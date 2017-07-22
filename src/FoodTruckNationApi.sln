@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodTruckNationApi", "FoodTruckNationApi\FoodTruckNationApi.csproj", "{F802C7EA-9819-4C28-B493-585C11483589}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodTruckNation.Data.EF", "FoodTruckNation.Data.EF\FoodTruckNation.Data.EF.csproj", "{F62C5396-F0A9-4B16-8A65-0354E5606688}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodTruckNationApi.Test", "FoodTruckNationApi.Test\FoodTruckNationApi.Test.csproj", "{2C2AECAE-EF1C-44CB-B95A-9E5E0D203DC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "Framework\Framework.csproj", "{590E8550-8B17-45E6-A44F-CA3D81882948}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.ApiUtil", "Framework.ApiUtil\Framework.ApiUtil.csproj", "{4AED1C58-FDCE-439F-B351-3134B647F928}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Test", "Framework.Test\Framework.Test.csproj", "{12A78805-6752-4D72-8DDB-1301CCEEE4AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodTruckNation.Core", "FoodTruckNation.Core\FoodTruckNation.Core.csproj", "{7AC4F562-D2B4-4B19-87C9-21BBE74C6466}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F802C7EA-9819-4C28-B493-585C11483589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F802C7EA-9819-4C28-B493-585C11483589}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F802C7EA-9819-4C28-B493-585C11483589}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F802C7EA-9819-4C28-B493-585C11483589}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F62C5396-F0A9-4B16-8A65-0354E5606688}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F62C5396-F0A9-4B16-8A65-0354E5606688}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F62C5396-F0A9-4B16-8A65-0354E5606688}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F62C5396-F0A9-4B16-8A65-0354E5606688}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C2AECAE-EF1C-44CB-B95A-9E5E0D203DC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C2AECAE-EF1C-44CB-B95A-9E5E0D203DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C2AECAE-EF1C-44CB-B95A-9E5E0D203DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C2AECAE-EF1C-44CB-B95A-9E5E0D203DC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{590E8550-8B17-45E6-A44F-CA3D81882948}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{590E8550-8B17-45E6-A44F-CA3D81882948}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{590E8550-8B17-45E6-A44F-CA3D81882948}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{590E8550-8B17-45E6-A44F-CA3D81882948}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AED1C58-FDCE-439F-B351-3134B647F928}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AED1C58-FDCE-439F-B351-3134B647F928}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AED1C58-FDCE-439F-B351-3134B647F928}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AED1C58-FDCE-439F-B351-3134B647F928}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12A78805-6752-4D72-8DDB-1301CCEEE4AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12A78805-6752-4D72-8DDB-1301CCEEE4AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12A78805-6752-4D72-8DDB-1301CCEEE4AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12A78805-6752-4D72-8DDB-1301CCEEE4AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AC4F562-D2B4-4B19-87C9-21BBE74C6466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AC4F562-D2B4-4B19-87C9-21BBE74C6466}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AC4F562-D2B4-4B19-87C9-21BBE74C6466}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AC4F562-D2B4-4B19-87C9-21BBE74C6466}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
