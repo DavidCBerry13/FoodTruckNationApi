@@ -1,21 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodTruckNationApi", "FoodTruckNationApi\FoodTruckNationApi.csproj", "{F802C7EA-9819-4C28-B493-585C11483589}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTruckNationApi", "FoodTruckNationApi\FoodTruckNationApi.csproj", "{F802C7EA-9819-4C28-B493-585C11483589}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodTruckNation.Data.EF", "FoodTruckNation.Data.EF\FoodTruckNation.Data.EF.csproj", "{F62C5396-F0A9-4B16-8A65-0354E5606688}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTruckNation.Data.EF", "FoodTruckNation.Data.EF\FoodTruckNation.Data.EF.csproj", "{F62C5396-F0A9-4B16-8A65-0354E5606688}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodTruckNationApi.Test", "FoodTruckNationApi.Test\FoodTruckNationApi.Test.csproj", "{2C2AECAE-EF1C-44CB-B95A-9E5E0D203DC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTruckNationApi.Test", "FoodTruckNationApi.Test\FoodTruckNationApi.Test.csproj", "{2C2AECAE-EF1C-44CB-B95A-9E5E0D203DC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "Framework\Framework.csproj", "{590E8550-8B17-45E6-A44F-CA3D81882948}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework", "Framework\Framework.csproj", "{590E8550-8B17-45E6-A44F-CA3D81882948}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.ApiUtil", "Framework.ApiUtil\Framework.ApiUtil.csproj", "{4AED1C58-FDCE-439F-B351-3134B647F928}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.ApiUtil", "Framework.ApiUtil\Framework.ApiUtil.csproj", "{4AED1C58-FDCE-439F-B351-3134B647F928}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Test", "Framework.Test\Framework.Test.csproj", "{12A78805-6752-4D72-8DDB-1301CCEEE4AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Test", "Framework.Test\Framework.Test.csproj", "{12A78805-6752-4D72-8DDB-1301CCEEE4AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodTruckNation.Core", "FoodTruckNation.Core\FoodTruckNation.Core.csproj", "{7AC4F562-D2B4-4B19-87C9-21BBE74C6466}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTruckNation.Core", "FoodTruckNation.Core\FoodTruckNation.Core.csproj", "{7AC4F562-D2B4-4B19-87C9-21BBE74C6466}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.ApiUtil.Tests", "Framework.ApiUtil.Tests\Framework.ApiUtil.Tests.csproj", "{9C2BE0CA-B576-431D-97F8-750A26139C52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{7AC4F562-D2B4-4B19-87C9-21BBE74C6466}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AC4F562-D2B4-4B19-87C9-21BBE74C6466}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AC4F562-D2B4-4B19-87C9-21BBE74C6466}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C2BE0CA-B576-431D-97F8-750A26139C52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C2BE0CA-B576-431D-97F8-750A26139C52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C2BE0CA-B576-431D-97F8-750A26139C52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C2BE0CA-B576-431D-97F8-750A26139C52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

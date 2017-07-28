@@ -25,7 +25,12 @@ namespace FoodTruckNation.Core.Domain
         }
 
 
+        #region Validation Constants
 
+        public const String ACCOUNT_NAME_VALIDATION = @"^[\w@][\w\.-]{1,39}$";
+
+
+        #endregion
 
         private int _socialMediaAccountId;
         private int _foodTruckId;

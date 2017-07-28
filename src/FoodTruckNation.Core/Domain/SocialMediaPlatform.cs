@@ -18,23 +18,26 @@ namespace FoodTruckNation.Core.Domain
         }
 
 
-        public SocialMediaPlatform(String name, String urlTemplate) : base(ObjectState.NEW)
+        public SocialMediaPlatform(String name, String urlTemplate, String accountNameRegex) : base(ObjectState.NEW)
         {
             _name = name;
             _urlTemplate = urlTemplate;
+            _accountNameRegex = accountNameRegex;
         }
 
 
-        internal SocialMediaPlatform(int platformId, String name, String urlTemplate) : base(ObjectState.UNCHANGED)
+        internal SocialMediaPlatform(int platformId, String name, String urlTemplate, String accountNameRegex) : base(ObjectState.UNCHANGED)
         {
             _platformId = platformId;
             _name = name;
             _urlTemplate = urlTemplate;
+            _accountNameRegex = accountNameRegex;
         }
 
         private int _platformId;
         private String _name;
         private String _urlTemplate;
+        private String _accountNameRegex;
 
 
         public int PlatformId
@@ -56,6 +59,16 @@ namespace FoodTruckNation.Core.Domain
             get { return _urlTemplate; }
             private set { _urlTemplate = value; }
         }
+
+
+
+        public String AccountNameRegex
+        {
+            get { return _accountNameRegex; }
+            private set { _accountNameRegex = value; }
+
+        }
+
 
     }
 }

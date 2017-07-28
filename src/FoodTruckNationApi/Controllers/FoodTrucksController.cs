@@ -201,8 +201,20 @@ namespace FoodTruckNationApi.Controllers
 
 
         /// <summary>
-        /// Update the given food truck with the provided values
+        /// Updates the core data elements of a food truck.
         /// </summary>
+        /// <remarks>
+        /// This endpoint only updates the properties directly on the food truck.  To
+        /// change elements on 'child' objects of the food truck (tags, social media accounts,
+        /// reviews, schedules), you need to look in the appropriate association controller, 
+        /// for example FoodTruckTagsController.
+        /// <para>
+        /// This decision was made because when editing a food truck, I think it is more likely
+        /// someone will just want to edit elements like the name or description.  It seemed 
+        /// unnatural to make them also include the tags or social media accounts as part of
+        /// the same update operation.  
+        /// </para>
+        /// </remarks>
         /// <param name="id">An int of the id of the food truck to update</param>
         /// <param name="updateModel">An UpdateFoodTruckModel of the </param>
         /// <returns></returns>
