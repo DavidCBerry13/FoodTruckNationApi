@@ -1,9 +1,0 @@
-C:\Users\yellowstone\Documents\GitHub\FoodTruckNationApi\src\FoodTruckNation.Core\bin\Debug\netcoreapp1.1\FoodTruckNation.Core.deps.json
-C:\Users\yellowstone\Documents\GitHub\FoodTruckNationApi\src\FoodTruckNation.Core\bin\Debug\netcoreapp1.1\FoodTruckNation.Core.dll
-C:\Users\yellowstone\Documents\GitHub\FoodTruckNationApi\src\FoodTruckNation.Core\bin\Debug\netcoreapp1.1\FoodTruckNation.Core.pdb
-C:\Users\yellowstone\Documents\GitHub\FoodTruckNationApi\src\FoodTruckNation.Core\bin\Debug\netcoreapp1.1\Framework.dll
-C:\Users\yellowstone\Documents\GitHub\FoodTruckNationApi\src\FoodTruckNation.Core\bin\Debug\netcoreapp1.1\Framework.pdb
-C:\Users\yellowstone\Documents\GitHub\FoodTruckNationApi\src\FoodTruckNation.Core\obj\Debug\netcoreapp1.1\FoodTruckNation.Core.csprojResolveAssemblyReference.cache
-C:\Users\yellowstone\Documents\GitHub\FoodTruckNationApi\src\FoodTruckNation.Core\obj\Debug\netcoreapp1.1\FoodTruckNation.Core.AssemblyInfo.cs
-C:\Users\yellowstone\Documents\GitHub\FoodTruckNationApi\src\FoodTruckNation.Core\obj\Debug\netcoreapp1.1\FoodTruckNation.Core.dll
-C:\Users\yellowstone\Documents\GitHub\FoodTruckNationApi\src\FoodTruckNation.Core\obj\Debug\netcoreapp1.1\FoodTruckNation.Core.pdb
