@@ -22,8 +22,8 @@ namespace FoodTruckNationApi.Controllers
     public class FoodTruckReviewsController : BaseController
     {
 
-        public FoodTruckReviewsController(ILoggerFactory loggerFactory, IMapper mapper, IFoodTruckService foodTruckService)
-            : base(loggerFactory, mapper)
+        public FoodTruckReviewsController(ILogger<FoodTrucksController> logger, IMapper mapper, IFoodTruckService foodTruckService)
+            : base(logger, mapper)
         {
             this.foodTruckService = foodTruckService;
         }

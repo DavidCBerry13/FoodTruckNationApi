@@ -26,9 +26,14 @@ namespace FoodTruckNationApi.Controllers
     [ApiVersion("1.0")]
     public class LocationsController : BaseController
     {
-
-        public LocationsController(ILoggerFactory loggerFactory, ILocationService locationService, IMapper mapper)
-            : base(loggerFactory, mapper)
+        /// <summary>
+        /// Create a new LocationsController
+        /// </summary>
+        /// <param name="logger">An ILogger instance to be used for any logging from this controller</param>
+        /// <param name="locationService">An ILocationService of the service layer object for this controller to use</param>
+        /// <param name="mapper">An IMapper class used by this controller to map objects</param>
+        public LocationsController(ILogger<FoodTrucksController> logger, ILocationService locationService, IMapper mapper)
+            : base(logger, mapper)
         {
             this.locationService = locationService;
         }
@@ -123,7 +128,11 @@ namespace FoodTruckNationApi.Controllers
         /// </summary>
         /// <param name="id">The id number of the location to update</param>
         /// <param name="updateModel">An UpdateLocationModel object with the new information for the location</param>
-        /// <response code="201">Created</response>
+        /// <response code="200">OK.  The location has been updated with the provided information</response>
+        /// <response code="400">Bad Requst.  The provided data to update the location with is invalid (check the message in the response for specifics)</response>
+        /// <response code="404">Not Found.  No location could be foudn with the specified id</response>
+        /// <response code="409">Conflict.  Updating the location as requested would conflict with another already existing location.  Check the response message for details</response>
+        /// <response code="500">Internal Server Error.  An unexpected error occured.  The error has been logged so support teams can look into the problem</response>
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(LocationModel), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]

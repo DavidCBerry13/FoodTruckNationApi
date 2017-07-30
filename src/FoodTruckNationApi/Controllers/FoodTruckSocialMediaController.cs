@@ -20,8 +20,8 @@ namespace FoodTruckNationApi.Controllers
     public class FoodTruckSocialMediaController : BaseController
     {
 
-        public FoodTruckSocialMediaController(ILoggerFactory loggerFactory, IMapper mapper, IFoodTruckService foodTruckService)
-            : base(loggerFactory, mapper)
+        public FoodTruckSocialMediaController(ILogger<FoodTrucksController> logger, IMapper mapper, IFoodTruckService foodTruckService)
+            : base(logger, mapper)
         {
             this.foodTruckService = foodTruckService;
         }

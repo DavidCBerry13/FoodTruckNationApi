@@ -24,11 +24,11 @@ namespace FoodTruckNationApi.Controllers
         /// <summary>
         /// Creates a new FoodTruckTagsController
         /// </summary>
-        /// <param name="loggerFactory">An ILoggerFactory used to create the ILogger used by this controller</param>
+        /// <param name="logger">An ILogger object used to log messages from this controller</param>
         /// <param name="mapper">An Automapper IMapper object used for object mapping within this controller</param>
         /// <param name="foodTruckService">An IFoodTruckService object that contains the business logic for food truck functions</param>
-        public FoodTruckTagsController(ILoggerFactory loggerFactory, IMapper mapper, IFoodTruckService foodTruckService)
-            : base(loggerFactory, mapper)
+        public FoodTruckTagsController(ILogger<FoodTrucksController> logger, IMapper mapper, IFoodTruckService foodTruckService)
+            : base(logger, mapper)
         {
             this.foodTruckService = foodTruckService;
         }

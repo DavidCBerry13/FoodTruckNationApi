@@ -8,15 +8,17 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Framework.ApiUtil.Controllers
 {
+
+    /// <summary>
+    /// Base controller class to encapsulate functionality common to all API controllers
+    /// </summary>
     public abstract class BaseController : Controller
     {
 
 
-        public BaseController(ILoggerFactory loggerFactory, IMapper mapper) : base()
+        public BaseController(ILogger<BaseController> logger, IMapper mapper) : base()
         {
-            String typeName = this.GetType().FullName;
-            this.logger = loggerFactory.CreateLogger(this.GetType());
-
+            this.logger = logger;
             this.mapper = mapper;
         }
 

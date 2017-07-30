@@ -19,9 +19,9 @@ namespace FoodTruckNationApi.Controllers
     public class LocationSchedulesController : BaseController
     {
 
-        public LocationSchedulesController(ILoggerFactory loggerFactory, IMapper mapper,
+        public LocationSchedulesController(ILogger<FoodTrucksController> logger, IMapper mapper,
             IScheduleService scheduleService, IDateTimeProvider dateTimeProvider)
-            : base(loggerFactory, mapper)
+            : base(logger, mapper)
         {
             this.dateTimeProvider = dateTimeProvider;
             this.scheduleService = scheduleService;
