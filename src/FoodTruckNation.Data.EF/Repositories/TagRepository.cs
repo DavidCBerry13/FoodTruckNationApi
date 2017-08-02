@@ -1,4 +1,4 @@
-﻿using FoodTruckNation.Core.Repositories;
+﻿using FoodTruckNation.Core.DataInterfaces;
 using System;
 using System.Linq;
 using System.Collections.Generic;

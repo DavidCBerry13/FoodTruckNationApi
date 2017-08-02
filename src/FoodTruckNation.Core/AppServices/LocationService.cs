@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using FoodTruckNation.Core.Domain;
-using FoodTruckNation.Core.Repositories;
+using FoodTruckNation.Core.DataInterfaces;
 using Microsoft.Extensions.Logging;
 using FoodTruckNation.Core.Commands;
 using Framework;

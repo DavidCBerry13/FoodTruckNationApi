@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using NLog.Web;
 using NLog.Extensions.Logging;
 using FoodTruckNation.Data.EF;
-using FoodTruckNation.Core.Repositories;
+using FoodTruckNation.Core.DataInterfaces;
 using FoodTruckNation.Data.EF.Repositories;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.AppServices;
@@ -19,12 +15,10 @@ using Framework;
 using System.IO;
 using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
-using Swashbuckle.AspNetCore;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Framework.ApiUtil.Filters;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using FoodTruckNation.Core.DataInterfaces;
 
 namespace FoodTruckNationApi
 {

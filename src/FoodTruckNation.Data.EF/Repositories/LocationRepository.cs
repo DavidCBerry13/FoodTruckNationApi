@@ -1,5 +1,5 @@
 ﻿using FoodTruckNation.Core.Domain;
-using FoodTruckNation.Core.Repositories;
+using FoodTruckNation.Core.DataInterfaces;
 using Framework;
 using Microsoft.EntityFrameworkCore;
 using System;

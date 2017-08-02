@@ -2,7 +2,6 @@
 using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.DataInterfaces;
 using FoodTruckNation.Core.Domain;
-using FoodTruckNation.Core.Repositories;
 using Framework;
 using Microsoft.Extensions.Logging;
 using System;
