@@ -61,7 +61,7 @@ namespace FoodTruckNationApi
                 options.Filters.Add(new ExceptionHandlerFilterAttribute(this.loggerFactory));
             });
 
-
+            services.AddCors();
             this.ConfigureServicesDI(services);
             services.AddAutoMapper();
             this.ConfigureServicesVersioning(services);
@@ -79,15 +79,23 @@ namespace FoodTruckNationApi
             loggerFactory.AddDebug();
             loggerFactory.AddNLog();
 
+            // Shows UseCors with CorsPolicyBuilder.
+            app.UseCors(builder =>
+               builder.AllowAnyOrigin()
+                   .AllowAnyHeader()
+                   .AllowAnyMethod()            
+            );
+
+
             app.UseMvc();
 
             app.UseSwagger(c =>
-            {
+            {                
                 c.PreSerializeFilters.Add((swagger, httpReq) => swagger.Host = httpReq.Host.Value);
             });
             
             app.UseSwaggerUI(c =>
-            {
+            { 
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger Docs");
             });
 
@@ -142,17 +150,19 @@ namespace FoodTruckNationApi
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1",
-                new Info
-                {
-                    Title = "Food Truck API",
-                    Description = "A demonstration api built around tracking food trucks and their schedules",
-                    TermsOfService = "For demonstration only"
-                }
-             );
+                    new Info
+                    {
+                        Title = "Food Truck API",
+                        Description = "A demonstration api built around tracking food trucks and their schedules",
+                        TermsOfService = "For demonstration only"
+                    }
+                );
 
                 var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, pathToXmlComments);
                 options.IncludeXmlComments(filePath);
                 options.DescribeAllEnumsAsStrings();
+
+
             });
         }
 
