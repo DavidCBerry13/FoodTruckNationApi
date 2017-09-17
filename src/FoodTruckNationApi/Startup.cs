@@ -157,7 +157,7 @@ namespace FoodTruckNationApi
                         TermsOfService = "For demonstration only"
                     }
                 );
-
+                
                 var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, pathToXmlComments);
                 options.IncludeXmlComments(filePath);
                 options.DescribeAllEnumsAsStrings();

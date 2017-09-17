@@ -16,6 +16,11 @@ namespace FoodTruckNationApi.ApiModels
     public class CreateFoodTruckModel
     {
 
+        public CreateFoodTruckModel()
+        {
+            this.Tags = new List<string>();
+        }
+
         /// <summary>
         /// Gets the name to give to the new Food Truck
         /// </summary>

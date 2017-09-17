@@ -53,6 +53,12 @@ namespace FoodTruckNationApi.Controllers
         /// </summary>
         public const String GET_FOOD_TRUCK_BY_ID = "GetFoodTruckById";
 
+        /// <summary>
+        /// Route name constant for route that creates a new Food Truck
+        /// </summary>
+        public const String CREATE_FOOD_TRUCK = "CreatFoodTruck";
+
+
         #endregion
 
 
@@ -185,7 +191,7 @@ namespace FoodTruckNationApi.Controllers
         /// <response code="200">Success.  The new food truck has been created</response>
         /// <response code="409">Conflict.  A food truck with the same name found so this food truck could not be created</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpPost(Name ="CreatFoodTruck")]
+        [HttpPost(Name = CREATE_FOOD_TRUCK)]
         [ProducesResponseType(typeof(FoodTruckModel), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 409)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]

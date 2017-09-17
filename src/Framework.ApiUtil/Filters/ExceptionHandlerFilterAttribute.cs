@@ -20,7 +20,6 @@ namespace Framework.ApiUtil.Filters
         public ExceptionHandlerFilterAttribute(ILoggerFactory loggerFactory)
         {
             this.logger = loggerFactory.CreateLogger(this.GetType().FullName);
-            //this.logger = loggerFactory.CreateLogger<ExceptionHandlerFilterAttribute>();            
         }
 
         private ILogger logger;

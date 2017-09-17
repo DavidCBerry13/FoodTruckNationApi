@@ -4,13 +4,24 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
   </PropertyGroup>
-
+  
+  <PropertyGroup>
+    <IsTransformWebConfigDisabled>true</IsTransformWebConfigDisabled>
+  </PropertyGroup>
+  
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netcoreapp1.1\FoodTruckNationApi.xml</DocumentationFile>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <None Remove="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Remove="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <None Remove="Properties\PublishProfiles\FoodTruckNationApi - Web Deploy.pubxml" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Filters\" />
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
@@ -38,6 +49,11 @@
     <ProjectReference Include="..\FoodTruckNation.Data.EF\FoodTruckNation.Data.EF.csproj" />
     <ProjectReference Include="..\Framework.ApiUtil\Framework.ApiUtil.csproj" />
     <ProjectReference Include="..\Framework\Framework.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="nlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
