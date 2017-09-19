@@ -58,11 +58,11 @@ namespace FoodTruckNation.Data.EF
             modelBuilder.Entity<Tag>().Property(p => p.TagId)
                 .HasField("tagId")
                 .UseSqlServerIdentityColumn()
-                .ForSqlServerHasColumnName("TagId");
+                .HasColumnName("TagId");
 
             modelBuilder.Entity<Tag>().Property(p => p.Text)
                 .HasField("tagText")
-                .ForSqlServerHasColumnName("TagName");
+                .HasColumnName("TagName");
         }
 
 
@@ -75,7 +75,7 @@ namespace FoodTruckNation.Data.EF
             modelBuilder.Entity<FoodTruckTag>().Property(p => p.FoodTruckTagId)
                .HasField("foodTruckTagId")
                .UseSqlServerIdentityColumn()
-               .ForSqlServerHasColumnName("FoodTruckTagId");
+               .HasColumnName("FoodTruckTagId");
 
             modelBuilder.Entity<FoodTruckTag>()
                 .HasOne<FoodTruck>(x => x.FoodTruck)
@@ -99,27 +99,27 @@ namespace FoodTruckNation.Data.EF
             modelBuilder.Entity<Location>().Property(p => p.LocationId)
                 .HasField("locationId")
                 .UseSqlServerIdentityColumn()
-                .ForSqlServerHasColumnName("LocationId");
+                .HasColumnName("LocationId");
 
             modelBuilder.Entity<Location>().Property(p => p.Name)
                 .HasField("locationName")                
-                .ForSqlServerHasColumnName("LocationName");
+                .HasColumnName("LocationName");
 
             modelBuilder.Entity<Location>().Property(p => p.StreetAddress)
                 .HasField("streetAddress")
-                .ForSqlServerHasColumnName("StreetAddress");
+                .HasColumnName("StreetAddress");
 
             modelBuilder.Entity<Location>().Property(p => p.City)
                 .HasField("city")
-                .ForSqlServerHasColumnName("City");
+                .HasColumnName("City");
 
             modelBuilder.Entity<Location>().Property(p => p.State)
                 .HasField("state")
-                .ForSqlServerHasColumnName("State");
+                .HasColumnName("State");
 
             modelBuilder.Entity<Location>().Property(p => p.ZipCode)
                 .HasField("zipCode")
-                .ForSqlServerHasColumnName("ZipCode");
+                .HasColumnName("ZipCode");
 
         }
 
@@ -133,19 +133,19 @@ namespace FoodTruckNation.Data.EF
             modelBuilder.Entity<FoodTruck>().Property(p => p.FoodTruckId)
                 .HasField("foodTruckId")
                 .UseSqlServerIdentityColumn()
-                .ForSqlServerHasColumnName("FoodTruckId");
+                .HasColumnName("FoodTruckId");
 
             modelBuilder.Entity<FoodTruck>().Property(p => p.Name)
                 .HasField("name")
-                .ForSqlServerHasColumnName("TruckName");
+                .HasColumnName("TruckName");
 
             modelBuilder.Entity<FoodTruck>().Property(p => p.Description)
                 .HasField("description")
-                .ForSqlServerHasColumnName("Description");
+                .HasColumnName("Description");
 
             modelBuilder.Entity<FoodTruck>().Property(p => p.Website)
                 .HasField("website")
-                .ForSqlServerHasColumnName("Website");
+                .HasColumnName("Website");
 
             // So EF can set the backing field on the navigation property
             // https://blog.oneunicorn.com/2016/10/28/collection-navigation-properties-and-fields-in-ef-core-1-1/
@@ -178,24 +178,24 @@ namespace FoodTruckNation.Data.EF
             modelBuilder.Entity<Review>().Property(x => x.ReviewId)
                 .HasField("_reviewId")
                 .UseSqlServerIdentityColumn()
-                .ForSqlServerHasColumnName("ReviewId");
+                .HasColumnName("ReviewId");
 
             modelBuilder.Entity<Review>().Property(x => x.FoodTruckId)
                 .HasField("_foodTruckId")
-                .ForSqlServerHasColumnName("FoodTruckId");
+                .HasColumnName("FoodTruckId");
 
             modelBuilder.Entity<Review>().Property(x => x.ReviewDate)
                 .HasField("_reviewDate")
-                .ForSqlServerHasColumnName("ReviewDate");
+                .HasColumnName("ReviewDate");
 
             modelBuilder.Entity<Review>().Property(x => x.Rating)
                 .HasField("_rating")
-                .ForSqlServerHasColumnName("Rating");
+                .HasColumnName("Rating");
 
 
             modelBuilder.Entity<Review>().Property(x => x.Details)
                 .HasField("_details")
-                .ForSqlServerHasColumnName("Details");
+                .HasColumnName("Details");
 
             modelBuilder.Entity<Review>()
                 .HasOne<FoodTruck>(x => x.FoodTruck)
@@ -213,23 +213,23 @@ namespace FoodTruckNation.Data.EF
             modelBuilder.Entity<Schedule>().Property(x => x.ScheduleId)
                 .HasField("scheduleId")
                 .UseSqlServerIdentityColumn()
-                .ForSqlServerHasColumnName("ScheduleId");
+                .HasColumnName("ScheduleId");
 
             modelBuilder.Entity<Schedule>().Property(x => x.FoodTruckId)
                 .HasField("foodTruckId")
-                .ForSqlServerHasColumnName("FoodTruckId");
+                .HasColumnName("FoodTruckId");
             
             modelBuilder.Entity<Schedule>().Property(x => x.LocationId)
                 .HasField("locationId")
-                .ForSqlServerHasColumnName("LocationId");
+                .HasColumnName("LocationId");
 
             modelBuilder.Entity<Schedule>().Property(x => x.ScheduledStart)
                 .HasField("scheduleStart")
-                .ForSqlServerHasColumnName("StartTime");
+                .HasColumnName("StartTime");
 
             modelBuilder.Entity<Schedule>().Property(x => x.ScheduledEnd)
                 .HasField("scheduleEnd")
-                .ForSqlServerHasColumnName("EndTime");
+                .HasColumnName("EndTime");
 
 
 
@@ -253,15 +253,15 @@ namespace FoodTruckNation.Data.EF
             modelBuilder.Entity<SocialMediaPlatform>().Property(p => p.PlatformId)
                 .HasField("_platformId")
                 .UseSqlServerIdentityColumn()
-                .ForSqlServerHasColumnName("PlatformId");
+                .HasColumnName("PlatformId");
 
             modelBuilder.Entity<SocialMediaPlatform>().Property(p => p.Name)
                 .HasField("_name")
-                .ForSqlServerHasColumnName("PlatformName");
+                .HasColumnName("PlatformName");
 
             modelBuilder.Entity<SocialMediaPlatform>().Property(p => p.UrlTemplate)
                 .HasField("_urlTemplate")
-                .ForSqlServerHasColumnName("UrlTemplate");
+                .HasColumnName("UrlTemplate");
         }
 
 
@@ -275,11 +275,11 @@ namespace FoodTruckNation.Data.EF
             modelBuilder.Entity<SocialMediaAccount>().Property(p => p.SocialMediaAccountId)
                .HasField("_socialMediaAccountId")
                .UseSqlServerIdentityColumn()
-               .ForSqlServerHasColumnName("SocialMediaAccountId");
+               .HasColumnName("SocialMediaAccountId");
 
             modelBuilder.Entity<SocialMediaAccount>().Property(p => p.AccountName)
                 .HasField("_accountName")
-                .ForSqlServerHasColumnName("AccountName");
+                .HasColumnName("AccountName");
 
             modelBuilder.Entity<SocialMediaAccount>()
                 .HasOne<FoodTruck>(x => x.FoodTruck)
