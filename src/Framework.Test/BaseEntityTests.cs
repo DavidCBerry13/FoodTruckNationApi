@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
+using FluentAssertions;
 
 namespace Framework.Test
 {
@@ -18,7 +19,7 @@ namespace Framework.Test
             entity.SetObjectModified();
 
             // Assert
-            Assert.Equal(ObjectState.NEW, entity.ObjectState);
+            entity.ObjectState.ShouldBeEquivalentTo(ObjectState.NEW);
         }
 
         [Fact]
@@ -31,7 +32,7 @@ namespace Framework.Test
             entity.SetObjectModified();
 
             // Assert
-            Assert.Equal(ObjectState.MODIFIED, entity.ObjectState);
+            entity.ObjectState.ShouldBeEquivalentTo(ObjectState.MODIFIED);
         }
 
 

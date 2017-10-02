@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Xunit;
+using FluentAssertions;
 
 namespace Framework.Test
 {
@@ -28,9 +29,11 @@ namespace Framework.Test
             var missingColors = colors.WhereNotExists(target, (x, y) => (x == y)).ToList();
 
             // Assert
-            Assert.Equal(2, missingColors.Count);
-            Assert.True(missingColors.Contains("Blue"));
-            Assert.True(missingColors.Contains("White"));
+            missingColors.Count.ShouldBeEquivalentTo(2);
+            missingColors.Should().Contain("Blue");
+            missingColors.Should().Contain("White");
+            missingColors.Should().NotContain("Red");
+            missingColors.Should().NotContain("Green");
         }
 
 
@@ -52,11 +55,11 @@ namespace Framework.Test
             var missingItems = cars.WhereNotExists(colors, (x, y) => (x.Color == y)).ToList();
 
             // Assert
-            Assert.Equal(2, missingItems.Count);
-            Assert.Equal(1, missingItems.Count(c => c.Color == "Silver"));
-            Assert.Equal(1, missingItems.Count(c => c.Color == "Yellow"));
-            Assert.Equal(0, missingItems.Count(c => c.Color == "Red"));
-            Assert.Equal(0, missingItems.Count(c => c.Color == "Green"));
+            missingItems.Count.ShouldBeEquivalentTo(2);
+            missingItems.Should().Contain(c => c.Color == "Silver" ); // Has a silver car
+            missingItems.Should().Contain(c => c.Color == "Yellow");  // Has a yellow car
+            missingItems.Should().NotContain(c => c.Color == "Red"); // No Red Cars
+            missingItems.Should().NotContain(c => c.Color == "Green");  // No Green Cars
         }
 
 
@@ -78,9 +81,9 @@ namespace Framework.Test
             var missingItems = colors.WhereNotExists(cars, (x, y) => (x == y.Color)).ToList();
 
             // Assert
-            Assert.Equal(2, missingItems.Count);
-            Assert.True(missingItems.Contains("White"));
-            Assert.True(missingItems.Contains("Blue"));
+            missingItems.Count.ShouldBeEquivalentTo(2);
+            missingItems.Should().Contain("White"); // There are no white cars
+            missingItems.Should().Contain("Blue"); // There are no blue cars
         }
 
 
@@ -103,11 +106,12 @@ namespace Framework.Test
             var matchingItems = cars.WhereExists(colors, (x, y) => (x.Color == y)).ToList();
 
             // Assert
-            Assert.Equal(2, matchingItems.Count);
-            Assert.Equal(0, matchingItems.Count(c => c.Color == "Silver"));
-            Assert.Equal(0, matchingItems.Count(c => c.Color == "Yellow"));
-            Assert.Equal(1, matchingItems.Count(c => c.Color == "Red"));
-            Assert.Equal(1, matchingItems.Count(c => c.Color == "Green"));
+            matchingItems.Count.ShouldBeEquivalentTo(2);
+            matchingItems.Should().NotContain(car => car.Color == "Silver"); // Silver is not in the color list
+            matchingItems.Should().NotContain(car => car.Color == "Yellow"); // Yellow is not in the color list
+
+            matchingItems.Should().Contain(car => car.Color == "Red", "A red car is in the list and red is in the list of colors");
+            matchingItems.Should().Contain(car => car.Color == "Green", "A green car is in the list and green is in the list of colors");
         }
 
 
@@ -129,9 +133,13 @@ namespace Framework.Test
             var matchingItems = colors.WhereExists(cars, (x, y) => (x == y.Color)).ToList();
 
             // Assert
-            Assert.Equal(2, matchingItems.Count);
-            Assert.True(matchingItems.Contains("Red"));
-            Assert.True(matchingItems.Contains("Green"));
+            matchingItems.Count.ShouldBeEquivalentTo(2);
+
+            matchingItems.Should().Contain("Red", "A red car is in the list and red is in the list of colors");
+            matchingItems.Should().Contain("Green", "A green car is in the list and green is in the list of colors");
+
+            matchingItems.Should().NotContain("Blue", "because there are no Blue cars");
+            matchingItems.Should().NotContain("White", "because there are no white cars");
         }
 
 
