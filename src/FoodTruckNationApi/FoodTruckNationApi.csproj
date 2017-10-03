@@ -14,13 +14,19 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <Compile Remove="Filters\**" />
+    <Content Remove="Filters\**" />
+    <EmbeddedResource Remove="Filters\**" />
+    <None Remove="Filters\**" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <None Remove="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Remove="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Remove="Properties\PublishProfiles\FoodTruckNationApi - Web Deploy.pubxml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Filters\" />
     <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>

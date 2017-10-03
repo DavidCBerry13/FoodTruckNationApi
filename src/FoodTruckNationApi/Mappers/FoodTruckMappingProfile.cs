@@ -29,7 +29,7 @@ namespace FoodTruckNationApi.Mappers
 
             // Update
             this.AddUpdateFoodTruckModelToUpdateFoodTruckCommandMap();
-            this.AddUpdateFoodTruckCommandToFoodTruckMap();
+            //this.AddUpdateFoodTruckCommandToFoodTruckMap();
         }
 
 
@@ -125,8 +125,7 @@ namespace FoodTruckNationApi.Mappers
                 .ForMember(
                     dest => dest.Tags,
                     opt => opt.Ignore()
-                );
-                
+                );                
         }
 
     }

@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using FoodTruckNation.Core.Domain;
-using FoodTruckNationApi.Api.SocialMediaPlatforms.Models;
+using FoodTruckNationApi.ApiModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Api.SocialMediaPlatforms
+namespace FoodTruckNationApi.Mappers
 {
     /// <summary>
     /// Class defining mappings used in the SocialMediaPlatforms feature
