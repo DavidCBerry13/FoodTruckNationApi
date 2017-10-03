@@ -28,7 +28,7 @@ namespace FoodTruckNation.Data.EF.Repositories
             return platform;
         }
 
-        public IList<SocialMediaPlatform> GetSocialMediaPlatforms()
+        public List<SocialMediaPlatform> GetSocialMediaPlatforms()
         {
             var platforms = this.foodTruckContext.SocialMediaPlatforms
                 .AsNoTracking()

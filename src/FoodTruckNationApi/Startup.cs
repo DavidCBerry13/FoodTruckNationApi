@@ -134,6 +134,8 @@ namespace FoodTruckNationApi
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<IScheduleService, ScheduleService>();
+            services.AddScoped<ISocialMediaPlatformService, SocialMediaPlatformService>();
+
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IDateTimeProvider, StandardDateTimeProvider>();
