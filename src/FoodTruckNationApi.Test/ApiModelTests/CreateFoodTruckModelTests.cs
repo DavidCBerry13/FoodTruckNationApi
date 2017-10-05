@@ -1,4 +1,5 @@
-﻿using FoodTruckNationApi.ApiModels;
+﻿using FoodTruckNationApi.Api.FoodTrucks.Models;
+using FoodTruckNationApi.ApiModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

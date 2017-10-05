@@ -27,11 +27,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ApiModels\FoodTruckReview\" />
+    <Folder Include="ApiModels\FoodTruckSchedule\" />
+    <Folder Include="ApiModels\FoodTruckSocialMediaAccount\" />
+    <Folder Include="ApiModels\FoodTruck\" />
+    <Folder Include="ApiModels\LocationSchedule\" />
+    <Folder Include="ApiModels\Location\" />
+    <Folder Include="ApiModels\SocialMediaPlatform\" />
+    <Folder Include="Controllers\" />
     <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.0.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="7.1.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
