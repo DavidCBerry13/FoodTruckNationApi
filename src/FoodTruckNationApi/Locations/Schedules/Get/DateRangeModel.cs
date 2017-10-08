@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Api.Locations.Schedules
+namespace FoodTruckNationApi.Locations.Schedules.Get
 {
     public class DateRangeModel : IValidatableObject
     {

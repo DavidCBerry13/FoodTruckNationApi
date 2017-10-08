@@ -1,20 +1,18 @@
 ﻿using AutoMapper;
 using FoodTruckNation.Core.Domain;
-using FoodTruckNationApi.Api.FoodTrucks;
-using FoodTruckNationApi.Api.FoodTrucks.Reviews;
 using Framework.ApiUtil;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Api.Locations.Schedules
+namespace FoodTruckNationApi.Locations.Schedules.Get
 {
-    public class LocationSchedulesMappingProfile : Profile
+    public class GetMappingProfile : Profile
     {
 
 
-        public LocationSchedulesMappingProfile()
+        public GetMappingProfile()
         {
             this.AddScheduleToLocationScheduleModelMap();
             this.AddFoodTruckToLocationScheduleFoodTruckModel();
@@ -41,7 +39,7 @@ namespace FoodTruckNationApi.Api.Locations.Schedules
                     opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
-                            RouteName = FoodTrucksController.GET_FOOD_TRUCK_BY_ID,
+                            RouteName = Api.FoodTrucks.FoodTrucksController.GET_FOOD_TRUCK_BY_ID,
                             RouteParams = new { id = src.FoodTruckId }
                         }
                     )
@@ -51,7 +49,7 @@ namespace FoodTruckNationApi.Api.Locations.Schedules
                     opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
-                            RouteName = FoodTruckReviewsController.GET_ALL_FOOD_TRUCK_REVIEWS,
+                            RouteName = Api.FoodTrucks.Reviews.FoodTruckReviewsController.GET_ALL_FOOD_TRUCK_REVIEWS,
                             RouteParams = new { foodTruckId = src.FoodTruckId }
                         }
                     )
@@ -61,7 +59,7 @@ namespace FoodTruckNationApi.Api.Locations.Schedules
                     opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
-                            RouteName = FoodTrucks.Schedules.FoodTruckSchedulesController.GET_FOOD_TRUCK_SCHEDULE,
+                            RouteName = Api.FoodTrucks.Schedules.FoodTruckSchedulesController.GET_FOOD_TRUCK_SCHEDULE,
                             RouteParams = new { foodTruckId = src.FoodTruckId }
                         }
                     )
@@ -98,7 +96,7 @@ namespace FoodTruckNationApi.Api.Locations.Schedules
                     opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
-                            RouteName = FoodTrucks.Schedules.FoodTruckSchedulesController.GET_SINGLE_FOOD_TRUCK_SCHEDULE,
+                            RouteName = Api.FoodTrucks.Schedules.FoodTruckSchedulesController.GET_SINGLE_FOOD_TRUCK_SCHEDULE,
                             RouteParams = new { foodTruckId = src.FoodTruckId, scheduleId = src.ScheduleId }
                         }
                     )

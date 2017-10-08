@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Api.Locations.Schedules
+namespace FoodTruckNationApi.Locations.Schedules.Get
 {
     /// <summary>
     /// Represents the information about a Food truck at a location at a certain time

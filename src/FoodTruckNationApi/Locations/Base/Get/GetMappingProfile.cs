@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.Domain;
 using Framework.ApiUtil;
 using System;
@@ -7,24 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Api.Locations
+namespace FoodTruckNationApi.Locations.Base.Get
 {
-
-    /// <summary>
-    /// Mapping profile for dealing with Location related objects in the Locations feature
-    /// </summary>
-    public class LocationsMappingProfile : Profile
+    public class GetMappingProfile : Profile
     {
 
-        public LocationsMappingProfile()
-        {
-            this.AddLocationToLocationModelMap();
-            this.AddCreateLocationModelToCreateLocationCommandMap();
-            this.AddUpdateLocationModelToUpdateLocationCommand();
-        }
-
-
-        internal void AddLocationToLocationModelMap()
+        public GetMappingProfile()
         {
             this.CreateMap<Location, LocationModel>()
                 .ForMember(
@@ -59,26 +46,7 @@ namespace FoodTruckNationApi.Api.Locations
                         }
                     )
                 );
-
         }
-
-
-        internal void AddCreateLocationModelToCreateLocationCommandMap()
-        {
-            this.CreateMap<CreateLocationModel, CreateLocationCommand>();
-
-        }
-
-
-        internal void AddUpdateLocationModelToUpdateLocationCommand()
-        {
-            this.CreateMap<UpdateLocationModel, UpdateLocationCommand>();
-        }
-
-
-
-
-
 
     }
 }

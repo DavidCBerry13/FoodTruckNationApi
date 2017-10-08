@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Api.Locations
+namespace FoodTruckNationApi.Locations.Base.Get
 {
 
     /// <summary>

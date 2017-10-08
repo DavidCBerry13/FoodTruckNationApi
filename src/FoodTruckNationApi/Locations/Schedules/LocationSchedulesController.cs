@@ -10,9 +10,14 @@ using Framework;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using FoodTruckNation.Core.Domain;
+using FoodTruckNationApi.Locations.Schedules.Get;
 
-namespace FoodTruckNationApi.Api.Locations.Schedules
+namespace FoodTruckNationApi.Locations.Schedules
 {
+
+    /// <summary>
+    /// API Endpoints related to the schedules of food trucks at a given location
+    /// </summary>
     [Produces("application/json")]
     [Route("api/Locations/{locationId}/Schedules")]
     public class LocationSchedulesController : BaseController
