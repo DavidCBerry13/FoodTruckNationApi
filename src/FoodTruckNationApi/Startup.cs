@@ -19,6 +19,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Framework.ApiUtil.Filters;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Framework.ApiUtil.Controllers;
+using System.Linq;
 
 namespace FoodTruckNationApi
 {
@@ -96,7 +98,8 @@ namespace FoodTruckNationApi
             
             app.UseSwaggerUI(c =>
             { 
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger Docs");
+                c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "Food Truck API v1.0");
+                c.SwaggerEndpoint("/swagger/v1.1/swagger.json", "Food Truck API v1.1");
             });
 
         }
@@ -151,14 +154,31 @@ namespace FoodTruckNationApi
             var pathToXmlComments = Configuration["Swagger:FileName"];
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1",
-                    new Info
+                options.SwaggerDoc("v1.1", new Info { Title = "Food Truck API v1.1", Version = "v1.1" });
+                options.SwaggerDoc("v1.0", new Info { Title = "Food Truck API v1.0", Version = "v1.0" });
+                options.DocInclusionPredicate((docName, apiDesc) =>
+                {
+                    var actionApiVersionModel = apiDesc.ActionDescriptor?.GetApiVersion();
+                    // would mean this action is unversioned and should be included everywhere
+                    if (actionApiVersionModel == null)
                     {
-                        Title = "Food Truck API",
-                        Description = "A demonstration api built around tracking food trucks and their schedules",
-                        TermsOfService = "For demonstration only"
+                        return true;
                     }
-                );
+                    if (actionApiVersionModel.DeclaredApiVersions.Any())
+                    {
+                        return actionApiVersionModel.DeclaredApiVersions.Any(v => $"v{v.ToString()}" == docName);
+                    }
+                    return actionApiVersionModel.ImplementedApiVersions.Any(v => $"v{v.ToString()}" == docName);
+                });
+
+                //options.SwaggerDoc("v1",
+                //    new Info
+                //    {
+                //        Title = "Food Truck API",
+                //        Description = "A demonstration api built around tracking food trucks and their schedules",
+                //        TermsOfService = "For demonstration only"
+                //    }
+                //);
                 
                 var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, pathToXmlComments);
                 options.IncludeXmlComments(filePath);

@@ -12,4 +12,8 @@
     <Folder Include="Handlers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.1.1" />
+  </ItemGroup>
+
 </Project>

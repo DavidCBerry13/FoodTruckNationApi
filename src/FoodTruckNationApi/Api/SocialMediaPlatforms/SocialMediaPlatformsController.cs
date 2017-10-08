@@ -43,6 +43,7 @@ namespace FoodTruckNationApi.Api.SocialMediaPlatforms
         /// <returns></returns>
         [ProducesResponseType(typeof(List<SocialMediaPlatformModel>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
+        [HttpGet]
         public IActionResult Get()
         {
             var platforms = this._socialMediaPlatformService.GetAllSocialMediaPlatforms();

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNationApi.Api.SocialMediaPlatforms.Models;
-using FoodTruckNationApi.ApiModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

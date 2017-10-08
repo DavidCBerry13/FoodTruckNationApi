@@ -27,14 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ApiModels\FoodTruckReview\" />
-    <Folder Include="ApiModels\FoodTruckSchedule\" />
-    <Folder Include="ApiModels\FoodTruckSocialMediaAccount\" />
-    <Folder Include="ApiModels\FoodTruck\" />
-    <Folder Include="ApiModels\LocationSchedule\" />
-    <Folder Include="ApiModels\Location\" />
-    <Folder Include="ApiModels\SocialMediaPlatform\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>

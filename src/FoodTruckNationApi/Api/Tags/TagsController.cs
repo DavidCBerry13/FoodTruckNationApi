@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
-using FoodTruckNationApi.Mappers;
 using Microsoft.Extensions.Logging;
 using Framework.ApiUtil;
 using AutoMapper;

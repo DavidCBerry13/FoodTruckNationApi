@@ -9,12 +9,10 @@ using Microsoft.Extensions.Logging;
 using Framework.ApiUtil;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Commands;
-using FoodTruckNationApi.ApiModels;
 using Framework;
 using AutoMapper;
 using Framework.ApiUtil.Models;
 using Framework.ApiUtil.Controllers;
-using FoodTruckNationApi.Api.Locations.Models;
 
 namespace FoodTruckNationApi.Api.Locations
 {
