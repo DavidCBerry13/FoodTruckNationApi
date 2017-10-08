@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Api.FoodTrucks.Reviews
+namespace FoodTruckNationApi.FoodTrucks.Reviews.Create
 {
 
     /// <summary>

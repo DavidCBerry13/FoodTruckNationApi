@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Api.FoodTrucks
+namespace FoodTruckNationApi.FoodTrucks.Base.Update
 {
     /// <summary>
     /// Model used to update the properties of a Food Truck

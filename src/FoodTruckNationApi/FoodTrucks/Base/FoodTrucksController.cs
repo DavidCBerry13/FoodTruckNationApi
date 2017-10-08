@@ -8,8 +8,11 @@ using FoodTruckNation.Core.AppInterfaces;
 using AutoMapper;
 using Framework.ApiUtil.Models;
 using Framework.ApiUtil.Controllers;
+using FoodTruckNationApi.FoodTrucks.Base.Get;
+using FoodTruckNationApi.FoodTrucks.Base.Create;
+using FoodTruckNationApi.FoodTrucks.Base.Update;
 
-namespace FoodTruckNationApi.Api.FoodTrucks
+namespace FoodTruckNationApi.FoodTrucks.Base
 {
 
     /// <summary>
@@ -93,33 +96,33 @@ namespace FoodTruckNationApi.Api.FoodTrucks
 
 
 
-        ///// <summary>
-        ///// Gets a list of all food trucks in the system.  Optionally, a tag value can be provided that will return only food trucks tagged with the given tag
-        ///// </summary>
-        ///// <param name="tag">An optional tag to filter the food trucks by</param>
-        ///// <returns></returns>
-        ///// <response code="200">Success.  A list of food trucks will be returned</response>
-        //[HttpGet(Name = GET_ALL_FOOD_TRUCKS)]
-        //[ProducesResponseType(typeof(List<FoodTruckModel>), 200)]
-        //[ProducesResponseType(typeof(ApiMessageModel), 500)]
-        //[MapToApiVersion("1.1")]
-        //public IActionResult GetV11([FromQuery]String tag = null)
-        //{
-        //    // Since we have just one filter possibility, we'll leave this as a simple if statement
-        //    // If we had more/more complex filter criteria, then splitting the logic into multiple methods would be in order
-        //    List<FoodTruck> foodTrucks = null;
-        //    if (tag == null)
-        //    {
-        //        foodTrucks = this.foodTruckService.GetAllFoodTrucks();
-        //    }
-        //    else
-        //    {
-        //        foodTrucks = this.foodTruckService.GetFoodTrucksByTag(tag);
-        //    }
-        //    var models = this.mapper.Map<List<FoodTruck>, List<FoodTruckModelV11>>(foodTrucks);
+        /// <summary>
+        /// Gets a list of all food trucks in the system.  Optionally, a tag value can be provided that will return only food trucks tagged with the given tag
+        /// </summary>
+        /// <param name="tag">An optional tag to filter the food trucks by</param>
+        /// <returns></returns>
+        /// <response code="200">Success.  A list of food trucks will be returned</response>
+        [HttpGet(Name = GET_ALL_FOOD_TRUCKS)]
+        [ProducesResponseType(typeof(List<FoodTruckModel>), 200)]
+        [ProducesResponseType(typeof(ApiMessageModel), 500)]
+        [MapToApiVersion("1.1")]
+        public IActionResult GetV11([FromQuery]String tag = null)
+        {
+            // Since we have just one filter possibility, we'll leave this as a simple if statement
+            // If we had more/more complex filter criteria, then splitting the logic into multiple methods would be in order
+            List<FoodTruck> foodTrucks = null;
+            if (tag == null)
+            {
+                foodTrucks = this.foodTruckService.GetAllFoodTrucks();
+            }
+            else
+            {
+                foodTrucks = this.foodTruckService.GetFoodTrucksByTag(tag);
+            }
+            var models = this.mapper.Map<List<FoodTruck>, List<FoodTruckModelV11>>(foodTrucks);
 
-        //    return Ok(models);
-        //}
+            return Ok(models);
+        }
 
 
         /// <summary>
@@ -152,33 +155,33 @@ namespace FoodTruckNationApi.Api.FoodTrucks
 
 
 
-        ///// <summary>
-        ///// Gets the food truck with the given id
-        ///// </summary>
-        ///// <param name="id">An into of the unique id of the food truck</param>
-        ///// <returns></returns>
-        ///// <response code="200">Success.  A food truck with the given id was found and is being returned</response>
-        ///// <response code="404">Not Found.  No food truck was found with the supplied id</response>
-        ///// <response code="500">Internal Server Error.  An unexpected error internal to the application has occured.  The error has been logged automatically by the system.</response>
-        //[HttpGet("{id:int}", Name = GET_FOOD_TRUCK_BY_ID)]
-        //[ProducesResponseType(typeof(FoodTruckModel), 200)]
-        //[ProducesResponseType(typeof(ApiMessageModel), 404)]
-        //[ProducesResponseType(typeof(ApiMessageModel), 500)]
-        //[MapToApiVersion("1.1")]
-        //public IActionResult GetV11(int id)
-        //{
-        //    FoodTruck foodTruck = this.foodTruckService.GetFoodTruck(id);
+        /// <summary>
+        /// Gets the food truck with the given id
+        /// </summary>
+        /// <param name="id">An into of the unique id of the food truck</param>
+        /// <returns></returns>
+        /// <response code="200">Success.  A food truck with the given id was found and is being returned</response>
+        /// <response code="404">Not Found.  No food truck was found with the supplied id</response>
+        /// <response code="500">Internal Server Error.  An unexpected error internal to the application has occured.  The error has been logged automatically by the system.</response>
+        [HttpGet("{id:int}", Name = GET_FOOD_TRUCK_BY_ID)]
+        [ProducesResponseType(typeof(FoodTruckModel), 200)]
+        [ProducesResponseType(typeof(ApiMessageModel), 404)]
+        [ProducesResponseType(typeof(ApiMessageModel), 500)]
+        [MapToApiVersion("1.1")]
+        public IActionResult GetV11(int id)
+        {
+            FoodTruck foodTruck = this.foodTruckService.GetFoodTruck(id);
 
-        //    if (foodTruck == null)
-        //    {
-        //        return this.NotFound(new ApiMessageModel() { Message = $"No food truck found with id {id}" });
-        //    }
-        //    else
-        //    {
-        //        var model = this.mapper.Map<FoodTruck, FoodTruckModelV11>(foodTruck);
-        //        return this.Ok(model);
-        //    }
-        //}
+            if (foodTruck == null)
+            {
+                return this.NotFound(new ApiMessageModel() { Message = $"No food truck found with id {id}" });
+            }
+            else
+            {
+                var model = this.mapper.Map<FoodTruck, FoodTruckModelV11>(foodTruck);
+                return this.Ok(model);
+            }
+        }
 
 
 

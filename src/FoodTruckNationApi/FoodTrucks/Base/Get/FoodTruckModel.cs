@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Api.FoodTrucks
+namespace FoodTruckNationApi.FoodTrucks.Base.Get
 {
-    public class FoodTruckModelV11
+
+    /// <summary>
+    /// Model class to represent the food truck data sent back to the client
+    /// </summary>
+    public class FoodTruckModel
     {
         /// <summary>
         /// The unique id number of this food truck.  This is the id used to get a single food truck on get by id API calls
@@ -32,11 +36,33 @@ namespace FoodTruckNationApi.Api.FoodTrucks
         /// </summary>
         public List<String> Tags { get; set; }
 
-        public List<SocialMediaAccountModelV11> SocialMediaAccounts { get; set; }
-
         /// <summary>
         /// Meta data object containing associated links for the food truck
         /// </summary>
         public FoodTruckLinks Meta { get; set; }
     }
+
+
+    /// <summary>
+    /// Class to encapsulate the links (urls) for a food truck
+    /// </summary>
+    public class FoodTruckLinks
+    {
+        /// <summary>
+        /// Gets the URL that refers to this food truck
+        /// </summary>
+        public String Self { get; set; }
+
+        /// <summary>
+        /// Gets the url for the reviews of this food truck
+        /// </summary>
+        public String Reviews { get; set; }
+
+        /// <summary>
+        /// Gets the url for the schedules of this food truck
+        /// </summary>
+        public String Schedules { get; set; }
+    }
+
+
 }

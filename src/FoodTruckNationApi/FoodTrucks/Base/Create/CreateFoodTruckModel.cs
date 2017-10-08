@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using FoodTruckNation.Core.Domain;
+﻿using FoodTruckNation.Core.Domain;
 using Framework;
 using System;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Api.FoodTrucks
+namespace FoodTruckNationApi.FoodTrucks.Base.Create
 {
 
 
@@ -54,21 +53,6 @@ namespace FoodTruckNationApi.Api.FoodTrucks
         /// </remarks>
         [StringCollectionValidationAttribute(Tag.TAG_TEXT_REGEX)]
         public List<String> Tags { get; set; }
-
-    }
-
-
-    public class CreateFoodTruckModelValidator : AbstractValidator<CreateFoodTruckModel>
-    {
-
-        public CreateFoodTruckModelValidator()
-        {
-            RuleFor(f => f.Name)
-                .NotEmpty().WithMessage("A food truck name must be provided")
-                .Matches(FoodTruck.NAME_VALIDATION).WithMessage("The food truck name must be less than 40 characters and contain only letters, numbers, spaces");
-
-
-        }
 
     }
 

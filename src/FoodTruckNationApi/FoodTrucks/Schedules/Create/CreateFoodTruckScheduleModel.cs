@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Api.FoodTrucks.Schedules
+namespace FoodTruckNationApi.FoodTrucks.Schedules.Create
 {
     public class CreateFoodTruckScheduleModel : IValidatableObject
     {

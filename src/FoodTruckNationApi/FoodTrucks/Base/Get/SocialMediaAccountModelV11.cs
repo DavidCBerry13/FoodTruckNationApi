@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Api.FoodTrucks
+namespace FoodTruckNationApi.FoodTrucks.Base.Get
 {
     public class SocialMediaAccountModelV11
     {

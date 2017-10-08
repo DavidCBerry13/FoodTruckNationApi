@@ -13,8 +13,10 @@ using FoodTruckNation.Core.AppServices;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNation.Core.Commands;
 using Framework.ApiUtil.Models;
+using FoodTruckNationApi.FoodTrucks.Schedules.Get;
+using FoodTruckNationApi.FoodTrucks.Schedules.Create;
 
-namespace FoodTruckNationApi.Api.FoodTrucks.Schedules
+namespace FoodTruckNationApi.FoodTrucks.Schedules
 {
     [Produces("application/json")]
     [Route("api/FoodTrucks/{foodTruckId}/Schedules")]

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.Domain;
 using Framework.ApiUtil;
 using System;
@@ -7,20 +6,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Api.FoodTrucks.Schedules
+namespace FoodTruckNationApi.FoodTrucks.Schedules.Get
 {
-    public class ScheduleMappingProfile : Profile
+    public class GetMappingProfile : Profile
     {
 
-        public ScheduleMappingProfile()
+        public GetMappingProfile()
         {
-            this.AddScheduleToFoodTruckScheduleModelMap();
-            this.AddCreateFoodTruckScheduleModelToCreateFoodTruckScheduleCommandMap();
-            this.AddLocationToScheduleLocationModelMap();
+            this.ScheduleToFoodTruckScheduleModelMap();
+            this.LocationToScheduleLocationModelMap();
         }
 
 
-        internal void AddScheduleToFoodTruckScheduleModelMap()
+        internal void ScheduleToFoodTruckScheduleModelMap()
         {
             this.CreateMap<Schedule, FoodTruckScheduleModel>()
                 .ForMember(
@@ -58,7 +56,7 @@ namespace FoodTruckNationApi.Api.FoodTrucks.Schedules
                     opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
-                            RouteName = FoodTrucksController.GET_FOOD_TRUCK_BY_ID,
+                            RouteName = Base.FoodTrucksController.GET_FOOD_TRUCK_BY_ID,
                             RouteParams = new { id = src.FoodTruckId }
                         }
                     )
@@ -66,14 +64,10 @@ namespace FoodTruckNationApi.Api.FoodTrucks.Schedules
         }
 
 
-        internal void AddCreateFoodTruckScheduleModelToCreateFoodTruckScheduleCommandMap()
-        {
-            this.CreateMap<CreateFoodTruckScheduleModel, CreateFoodTruckScheduleCommand>();
-        }
 
 
 
-        internal void AddLocationToScheduleLocationModelMap()
+        internal void LocationToScheduleLocationModelMap()
         {
             this.CreateMap<Location, FoodTruckScheduleLocationModel>()
                 .ForMember(
@@ -110,9 +104,6 @@ namespace FoodTruckNationApi.Api.FoodTrucks.Schedules
                 );
 
         }
-
-
-
 
     }
 }

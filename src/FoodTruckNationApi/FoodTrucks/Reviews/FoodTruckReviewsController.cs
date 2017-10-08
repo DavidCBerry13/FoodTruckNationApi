@@ -12,8 +12,10 @@ using FoodTruckNation.Core.Domain;
 using FoodTruckNation.Core.Commands;
 using Framework.ApiUtil.Controllers;
 using Framework.ApiUtil.Models;
+using FoodTruckNationApi.FoodTrucks.Reviews.Get;
+using FoodTruckNationApi.FoodTrucks.Reviews.Create;
 
-namespace FoodTruckNationApi.Api.FoodTrucks.Reviews
+namespace FoodTruckNationApi.FoodTrucks.Reviews
 {
     [Produces("application/json")]
     [Route("api/FoodTrucks/{foodTruckId}/Reviews")]
@@ -51,7 +53,7 @@ namespace FoodTruckNationApi.Api.FoodTrucks.Reviews
         /// <response code="404">Not Found.  No food truck was found with the given id</response>
         /// <response code="500">Internal Server Error.  An unexpected error internal to the application has occured.  The error has been logged automatically by the system.</response>
         [HttpGet(Name = GET_ALL_FOOD_TRUCK_REVIEWS)]
-        [ProducesResponseType(typeof(FoodTruckModel), 200)]
+        [ProducesResponseType(typeof(List<ReviewModel>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Get(int foodTruckId)
@@ -73,7 +75,7 @@ namespace FoodTruckNationApi.Api.FoodTrucks.Reviews
         /// <response code="404">Not Found.  Either no food truck was found with the given id or no review was found for this truck with the specified id</response>
         /// <response code="500">Internal Server Error.  An unexpected error internal to the application has occured.  The error has been logged automatically by the system.</response>
         [HttpGet("{reviewId:int}", Name = GET_SINGLE_FOOD_TRUCK_REVIEW)]
-        [ProducesResponseType(typeof(FoodTruckModel), 200)]
+        [ProducesResponseType(typeof(ReviewModel), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Get(int foodTruckId, int reviewId)
@@ -98,7 +100,7 @@ namespace FoodTruckNationApi.Api.FoodTrucks.Reviews
         /// <response code="404">Not Found.  No food truck was found with the given id so no review could be added</response>
         /// <response code="500">Internal Server Error.  An unexpected error internal to the application has occured.  The error has been logged automatically by the system.</response>
         [HttpPost]
-        [ProducesResponseType(typeof(FoodTruckModel), 201)]
+        [ProducesResponseType(typeof(ReviewModel), 201)]
         [ProducesResponseType(typeof(List<RequestErrorModel>), 400)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
@@ -114,17 +116,5 @@ namespace FoodTruckNationApi.Api.FoodTrucks.Reviews
                 new { FoodTruckId = model.FoodTruckId, ReviewId = model.ReviewId }, model);
         }
 
-
-        //// PUT: api/FoodTruckReviews/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
-
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }

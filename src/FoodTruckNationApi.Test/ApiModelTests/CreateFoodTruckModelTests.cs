@@ -1,4 +1,5 @@
 ﻿using FoodTruckNationApi.Api.FoodTrucks;
+using FoodTruckNationApi.FoodTrucks.Base.Create;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

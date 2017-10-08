@@ -1,26 +1,18 @@
 ﻿using AutoMapper;
-using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.Domain;
+using FoodTruckNationApi.FoodTrucks.Base;
 using Framework.ApiUtil;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Api.FoodTrucks.Reviews
+namespace FoodTruckNationApi.FoodTrucks.Reviews.Get
 {
-    public class ReviewMappingProfile : Profile
+    public class GetMappingProfile : Profile
     {
 
-
-
-        public ReviewMappingProfile()
-        {
-            this.AddFoodTruckToFoodTruckModelMap();
-            this.AddCreateReviewModelToCommandMap();
-        }
-
-        internal void AddFoodTruckToFoodTruckModelMap()
+        public GetMappingProfile()
         {
             this.CreateMap<Review, ReviewModel>()
                 .ForMember(
@@ -56,15 +48,6 @@ namespace FoodTruckNationApi.Api.FoodTrucks.Reviews
                     )
                 );
         }
-
-
-        internal void AddCreateReviewModelToCommandMap()
-        {
-            this.CreateMap<CreateReviewModel, CreateReviewCommand>();
-        }
-
-
-
 
     }
 }

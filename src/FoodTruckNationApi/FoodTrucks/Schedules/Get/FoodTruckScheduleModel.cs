@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Api.FoodTrucks.Schedules
+namespace FoodTruckNationApi.FoodTrucks.Schedules.Get
 {
     public class FoodTruckScheduleModel
     {

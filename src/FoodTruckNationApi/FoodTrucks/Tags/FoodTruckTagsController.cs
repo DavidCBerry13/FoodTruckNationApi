@@ -10,8 +10,9 @@ using AutoMapper;
 using FoodTruckNation.Core.AppInterfaces;
 using Framework.ApiUtil.Models;
 using FoodTruckNation.Core.Domain;
+using FoodTruckNationApi.FoodTrucks.Base.Get;
 
-namespace FoodTruckNationApi.Api.FoodTrucks.Tags
+namespace FoodTruckNationApi.FoodTrucks.Tags
 {
     [Produces("application/json")]
     [Route("api/FoodTrucks/{foodTruckId}/Tags")]

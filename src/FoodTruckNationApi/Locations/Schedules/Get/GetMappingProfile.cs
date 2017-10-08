@@ -39,7 +39,7 @@ namespace FoodTruckNationApi.Locations.Schedules.Get
                     opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
-                            RouteName = Api.FoodTrucks.FoodTrucksController.GET_FOOD_TRUCK_BY_ID,
+                            RouteName = FoodTrucks.Base.FoodTrucksController.GET_FOOD_TRUCK_BY_ID,
                             RouteParams = new { id = src.FoodTruckId }
                         }
                     )
@@ -49,7 +49,7 @@ namespace FoodTruckNationApi.Locations.Schedules.Get
                     opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
-                            RouteName = Api.FoodTrucks.Reviews.FoodTruckReviewsController.GET_ALL_FOOD_TRUCK_REVIEWS,
+                            RouteName = FoodTrucks.Reviews.FoodTruckReviewsController.GET_ALL_FOOD_TRUCK_REVIEWS,
                             RouteParams = new { foodTruckId = src.FoodTruckId }
                         }
                     )
@@ -59,7 +59,7 @@ namespace FoodTruckNationApi.Locations.Schedules.Get
                     opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
-                            RouteName = Api.FoodTrucks.Schedules.FoodTruckSchedulesController.GET_FOOD_TRUCK_SCHEDULE,
+                            RouteName = FoodTrucks.Schedules.FoodTruckSchedulesController.GET_FOOD_TRUCK_SCHEDULE,
                             RouteParams = new { foodTruckId = src.FoodTruckId }
                         }
                     )
@@ -96,7 +96,7 @@ namespace FoodTruckNationApi.Locations.Schedules.Get
                     opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
-                            RouteName = Api.FoodTrucks.Schedules.FoodTruckSchedulesController.GET_SINGLE_FOOD_TRUCK_SCHEDULE,
+                            RouteName = FoodTrucks.Schedules.FoodTruckSchedulesController.GET_SINGLE_FOOD_TRUCK_SCHEDULE,
                             RouteParams = new { foodTruckId = src.FoodTruckId, scheduleId = src.ScheduleId }
                         }
                     )
