@@ -10,9 +10,8 @@ using Framework.ApiUtil.Controllers;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
 using Framework.ApiUtil.Models;
-using FoodTruckNationApi.Api.SocialMediaPlatforms.Models;
 
-namespace FoodTruckNationApi.Api.SocialMediaPlatforms
+namespace FoodTruckNationApi.SocialMediaPlatforms
 {
 
     /// <summary>
@@ -21,6 +20,7 @@ namespace FoodTruckNationApi.Api.SocialMediaPlatforms
     /// </summary>
     [Produces("application/json")]
     [Route("api/SocialMediaPlatforms")]
+    [ApiVersion("1.1")]
     public class SocialMediaPlatformsController : BaseController
     {
 
@@ -36,14 +36,24 @@ namespace FoodTruckNationApi.Api.SocialMediaPlatforms
         private ISocialMediaPlatformService _socialMediaPlatformService;
 
 
+        #region Route Names
+
+        /// <summary>
+        /// Route Name Constant for route that will get all social media platforms
+        /// </summary>
+        public const String GET_ALL_SOCIAL_MEDIA_PLATFORMS = "GetSocialMediaPlatforms";
+
+        #endregion
+
 
         /// <summary>
         /// Gets a list of all social media platforms that a food truck may have a social media account on
         /// </summary>
         /// <returns></returns>
+        /// <response code="200">Success.  A list of social media platforms will be returned</response>
         [ProducesResponseType(typeof(List<SocialMediaPlatformModel>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        [HttpGet]
+        [HttpGet(Name = GET_ALL_SOCIAL_MEDIA_PLATFORMS)]
         public IActionResult Get()
         {
             var platforms = this._socialMediaPlatformService.GetAllSocialMediaPlatforms();

@@ -11,7 +11,7 @@ using Framework.ApiUtil;
 using AutoMapper;
 using Framework.ApiUtil.Controllers;
 
-namespace FoodTruckNationApi.Api.Tags
+namespace FoodTruckNationApi.Tags
 {
 
     /// <summary>
@@ -20,6 +20,7 @@ namespace FoodTruckNationApi.Api.Tags
     [Produces("application/json")]
     [Route("api/Tags")]
     [ApiVersion("1.0")]
+    [ApiVersion("1.1")]
     public class TagsController : BaseController
     {
 
@@ -39,7 +40,11 @@ namespace FoodTruckNationApi.Api.Tags
         private ITagService tagService;
 
 
-        // GET: api/Tags
+        /// <summary>
+        /// Gets a list of all of the tags in the system
+        /// </summary>
+        /// <param name="inUseOnly"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Get([FromQuery]bool inUseOnly = false)
         {

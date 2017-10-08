@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Api.Tags
+namespace FoodTruckNationApi.Tags
 {
     public class TagMappingProfile : Profile
     {
