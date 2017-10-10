@@ -1,10 +1,6 @@
-﻿using FoodTruckNation.Core.Domain;
-using Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace FoodTruckNationApi.FoodTrucks.Base.Update
 {
@@ -23,20 +19,16 @@ namespace FoodTruckNationApi.FoodTrucks.Base.Update
         /// <summary>
         /// The name to give a food truck
         /// </summary>
-        [RegularExpression(FoodTruck.NAME_VALIDATION)]
         public String Name { get; set; }
 
         /// <summary>
         /// The description of the food truck
         /// </summary>
-        [RegularExpression(FoodTruck.DESCRIPTION_VALIDATION)]
         public String Description { get; set; }
 
         /// <summary>
         /// The website of the food truck
         /// </summary>
-        [Required]
-        [RegularExpression(FoodTruck.WEBSITE_VALIDATION)]
         public String Website { get; set; }
 
     }

@@ -22,13 +22,11 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
         /// <summary>
         /// The id number of the social media platform the account is for
         /// </summary>
-        [Required]
         public int SocialMediaPlatformId { get; set; }
 
         /// <summary>
         /// The social media account name used by the food truck on this platform
         /// </summary>
-        [Required]
         public String AccountName { get; set; }
 
     }

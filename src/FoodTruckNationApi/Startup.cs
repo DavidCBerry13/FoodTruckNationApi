@@ -21,6 +21,8 @@ using Framework.ApiUtil.Filters;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Framework.ApiUtil.Controllers;
 using System.Linq;
+using FluentValidation.AspNetCore;
+using System.Reflection;
 
 namespace FoodTruckNationApi
 {
@@ -61,7 +63,8 @@ namespace FoodTruckNationApi
             {
                 options.Filters.Add(new ValidationAttribute());
                 options.Filters.Add(new ExceptionHandlerFilterAttribute(this.loggerFactory));
-            });
+            })
+            .AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 
             services.AddCors();
             this.ConfigureServicesDI(services);
@@ -159,7 +162,6 @@ namespace FoodTruckNationApi
                 options.DocInclusionPredicate((docName, apiDesc) =>
                 {
                     var actionApiVersionModel = apiDesc.ActionDescriptor?.GetApiVersion();
-                    // would mean this action is unversioned and should be included everywhere
                     if (actionApiVersionModel == null)
                     {
                         return true;
@@ -170,15 +172,6 @@ namespace FoodTruckNationApi
                     }
                     return actionApiVersionModel.ImplementedApiVersions.Any(v => $"v{v.ToString()}" == docName);
                 });
-
-                //options.SwaggerDoc("v1",
-                //    new Info
-                //    {
-                //        Title = "Food Truck API",
-                //        Description = "A demonstration api built around tracking food trucks and their schedules",
-                //        TermsOfService = "For demonstration only"
-                //    }
-                //);
                 
                 var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, pathToXmlComments);
                 options.IncludeXmlComments(filePath);

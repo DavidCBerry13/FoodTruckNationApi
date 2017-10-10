@@ -58,7 +58,7 @@ namespace FoodTruckNation.Core.Domain
 
         public const String NAME_VALIDATION = @"^\w[\w ?,!\.'-\(\)]{1,49}$";
 
-        public const String ADDRESS_VALIDATION = @"^\w[\w ?,!\.]{1,49}$";
+        public const String ADDRESS_VALIDATION = @"^\w[\w ?,!'\.]{1,49}$";
 
         public const String CITY_VALIDATION = @"^\w[\w ?,!\.]{1,29}$";
 

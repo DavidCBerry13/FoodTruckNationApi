@@ -1,10 +1,6 @@
-﻿using FoodTruckNation.Core.Domain;
-using Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace FoodTruckNationApi.FoodTrucks.Base.Create
 {
@@ -24,23 +20,17 @@ namespace FoodTruckNationApi.FoodTrucks.Base.Create
         /// <summary>
         /// Gets the name to give to the new Food Truck
         /// </summary>
-        [Required]
-        [RegularExpression(FoodTruck.NAME_VALIDATION)]
         public String Name { get; set; }
 
 
         /// <summary>
         /// Gets the description of the new food truck
         /// </summary>
-        [Required]
-        [RegularExpression(FoodTruck.DESCRIPTION_VALIDATION)]
         public String Description { get; set; }
 
         /// <summary>
         /// Gets the Website of the new food truck
         /// </summary>
-        [Required]
-        [RegularExpression(FoodTruck.WEBSITE_VALIDATION)]
         public String Website { get; set; }
 
         /// <summary>
@@ -51,7 +41,6 @@ namespace FoodTruckNationApi.FoodTrucks.Base.Create
         /// with tag objects in the system.  Also, some tags may exist, some may not, so it is up
         /// to the application to determine this and treat each tag appropriately.
         /// </remarks>
-        [StringCollectionValidationAttribute(Tag.TAG_TEXT_REGEX)]
         public List<String> Tags { get; set; }
 
     }

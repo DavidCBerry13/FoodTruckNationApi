@@ -57,6 +57,11 @@ namespace FoodTruckNation.Core.Domain
         #endregion
 
 
+        #region Validation Constants
+
+        public const String COMMENTS_VALIDATION = @"^\w[\w ?,-'""!\.]{1,1023}$";
+
+        #endregion
 
 
         public int ReviewId

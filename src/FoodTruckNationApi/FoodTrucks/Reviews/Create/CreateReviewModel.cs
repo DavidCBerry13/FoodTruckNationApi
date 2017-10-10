@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace FoodTruckNationApi.FoodTrucks.Reviews.Create
 {
@@ -19,8 +18,6 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews.Create
         /// <summary>
         /// The overall rating on a scale of 1 through 5
         /// </summary>
-        [Required]
-        [Range(1, 5)]
         public int Rating { get; set; }
 
         /// <summary>

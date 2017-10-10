@@ -5,12 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.FoodTrucks.Base.Create
+namespace FoodTruckNationApi.FoodTrucks.Base.Update
 {
-    public class CreateFoodTruckModelValidator : AbstractValidator<CreateFoodTruckModel>
+    public class UpdateFoodTruckModelValidator : AbstractValidator<UpdateFoodTruckModel>
     {
-
-        public CreateFoodTruckModelValidator()
+        public UpdateFoodTruckModelValidator()
         {
             RuleFor(f => f.Name)
                 .NotEmpty().WithMessage("A food truck name must be provided")
@@ -24,9 +23,6 @@ namespace FoodTruckNationApi.FoodTrucks.Base.Create
                 .NotEmpty().WithMessage("The food truck must have a website")
                 .Matches(FoodTruck.WEBSITE_VALIDATION).WithMessage("You must input a valid website url");
 
-            RuleForEach(f => f.Tags)
-                .NotNull().WithMessage("Tags cannot be empty")
-                .Matches(Tag.TAG_TEXT_REGEX).WithMessage("Tags can only contain characters and spaces");
         }
 
     }

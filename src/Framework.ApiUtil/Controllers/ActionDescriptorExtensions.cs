@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 
 namespace Framework.ApiUtil.Controllers
 {
+
+    // From https://blog.jimismith.me/blogs/api-versioning-in-aspnet-core-with-nice-swagg
     public static class ActionDescriptorExtensions
     {
         public static ApiVersionModel GetApiVersion(this ActionDescriptor actionDescriptor)
