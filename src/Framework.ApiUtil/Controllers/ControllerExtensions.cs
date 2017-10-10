@@ -48,12 +48,12 @@ namespace Framework.ApiUtil.Controllers
 
 
 
-        public static IActionResult InternalServiceError(this Controller controller)
+        public static IActionResult InternalServerError(this Controller controller)
         {
             return new InternalServerErrorResult();
         }
 
-        public static IActionResult InternalServiceError(this Controller controller, object value)
+        public static IActionResult InternalServerError(this Controller controller, object value)
         {
             return new InternalServerErrorObjectResult(value);
         }
