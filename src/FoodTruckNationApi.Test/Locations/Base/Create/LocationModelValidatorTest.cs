@@ -138,10 +138,10 @@ namespace FoodTruckNationApi.Test.Locations.Base.Create
         [InlineData(" 53202")]
         [InlineData("53202 ")]
         [InlineData("53 202")]
-        public void InvalidZipCodeShouldFail(String state)
+        public void InvalidZipCodeShouldFail(String zipCode)
         {
             // Arrange
-            locationOne.State = state;
+            locationOne.ZipCode = zipCode;
 
             // Act
             CreateLocationModelValidator validator = new CreateLocationModelValidator();

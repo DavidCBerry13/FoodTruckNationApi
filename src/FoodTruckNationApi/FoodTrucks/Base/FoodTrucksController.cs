@@ -204,7 +204,7 @@ namespace FoodTruckNationApi.FoodTrucks.Base
             FoodTruck foodTruck = this.foodTruckService.CreateFoodTruck(createCommand);
 
             var model = this.mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
-            return this.CreatedAtRoute(GET_FOOD_TRUCK_BY_ID, new { id = model.FoodTruckId }, model);
+            return this.CreatedAtRoute(GET_FOOD_TRUCK_BY_ID, new { id = model.FoodTruckId }, model);           
         }
 
 

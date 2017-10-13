@@ -36,6 +36,12 @@ namespace FoodTruckNation.Core.AppServices
         #endregion
 
 
+        public Schedule GetSchedule(int scheduleId)
+        {
+            return this.scheduleRepository.GetSchedule(scheduleId);
+        }
+
+
         public Schedule GetSchedule(int foodTruckId, int scheduleId)
         {
             var foodTruck = this.foodTruckRepository.GetFoodTruck(foodTruckId);
@@ -45,6 +51,10 @@ namespace FoodTruckNation.Core.AppServices
             return this.scheduleRepository.GetSchedule(scheduleId);
         }
 
+        public List<Schedule> GetSchedules(DateTime startDate, DateTime endDate)
+        {
+            return this.scheduleRepository.GetSchedules(startDate, endDate);
+        }
 
 
         public List<Schedule> GetSchedulesForFoodTruck(int foodTruckId, DateTime startDate, DateTime endDate)
