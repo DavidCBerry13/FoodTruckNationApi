@@ -20,6 +20,8 @@ namespace FoodTruckNationApi.Locations.Schedules
     /// </summary>
     [Produces("application/json")]
     [Route("api/Locations/{locationId}/Schedules")]
+    [ApiVersion("1.0")]
+    [ApiVersion("1.1")]
     public class LocationSchedulesController : BaseController
     {
 

@@ -15,6 +15,8 @@ namespace FoodTruckNationApi.Schedules
 {
     [Produces("application/json")]
     [Route("api/Schedules")]
+    [ApiVersion("1.0")]
+    [ApiVersion("1.1")]
     public class SchedulesController : BaseController
     {
 

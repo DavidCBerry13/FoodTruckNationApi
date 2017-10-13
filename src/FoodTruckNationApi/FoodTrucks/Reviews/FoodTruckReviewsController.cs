@@ -20,6 +20,7 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
     [Produces("application/json")]
     [Route("api/FoodTrucks/{foodTruckId}/Reviews")]
     [ApiVersion("1.0")]
+    [ApiVersion("1.1")]
     public class FoodTruckReviewsController : BaseController
     {
 
