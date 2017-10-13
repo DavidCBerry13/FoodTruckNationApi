@@ -39,7 +39,14 @@ namespace Framework.ApiUtil.Filters
 
             String logMessage = $"{ex.GetType().Name} occured in action {context.ActionDescriptor.DisplayName} - {ex.Message}";
 
-            if (ex is SecurityException)
+            if (ex is InvalidDataException)
+            {
+                logger.LogError(new EventId(400), ex, logMessage);
+
+                var message = new ApiMessageModel() { Message = ex.Message };
+                context.Result = new BadRequestObjectResult(message);
+            }
+            else if (ex is SecurityException)
             {
                 logger.LogError(new EventId(403), ex, logMessage);
 

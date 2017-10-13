@@ -94,6 +94,17 @@ namespace FoodTruckNation.Core.AppServices
                 // Attaches the tags to the Food Truck Object
                 tagObjects.ForEach(obj => foodTruck.AddTag(obj));
 
+                // Social Media Accounts
+                foreach (var accountInfo in foodTruckInfo.SocialMediaAccounts)
+                {
+                    var platform = this.socialMediaPlatformRepository.GetSocialMediaPlatform(accountInfo.SocialMediaPlatformId);
+                    if (platform == null)
+                        throw new InvalidDataException($"The id {accountInfo.SocialMediaPlatformId} is not a valid social media platform id");
+
+                    SocialMediaAccount account = new SocialMediaAccount(platform, foodTruck, accountInfo.AccountName);
+                    foodTruck.AddSocialMediaAccount(account);
+                }
+
                 // Persist to the database
                 this.foodTruckRepository.Save(foodTruck);
                 this.UnitOfWork.SaveChanges();

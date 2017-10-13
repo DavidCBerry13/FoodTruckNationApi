@@ -13,6 +13,18 @@ namespace FoodTruckNationApi.FoodTrucks.Base.Create
         public CreateMappingProfile()
         {
             this.CreateMap<CreateFoodTruckModel, CreateFoodTruckCommand>();
+
+            this.CreateMap<CreateFoodTruckModelV11, CreateFoodTruckCommand>()
+                .ForMember(
+                    dest => dest.SocialMediaAccounts,
+                    opt => opt.MapFrom(
+                        src => src.SocialMediaAccounts
+                        .Select(x => new FoodTruckSocialMediaAccountData()
+                        {
+                            SocialMediaPlatformId = x.SocialMediaPlatformId,
+                            AccountName = x.AccountName
+                        }).ToList())
+                );
         }
     }
 }

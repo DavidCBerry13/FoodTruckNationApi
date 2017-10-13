@@ -49,7 +49,7 @@ namespace FoodTruckNation.Core.Domain
 
         public const int TAG_TEXT_MAX_LENGTH = 30;
 
-        public const String TAG_TEXT_REGEX = "^[A-Za-z][\\w ]{2,29}$";
+        public const String TAG_TEXT_REGEX = "^[A-Za-z][\\w -]{2,29}$";
 
         #endregion
 

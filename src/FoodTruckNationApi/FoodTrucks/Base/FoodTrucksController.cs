@@ -197,6 +197,7 @@ namespace FoodTruckNationApi.FoodTrucks.Base
         [ProducesResponseType(typeof(FoodTruckModel), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 409)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
+        [MapToApiVersion("1.0")]
         public IActionResult Post([FromBody]CreateFoodTruckModel createModel)
         {
             var createCommand = this.mapper.Map<CreateFoodTruckModel, CreateFoodTruckCommand>(createModel);
@@ -206,6 +207,31 @@ namespace FoodTruckNationApi.FoodTrucks.Base
             var model = this.mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
             return this.CreatedAtRoute(GET_FOOD_TRUCK_BY_ID, new { id = model.FoodTruckId }, model);           
         }
+
+
+        /// <summary>
+        /// Creates a new food truck with the supplied information, including social media accounts
+        /// </summary>
+        /// <param name="createModel">A CreateFoodTruckModel object with the information needed to create the food truck</param>
+        /// <returns></returns>
+        /// <response code="200">Success.  The new food truck has been created</response>
+        /// <response code="409">Conflict.  A food truck with the same name found so this food truck could not be created</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpPost(Name = CREATE_FOOD_TRUCK)]
+        [ProducesResponseType(typeof(FoodTruckModel), 200)]
+        [ProducesResponseType(typeof(ApiMessageModel), 409)]
+        [ProducesResponseType(typeof(ApiMessageModel), 500)]
+        [MapToApiVersion("1.1")]
+        public IActionResult PostV11([FromBody]CreateFoodTruckModelV11 createModel)
+        {
+            var createCommand = this.mapper.Map<CreateFoodTruckModelV11, CreateFoodTruckCommand>(createModel);
+
+            FoodTruck foodTruck = this.foodTruckService.CreateFoodTruck(createCommand);
+
+            var model = this.mapper.Map<FoodTruck, FoodTruckModelV11>(foodTruck);
+            return this.CreatedAtRoute(GET_FOOD_TRUCK_BY_ID, new { id = model.FoodTruckId }, model);
+        }
+
 
 
         /// <summary>
