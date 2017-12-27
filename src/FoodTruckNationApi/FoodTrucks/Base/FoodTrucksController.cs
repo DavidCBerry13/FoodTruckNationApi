@@ -263,6 +263,7 @@ namespace FoodTruckNationApi.FoodTrucks.Base
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ConcurrencyErrorModel<FoodTruckModel>), 409)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
+        [MapToApiVersion("1.0")]
         public IActionResult Put(int id, [FromBody]UpdateFoodTruckModel updateModel)
         {
             var updateCommand = new UpdateFoodTruckCommand() { FoodTruckId = id };
@@ -278,6 +279,53 @@ namespace FoodTruckNationApi.FoodTrucks.Base
             {
                 String logMessage = $"Unable to update food truck {id} due to concurrency exception";
                 return this.CreateConcurrencyConflictErrorResult<FoodTruckModel, FoodTruck>(ce);
+            }
+        }
+
+
+        /// <summary>
+        /// Updates the core data elements of a food truck.
+        /// </summary>
+        /// <remarks>
+        /// This endpoint only updates the properties directly on the food truck.  To
+        /// change elements on 'child' objects of the food truck (tags, social media accounts,
+        /// reviews, schedules), you need to look in the appropriate association controller, 
+        /// for example FoodTruckTagsController.
+        /// <para>
+        /// This decision was made because when editing a food truck, I think it is more likely
+        /// someone will just want to edit elements like the name or description.  It seemed 
+        /// unnatural to make them also include the tags or social media accounts as part of
+        /// the same update operation.  
+        /// </para>
+        /// </remarks>
+        /// <param name="id">An int of the id of the food truck to update</param>
+        /// <param name="updateModel">An UpdateFoodTruckModel of the </param>
+        /// <returns></returns>
+        /// <response code="200">Success.  The food truck has been updated</response>
+        /// <response code="404">No food truck with the given id could be found</response>
+        /// <response code="409">The food truck could not be updated due to a conflict, usually due to a concurrency problem.  More details are in the message property and the conficting object is also returned</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpPut("{id}", Name = "UpdateFoodTruck")]
+        [ProducesResponseType(typeof(FoodTruckModel), 200)]
+        [ProducesResponseType(typeof(ApiMessageModel), 404)]
+        [ProducesResponseType(typeof(ConcurrencyErrorModel<FoodTruckModelV11>), 409)]
+        [ProducesResponseType(typeof(ApiMessageModel), 500)]
+        [MapToApiVersion("1.1")]
+        public IActionResult PutV11(int id, [FromBody]UpdateFoodTruckModel updateModel)
+        {
+            var updateCommand = new UpdateFoodTruckCommand() { FoodTruckId = id };
+            this.mapper.Map<UpdateFoodTruckModel, UpdateFoodTruckCommand>(updateModel, updateCommand);
+
+            try
+            {
+                FoodTruck foodTruck = this.foodTruckService.UpdateFoodTruck(updateCommand);
+                var model = this.mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
+                return this.Ok(model);
+            }
+            catch (ConcurrencyException<FoodTruck> ce)
+            {
+                String logMessage = $"Unable to update food truck {id} due to concurrency exception";
+                return this.CreateConcurrencyConflictErrorResult<FoodTruckModelV11, FoodTruck>(ce);
             }
         }
 
