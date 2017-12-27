@@ -147,6 +147,13 @@ namespace FoodTruckNation.Data.EF
                 .HasField("website")
                 .HasColumnName("Website");
 
+            modelBuilder.Entity<FoodTruck>().Property(p => p.LastModifiedDate)
+                .HasField("lastModifiedDate")
+                .HasColumnName("RowValidFrom")
+                .IsConcurrencyToken()
+                .ValueGeneratedOnAddOrUpdate();
+
+
             // So EF can set the backing field on the navigation property
             // https://blog.oneunicorn.com/2016/10/28/collection-navigation-properties-and-fields-in-ef-core-1-1/
             var navigationTags = modelBuilder.Entity<FoodTruck>().Metadata

@@ -28,6 +28,11 @@ namespace FoodTruckNationApi.FoodTrucks.Base.Get
         public String Website { get; set; }
 
         /// <summary>
+        /// The last time this food truck object was modified.  This is needed when updating the object
+        /// </summary>
+        public DateTime LastModifiedDate { get; set; }
+
+        /// <summary>
         /// A list of tags associated with the food truck.  This list is just a string list of the tag text
         /// </summary>
         public List<String> Tags { get; set; }

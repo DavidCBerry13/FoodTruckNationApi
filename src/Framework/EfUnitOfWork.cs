@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 
 namespace Framework
 {
-    public class EfUnitOfWork<T> : IUnitOfWork where T: DbContext
+    public class EfUnitOfWork<T> : IUnitOfWork where T : DbContext
     {
 
 
@@ -21,7 +22,18 @@ namespace Framework
 
         public void SaveChanges()
         {
-            this.dataContext.SaveChanges();            
+            try
+            {
+                this.dataContext.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ce)
+            {
+                // We need to convert the EF specific exception to the concurrency exception 
+                // used in System.Data because that is what the service layer expects
+                throw new DBConcurrencyException("Unable to update date due to a concurency exception.  Typically this means the object has been updated by another process.  Re-fetch the object and try again", ce);
+            }
         }
     }
 }
+    
+

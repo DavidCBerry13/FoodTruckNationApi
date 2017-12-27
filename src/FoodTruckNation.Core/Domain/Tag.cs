@@ -84,5 +84,22 @@ namespace FoodTruckNation.Core.Domain
             }
         }
 
+
+        public override bool Equals(object obj)
+        {
+            Tag other = obj as Tag;
+
+            if (other == null)
+                return false;
+
+            return this.tagText == other.tagText;
+        }
+
+
+        public override int GetHashCode()
+        {
+            return this.tagText.GetHashCode();
+        }
+
     }
 }

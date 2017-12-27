@@ -14,6 +14,8 @@ namespace FoodTruckNation.Core.Commands
 
         public String Website { get; set; }
 
+        public DateTime LastModifiedDate { get; set; }
+
     }
 
 }

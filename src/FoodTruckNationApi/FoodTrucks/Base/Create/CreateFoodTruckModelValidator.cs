@@ -24,6 +24,7 @@ namespace FoodTruckNationApi.FoodTrucks.Base.Create
                 .NotEmpty().WithMessage("The food truck must have a website")
                 .Matches(FoodTruck.WEBSITE_VALIDATION).WithMessage("You must input a valid website url");
 
+
             RuleForEach(f => f.Tags)
                 .NotNull().WithMessage("Tags cannot be empty")
                 .Matches(Tag.TAG_TEXT_REGEX).WithMessage("Tags can only contain characters and spaces");

@@ -6,6 +6,7 @@ using Framework;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 namespace FoodTruckNation.Core.AppServices
@@ -160,12 +161,24 @@ namespace FoodTruckNation.Core.AppServices
                 foodTruck.Name = foodTruckInfo.Name;
                 foodTruck.Description = foodTruckInfo.Description;
                 foodTruck.Website = foodTruckInfo.Website;
+                foodTruck.LastModifiedDate = foodTruckInfo.LastModifiedDate;
 
                 // Persist the changes to the database
                 this.foodTruckRepository.Save(foodTruck);
                 this.UnitOfWork.SaveChanges();
 
                 return foodTruck;
+            }
+            catch (DBConcurrencyException ce)
+            {
+                // This is the object in the database - so the object our update conflicted with
+                var foodTruck = this.foodTruckRepository.GetFoodTruck(foodTruckInfo.FoodTruckId);
+
+                Logger.LogWarning(new EventId(125), ce, $"Concurrency exception thrown while calling FoodTruckService.UpdateFoodTruck() - Update Command = || {foodTruckInfo.ToJson()} || Database Object = || {foodTruck.ToJson() } ||");
+
+                // Get the current state of the object so we can return it with the ConcurrencyException
+                throw new ConcurrencyException<FoodTruck>($"The food truck could not be updated due to a concurrency exception.  This is most likely because the object has changed since the object was retrieved.  Compare your changes to the current state of the object (included) and resubmit as neccessary",
+                    foodTruck);
             }
             catch (Exception ex)
             {

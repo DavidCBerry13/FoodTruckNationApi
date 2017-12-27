@@ -11,6 +11,8 @@ using Framework.ApiUtil.Controllers;
 using FoodTruckNationApi.FoodTrucks.Base.Get;
 using FoodTruckNationApi.FoodTrucks.Base.Create;
 using FoodTruckNationApi.FoodTrucks.Base.Update;
+using Framework;
+using Framework.ApiUtil.Filters;
 
 namespace FoodTruckNationApi.FoodTrucks.Base
 {
@@ -36,7 +38,7 @@ namespace FoodTruckNationApi.FoodTrucks.Base
         public FoodTrucksController(ILogger<FoodTrucksController> logger, IMapper mapper, IFoodTruckService foodTruckService)
             : base(logger, mapper)
         {
-            this.foodTruckService = foodTruckService;            
+            this.foodTruckService = foodTruckService;
         }
 
 
@@ -90,7 +92,7 @@ namespace FoodTruckNationApi.FoodTrucks.Base
                 foodTrucks = this.foodTruckService.GetFoodTrucksByTag(tag);
             }
             var models = this.mapper.Map<List<FoodTruck>, List<FoodTruckModel>>(foodTrucks);
-            
+
             return Ok(models);
         }
 
@@ -141,10 +143,10 @@ namespace FoodTruckNationApi.FoodTrucks.Base
         public IActionResult Get(int id)
         {
             FoodTruck foodTruck = this.foodTruckService.GetFoodTruck(id);
-                       
-            if ( foodTruck == null)
+
+            if (foodTruck == null)
             {
-                return this.NotFound(new ApiMessageModel() { Message = $"No food truck found with id {id}"} );
+                return this.NotFound(new ApiMessageModel() { Message = $"No food truck found with id {id}" });
             }
             else
             {
@@ -205,7 +207,7 @@ namespace FoodTruckNationApi.FoodTrucks.Base
             FoodTruck foodTruck = this.foodTruckService.CreateFoodTruck(createCommand);
 
             var model = this.mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
-            return this.CreatedAtRoute(GET_FOOD_TRUCK_BY_ID, new { id = model.FoodTruckId }, model);           
+            return this.CreatedAtRoute(GET_FOOD_TRUCK_BY_ID, new { id = model.FoodTruckId }, model);
         }
 
 
@@ -254,21 +256,29 @@ namespace FoodTruckNationApi.FoodTrucks.Base
         /// <returns></returns>
         /// <response code="200">Success.  The food truck has been updated</response>
         /// <response code="404">No food truck with the given id could be found</response>
+        /// <response code="409">The food truck could not be updated due to a conflict, usually due to a concurrency problem.  More details are in the message property and the conficting object is also returned</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpPut("{id}", Name ="UpdateFoodTruck")]
+        [HttpPut("{id}", Name = "UpdateFoodTruck")]
         [ProducesResponseType(typeof(FoodTruckModel), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
-        [ProducesResponseType(typeof(ApiMessageModel), 409)]
+        [ProducesResponseType(typeof(ConcurrencyErrorModel<FoodTruckModel>), 409)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Put(int id, [FromBody]UpdateFoodTruckModel updateModel)
         {
             var updateCommand = new UpdateFoodTruckCommand() { FoodTruckId = id };
             this.mapper.Map<UpdateFoodTruckModel, UpdateFoodTruckCommand>(updateModel, updateCommand);
 
-            FoodTruck foodTruck = this.foodTruckService.UpdateFoodTruck(updateCommand);
-
-            var model = this.mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
-            return this.Ok(model);
+            try
+            {
+                FoodTruck foodTruck = this.foodTruckService.UpdateFoodTruck(updateCommand);
+                var model = this.mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
+                return this.Ok(model);
+            }
+            catch (ConcurrencyException<FoodTruck> ce)
+            {
+                String logMessage = $"Unable to update food truck {id} due to concurrency exception";
+                return this.CreateConcurrencyConflictErrorResult<FoodTruckModel, FoodTruck>(ce);
+            }
         }
 
 
@@ -280,7 +290,7 @@ namespace FoodTruckNationApi.FoodTrucks.Base
         /// <response code="200">Success.  The food truck has been deleted</response>
         /// <response code="404">No food truck with the given id could be found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpDelete("{id}", Name ="DeleteFoodTruck")]
+        [HttpDelete("{id}", Name = "DeleteFoodTruck")]
         [ProducesResponseType(typeof(ApiMessageModel), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]

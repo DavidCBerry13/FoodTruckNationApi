@@ -1,11 +1,6 @@
-//using FoodTruckNation.AppServices.Framework;
-//using FoodTruckNation.AppServices.Interfaces;
-//using FoodTruckNation.AppServices.Models;
-//using FoodTruckNation.Domain;
-//using FoodTruckNation.Domain.Repositories;
-//using FoodTruckNationApi.ApiModels;
-//using FoodTruckNationApi.Controllers;
-//using FoodTruckNationApi.Test.Data;
+//using FoodTruckNation.Core.AppInterfaces;
+//using FoodTruckNation.Core.Domain;
+//using FoodTruckNationApi.FoodTrucks.Base;
 //using Microsoft.AspNetCore.Http;
 //using Microsoft.AspNetCore.Mvc;
 //using Microsoft.Extensions.Logging;
@@ -26,10 +21,16 @@
 //            return mockLogger;
 //        }
 
+
+
+
+
+
+
 //        public Mock<ILoggerFactory> GetMockLoggerFactory<T>(Mock<ILogger<T>> mockLogger)
 //        {
 //            var mockLoggerFactory = new Mock<ILoggerFactory>();
-            
+
 //            // We only have to setup the CreateLogger method that takes a String as the other two
 //            // CreateLogger methods are actually extension methods and call the one that takes a 
 //            // String under the covers
@@ -40,7 +41,7 @@
 //        }
 
 //        [Fact]
-//        public void TestGetFoodTrucksWithNoParametersCallsGetAllFoodTrucks()
+//        public void WhenNoParametersPassedToAPI_WeCallMethodToGetAllFoodTrucks()
 //        {
 //            // Arrange
 //            var mockLogger = this.GetMockLogger<FoodTrucksController>();
@@ -113,7 +114,7 @@
 //            Assert.Equal(foodTruckOne.Website, model.Website);
 
 //            Assert.Equal(foodTruckOne.Tags.Count, model.Tags.Count);
-//            for (int i= 0; i < model.Tags.Count; i++)
+//            for (int i = 0; i < model.Tags.Count; i++)
 //            {
 //                String modelTag = model.Tags[i];
 //                String expectedTag = foodTruckOne.Tags[i].Tag.Text;

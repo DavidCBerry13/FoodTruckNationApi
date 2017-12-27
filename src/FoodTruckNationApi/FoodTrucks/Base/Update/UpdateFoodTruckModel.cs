@@ -31,5 +31,14 @@ namespace FoodTruckNationApi.FoodTrucks.Base.Update
         /// </summary>
         public String Website { get; set; }
 
+        /// <summary>
+        /// The last time this food truck object was modified.
+        /// </summary>
+        /// <remarks>
+        /// This value is required so the API can perform a concurrency check on the object
+        /// being updated and make sure it has not changed since fetched by the client
+        /// </remarks>
+        public DateTime LastModifiedDate { get; set; }
+
     }
 }

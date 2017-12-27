@@ -73,6 +73,7 @@ namespace FoodTruckNation.Core.Domain
         private String name;
         private String description;
         private String website;
+        private DateTime lastModifiedDate;
         private List<FoodTruckTag> tags;
         private List<Review> reviews;
         private List<Schedule> schedules;
@@ -128,6 +129,12 @@ namespace FoodTruckNation.Core.Domain
         }
 
 
+        public DateTime LastModifiedDate
+        {
+            get { return this.lastModifiedDate;  }
+            internal set { this.lastModifiedDate = value; }
+        }
+
         public List<FoodTruckTag> Tags
         {
             get
@@ -140,7 +147,11 @@ namespace FoodTruckNation.Core.Domain
 
         public void AddTag(Tag tag)
         {
-            // TODO:  Verify tag is not already on truck
+            // If the tag is already on the truck, then just return
+            // A different implementation may throw an exception here, but for
+            // a food truck tag, it is OK just to return
+            if (this.tags.Any(t => t.Tag == tag))
+                return;            
 
             FoodTruckTag foodTruckTag = new FoodTruckTag(this, tag);
             this.tags.Add(foodTruckTag);
