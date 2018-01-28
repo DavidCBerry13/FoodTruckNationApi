@@ -29,9 +29,9 @@ namespace FoodTruckNationApi
     public class Startup
     {
 
-        private IConfigurationRoot configuration;
-        private IHostingEnvironment hostingEnvironment;
-        private ILoggerFactory loggerFactory;
+        private readonly IConfigurationRoot configuration;
+        private readonly IHostingEnvironment hostingEnvironment;
+        private readonly ILoggerFactory loggerFactory;
 
         public Startup(IHostingEnvironment env, ILoggerFactory loggerFactory)
         {

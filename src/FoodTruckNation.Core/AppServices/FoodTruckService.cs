@@ -28,10 +28,10 @@ namespace FoodTruckNation.Core.AppServices
 
         #region Member Variables
 
-        private IDateTimeProvider dateTimeProvider;
-        private IFoodTruckRepository foodTruckRepository;
-        private ITagRepository tagRepository;
-        private ISocialMediaPlatformRepository socialMediaPlatformRepository;
+        private readonly IDateTimeProvider dateTimeProvider;
+        private readonly IFoodTruckRepository foodTruckRepository;
+        private readonly ITagRepository tagRepository;
+        private readonly ISocialMediaPlatformRepository socialMediaPlatformRepository;
 
         #endregion
 
@@ -128,7 +128,7 @@ namespace FoodTruckNation.Core.AppServices
             var allTags = this.tagRepository.GetAllTags();
             foreach (var tag in inputTags)
             {
-                var tagObject = allTags.Where(t => t.Text == tag).SingleOrDefault();
+                var tagObject = allTags.SingleOrDefault(t => t.Text == tag);
                 if (tagObject != null)
                 {
                     // Tag already exists
@@ -273,7 +273,7 @@ namespace FoodTruckNation.Core.AppServices
             if (foodTruck == null)
                 throw new ObjectNotFoundException("No food truck with the id of {foodTruckId} could be found");
 
-            var tagToRemove = foodTruck.Tags.Where(t => t.Tag.Text.Equals(tag, StringComparison.CurrentCultureIgnoreCase) ).FirstOrDefault();
+            var tagToRemove = foodTruck.Tags.FirstOrDefault(t => t.Tag.Text.Equals(tag, StringComparison.CurrentCultureIgnoreCase) );
             if ( tagToRemove == null)
                 throw new ObjectNotFoundException("No tag of {tag} found on the food truck with the id of {foodTruckId}");
 

@@ -64,13 +64,14 @@ namespace FoodTruckNationApi.Test.FoodTrucks.Base
 
 
 
-        private FoodTruck foodTruckOne;
-        private FoodTruck foodTruckTwo;
-        private FoodTruck foodTruckThree;
+        private readonly FoodTruck foodTruckOne;
+        private readonly FoodTruck foodTruckTwo;
+        private readonly FoodTruck foodTruckThree;
 
-        private List<FoodTruck> foodTruckList;
+        private readonly List<FoodTruck> foodTruckList;
 
-        private IMapper mapper;
+        private readonly IMapper mapper;
+
 
         [Fact]
         public void WhenNoParametersPassedToAPI_WeCallMethodToGetAllFoodTrucks()

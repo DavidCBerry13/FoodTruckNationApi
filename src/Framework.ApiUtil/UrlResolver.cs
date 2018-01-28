@@ -40,14 +40,14 @@ namespace Framework.ApiUtil
             this.httpContext = httpContextAccessor.HttpContext;
         }
 
-
+        // This is here so the TestUrlResolver can extend the class
         protected UrlResolver()
         {
 
         }
 
 
-        private HttpContext httpContext;
+        private readonly HttpContext httpContext;
 
 
         /// <summary>
