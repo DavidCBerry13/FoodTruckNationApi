@@ -47,21 +47,22 @@ namespace FoodTruckNationApi.Test.FoodTrucks.Base
                 foodTruckOne, foodTruckTwo, foodTruckThree
             };
 
-            //Mapper.Initialize(config =>
-            //{
-            //    config.AddProfiles(new[] { typeof(FoodTrucksController) });
-            //});
-            ////Mapper.AssertConfigurationIsValid();
 
             var config = new MapperConfiguration(cfg => {
-                cfg.AddProfile<GetMappingProfile>();                
-            });
-
-            //var mapper = config.CreateMapper();
-            
-            mapper = new Mapper(config);
+                cfg.AddProfile<GetMappingProfile>();             
+            });            
+            mapper = new Mapper(config, 
+                t => FoodTrucksControllerTests.Resolve<Type, object>(t));
 
         }
+
+        // Resolver method so AutoMapper will resolve the TestUrlResolver when it goes looking for the UrlResolver
+        private static object Resolve<Type, Object>(Type t)
+        {
+            return new TestUrlResolver();
+        }
+
+
 
         private FoodTruck foodTruckOne;
         private FoodTruck foodTruckTwo;

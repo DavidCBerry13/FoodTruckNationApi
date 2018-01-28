@@ -41,6 +41,12 @@ namespace Framework.ApiUtil
         }
 
 
+        protected UrlResolver()
+        {
+
+        }
+
+
         private HttpContext httpContext;
 
 
@@ -53,7 +59,7 @@ namespace Framework.ApiUtil
         /// <param name="destMember"></param>
         /// <param name="context"></param>
         /// <returns>A String of the generated URL</returns>
-        public string Resolve(object source, object destination, RouteUrlInfo sourceMember, string destMember, ResolutionContext context)
+        public virtual string Resolve(object source, object destination, RouteUrlInfo sourceMember, string destMember, ResolutionContext context)
         {
             IUrlHelper url = (IUrlHelper)httpContext.Items["URL_HELPER"];
 
