@@ -78,7 +78,7 @@ namespace FoodTruckNationApi.FoodTrucks.Base.Get
                 .ForMember(
                     dest => dest.SocialMediaAccounts,
                     opt => opt.MapFrom(src => src.SocialMediaAccounts
-                        .Select(a => new SocialMediaAccountModelV11()
+                        .Select(a => new SocialMediaAccountModel()
                         { PlatformName = a.Platform.Name, AccountName = a.AccountName }
                         ).ToList())
                 )

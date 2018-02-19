@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using FoodTruckNationApi.Schedules.Base.Get;
+using FoodTruckNationApi.Schedules.Get;
 using Framework.ApiUtil.Controllers;
 using Microsoft.Extensions.Logging;
 using FoodTruckNation.Core.AppInterfaces;
@@ -29,7 +29,13 @@ namespace FoodTruckNationApi.Schedules
 
         private IScheduleService _scheduleService;
 
-        // GET: api/Schedules
+        /// <summary>
+        /// Gets a list of food truck schedules (appointments) for all food trucks for
+        /// the provided date range.  If no date range is provided, then the next seven
+        /// days is the default date range used
+        /// </summary>
+        /// <param name="parameters">A GetSchedulesParameters object that encapsulates the query string arguments to this method, mainly, the start and end dates if any were included</param>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<ScheduleModel> Get([FromQuery]GetSchedulesParameters parameters)
         {

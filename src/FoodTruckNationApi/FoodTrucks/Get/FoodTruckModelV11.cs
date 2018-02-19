@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 
 namespace FoodTruckNationApi.FoodTrucks.Base.Get
 {
+    /// <summary>
+    /// Version 1.1 of the food ruck model.  This version includes social media
+    /// account for the food truck
+    /// </summary>
     public class FoodTruckModelV11
     {
         /// <summary>
@@ -37,7 +41,7 @@ namespace FoodTruckNationApi.FoodTrucks.Base.Get
         /// </summary>
         public List<String> Tags { get; set; }
 
-        public List<SocialMediaAccountModelV11> SocialMediaAccounts { get; set; }
+        public List<SocialMediaAccountModel> SocialMediaAccounts { get; set; }
 
         /// <summary>
         /// Meta data object containing associated links for the food truck

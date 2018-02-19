@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Schedules.Base.Get
+namespace FoodTruckNationApi.Schedules.Get
 {
     public class MappingProfile : Profile
     {
