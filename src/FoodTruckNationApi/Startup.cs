@@ -97,12 +97,13 @@ namespace FoodTruckNationApi
             app.UseSwagger(c =>
             {                
                 c.PreSerializeFilters.Add((swagger, httpReq) => swagger.Host = httpReq.Host.Value);
+
             });
             
             app.UseSwaggerUI(c =>
             { 
                 c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "Food Truck API v1.0");
-                c.SwaggerEndpoint("/swagger/v1.1/swagger.json", "Food Truck API v1.1");
+                c.SwaggerEndpoint("/swagger/v1.1/swagger.json", "Food Truck API v1.1");                
             });
 
         }
@@ -176,8 +177,7 @@ namespace FoodTruckNationApi
                 var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, pathToXmlComments);
                 options.IncludeXmlComments(filePath);
                 options.DescribeAllEnumsAsStrings();
-
-
+                options.CustomSchemaIds(x => x.FullName);
             });
         }
 

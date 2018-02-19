@@ -7,12 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Schedules.Get
+namespace FoodTruckNationApi.Schedules
 {
-    public class MappingProfile : Profile
+    public class SchedulesMappingProfile : Profile
     {
 
-        public MappingProfile()
+        public SchedulesMappingProfile()
         {
             ScheduleToScheduleModel();
             FoodtruckToScheduleFoodTruckModel();
@@ -37,7 +37,7 @@ namespace FoodTruckNationApi.Schedules.Get
         internal void FoodtruckToScheduleFoodTruckModel()
         {
             // FoodTruck Truck
-            this.CreateMap<FoodTruck, ScheduleFoodTruckModel>()
+            this.CreateMap<FoodTruck, ScheduleModel.FoodTruckModel>()
                 .ForMember(
                     dest => dest.Tags,
                     opt => opt.MapFrom(src => src.Tags.Select(t => t.Tag.Text).ToList())
@@ -49,7 +49,7 @@ namespace FoodTruckNationApi.Schedules.Get
 
 
             // For the links in the Meta object
-            this.CreateMap<FoodTruck, ScheduleFoodTruckLinks>()
+            this.CreateMap<FoodTruck, ScheduleModel.FoodTruckLinks>()
                 .ForMember(
                     dest => dest.Self,
                     opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
@@ -85,7 +85,7 @@ namespace FoodTruckNationApi.Schedules.Get
 
         internal void LocationToScheduleLocationModel()
         {
-            this.CreateMap<Location, ScheduleLocationModel>()
+            this.CreateMap<Location, ScheduleModel.LocationModel>()
                 .ForMember(
                     dest => dest.LocationName,
                     opt => opt.MapFrom(src => src.Name)
@@ -97,7 +97,7 @@ namespace FoodTruckNationApi.Schedules.Get
 
 
             // For the links in the Meta object
-            this.CreateMap<Location, ScheduleLocationLinks>()
+            this.CreateMap<Location, ScheduleModel.LocationLinks>()
                 .ForMember(
                     dest => dest.Self,
                     opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>

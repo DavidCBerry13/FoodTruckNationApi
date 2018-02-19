@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using FoodTruckNationApi.Schedules.Get;
+using FoodTruckNationApi.Schedules;
 using System;
 using System.Collections.Generic;
 using System.Text;

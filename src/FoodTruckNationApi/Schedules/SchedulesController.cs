@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using FoodTruckNationApi.Schedules.Get;
 using Framework.ApiUtil.Controllers;
 using Microsoft.Extensions.Logging;
 using FoodTruckNation.Core.AppInterfaces;
