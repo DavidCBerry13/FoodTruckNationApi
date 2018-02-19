@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.FoodTrucks.Base.Get
+namespace FoodTruckNationApi.FoodTrucks.Get
 {
     /// <summary>
     /// Version 1.1 of the food ruck model.  This version includes social media

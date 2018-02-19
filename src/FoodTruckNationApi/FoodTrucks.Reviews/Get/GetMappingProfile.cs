@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FoodTruckNation.Core.Domain;
-using FoodTruckNationApi.FoodTrucks.Base;
+using FoodTruckNationApi.FoodTrucks;
 using Framework.ApiUtil;
 using System;
 using System.Collections.Generic;

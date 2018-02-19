@@ -55,7 +55,7 @@ namespace FoodTruckNationApi.Schedules.Get
                     opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
-                            RouteName = FoodTrucks.Base.FoodTrucksController.GET_FOOD_TRUCK_BY_ID,
+                            RouteName = FoodTrucks.FoodTrucksController.GET_FOOD_TRUCK_BY_ID,
                             RouteParams = new { id = src.FoodTruckId }
                         }
                     )

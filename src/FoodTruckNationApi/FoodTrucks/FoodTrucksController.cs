@@ -8,13 +8,12 @@ using FoodTruckNation.Core.AppInterfaces;
 using AutoMapper;
 using Framework.ApiUtil.Models;
 using Framework.ApiUtil.Controllers;
-using FoodTruckNationApi.FoodTrucks.Base.Get;
-using FoodTruckNationApi.FoodTrucks.Base.Create;
-using FoodTruckNationApi.FoodTrucks.Base.Update;
+using FoodTruckNationApi.FoodTrucks.Get;
+using FoodTruckNationApi.FoodTrucks.Create;
+using FoodTruckNationApi.FoodTrucks.Update;
 using Framework;
-using Framework.ApiUtil.Filters;
 
-namespace FoodTruckNationApi.FoodTrucks.Base
+namespace FoodTruckNationApi.FoodTrucks
 {
 
     /// <summary>

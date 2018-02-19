@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
-using FoodTruckNationApi.FoodTrucks.Base;
-using FoodTruckNationApi.FoodTrucks.Base.Get;
+using FoodTruckNationApi.FoodTrucks;
+using FoodTruckNationApi.FoodTrucks.Get;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;

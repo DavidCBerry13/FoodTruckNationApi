@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.FoodTrucks.Base.Get
+namespace FoodTruckNationApi.FoodTrucks.Get
 {
     /// <summary>
     /// Represents the social media account for a food truck

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FoodTruckNationApi.FoodTrucks.Base.Create
+namespace FoodTruckNationApi.FoodTrucks.Create
 {
 
 
