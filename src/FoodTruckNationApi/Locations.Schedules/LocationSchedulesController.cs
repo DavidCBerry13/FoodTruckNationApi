@@ -49,19 +49,19 @@ namespace FoodTruckNationApi.Locations.Schedules
         /// If no date range data is provided, then this enpoint will use a date range of the next seven days
         /// </remarks>
         /// <param name="locationId">The id number of the location</param>
-        /// <param name="dateRange">An optional date range to get the scheduled food trucks for</param>
+        /// <param name="parameters">An optional date range to get the scheduled food trucks for</param>
         /// <returns></returns>
         [HttpGet(Name=GET_ALL_SCHEDULES_FOR_LOCATION)]
-        public IActionResult Get(int locationId, DateRangeModel dateRange)
+        public IActionResult Get(int locationId, GetLocationSchedulesParameters parameters)
         {
-            if (!dateRange.StartDate.HasValue)
-                dateRange.StartDate = this.dateTimeProvider.CurrentDateTime.Date;
+            if (!parameters.StartDate.HasValue)
+                parameters.StartDate = this.dateTimeProvider.CurrentDateTime.Date;
 
-            if (!dateRange.EndDate.HasValue)
-                dateRange.EndDate = dateRange.StartDate.Value.AddDays(7).Date;
+            if (!parameters.EndDate.HasValue)
+                parameters.EndDate = parameters.StartDate.Value.AddDays(7).Date;
 
             List<Schedule> schedules = scheduleService.GetSchedulesForLocation(locationId,
-                dateRange.StartDate.Value, dateRange.EndDate.Value);
+                parameters.StartDate.Value, parameters.EndDate.Value);
 
             List<LocationScheduleModel> models = this.mapper.Map<List<Schedule>, List<LocationScheduleModel>>(schedules);
 
