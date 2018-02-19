@@ -29,6 +29,7 @@ namespace FoodTruckNation.Data.EF.Repositories
                 .Include(f => f.Schedules)
                 .Include(f => f.SocialMediaAccounts)
                 .ThenInclude(x => x.Platform)
+                .OrderBy(x => x.FoodTruckId)
                 .AsNoTracking()
                 .ToList();
 
