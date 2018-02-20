@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Locations.Schedules.Get
+namespace FoodTruckNationApi.Locations.Schedules
 {
-    public class GetMappingProfile : Profile
+    public class LocationSchedulesAutomapperProfile : Profile
     {
 
 
-        public GetMappingProfile()
+        public LocationSchedulesAutomapperProfile()
         {
             this.AddScheduleToLocationScheduleModelMap();
             this.AddFoodTruckToLocationScheduleFoodTruckModel();
@@ -21,7 +21,7 @@ namespace FoodTruckNationApi.Locations.Schedules.Get
 
         internal void AddFoodTruckToLocationScheduleFoodTruckModel()
         {
-            this.CreateMap<FoodTruck, LocationScheduleFoodTruckModel>()
+            this.CreateMap<FoodTruck, LocationScheduleModel.FoodTruckModel>()
                             .ForMember(
                                 dest => dest.Tags,
                                 opt => opt.MapFrom(src => src.Tags.Select(t => t.Tag.Text).ToList())
@@ -33,7 +33,7 @@ namespace FoodTruckNationApi.Locations.Schedules.Get
 
 
             // For the links in the Meta object
-            this.CreateMap<FoodTruck, LocationScheduleFoodTruckLinks>()
+            this.CreateMap<FoodTruck, LocationScheduleModel.FoodTruckLinks>()
                 .ForMember(
                     dest => dest.Self,
                     opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
@@ -90,7 +90,7 @@ namespace FoodTruckNationApi.Locations.Schedules.Get
 
 
             // For the links in the Meta object
-            this.CreateMap<Schedule, LocationScheduleLinks>()
+            this.CreateMap<Schedule, LocationScheduleModel.LocationScheduleLinks>()
                 .ForMember(
                     dest => dest.Self,
                     opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>

@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Framework.ApiUtil.Controllers;
 using FoodTruckNation.Core.AppInterfaces;
@@ -10,7 +8,6 @@ using Framework;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using FoodTruckNation.Core.Domain;
-using FoodTruckNationApi.Locations.Schedules.Get;
 
 namespace FoodTruckNationApi.Locations.Schedules
 {
@@ -24,7 +21,14 @@ namespace FoodTruckNationApi.Locations.Schedules
     [ApiVersion("1.1")]
     public class LocationSchedulesController : BaseController
     {
-
+        /// <summary>
+        /// Creates a LocationSchedulesController, the controller responsible for returning schedules
+        /// (appointments) for a specific location
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="mapper"></param>
+        /// <param name="scheduleService"></param>
+        /// <param name="dateTimeProvider"></param>
         public LocationSchedulesController(ILogger<LocationSchedulesController> logger, IMapper mapper,
             IScheduleService scheduleService, IDateTimeProvider dateTimeProvider)
             : base(logger, mapper)
