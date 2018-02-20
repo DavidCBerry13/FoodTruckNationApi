@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.Domain;
 using Framework.ApiUtil;
 using System;
@@ -6,12 +7,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.Locations.Base.Get
+namespace FoodTruckNationApi.Locations
 {
-    public class GetMappingProfile : Profile
+    public class LocationsAutomapperProfile : Profile
     {
 
-        public GetMappingProfile()
+        public LocationsAutomapperProfile()
+        {
+            this.AddLocationModelMaps();
+        }
+
+
+        private void AddLocationModelMaps()
         {
             this.CreateMap<Location, LocationModel>()
                 .ForMember(
@@ -22,7 +29,6 @@ namespace FoodTruckNationApi.Locations.Base.Get
                     dest => dest.Meta,
                     opt => opt.MapFrom(src => src)
                 );
-
 
             // For the links in the Meta object
             this.CreateMap<Location, LocationLinks>()
@@ -46,7 +52,18 @@ namespace FoodTruckNationApi.Locations.Base.Get
                         }
                     )
                 );
+
         }
 
+        private void AddCreateLocationModelMaps()
+        {
+            this.CreateMap<CreateLocationModel, CreateLocationCommand>();
+        }
+
+        private void AddUpdateLocationModelMaps()
+        {
+            this.CreateMap<UpdateLocationModel, UpdateLocationCommand>();
+
+        }
     }
 }

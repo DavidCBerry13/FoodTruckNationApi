@@ -13,9 +13,6 @@ using Framework;
 using AutoMapper;
 using Framework.ApiUtil.Models;
 using Framework.ApiUtil.Controllers;
-using FoodTruckNationApi.Locations.Base.Get;
-using FoodTruckNationApi.Locations.Base.Create;
-using FoodTruckNationApi.Locations.Base.Update;
 
 namespace FoodTruckNationApi.Locations
 {

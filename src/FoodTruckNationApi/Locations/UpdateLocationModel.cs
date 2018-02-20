@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FoodTruckNationApi.Locations.Base.Update
+namespace FoodTruckNationApi.Locations
 {
 
     /// <summary>

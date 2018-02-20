@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using FoodTruckNationApi.Locations.Base.Create;
+using FoodTruckNationApi.Locations;
 using System;
 using System.Collections.Generic;
 using System.Text;
