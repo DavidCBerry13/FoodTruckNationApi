@@ -12,8 +12,6 @@ using FoodTruckNation.Core.Domain;
 using FoodTruckNation.Core.Commands;
 using Framework.ApiUtil.Controllers;
 using Framework.ApiUtil.Models;
-using FoodTruckNationApi.FoodTrucks.Reviews.Get;
-using FoodTruckNationApi.FoodTrucks.Reviews.Create;
 
 namespace FoodTruckNationApi.FoodTrucks.Reviews
 {

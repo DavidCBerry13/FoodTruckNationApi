@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-namespace FoodTruckNationApi.FoodTrucks.Reviews.Create
+namespace FoodTruckNationApi.FoodTrucks.Reviews
 {
 
     /// <summary>
