@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using FoodTruckNationApi.FoodTrucks.Schedules.Create;
+using FoodTruckNationApi.FoodTrucks.Schedules;
 using Framework;
 using System;
 using System.Collections.Generic;

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.FoodTrucks.Schedules.Create
+namespace FoodTruckNationApi.FoodTrucks.Schedules
 {
     public class CreateFoodTruckScheduleModelValidator : AbstractValidator<CreateFoodTruckScheduleModel>
     {

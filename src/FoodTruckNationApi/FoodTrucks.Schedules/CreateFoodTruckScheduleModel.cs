@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FoodTruckNationApi.FoodTrucks.Schedules.Create
+namespace FoodTruckNationApi.FoodTrucks.Schedules
 {
     public class CreateFoodTruckScheduleModel
     {

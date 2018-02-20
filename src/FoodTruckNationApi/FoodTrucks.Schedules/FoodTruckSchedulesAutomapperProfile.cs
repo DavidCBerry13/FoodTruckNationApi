@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.Domain;
 using Framework.ApiUtil;
 using System;
@@ -6,15 +7,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.FoodTrucks.Schedules.Get
+namespace FoodTruckNationApi.FoodTrucks.Schedules
 {
-    public class GetMappingProfile : Profile
+    public class FoodTruckSchedulesAutomapperProfile : Profile
     {
 
-        public GetMappingProfile()
+        public FoodTruckSchedulesAutomapperProfile()
         {
             this.ScheduleToFoodTruckScheduleModelMap();
             this.LocationToScheduleLocationModelMap();
+            this.AddCreateFoodTruckScheduleMaps();
         }
 
 
@@ -40,7 +42,7 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules.Get
 
 
             // For the links in the Meta object
-            this.CreateMap<Schedule, FoodTruckScheduleLinks>()
+            this.CreateMap<Schedule, FoodTruckScheduleModel.FoodTruckScheduleLinks>()
                 .ForMember(
                     dest => dest.Self,
                     opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
@@ -69,7 +71,7 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules.Get
 
         internal void LocationToScheduleLocationModelMap()
         {
-            this.CreateMap<Location, FoodTruckScheduleLocationModel>()
+            this.CreateMap<Location, FoodTruckScheduleModel.LocationModel>()
                 .ForMember(
                     dest => dest.LocationName,
                     opt => opt.MapFrom(src => src.Name)
@@ -81,7 +83,7 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules.Get
 
 
             // For the links in the Meta object
-            this.CreateMap<Location, FoodTruckScheduleLocationLinks>()
+            this.CreateMap<Location, FoodTruckScheduleModel.LocationModel.LocationLinks>()
                 .ForMember(
                     dest => dest.Self,
                     opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
@@ -103,6 +105,11 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules.Get
                     )
                 );
 
+        }
+
+        public void AddCreateFoodTruckScheduleMaps()
+        {
+            this.CreateMap<CreateFoodTruckScheduleModel, CreateFoodTruckScheduleCommand>();
         }
 
     }
