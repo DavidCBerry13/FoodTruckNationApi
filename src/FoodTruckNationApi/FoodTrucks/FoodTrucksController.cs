@@ -8,9 +8,6 @@ using FoodTruckNation.Core.AppInterfaces;
 using AutoMapper;
 using Framework.ApiUtil.Models;
 using Framework.ApiUtil.Controllers;
-using FoodTruckNationApi.FoodTrucks.Get;
-using FoodTruckNationApi.FoodTrucks.Create;
-using FoodTruckNationApi.FoodTrucks.Update;
 using Framework;
 
 namespace FoodTruckNationApi.FoodTrucks

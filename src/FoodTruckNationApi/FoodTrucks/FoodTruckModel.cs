@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.FoodTrucks.Get
+namespace FoodTruckNationApi.FoodTrucks
 {
 
     /// <summary>
@@ -45,29 +45,37 @@ namespace FoodTruckNationApi.FoodTrucks.Get
         /// Meta data object containing associated links for the food truck
         /// </summary>
         public FoodTruckLinks Meta { get; set; }
+
+
+        #region Nested Types
+
+        /// <summary>
+        /// Class to encapsulate the links (urls) for a food truck
+        /// </summary>
+        public class FoodTruckLinks
+        {
+            /// <summary>
+            /// Gets the URL that refers to this food truck
+            /// </summary>
+            public String Self { get; set; }
+
+            /// <summary>
+            /// Gets the url for the reviews of this food truck
+            /// </summary>
+            public String Reviews { get; set; }
+
+            /// <summary>
+            /// Gets the url for the schedules of this food truck
+            /// </summary>
+            public String Schedules { get; set; }
+        }
+
+        #endregion
+
     }
 
 
-    /// <summary>
-    /// Class to encapsulate the links (urls) for a food truck
-    /// </summary>
-    public class FoodTruckLinks
-    {
-        /// <summary>
-        /// Gets the URL that refers to this food truck
-        /// </summary>
-        public String Self { get; set; }
 
-        /// <summary>
-        /// Gets the url for the reviews of this food truck
-        /// </summary>
-        public String Reviews { get; set; }
-
-        /// <summary>
-        /// Gets the url for the schedules of this food truck
-        /// </summary>
-        public String Schedules { get; set; }
-    }
 
 
 }

@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.FoodTrucks.Create
+namespace FoodTruckNationApi.FoodTrucks
 {
-    public class CreateFoodTruckModelV11
+
+
+    /// <summary>
+    /// Model class representing the data needed to create a new FoodTruck
+    /// </summary>
+    public class CreateFoodTruckModel
     {
 
-        public CreateFoodTruckModelV11()
+        public CreateFoodTruckModel()
         {
             this.Tags = new List<string>();
-            this.SocialMediaAccounts = new List<CreateFoodTruckSocialMediaAccountModelV11>();
         }
 
         /// <summary>
@@ -40,16 +43,6 @@ namespace FoodTruckNationApi.FoodTrucks.Create
         /// </remarks>
         public List<String> Tags { get; set; }
 
-
-        /// <summary>
-        /// Gets a list of social media accounts to be attached to the new food truck.
-        /// </summary>
-        /// <remarks>
-        /// This property is included because it is likely on the form that creates a food
-        /// truck will collect this information as well, so the client will want to create
-        /// a new food truck in one operation, not multiple operations
-        /// </remarks>
-        public List<CreateFoodTruckSocialMediaAccountModelV11> SocialMediaAccounts { get; set; }
-
     }
+
 }

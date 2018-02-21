@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodTruckNationApi.FoodTrucks.Update
+namespace FoodTruckNationApi.FoodTrucks
 {
     public class UpdateFoodTruckModelValidator : AbstractValidator<UpdateFoodTruckModel>
     {

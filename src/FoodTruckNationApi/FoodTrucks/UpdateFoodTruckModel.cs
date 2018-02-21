@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FoodTruckNationApi.FoodTrucks.Update
+namespace FoodTruckNationApi.FoodTrucks
 {
     /// <summary>
     /// Model used to update the properties of a Food Truck

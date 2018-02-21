@@ -2,7 +2,6 @@
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNationApi.FoodTrucks;
-using FoodTruckNationApi.FoodTrucks.Get;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
@@ -49,7 +48,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks.Base
 
 
             var config = new MapperConfiguration(cfg => {
-                cfg.AddProfile<GetMappingProfile>();             
+                cfg.AddProfile<FoodTruckAutomapperProfile>();             
             });            
             mapper = new Mapper(config, 
                 t => FoodTrucksControllerTests.Resolve<Type, object>(t));
