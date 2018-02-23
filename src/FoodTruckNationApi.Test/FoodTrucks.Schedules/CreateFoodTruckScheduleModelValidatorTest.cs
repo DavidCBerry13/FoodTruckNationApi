@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace FoodTruckNationApi.Test.FoodTrucks.Schedules.Create
+namespace FoodTruckNationApi.Test.FoodTrucks.Schedules
 {
     public class CreateFoodTruckScheduleModelValidatorTest
     {

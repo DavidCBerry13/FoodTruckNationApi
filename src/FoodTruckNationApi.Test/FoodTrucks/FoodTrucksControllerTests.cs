@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace FoodTruckNationApi.Test.FoodTrucks.Base
+namespace FoodTruckNationApi.Test.FoodTrucks
 {
     public class FoodTrucksControllerTests
     {

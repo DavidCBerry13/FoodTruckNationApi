@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace FoodTruckNationApi.Test.FoodTrucks.Schedules.Get
+namespace FoodTruckNationApi.Test.FoodTrucks.Schedules
 {
     public class FoodTruckScheduleParametersValidatorTest
     {
