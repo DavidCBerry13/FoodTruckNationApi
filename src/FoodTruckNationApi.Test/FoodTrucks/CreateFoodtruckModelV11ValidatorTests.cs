@@ -7,7 +7,7 @@ using Xunit;
 
 namespace FoodTruckNationApi.Test.FoodTrucks
 {
-    public class CreateFoodTruckModelValidatorTest
+    public class CreateFoodtruckModelV11ValidatorTests
     {
 
         [Theory]
@@ -17,7 +17,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         public void ValidFoodTruckNamesPass(String name)
         {
             // Arrange
-            CreateFoodTruckModel model = new CreateFoodTruckModel()
+            CreateFoodTruckModelV11 model = new CreateFoodTruckModelV11()
             {
                 Name = name,
                 Description = "Some very interesting description",
@@ -26,7 +26,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
 
             // Act
-            CreateFoodTruckModelValidator validator = new CreateFoodTruckModelValidator();
+            var validator = new CreateFoodTruckModelV11Validator();
             var result = validator.Validate(model);
 
             // Assert
@@ -41,7 +41,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         public void InvalidFoodTruckNamesFail(String name)
         {
             // Arrange
-            CreateFoodTruckModel model = new CreateFoodTruckModel()
+            var model = new CreateFoodTruckModelV11()
             {
                 Name = name,
                 Description = "Some very interesting description",
@@ -50,7 +50,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
 
             // Act
-            CreateFoodTruckModelValidator validator = new CreateFoodTruckModelValidator();
+            var validator = new CreateFoodTruckModelV11Validator();
             var result = validator.Validate(model);
 
             // Assert
@@ -62,7 +62,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         public void FoodTruckWithEmptyNameFails()
         {
             // Arrange
-            CreateFoodTruckModel model = new CreateFoodTruckModel()
+            var model = new CreateFoodTruckModelV11()
             {
                 Name = "",
                 Description = "Some very interesting description",
@@ -71,7 +71,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
 
             // Act
-            CreateFoodTruckModelValidator validator = new CreateFoodTruckModelValidator();
+            var validator = new CreateFoodTruckModelV11Validator();
             var result = validator.Validate(model);
 
             // Assert
@@ -82,7 +82,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         public void FoodTruckWithNullNameFails()
         {
             // Arrange
-            CreateFoodTruckModel model = new CreateFoodTruckModel()
+            var model = new CreateFoodTruckModelV11()
             {
                 Name = null,
                 Description = "Some very interesting description",
@@ -91,7 +91,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
 
             // Act
-            CreateFoodTruckModelValidator validator = new CreateFoodTruckModelValidator();
+            var validator = new CreateFoodTruckModelV11Validator();
             var result = validator.Validate(model);
 
             // Assert
@@ -103,7 +103,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         public void FoodTruckWithOneCharacterNameFails()
         {
             // Arrange
-            CreateFoodTruckModel model = new CreateFoodTruckModel()
+            var model = new CreateFoodTruckModelV11()
             {
                 Name = "X",
                 Description = "Some very interesting description",
@@ -112,7 +112,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
 
             // Act
-            CreateFoodTruckModelValidator validator = new CreateFoodTruckModelValidator();
+            var validator = new CreateFoodTruckModelV11Validator();
             var result = validator.Validate(model);
 
             // Assert
@@ -124,7 +124,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         public void FoodTruckWith41CharacterNameFails()
         {
             // Arrange
-            CreateFoodTruckModel model = new CreateFoodTruckModel()
+            var model = new CreateFoodTruckModelV11()
             {
                 Name = "One really looooong name for a food truck",
                 Description = "Some very interesting description",
@@ -133,7 +133,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
 
             // Act
-            CreateFoodTruckModelValidator validator = new CreateFoodTruckModelValidator();
+            var validator = new CreateFoodTruckModelV11Validator();
             var result = validator.Validate(model);
 
             // Assert
@@ -152,7 +152,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         public void ValidWebsitesPass(String website)
         {
             // Arrange
-            CreateFoodTruckModel model = new CreateFoodTruckModel()
+            var model = new CreateFoodTruckModelV11()
             {
                 Name = "Food Truck Name",
                 Description = "Some very interesting description",
@@ -161,7 +161,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
 
             // Act
-            CreateFoodTruckModelValidator validator = new CreateFoodTruckModelValidator();
+            var validator = new CreateFoodTruckModelV11Validator();
             var result = validator.Validate(model);
 
             // Assert
@@ -181,7 +181,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         public void InvalidWebsitesFail(String website)
         {
             // Arrange
-            CreateFoodTruckModel model = new CreateFoodTruckModel()
+            var model = new CreateFoodTruckModelV11()
             {
                 Name = "Food Truck Name",
                 Description = "Some very interesting description",
@@ -190,7 +190,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
 
             // Act
-            CreateFoodTruckModelValidator validator = new CreateFoodTruckModelValidator();
+            var validator = new CreateFoodTruckModelV11Validator();
             var result = validator.Validate(model);
 
             // Assert
@@ -203,7 +203,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         public void TagsArrayCanBeEmptyList()
         {
             // Arrange
-            CreateFoodTruckModel model = new CreateFoodTruckModel()
+            var model = new CreateFoodTruckModelV11()
             {
                 Name = "Food Truck Name",
                 Description = "Some very interesting description",
@@ -212,7 +212,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
 
             // Act
-            CreateFoodTruckModelValidator validator = new CreateFoodTruckModelValidator();
+            var validator = new CreateFoodTruckModelV11Validator();
             var result = validator.Validate(model);
 
             // Assert
@@ -223,7 +223,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         public void TagsArrayCanBeNull()
         {
             // Arrange
-            CreateFoodTruckModel model = new CreateFoodTruckModel()
+            var model = new CreateFoodTruckModelV11()
             {
                 Name = "Food Truck Name",
                 Description = "Some very interesting description",
@@ -232,7 +232,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
 
             // Act
-            CreateFoodTruckModelValidator validator = new CreateFoodTruckModelValidator();
+            var validator = new CreateFoodTruckModelV11Validator();
             var result = validator.Validate(model);
 
             // Assert
@@ -244,7 +244,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         public void TagsArrayCannotContainEmptyElements()
         {
             // Arrange
-            CreateFoodTruckModel model = new CreateFoodTruckModel()
+            var model = new CreateFoodTruckModelV11()
             {
                 Name = "Food Truck Name",
                 Description = "Some very interesting description",
@@ -253,7 +253,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
 
             // Act
-            CreateFoodTruckModelValidator validator = new CreateFoodTruckModelValidator();
+            var validator = new CreateFoodTruckModelV11Validator();
             var result = validator.Validate(model);
 
             // Assert
@@ -265,7 +265,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         public void TagsArrayCannotContainInvalidEntries()
         {
             // Arrange
-            CreateFoodTruckModel model = new CreateFoodTruckModel()
+            var model = new CreateFoodTruckModelV11()
             {
                 Name = "Food Truck Name",
                 Description = "Some very interesting description",
@@ -274,13 +274,12 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
 
             // Act
-            CreateFoodTruckModelValidator validator = new CreateFoodTruckModelValidator();
+            var validator = new CreateFoodTruckModelV11Validator();
             var result = validator.Validate(model);
 
             // Assert
             result.IsValid.Should().BeFalse();
         }
-
 
     }
 }

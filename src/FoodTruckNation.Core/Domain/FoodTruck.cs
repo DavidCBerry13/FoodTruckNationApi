@@ -87,7 +87,7 @@ namespace FoodTruckNation.Core.Domain
 
         public const String DESCRIPTION_VALIDATION = @"^\w[\w ?,!\.]{1,511}$";
 
-        public const String WEBSITE_VALIDATION = @"^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$";
+        public const String WEBSITE_VALIDATION = @"^https?:\/\/([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$";
 
         #endregion
 
