@@ -281,5 +281,64 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             result.IsValid.Should().BeFalse();
         }
 
+
+        [Fact]
+        public void SocialMediaAccountNamePassesWhenNameIsIncluded()
+        {
+            // Arrange
+            var model = new CreateFoodTruckModelV11()
+            {
+                Name = "Food Truck Name",
+                Description = "Some very interesting description",
+                Website = @"http://www.foodtruck.com",
+                Tags = new List<string>() { "Burgers", "Pizza" },
+                SocialMediaAccounts = new List<CreateFoodTruckModelV11.CreateFoodTruckSocialMediaAccountModelV11>()
+                {
+                    new CreateFoodTruckModelV11.CreateFoodTruckSocialMediaAccountModelV11()
+                    {
+                        SocialMediaPlatformId = 1,
+                        AccountName = "FoodTruck"
+                    }
+                }
+            };
+
+            // Act
+            var validator = new CreateFoodTruckModelV11Validator();
+            var result = validator.Validate(model);
+
+            // Assert
+            result.IsValid.Should().BeTrue();
+        }
+
+
+        [Fact]
+        public void SocialMediaAccountNameCannotBeEmpty()
+        {
+            // Arrange
+            var model = new CreateFoodTruckModelV11()
+            {
+                Name = "Food Truck Name",
+                Description = "Some very interesting description",
+                Website = @"http://www.foodtruck.com",
+                Tags = new List<string>() { "Burgers", "Pizza" },
+                SocialMediaAccounts = new List<CreateFoodTruckModelV11.CreateFoodTruckSocialMediaAccountModelV11>()
+                {
+                    new CreateFoodTruckModelV11.CreateFoodTruckSocialMediaAccountModelV11()
+                    {
+                        SocialMediaPlatformId = 1,
+                        AccountName = ""
+                    }
+                }
+            };
+
+            // Act
+            var validator = new CreateFoodTruckModelV11Validator();
+            var result = validator.Validate(model);
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+        }
+
+
     }
 }

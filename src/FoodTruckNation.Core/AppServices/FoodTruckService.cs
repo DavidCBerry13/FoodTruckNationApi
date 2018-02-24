@@ -101,7 +101,7 @@ namespace FoodTruckNation.Core.AppServices
                     var platform = this.socialMediaPlatformRepository.GetSocialMediaPlatform(accountInfo.SocialMediaPlatformId);
                     if (platform == null)
                         throw new InvalidDataException($"The id {accountInfo.SocialMediaPlatformId} is not a valid social media platform id");
-
+                    
                     SocialMediaAccount account = new SocialMediaAccount(platform, foodTruck, accountInfo.AccountName);
                     foodTruck.AddSocialMediaAccount(account);
                 }

@@ -28,10 +28,12 @@ namespace FoodTruckNationApi.FoodTrucks
                 .Matches(FoodTruck.WEBSITE_VALIDATION).WithMessage("You must input a valid website url");
 
             RuleForEach(f => f.Tags)
-                .NotNull().WithMessage("Tags cannot be empty")
+                .NotNull().WithMessage("An empty tag is not allowed")
                 .Matches(Tag.TAG_TEXT_REGEX).WithMessage("Tags can only contain characters and spaces");
 
-
+            RuleForEach(f => f.SocialMediaAccounts)
+                .Must(sma => !String.IsNullOrWhiteSpace(sma.AccountName))
+                .WithMessage("Social media account names cannot be blank or null");
         }
 
     }
