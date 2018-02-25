@@ -1,5 +1,8 @@
 ﻿using FluentAssertions;
+using FoodTruckNation.Core.AppInterfaces;
+using FoodTruckNation.Core.Domain;
 using FoodTruckNationApi.FoodTrucks;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,9 +27,12 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Website = @"http://www.foodtruck.com",
                 Tags = new List<string>() { "Burgers", "Sandwiches" }
             };
+            var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
+                .Returns(new List<SocialMediaPlatform>());
 
             // Act
-            var validator = new CreateFoodTruckModelV11Validator();
+            var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
             var result = validator.Validate(model);
 
             // Assert
@@ -48,9 +54,12 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Website = @"http://www.foodtruck.com",
                 Tags = new List<string>() { "Burgers", "Sandwiches" }
             };
+            var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
+                .Returns(new List<SocialMediaPlatform>());
 
             // Act
-            var validator = new CreateFoodTruckModelV11Validator();
+            var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
             var result = validator.Validate(model);
 
             // Assert
@@ -69,9 +78,12 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Website = @"http://www.foodtruck.com",
                 Tags = new List<string>() { "Burgers", "Sandwiches" }
             };
+            var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
+                .Returns(new List<SocialMediaPlatform>());
 
             // Act
-            var validator = new CreateFoodTruckModelV11Validator();
+            var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
             var result = validator.Validate(model);
 
             // Assert
@@ -89,9 +101,12 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Website = @"http://www.foodtruck.com",
                 Tags = new List<string>() { "Burgers", "Sandwiches" }
             };
+            var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
+                .Returns(new List<SocialMediaPlatform>());
 
             // Act
-            var validator = new CreateFoodTruckModelV11Validator();
+            var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
             var result = validator.Validate(model);
 
             // Assert
@@ -110,9 +125,12 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Website = @"http://www.foodtruck.com",
                 Tags = new List<string>() { "Burgers", "Sandwiches" }
             };
+            var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
+                .Returns(new List<SocialMediaPlatform>());
 
             // Act
-            var validator = new CreateFoodTruckModelV11Validator();
+            var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
             var result = validator.Validate(model);
 
             // Assert
@@ -131,9 +149,12 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Website = @"http://www.foodtruck.com",
                 Tags = new List<string>() { "Burgers", "Sandwiches" }
             };
+            var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
+                .Returns(new List<SocialMediaPlatform>());
 
             // Act
-            var validator = new CreateFoodTruckModelV11Validator();
+            var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
             var result = validator.Validate(model);
 
             // Assert
@@ -159,9 +180,12 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Website = website,
                 Tags = new List<string>() { "Burgers", "Sandwiches" }
             };
+            var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
+                .Returns(new List<SocialMediaPlatform>());
 
             // Act
-            var validator = new CreateFoodTruckModelV11Validator();
+            var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
             var result = validator.Validate(model);
 
             // Assert
@@ -188,9 +212,12 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Website = website,
                 Tags = new List<string>() { "Burgers", "Sandwiches" }
             };
+            var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
+                .Returns(new List<SocialMediaPlatform>());
 
             // Act
-            var validator = new CreateFoodTruckModelV11Validator();
+            var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
             var result = validator.Validate(model);
 
             // Assert
@@ -210,10 +237,14 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Website = @"http://www.foodtruck.com",
                 Tags = new List<string>()
             };
+            var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
+                .Returns(new List<SocialMediaPlatform>());
 
             // Act
-            var validator = new CreateFoodTruckModelV11Validator();
+            var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
             var result = validator.Validate(model);
+
 
             // Assert
             result.IsValid.Should().BeTrue();
@@ -230,9 +261,12 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Website = @"http://www.foodtruck.com",
                 Tags = null
             };
+            var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
+                .Returns(new List<SocialMediaPlatform>());
 
             // Act
-            var validator = new CreateFoodTruckModelV11Validator();
+            var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
             var result = validator.Validate(model);
 
             // Assert
@@ -251,9 +285,12 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Website = @"http://www.foodtruck.com",
                 Tags = new List<string>() { "Burgers", "" }
             };
+            var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
+                .Returns(new List<SocialMediaPlatform>());
 
             // Act
-            var validator = new CreateFoodTruckModelV11Validator();
+            var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
             var result = validator.Validate(model);
 
             // Assert
@@ -272,9 +309,12 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Website = @"http://www.foodtruck.com",
                 Tags = new List<string>() { "Burgers", "Pizza@" }
             };
+            var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
+                .Returns(new List<SocialMediaPlatform>());
 
             // Act
-            var validator = new CreateFoodTruckModelV11Validator();
+            var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
             var result = validator.Validate(model);
 
             // Assert
@@ -283,7 +323,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
 
 
         [Fact]
-        public void SocialMediaAccountNamePassesWhenNameIsIncluded()
+        public void SocialMediaAccountNamePassesWhenValidNameIsIncluded()
         {
             // Arrange
             var model = new CreateFoodTruckModelV11()
@@ -292,18 +332,24 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Description = "Some very interesting description",
                 Website = @"http://www.foodtruck.com",
                 Tags = new List<string>() { "Burgers", "Pizza" },
-                SocialMediaAccounts = new List<CreateFoodTruckModelV11.CreateFoodTruckSocialMediaAccountModelV11>()
+                SocialMediaAccounts = new List<CreateFoodTruckModelV11.SocialMediaAccountModel>()
                 {
-                    new CreateFoodTruckModelV11.CreateFoodTruckSocialMediaAccountModelV11()
+                    new CreateFoodTruckModelV11.SocialMediaAccountModel()
                     {
                         SocialMediaPlatformId = 1,
                         AccountName = "FoodTruck"
                     }
                 }
             };
+            var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
+                .Returns(new List<SocialMediaPlatform>()
+                {
+                    new SocialMediaPlatform(1, "FooTruckMedia", "",  @"\w{1,20}")
+                });
 
             // Act
-            var validator = new CreateFoodTruckModelV11Validator();
+            var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
             var result = validator.Validate(model);
 
             // Assert
@@ -321,24 +367,66 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Description = "Some very interesting description",
                 Website = @"http://www.foodtruck.com",
                 Tags = new List<string>() { "Burgers", "Pizza" },
-                SocialMediaAccounts = new List<CreateFoodTruckModelV11.CreateFoodTruckSocialMediaAccountModelV11>()
+                SocialMediaAccounts = new List<CreateFoodTruckModelV11.SocialMediaAccountModel>()
                 {
-                    new CreateFoodTruckModelV11.CreateFoodTruckSocialMediaAccountModelV11()
+                    new CreateFoodTruckModelV11.SocialMediaAccountModel()
                     {
                         SocialMediaPlatformId = 1,
                         AccountName = ""
                     }
                 }
             };
+            var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
+                .Returns(new List<SocialMediaPlatform>()
+                {
+                    new SocialMediaPlatform(1, "FooTruckMedia", "",  @"\w{1,20}")
+                });
+
 
             // Act
-            var validator = new CreateFoodTruckModelV11Validator();
+            var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
             var result = validator.Validate(model);
 
             // Assert
             result.IsValid.Should().BeFalse();
         }
 
+
+        [Fact]
+        public void SocialMediaAccountFailsWhenPlatformDoesNotExist()
+        {
+            // Arrange
+            var model = new CreateFoodTruckModelV11()
+            {
+                Name = "Food Truck Name",
+                Description = "Some very interesting description",
+                Website = @"http://www.foodtruck.com",
+                Tags = new List<string>() { "Burgers", "Pizza" },
+                SocialMediaAccounts = new List<CreateFoodTruckModelV11.SocialMediaAccountModel>()
+                {
+                    new CreateFoodTruckModelV11.SocialMediaAccountModel()
+                    {
+                        SocialMediaPlatformId = 2,
+                        AccountName = "MostAwesomeFoodTruck"
+                    }
+                }
+            };
+            var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
+                .Returns(new List<SocialMediaPlatform>()
+                {
+                    new SocialMediaPlatform(1, "FooTruckMedia", "",  @"\w{1,20}")
+                });
+
+
+            // Act
+            var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
+            var result = validator.Validate(model);
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+        }
 
     }
 }

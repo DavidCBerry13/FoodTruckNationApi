@@ -25,5 +25,10 @@ namespace FoodTruckNation.Core.AppServices
         }
 
 
+        public SocialMediaPlatform GetSocialMediaPlatform(int platformId)
+        {
+            return this._socialMediaPlatformRepository.GetSocialMediaPlatform(platformId);
+        }
+
     }
 }

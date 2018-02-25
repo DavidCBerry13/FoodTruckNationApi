@@ -8,10 +8,13 @@ namespace FoodTruckNationApi.FoodTrucks
     public class CreateFoodTruckModelV11
     {
 
+        /// <summary>
+        /// Represents version 1.1 of the create food truck model
+        /// </summary>
         public CreateFoodTruckModelV11()
         {
             this.Tags = new List<string>();
-            this.SocialMediaAccounts = new List<CreateFoodTruckSocialMediaAccountModelV11>();
+            this.SocialMediaAccounts = new List<SocialMediaAccountModel>();
         }
 
         /// <summary>
@@ -49,17 +52,28 @@ namespace FoodTruckNationApi.FoodTrucks
         /// truck will collect this information as well, so the client will want to create
         /// a new food truck in one operation, not multiple operations
         /// </remarks>
-        public List<CreateFoodTruckSocialMediaAccountModelV11> SocialMediaAccounts { get; set; }
+        public List<SocialMediaAccountModel> SocialMediaAccounts { get; set; }
 
 
         #region Nested Classes
 
-        public class CreateFoodTruckSocialMediaAccountModelV11
+        /// <summary>
+        /// Represents a Social Media Account for the Food Truck that is being added at creation time of the truck
+        /// </summary>
+        public class SocialMediaAccountModel
         {
 
+            /// <summary>
+            /// The id number of the social media platform this account is for
+            /// </summary>
+            /// <remarks>
+            /// Use the SocialMediaPlatforms endpoint to get the valid ids of Social Media Platforms
+            /// </remarks>
             public int SocialMediaPlatformId { get; set; }
 
-
+            /// <summary>
+            /// The account name on this social media platform for the food truck
+            /// </summary>
             public String AccountName { get; set; }
 
         }

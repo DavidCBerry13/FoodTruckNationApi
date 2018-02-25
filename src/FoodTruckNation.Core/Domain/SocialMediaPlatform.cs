@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace FoodTruckNation.Core.Domain
 {
@@ -69,6 +70,14 @@ namespace FoodTruckNation.Core.Domain
 
         }
 
+
+        public bool IsValidAccountName(String accountName)
+        {
+            if (!String.IsNullOrWhiteSpace(this.AccountNameRegex))
+                Regex.IsMatch(accountName, this.AccountNameRegex);
+
+            return true;
+        }
 
     }
 }

@@ -8,8 +8,10 @@ namespace FoodTruckNation.Core.AppInterfaces
     public interface ISocialMediaPlatformService
     {
 
+        SocialMediaPlatform GetSocialMediaPlatform(int platformId);
 
         List<SocialMediaPlatform> GetAllSocialMediaPlatforms();
+
 
     }
 }
