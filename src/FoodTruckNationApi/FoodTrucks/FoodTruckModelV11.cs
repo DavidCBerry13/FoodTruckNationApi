@@ -42,6 +42,16 @@ namespace FoodTruckNationApi.FoodTrucks
         public List<String> Tags { get; set; }
 
         /// <summary>
+        /// Gets the number of reviews present for this food truck
+        /// </summary>
+        public int ReviewCount { get; set; }
+
+        /// <summary>
+        /// Gets the average review for the food truck
+        /// </summary>
+        public double ReviewAverage { get; set; }
+
+        /// <summary>
         /// List of social media accounts for this food truck
         /// </summary>
         public List<SocialMediaAccountModel> SocialMediaAccounts { get; set; }

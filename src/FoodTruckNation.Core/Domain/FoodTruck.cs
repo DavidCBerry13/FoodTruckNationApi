@@ -167,6 +167,24 @@ namespace FoodTruckNation.Core.Domain
         }
 
 
+        public int ReviewCount
+        {
+            get { return this.reviews.Count;  }
+        }
+
+
+        public double ReviewAverage
+        {
+            get
+            {
+                if (this.reviews.Count == 0)
+                    return 0.0;
+
+                return this.reviews.Average(r => r.Rating);
+            }
+        }
+        
+
         public List<Review> Reviews
         {
             get

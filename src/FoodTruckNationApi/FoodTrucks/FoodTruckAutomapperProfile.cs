@@ -29,6 +29,10 @@ namespace FoodTruckNationApi.FoodTrucks
                     opt => opt.MapFrom(src => src.Tags.Select(t => t.Tag.Text).ToList())
                 )
                 .ForMember(
+                    dest => dest.ReviewAverage,
+                    opt => opt.MapFrom(src => Math.Round(src.ReviewAverage, 2))
+                )
+                .ForMember(
                     dest => dest.Meta,
                     opt => opt.MapFrom(src => src)
                 );
@@ -83,6 +87,10 @@ namespace FoodTruckNationApi.FoodTrucks
                         .Select(a => new FoodTruckModelV11.SocialMediaAccountModel()
                         { PlatformName = a.Platform.Name, AccountName = a.AccountName }
                         ).ToList())
+                )
+                .ForMember(
+                    dest => dest.ReviewAverage,
+                    opt => opt.MapFrom(src => Math.Round(src.ReviewAverage, 2))
                 )
                 .ForMember(
                     dest => dest.Meta,

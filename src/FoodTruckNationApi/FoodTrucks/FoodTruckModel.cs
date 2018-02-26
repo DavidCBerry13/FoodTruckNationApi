@@ -37,6 +37,16 @@ namespace FoodTruckNationApi.FoodTrucks
         public List<String> Tags { get; set; }
 
         /// <summary>
+        /// Gets the number of reviews present for this food truck
+        /// </summary>
+        public int ReviewCount { get; set; }
+
+        /// <summary>
+        /// Gets the average review for the food truck
+        /// </summary>
+        public double ReviewAverage { get; set; }
+
+        /// <summary>
         /// The last time this food truck object was modified.  This is needed when updating the object
         /// </summary>
         public DateTime LastModifiedDate { get; set; }
