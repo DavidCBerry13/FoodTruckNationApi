@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace FoodTruckNationApi.Schedules
 {
-    public class SchedulesMappingProfile : Profile
+    public class SchedulesAutomapperProfile : Profile
     {
 
-        public SchedulesMappingProfile()
+        public SchedulesAutomapperProfile()
         {
             ScheduleToScheduleModel();
             FoodtruckToScheduleFoodTruckModel();

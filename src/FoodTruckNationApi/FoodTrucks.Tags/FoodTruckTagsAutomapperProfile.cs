@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace FoodTruckNationApi.Api.FoodTrucks.Tags
 {
-    public class FoodTruckTagsMappingProfile : Profile
+    public class FoodTruckTagsAutomapperProfile : Profile
     {
 
 
-        public FoodTruckTagsMappingProfile()
+        public FoodTruckTagsAutomapperProfile()
         {
             this.AddFoodTruckToFoodTruckModelMap();
 

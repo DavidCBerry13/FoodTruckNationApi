@@ -10,9 +10,9 @@ namespace FoodTruckNationApi.SocialMediaPlatforms
     /// <summary>
     /// Class defining mappings used in the SocialMediaPlatforms feature
     /// </summary>
-    public class SocialMediaPlatformMappingProfile : Profile
+    public class SocialMediaPlatformAutomapperProfile : Profile
     {
-        public SocialMediaPlatformMappingProfile()
+        public SocialMediaPlatformAutomapperProfile()
         {
             this.AddSocialMediaPlatformToSocialMediaPlatformModelMapping();
         }
