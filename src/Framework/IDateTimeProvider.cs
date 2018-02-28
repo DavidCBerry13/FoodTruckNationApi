@@ -16,6 +16,6 @@ namespace Framework
 
         DateTime CurrentDateTime { get;  }
 
-
+        DateTime Today { get; }
     }
 }

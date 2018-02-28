@@ -24,5 +24,7 @@ namespace Framework
         public DateTime CurrentUtcDateTime => _specifiedDateTimeUtc;
 
         public DateTime CurrentDateTime => _specifiedDateTime;
+
+        public DateTime Today => _specifiedDateTime.Date;
     }
 }

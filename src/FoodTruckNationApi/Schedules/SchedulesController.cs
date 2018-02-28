@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using FoodTruckNation.Core.AppInterfaces;
 using AutoMapper;
 using FoodTruckNation.Core.Domain;
+using Framework;
 
 namespace FoodTruckNationApi.Schedules
 {
@@ -20,13 +21,15 @@ namespace FoodTruckNationApi.Schedules
     {
 
         public SchedulesController(ILogger<SchedulesController> logger, IMapper mapper, 
-            IScheduleService scheduleService) : base(logger, mapper)
+            IScheduleService scheduleService, IDateTimeProvider dateTimeProvider) : base(logger, mapper)
         {
             _scheduleService = scheduleService;
+            _dateTimeProvider = dateTimeProvider;
         }
 
 
         private IScheduleService _scheduleService;
+        private IDateTimeProvider _dateTimeProvider;
 
         /// <summary>
         /// Gets a list of food truck schedules (appointments) for all food trucks for
@@ -38,8 +41,8 @@ namespace FoodTruckNationApi.Schedules
         [HttpGet]
         public IEnumerable<ScheduleModel> Get([FromQuery]GetSchedulesParameters parameters)
         {
-            var startDate = parameters.StartDate.HasValue ? parameters.StartDate.Value : DateTime.Today;
-            var endDate = parameters.EndDate.HasValue ? parameters.StartDate.Value : DateTime.Today.AddDays(7);
+            var startDate = parameters.StartDate.HasValue ? parameters.StartDate.Value : _dateTimeProvider.CurrentDateTime.Date; ;
+            var endDate = parameters.EndDate.HasValue ? parameters.EndDate.Value : _dateTimeProvider.CurrentDateTime.Date.AddDays(7);
 
             var schedules = this._scheduleService.GetSchedules(startDate, endDate);
             var scheduleModels = this.mapper.Map<List<Schedule>, List<ScheduleModel>>(schedules);

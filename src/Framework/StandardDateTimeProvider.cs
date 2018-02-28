@@ -13,5 +13,7 @@ namespace Framework
         public DateTime CurrentDateTime => DateTime.Now;
 
         public DateTime CurrentUtcDateTime => DateTime.UtcNow;
+
+        public DateTime Today => DateTime.Today;
     }
 }
