@@ -23,6 +23,10 @@ using Framework.ApiUtil.Controllers;
 using System.Linq;
 using FluentValidation.AspNetCore;
 using System.Reflection;
+using App.Metrics.Health;
+using App.Metrics.Health.Builder;
+using System;
+using App.Metrics.Health.Checks.Sql;
 
 namespace FoodTruckNationApi
 {
@@ -71,6 +75,19 @@ namespace FoodTruckNationApi
             services.AddAutoMapper();
             this.ConfigureServicesVersioning(services);
             this.ConfigureServicesSwagger(services);
+
+            var memoryThreshhold = 800000000; // 800 MB
+            var healthBuilder = new HealthBuilder()
+                // Check that the current amount of physical memory in bytes is below a threshold
+                .HealthChecks.AddProcessPhysicalMemoryCheck("Working Set", memoryThreshhold)
+                // Check connectivity to google with a "ping", passes if the result is `IPStatus.Success`
+                .HealthChecks.AddPingCheck("google ping", "google.com", TimeSpan.FromSeconds(10))
+                // Check that our SQL Server is still up and running
+                .HealthChecks.AddSqlCheck("Food Truck Database", 
+                    this.configuration.GetConnectionString("FoodTruckConnectionString"), TimeSpan.FromSeconds(10))
+                .OutputHealth.AsJson()
+                .BuildAndAddTo(services);
+            services.AddHealthEndpoints();
         }
 
 
@@ -93,6 +110,10 @@ namespace FoodTruckNationApi
 
 
             app.UseMvc();
+
+            // For AppMetrics health Endpoints
+            app.UseHealthEndpoint();
+            app.UsePingEndpoint();
 
             app.UseSwagger(c =>
             {                

@@ -30,6 +30,11 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="App.Metrics.AspNetCore.Health" Version="2.0.0-preview1" />
+    <PackageReference Include="App.Metrics.AspNetCore.Health.Endpoints" Version="2.0.0-preview1" />
+    <PackageReference Include="App.Metrics.Health.Checks.Http" Version="2.0.0-preview1" />
+    <PackageReference Include="App.Metrics.Health.Checks.Network" Version="2.0.0-preview1" />
+    <PackageReference Include="App.Metrics.Health.Checks.Process" Version="2.0.0-preview1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.0.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="7.1.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0" />
@@ -51,6 +56,7 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\App.Metrics.Health.Checks.Sql\App.Metrics.Health.Checks.Sql.csproj" />
     <ProjectReference Include="..\FoodTruckNation.Core\FoodTruckNation.Core.csproj" />
     <ProjectReference Include="..\FoodTruckNation.Data.EF\FoodTruckNation.Data.EF.csproj" />
     <ProjectReference Include="..\Framework.ApiUtil\Framework.ApiUtil.csproj" />

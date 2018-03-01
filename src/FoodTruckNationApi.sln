@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.13
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTruckNationApi", "FoodTruckNationApi\FoodTruckNationApi.csproj", "{F802C7EA-9819-4C28-B493-585C11483589}"
 EndProject
@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Test", "Framework
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTruckNation.Core", "FoodTruckNation.Core\FoodTruckNation.Core.csproj", "{7AC4F562-D2B4-4B19-87C9-21BBE74C6466}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.ApiUtil.Tests", "Framework.ApiUtil.Tests\Framework.ApiUtil.Tests.csproj", "{9C2BE0CA-B576-431D-97F8-750A26139C52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.ApiUtil.Tests", "Framework.ApiUtil.Tests\Framework.ApiUtil.Tests.csproj", "{9C2BE0CA-B576-431D-97F8-750A26139C52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Metrics.Health.Checks.Sql", "App.Metrics.Health.Checks.Sql\App.Metrics.Health.Checks.Sql.csproj", "{2874062D-F123-47F8-9F30-D7E6A4AC69BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,8 +59,15 @@ Global
 		{9C2BE0CA-B576-431D-97F8-750A26139C52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C2BE0CA-B576-431D-97F8-750A26139C52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C2BE0CA-B576-431D-97F8-750A26139C52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2874062D-F123-47F8-9F30-D7E6A4AC69BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2874062D-F123-47F8-9F30-D7E6A4AC69BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2874062D-F123-47F8-9F30-D7E6A4AC69BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2874062D-F123-47F8-9F30-D7E6A4AC69BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {74656868-94B3-4949-B7BC-26D099F008CA}
 	EndGlobalSection
 EndGlobal
