@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTruckNation.Core", "Foo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.ApiUtil.Tests", "Framework.ApiUtil.Tests\Framework.ApiUtil.Tests.csproj", "{9C2BE0CA-B576-431D-97F8-750A26139C52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Metrics.Health.Checks.Sql", "App.Metrics.Health.Checks.Sql\App.Metrics.Health.Checks.Sql.csproj", "{2874062D-F123-47F8-9F30-D7E6A4AC69BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Metrics.Health.Checks.Sql", "App.Metrics.Health.Checks.Sql\App.Metrics.Health.Checks.Sql.csproj", "{2874062D-F123-47F8-9F30-D7E6A4AC69BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodTruckNationApi.Tests.Integration", "FoodTruckNationApi.Tests.Integration\FoodTruckNationApi.Tests.Integration.csproj", "{BA101816-95DA-4907-8237-2DBB96075D13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{2874062D-F123-47F8-9F30-D7E6A4AC69BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2874062D-F123-47F8-9F30-D7E6A4AC69BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2874062D-F123-47F8-9F30-D7E6A4AC69BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA101816-95DA-4907-8237-2DBB96075D13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA101816-95DA-4907-8237-2DBB96075D13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA101816-95DA-4907-8237-2DBB96075D13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA101816-95DA-4907-8237-2DBB96075D13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

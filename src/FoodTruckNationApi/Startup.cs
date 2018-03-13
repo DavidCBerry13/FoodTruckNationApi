@@ -33,23 +33,18 @@ namespace FoodTruckNationApi
     public class Startup
     {
 
-        private readonly IConfigurationRoot configuration;
+        //private readonly IConfigurationRoot configuration;
         private readonly IHostingEnvironment hostingEnvironment;
         private readonly ILoggerFactory loggerFactory;
 
-        public Startup(IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public Startup(IHostingEnvironment env, IConfiguration configuration, ILoggerFactory loggerFactory)
         {
             // Hold onto a reference to the hosting environment and the logger factory
             this.hostingEnvironment = env;
             this.loggerFactory = loggerFactory;
 
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
+            this.Configuration = configuration;
 
-            configuration = Configuration = builder.Build();
             
             // For NLog            
             env.ConfigureNLog("nlog.config");
@@ -57,7 +52,7 @@ namespace FoodTruckNationApi
 
 
 
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -84,7 +79,7 @@ namespace FoodTruckNationApi
                 .HealthChecks.AddPingCheck("google ping", "google.com", TimeSpan.FromSeconds(10))
                 // Check that our SQL Server is still up and running
                 .HealthChecks.AddSqlCheck("Food Truck Database", 
-                    this.configuration.GetConnectionString("FoodTruckConnectionString"), TimeSpan.FromSeconds(10))
+                    this.Configuration.GetConnectionString("FoodTruckConnectionString"), TimeSpan.FromSeconds(10))
                 .OutputHealth.AsJson()
                 .BuildAndAddTo(services);
             services.AddHealthEndpoints();
@@ -143,12 +138,23 @@ namespace FoodTruckNationApi
         /// <param name="services"></param>
         private void ConfigureServicesDI(IServiceCollection services)
         {
-            services.AddSingleton<IConfigurationRoot>(this.configuration);
+            services.AddSingleton<IConfiguration>(this.Configuration);
 
-            services.AddDbContext<FoodTruckContext>(options => options
-                .UseSqlServer(this.configuration.GetConnectionString("FoodTruckConnectionString"))
-                .UseLoggerFactory(this.loggerFactory)
+            if (this.hostingEnvironment.EnvironmentName == "IntegrationTests")
+            {
+                var testDbName = this.Configuration["TestName"];
+
+                services.AddDbContext<FoodTruckContext>(options =>
+                    options.UseInMemoryDatabase(databaseName: testDbName)
                 );
+            }
+            else
+            {
+                services.AddDbContext<FoodTruckContext>(options => options
+                    .UseSqlServer(this.Configuration.GetConnectionString("FoodTruckConnectionString"))
+                    .UseLoggerFactory(this.loggerFactory)
+                    );
+            }
 
             services.AddScoped<IUnitOfWork, EfUnitOfWork<FoodTruckContext>>();
 
