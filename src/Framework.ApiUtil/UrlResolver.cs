@@ -37,7 +37,8 @@ namespace Framework.ApiUtil
         /// fetch the HttpContext of the current request</param>
         public UrlResolver(IHttpContextAccessor httpContextAccessor)
         {
-            this.httpContext = httpContextAccessor.HttpContext;
+            var httpContext = httpContextAccessor.HttpContext;
+            this.urlHelper = (IUrlHelper)httpContext.Items["URL_HELPER"];
         }
 
         // This is here so the TestUrlResolver can extend the class
@@ -47,8 +48,7 @@ namespace Framework.ApiUtil
         }
 
 
-        private readonly HttpContext httpContext;
-
+        private readonly IUrlHelper urlHelper;
 
         /// <summary>
         /// Resolves a URL in a modul object by using a route name and route paramters in the supplied RouteUrlInfo object
@@ -61,9 +61,7 @@ namespace Framework.ApiUtil
         /// <returns>A String of the generated URL</returns>
         public virtual string Resolve(object source, object destination, RouteUrlInfo sourceMember, string destMember, ResolutionContext context)
         {
-            IUrlHelper url = (IUrlHelper)httpContext.Items["URL_HELPER"];
-
-            return url.Link(sourceMember.RouteName, sourceMember.RouteParams);
+            return this.urlHelper.Link(sourceMember.RouteName, sourceMember.RouteParams);
         }
     }
 }

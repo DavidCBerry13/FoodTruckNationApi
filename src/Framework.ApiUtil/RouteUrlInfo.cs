@@ -18,7 +18,6 @@ namespace Framework.ApiUtil
 
         public String RouteName { get; set; }
 
-
         public object RouteParams { get; set; }
 
     }
