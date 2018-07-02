@@ -55,6 +55,9 @@ namespace FoodTruckNation.Data.EF
                 .ToTable("Tags")
                 .HasKey(t => t.TagId);
 
+            modelBuilder.Entity<Tag>()
+                .Ignore(t => t.ObjectState);
+
             modelBuilder.Entity<Tag>().Property(p => p.TagId)
                 .HasField("tagId")
                 .UseSqlServerIdentityColumn()
@@ -71,6 +74,9 @@ namespace FoodTruckNation.Data.EF
             modelBuilder.Entity<FoodTruckTag>()
                 .ToTable("FoodTruckTags")
                 .HasKey(f => f.FoodTruckTagId);
+
+            modelBuilder.Entity<FoodTruckTag>()
+                .Ignore(t => t.ObjectState);
 
             modelBuilder.Entity<FoodTruckTag>().Property(p => p.FoodTruckTagId)
                .HasField("foodTruckTagId")
@@ -95,6 +101,9 @@ namespace FoodTruckNation.Data.EF
             modelBuilder.Entity<Location>()
                 .ToTable("Locations")
                 .HasKey(l => l.LocationId);
+
+            modelBuilder.Entity<Location>()
+                .Ignore(l => l.ObjectState);
 
             modelBuilder.Entity<Location>().Property(p => p.LocationId)
                 .HasField("locationId")
@@ -129,6 +138,9 @@ namespace FoodTruckNation.Data.EF
             modelBuilder.Entity<FoodTruck>()
                 .ToTable("FoodTrucks")
                 .HasKey(f => f.FoodTruckId);
+
+            modelBuilder.Entity<FoodTruck>()
+                .Ignore(f => f.ObjectState);
 
             modelBuilder.Entity<FoodTruck>().Property(p => p.FoodTruckId)
                 .HasField("foodTruckId")
@@ -182,6 +194,9 @@ namespace FoodTruckNation.Data.EF
                 .ToTable("Reviews")
                 .HasKey(r => r.ReviewId);
 
+            modelBuilder.Entity<Review>()
+                .Ignore(r => r.ObjectState);
+
             modelBuilder.Entity<Review>().Property(x => x.ReviewId)
                 .HasField("_reviewId")
                 .UseSqlServerIdentityColumn()
@@ -216,6 +231,9 @@ namespace FoodTruckNation.Data.EF
             modelBuilder.Entity<Schedule>()
                 .ToTable("Schedules")
                 .HasKey(s => s.ScheduleId);
+
+            modelBuilder.Entity<Schedule>()
+                .Ignore(s => s.ObjectState);
 
             modelBuilder.Entity<Schedule>().Property(x => x.ScheduleId)
                 .HasField("scheduleId")
@@ -257,6 +275,9 @@ namespace FoodTruckNation.Data.EF
                 .ToTable("SocialMediaPlatforms")
                 .HasKey(p => p.PlatformId);
 
+            modelBuilder.Entity<SocialMediaPlatform>()
+               .Ignore(p => p.ObjectState);
+
             modelBuilder.Entity<SocialMediaPlatform>().Property(p => p.PlatformId)
                 .HasField("_platformId")
                 .UseSqlServerIdentityColumn()
@@ -278,6 +299,9 @@ namespace FoodTruckNation.Data.EF
             modelBuilder.Entity<SocialMediaAccount>()
                 .ToTable("SocialMediaAccounts")
                 .HasKey(a => a.SocialMediaAccountId);
+
+            modelBuilder.Entity<SocialMediaAccount>()
+                .Ignore(a => a.ObjectState);
 
             modelBuilder.Entity<SocialMediaAccount>().Property(p => p.SocialMediaAccountId)
                .HasField("_socialMediaAccountId")

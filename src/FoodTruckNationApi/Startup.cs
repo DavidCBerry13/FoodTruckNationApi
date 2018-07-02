@@ -13,7 +13,7 @@ using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.AppServices;
 using Framework;
 using System.IO;
-using Microsoft.Extensions.PlatformAbstractions;
+//using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -200,9 +200,11 @@ namespace FoodTruckNationApi
                     }
                     return actionApiVersionModel.ImplementedApiVersions.Any(v => $"v{v.ToString()}" == docName);
                 });
-                
-                var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, pathToXmlComments);
-                options.IncludeXmlComments(filePath);
+
+                //var filePath = Path.Combine(this.hostingEnvironment.ContentRootPath, pathToXmlComments);
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
                 options.DescribeAllEnumsAsStrings();
                 options.CustomSchemaIds(x => x.FullName);
             });

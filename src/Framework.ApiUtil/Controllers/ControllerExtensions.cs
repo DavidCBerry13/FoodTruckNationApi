@@ -35,19 +35,6 @@ namespace Framework.ApiUtil.Controllers
         }
 
 
-
-        public static IActionResult Conflict(this Controller controller)
-        {
-            return new ConflictResult();
-        }
-
-        public static IActionResult Conflict(this Controller controller, object value)
-        {
-            return new ConflictObjectResult(value);
-        }
-
-
-
         public static IActionResult InternalServerError(this Controller controller)
         {
             return new InternalServerErrorResult();

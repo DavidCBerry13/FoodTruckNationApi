@@ -29,7 +29,7 @@ namespace Framework.Test
             var missingColors = colors.WhereNotExists(target, (x, y) => (x == y)).ToList();
 
             // Assert
-            missingColors.Count.ShouldBeEquivalentTo(2);
+            missingColors.Count.Should().Be(2);
             missingColors.Should().Contain("Blue");
             missingColors.Should().Contain("White");
             missingColors.Should().NotContain("Red");
@@ -55,7 +55,7 @@ namespace Framework.Test
             var missingItems = cars.WhereNotExists(colors, (x, y) => (x.Color == y)).ToList();
 
             // Assert
-            missingItems.Count.ShouldBeEquivalentTo(2);
+            missingItems.Count.Should().Be(2);
             missingItems.Should().Contain(c => c.Color == "Silver" ); // Has a silver car
             missingItems.Should().Contain(c => c.Color == "Yellow");  // Has a yellow car
             missingItems.Should().NotContain(c => c.Color == "Red"); // No Red Cars
@@ -81,7 +81,7 @@ namespace Framework.Test
             var missingItems = colors.WhereNotExists(cars, (x, y) => (x == y.Color)).ToList();
 
             // Assert
-            missingItems.Count.ShouldBeEquivalentTo(2);
+            missingItems.Count.Should().Be(2);
             missingItems.Should().Contain("White"); // There are no white cars
             missingItems.Should().Contain("Blue"); // There are no blue cars
         }
@@ -106,7 +106,7 @@ namespace Framework.Test
             var matchingItems = cars.WhereExists(colors, (x, y) => (x.Color == y)).ToList();
 
             // Assert
-            matchingItems.Count.ShouldBeEquivalentTo(2);
+            matchingItems.Count.Should().Be(2);
             matchingItems.Should().NotContain(car => car.Color == "Silver"); // Silver is not in the color list
             matchingItems.Should().NotContain(car => car.Color == "Yellow"); // Yellow is not in the color list
 
@@ -133,7 +133,7 @@ namespace Framework.Test
             var matchingItems = colors.WhereExists(cars, (x, y) => (x == y.Color)).ToList();
 
             // Assert
-            matchingItems.Count.ShouldBeEquivalentTo(2);
+            matchingItems.Count.Should().Be(2);
 
             matchingItems.Should().Contain("Red", "A red car is in the list and red is in the list of colors");
             matchingItems.Should().Contain("Green", "A green car is in the list and green is in the list of colors");

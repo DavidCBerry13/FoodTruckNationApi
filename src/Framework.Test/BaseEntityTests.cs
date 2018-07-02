@@ -19,7 +19,7 @@ namespace Framework.Test
             entity.SetObjectModified();
 
             // Assert
-            entity.ObjectState.ShouldBeEquivalentTo(ObjectState.NEW);
+            entity.ObjectState.Should().Be(ObjectState.NEW);
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace Framework.Test
             entity.SetObjectModified();
 
             // Assert
-            entity.ObjectState.ShouldBeEquivalentTo(ObjectState.MODIFIED);
+            entity.ObjectState.Should().Be(ObjectState.MODIFIED);
         }
 
 
