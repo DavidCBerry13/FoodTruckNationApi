@@ -136,7 +136,7 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.0")]
-        public IActionResult Get(int id)
+        public ActionResult<FoodTruckModel> Get(int id)
         {
             FoodTruck foodTruck = this.foodTruckService.GetFoodTruck(id);
 
@@ -147,7 +147,7 @@ namespace FoodTruckNationApi.FoodTrucks
             else
             {
                 var model = this.mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
-                return this.Ok(model);
+                return model;
             }
         }
 
@@ -166,7 +166,7 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.1")]
-        public IActionResult GetV11(int id)
+        public ActionResult<FoodTruckModelV11> GetV11(int id)
         {
             FoodTruck foodTruck = this.foodTruckService.GetFoodTruck(id);
 
@@ -177,7 +177,7 @@ namespace FoodTruckNationApi.FoodTrucks
             else
             {
                 var model = this.mapper.Map<FoodTruck, FoodTruckModelV11>(foodTruck);
-                return this.Ok(model);
+                return model;
             }
         }
 

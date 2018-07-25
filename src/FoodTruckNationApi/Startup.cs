@@ -13,7 +13,7 @@ using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.AppServices;
 using Framework;
 using System.IO;
-//using Microsoft.Extensions.PlatformAbstractions;
+//using Microsoft.Extensions.PlatformAbstractions;  // For ApiControllerAttribute Compatibility Setting
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -62,7 +62,9 @@ namespace FoodTruckNationApi
             {
                 options.Filters.Add(new ValidationAttribute());
                 options.Filters.Add(new ExceptionHandlerFilterAttribute(this.loggerFactory));
-            })
+                
+            })            
+            // .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)  // Uncomment to use ApiController Attribute
             .AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 
             services.AddCors();

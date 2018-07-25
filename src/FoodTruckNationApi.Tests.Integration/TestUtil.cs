@@ -14,6 +14,10 @@ namespace FoodTruckNationApi.Tests.Integration
 
         public static TestServer CreateTestServer(String testName)
         {
+            // Solves problem of Automapper getting re-initialized for each test run (which throws exception)
+            // This is only for use in test scenarios per AutoMapper doc
+            AutoMapper.Mapper.Reset();  
+
             var server = new TestServer(new WebHostBuilder()
                 .UseEnvironment("IntegrationTests")
                 .ConfigureAppConfiguration((hostingEnv, configBuilder) =>
