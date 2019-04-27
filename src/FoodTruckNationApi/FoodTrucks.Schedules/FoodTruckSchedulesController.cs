@@ -49,8 +49,7 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
         /// Gets all the Schedules (appointments) for a Food Truck in the given date range
         /// </summary>
         /// <param name="foodTruckId">An int of the food truck id</param>
-        /// <param name="startDate"></param>
-        /// <param name="endDate"></param>
+        /// <param name="parameters">A FoodTruckScheduleParameters object that encapsulates the optional parameters that can be passed to this action (example the start and end date)</param>
         /// <returns></returns>
         /// <response code="200">Success.  A list of location schedule objects of what food trucks are scheduled at this location are returned</response>
         /// <response code="404">Not Found.  The requested food truck id could not be found</response>
@@ -81,7 +80,7 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
         /// <param name="foodTruckId">An int of the food truck id the schedule is for</param>
         /// <param name="scheduleId">An int of the unique id of the schedule</param>
         /// <returns></returns>
-        /// <response code="200">Success.  A location schedule object of of an individual appointment for this food truck<response>
+        /// <response code="200">Success.  A location schedule object of of an individual appointment for this food truck</response>
         /// <response code="404">Not Found.  The requested food truck id could not be found or the individual schedule could not be found</response>
         /// <response code="500">Internal Server Error.  An unexpected error occured.  This error has been logged so support personel can troubleshoot the problem</response>
         [ProducesResponseType(typeof(List<FoodTruckScheduleModel>), 200)]
@@ -102,7 +101,7 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
         /// <param name="foodTruckId">An int of the id of the food truck to create the schedule for</param>
         /// <param name="createModel">The data required to create the new schedule for the food truck</param>
         /// <returns></returns>
-        /// <response code="201">Success.  A new schedule was created and has been returned<response>
+        /// <response code="201">Success.  A new schedule was created and has been returned</response>
         /// <response code="404">Not Found.  The requested food truck id could not be found</response>
         /// <response code="500">Internal Server Error.  An unexpected error occured.  This error has been logged so support personel can troubleshoot the problem</response>
         [ProducesResponseType(typeof(List<FoodTruckScheduleModel>), 201)]

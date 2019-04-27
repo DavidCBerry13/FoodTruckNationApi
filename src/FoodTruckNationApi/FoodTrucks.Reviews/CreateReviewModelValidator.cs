@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace FoodTruckNationApi.FoodTrucks.Reviews
 {
+    /// <summary>
+    /// Validation rules for the CreateReviewModel object used in creating a review
+    /// </summary>
     public class CreateReviewModelValidator : AbstractValidator<CreateReviewModel>
     {
 

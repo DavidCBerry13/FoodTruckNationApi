@@ -41,7 +41,7 @@ namespace Framework
             }
             catch (Exception exception)
             {
-                //log exception but dont throw one
+                //log exception but don't throw one
                 return EXCEPTION;
             }
         }

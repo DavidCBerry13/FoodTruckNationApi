@@ -18,7 +18,7 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
         }
 
 
-        public void AddReviewModelMaps()
+        internal void AddReviewModelMaps()
         {
             this.CreateMap<Review, ReviewModel>()
                 .ForMember(
@@ -56,7 +56,7 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
         }
 
 
-        public void AddCreateReviewModelMaps()
+        internal void AddCreateReviewModelMaps()
         {
             this.CreateMap<CreateReviewModel, CreateReviewCommand>();
         }

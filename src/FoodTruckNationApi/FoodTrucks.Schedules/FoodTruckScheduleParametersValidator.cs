@@ -6,9 +6,17 @@ using System.Threading.Tasks;
 
 namespace FoodTruckNationApi.FoodTrucks.Schedules
 {
+
+    /// <summary>
+    /// Validator class for the FoodTruckScheduleParameters object - the object that contains optional parameters when
+    /// getting a Good Trucks Schedule
+    /// </summary>
     public class FoodTruckScheduleParametersValidator : AbstractValidator<FoodTruckScheduleParameters>
     {
 
+        /// <summary>
+        /// Creates a FoodTruckScheduleParametersValidator object
+        /// </summary>
         public FoodTruckScheduleParametersValidator()
         {
 

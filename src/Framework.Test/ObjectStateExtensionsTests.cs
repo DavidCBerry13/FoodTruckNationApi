@@ -17,7 +17,7 @@ namespace Framework.Test
             Assert.True(isActive);
         }
 
-
+        [Fact]
         public void TestUnchangedStateIsActive()
         {
             // Act
@@ -27,7 +27,7 @@ namespace Framework.Test
             Assert.True(isActive);
         }
 
-
+        [Fact]
         public void TestModifiedStateIsActive()
         {
             // Act
@@ -37,7 +37,7 @@ namespace Framework.Test
             Assert.True(isActive);
         }
 
-
+        [Fact]
         public void TestDeletedStateIsNotActive()
         {
             // Act
