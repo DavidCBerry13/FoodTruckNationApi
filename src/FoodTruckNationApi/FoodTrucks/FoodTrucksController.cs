@@ -20,6 +20,7 @@ namespace FoodTruckNationApi.FoodTrucks
     /// </summary>
     [Produces("application/json")]
     [Route("api/FoodTrucks")]
+    //[ApiController]
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
     public class FoodTrucksController : BaseController
@@ -49,15 +50,29 @@ namespace FoodTruckNationApi.FoodTrucks
         public const String GET_ALL_FOOD_TRUCKS = "GetFoodTrucks";
 
         /// <summary>
+        /// Route Name Constant for route that will get all food trucks
+        /// </summary>
+        public const String GET_ALL_FOOD_TRUCKS_V11 = "GetFoodTrucksV11";
+
+        /// <summary>
         /// Route name constant for route that gets an individual food truck
         /// </summary>
         public const String GET_FOOD_TRUCK_BY_ID = "GetFoodTruckById";
+
+        /// <summary>
+        /// Route name constant for route that gets an individual food truck
+        /// </summary>
+        public const String GET_FOOD_TRUCK_BY_ID_V11 = "GetFoodTruckByIdV11";
 
         /// <summary>
         /// Route name constant for route that creates a new Food Truck
         /// </summary>
         public const String CREATE_FOOD_TRUCK = "CreatFoodTruck";
 
+        /// <summary>
+        /// Route name constant for route that creates a new Food Truck
+        /// </summary>
+        public const String CREATE_FOOD_TRUCK_V11 = "CreatFoodTruckV11";
 
         #endregion
 
@@ -100,7 +115,7 @@ namespace FoodTruckNationApi.FoodTrucks
         /// <param name="tag">An optional tag to filter the food trucks by</param>
         /// <returns></returns>
         /// <response code="200">Success.  A list of food trucks will be returned</response>
-        [HttpGet(Name = GET_ALL_FOOD_TRUCKS)]
+        [HttpGet(Name = GET_ALL_FOOD_TRUCKS_V11)]
         [ProducesResponseType(typeof(List<FoodTruckModel>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.1")]
@@ -161,7 +176,7 @@ namespace FoodTruckNationApi.FoodTrucks
         /// <response code="200">Success.  A food truck with the given id was found and is being returned</response>
         /// <response code="404">Not Found.  No food truck was found with the supplied id</response>
         /// <response code="500">Internal Server Error.  An unexpected error internal to the application has occured.  The error has been logged automatically by the system.</response>
-        [HttpGet("{id:int}", Name = GET_FOOD_TRUCK_BY_ID)]
+        [HttpGet("{id:int}", Name = GET_FOOD_TRUCK_BY_ID_V11)]
         [ProducesResponseType(typeof(FoodTruckModel), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
@@ -215,7 +230,7 @@ namespace FoodTruckNationApi.FoodTrucks
         /// <response code="200">Success.  The new food truck has been created</response>
         /// <response code="409">Conflict.  A food truck with the same name found so this food truck could not be created</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpPost(Name = CREATE_FOOD_TRUCK)]
+        [HttpPost(Name = CREATE_FOOD_TRUCK_V11)]
         [ProducesResponseType(typeof(FoodTruckModel), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 409)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]

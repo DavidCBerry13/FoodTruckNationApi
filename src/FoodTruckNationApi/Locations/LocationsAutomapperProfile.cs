@@ -34,7 +34,7 @@ namespace FoodTruckNationApi.Locations
             this.CreateMap<Location, LocationLinks>()
                 .ForMember(
                     dest => dest.Self,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = LocationsController.GET_LOCATION_BY_ID,
@@ -44,7 +44,7 @@ namespace FoodTruckNationApi.Locations
                 )
                 .ForMember(
                     dest => dest.Schedules,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = Schedules.LocationSchedulesController.GET_ALL_SCHEDULES_FOR_LOCATION,

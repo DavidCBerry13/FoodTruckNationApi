@@ -35,7 +35,7 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
             this.CreateMap<Review, ReviewLinks>()
                 .ForMember(
                     dest => dest.Self,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = FoodTruckReviewsController.GET_SINGLE_FOOD_TRUCK_REVIEW,
@@ -45,7 +45,7 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
                 )
                 .ForMember(
                     dest => dest.FoodTruck,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = FoodTrucksController.GET_FOOD_TRUCK_BY_ID,

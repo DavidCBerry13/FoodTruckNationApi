@@ -42,7 +42,7 @@ namespace FoodTruckNationApi.FoodTrucks
             this.CreateMap<FoodTruck, FoodTruckModel.FoodTruckLinks>()
                 .ForMember(
                     dest => dest.Self,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = FoodTrucksController.GET_FOOD_TRUCK_BY_ID,
@@ -52,7 +52,7 @@ namespace FoodTruckNationApi.FoodTrucks
                 )
                 .ForMember(
                     dest => dest.Reviews,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = Reviews.FoodTruckReviewsController.GET_ALL_FOOD_TRUCK_REVIEWS,
@@ -62,7 +62,7 @@ namespace FoodTruckNationApi.FoodTrucks
                 )
                 .ForMember(
                     dest => dest.Schedules,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = Schedules.FoodTruckSchedulesController.GET_FOOD_TRUCK_SCHEDULE,
@@ -101,7 +101,7 @@ namespace FoodTruckNationApi.FoodTrucks
             this.CreateMap<FoodTruck, FoodTruckModelV11.FoodTruckLinks>()
                 .ForMember(
                     dest => dest.Self,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = FoodTrucksController.GET_FOOD_TRUCK_BY_ID,
@@ -111,7 +111,7 @@ namespace FoodTruckNationApi.FoodTrucks
                 )
                 .ForMember(
                     dest => dest.Reviews,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = Reviews.FoodTruckReviewsController.GET_ALL_FOOD_TRUCK_REVIEWS,
@@ -121,7 +121,7 @@ namespace FoodTruckNationApi.FoodTrucks
                 )
                 .ForMember(
                     dest => dest.Schedules,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = Schedules.FoodTruckSchedulesController.GET_FOOD_TRUCK_SCHEDULE,

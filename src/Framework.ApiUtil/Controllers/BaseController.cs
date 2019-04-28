@@ -14,6 +14,7 @@ namespace Framework.ApiUtil.Controllers
     /// <summary>
     /// Base controller class to encapsulate functionality common to all API controllers
     /// </summary>
+    [ApiController]
     public abstract class BaseController : Controller
     {
 

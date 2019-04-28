@@ -20,7 +20,7 @@ namespace FoodTruckNationApi.Tags
         {
 
             this.CreateMap<Tag, String>()
-                .ProjectUsing(tag => tag.Text );
+                .ConvertUsing(tag => tag.Text );
         }
 
     }

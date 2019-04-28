@@ -45,7 +45,7 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
             this.CreateMap<Schedule, FoodTruckScheduleModel.FoodTruckScheduleLinks>()
                 .ForMember(
                     dest => dest.Self,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = FoodTruckSchedulesController.GET_SINGLE_FOOD_TRUCK_SCHEDULE,
@@ -55,7 +55,7 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
                 )
                 .ForMember(
                     dest => dest.FoodTruck,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = FoodTrucksController.GET_FOOD_TRUCK_BY_ID,
@@ -86,7 +86,7 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
             this.CreateMap<Location, FoodTruckScheduleModel.LocationModel.LocationLinks>()
                 .ForMember(
                     dest => dest.Self,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = Locations.LocationsController.GET_LOCATION_BY_ID,
@@ -96,7 +96,7 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
                 )
                 .ForMember(
                     dest => dest.Schedules,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = Locations.Schedules.LocationSchedulesController.GET_ALL_SCHEDULES_FOR_LOCATION,

@@ -52,7 +52,7 @@ namespace FoodTruckNationApi.Schedules
             this.CreateMap<FoodTruck, ScheduleModel.FoodTruckLinks>()
                 .ForMember(
                     dest => dest.Self,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = FoodTrucks.FoodTrucksController.GET_FOOD_TRUCK_BY_ID,
@@ -62,7 +62,7 @@ namespace FoodTruckNationApi.Schedules
                 )
                 .ForMember(
                     dest => dest.Reviews,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = FoodTrucks.Reviews.FoodTruckReviewsController.GET_ALL_FOOD_TRUCK_REVIEWS,
@@ -72,7 +72,7 @@ namespace FoodTruckNationApi.Schedules
                 )
                 .ForMember(
                     dest => dest.Schedules,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = FoodTruckSchedulesController.GET_FOOD_TRUCK_SCHEDULE,
@@ -100,7 +100,7 @@ namespace FoodTruckNationApi.Schedules
             this.CreateMap<Location, ScheduleModel.LocationLinks>()
                 .ForMember(
                     dest => dest.Self,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = Locations.LocationsController.GET_LOCATION_BY_ID,
@@ -110,7 +110,7 @@ namespace FoodTruckNationApi.Schedules
                 )
                 .ForMember(
                     dest => dest.Schedules,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = Locations.Schedules.LocationSchedulesController.GET_ALL_SCHEDULES_FOR_LOCATION,

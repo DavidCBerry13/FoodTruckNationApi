@@ -36,7 +36,7 @@ namespace FoodTruckNationApi.Locations.Schedules
             this.CreateMap<FoodTruck, LocationScheduleModel.FoodTruckLinks>()
                 .ForMember(
                     dest => dest.Self,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = FoodTrucks.FoodTrucksController.GET_FOOD_TRUCK_BY_ID,
@@ -46,7 +46,7 @@ namespace FoodTruckNationApi.Locations.Schedules
                 )
                 .ForMember(
                     dest => dest.Reviews,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = FoodTrucks.Reviews.FoodTruckReviewsController.GET_ALL_FOOD_TRUCK_REVIEWS,
@@ -56,7 +56,7 @@ namespace FoodTruckNationApi.Locations.Schedules
                 )
                 .ForMember(
                     dest => dest.Schedules,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = FoodTrucks.Schedules.FoodTruckSchedulesController.GET_FOOD_TRUCK_SCHEDULE,
@@ -93,7 +93,7 @@ namespace FoodTruckNationApi.Locations.Schedules
             this.CreateMap<Schedule, LocationScheduleModel.LocationScheduleLinks>()
                 .ForMember(
                     dest => dest.Self,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = FoodTrucks.Schedules.FoodTruckSchedulesController.GET_SINGLE_FOOD_TRUCK_SCHEDULE,
@@ -103,7 +103,7 @@ namespace FoodTruckNationApi.Locations.Schedules
                 )
                 .ForMember(
                     dest => dest.Location,
-                    opt => opt.ResolveUsing<UrlResolver, RouteUrlInfo>(src =>
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
                         new RouteUrlInfo()
                         {
                             RouteName = LocationsController.GET_LOCATION_BY_ID,
