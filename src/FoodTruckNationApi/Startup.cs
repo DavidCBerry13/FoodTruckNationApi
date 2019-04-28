@@ -3,12 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using NLog.Web;
 using NLog.Extensions.Logging;
-using FoodTruckNation.Data.EF;
-using FoodTruckNation.Core.DataInterfaces;
-using FoodTruckNation.Data.EF.Repositories;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.AppServices;
 using Framework;
@@ -27,6 +23,8 @@ using App.Metrics.Health;
 using App.Metrics.Health.Builder;
 using System;
 using App.Metrics.Health.Checks.Sql;
+using FoodTruckNation.Data.EF;
+using FoodTruckNation.Core;
 
 namespace FoodTruckNationApi
 {
@@ -133,10 +131,6 @@ namespace FoodTruckNationApi
         /// <summary>
         /// Helper method where all the dependency injection is configured
         /// </summary>
-        /// <remarks>
-        /// This code is split out into a helper method to keep the ConfigureServices method from getting too large.
-        /// Having a separate helper method helps to keep each helper tightly focused on one job as well.
-        /// </remarks>
         /// <param name="services"></param>
         private void ConfigureServicesDI(IServiceCollection services)
         {
@@ -145,33 +139,15 @@ namespace FoodTruckNationApi
             if (this.hostingEnvironment.EnvironmentName == "IntegrationTests")
             {
                 var testDbName = this.Configuration["TestName"];
-
-                services.AddDbContext<FoodTruckContext>(options =>
-                    options.UseInMemoryDatabase(databaseName: testDbName)
-                );
+                services.ConfigureInMemoryDataAccess(testDbName);
             }
             else
             {
-                services.AddDbContext<FoodTruckContext>(options => options
-                    .UseSqlServer(this.Configuration.GetConnectionString("FoodTruckConnectionString"))
-                    .UseLoggerFactory(this.loggerFactory)
-                    );
+                var connectionString = this.Configuration.GetConnectionString("FoodTruckConnectionString");
+                services.ConfigureSqlServerDataAccess(connectionString, loggerFactory);
             }
 
-            services.AddScoped<IUnitOfWork, EfUnitOfWork<FoodTruckContext>>();
-
-            services.AddScoped<IFoodTruckRepository, FoodTruckRepository>();
-            services.AddScoped<ITagRepository, TagRepository>();
-            services.AddScoped<ILocationRepository, LocationRepository>();
-            services.AddScoped<IScheduleRepository, ScheduleRepository>();
-            services.AddScoped<ISocialMediaPlatformRepository, SocialMediaPlatformRepository>();
-
-            services.AddScoped<IFoodTruckService, FoodTruckService>();
-            services.AddScoped<ITagService, TagService>();
-            services.AddScoped<ILocationService, LocationService>();
-            services.AddScoped<IScheduleService, ScheduleService>();
-            services.AddScoped<ISocialMediaPlatformService, SocialMediaPlatformService>();
-
+            services.ConfigureFoodTruckServices();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IDateTimeProvider, StandardDateTimeProvider>();
@@ -203,7 +179,6 @@ namespace FoodTruckNationApi
                     return actionApiVersionModel.ImplementedApiVersions.Any(v => $"v{v.ToString()}" == docName);
                 });
 
-                //var filePath = Path.Combine(this.hostingEnvironment.ContentRootPath, pathToXmlComments);
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 options.IncludeXmlComments(xmlPath);
