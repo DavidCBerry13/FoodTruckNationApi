@@ -13,16 +13,16 @@ namespace FoodTruckNation.Data.EF.Repositories
 
         public SocialMediaPlatformRepository(FoodTruckContext context)
         {
-            this.foodTruckContext = context;
+            _foodTruckContext = context;
         }
 
 
-        private FoodTruckContext foodTruckContext;
+        private readonly FoodTruckContext _foodTruckContext;
 
 
         public SocialMediaPlatform GetSocialMediaPlatform(int platformId)
         {
-            var platform = this.foodTruckContext.SocialMediaPlatforms
+            var platform = _foodTruckContext.SocialMediaPlatforms
                 .FirstOrDefault(p => p.PlatformId == platformId);
                 
             return platform;
@@ -30,7 +30,7 @@ namespace FoodTruckNation.Data.EF.Repositories
 
         public List<SocialMediaPlatform> GetSocialMediaPlatforms()
         {
-            var platforms = this.foodTruckContext.SocialMediaPlatforms
+            var platforms = _foodTruckContext.SocialMediaPlatforms
                 .AsNoTracking()
                 .ToList();
 

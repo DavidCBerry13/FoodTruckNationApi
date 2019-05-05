@@ -17,7 +17,7 @@ namespace Framework
         /// Converts the state of an object that self tracks changes to an the appropriate state for Entity Framework
         /// </summary>
         /// <remarks>
-        /// This code is from the Julie Lerhman article in MSDN Magazine at 
+        /// This code is from the Julie Lerman article in MSDN Magazine at 
         /// https://msdn.microsoft.com/magazine/mt767693
         /// </remarks>
         /// <param name="node"></param>

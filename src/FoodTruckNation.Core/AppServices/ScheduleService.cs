@@ -28,10 +28,10 @@ namespace FoodTruckNation.Core.AppServices
 
         #region Member Variables
 
-        private IDateTimeProvider dateTimeProvider;
-        private IFoodTruckRepository foodTruckRepository;
-        private ILocationRepository locationRepository;
-        private IScheduleRepository scheduleRepository;
+        private readonly IDateTimeProvider dateTimeProvider;
+        private readonly IFoodTruckRepository foodTruckRepository;
+        private readonly ILocationRepository locationRepository;
+        private readonly IScheduleRepository scheduleRepository;
 
         #endregion
 

@@ -17,8 +17,8 @@ namespace Framework
             _specifiedDateTimeUtc = specifiedDateTime.ToUniversalTime();
         }
 
-        private DateTime _specifiedDateTime;
-        private DateTime _specifiedDateTimeUtc;
+        private readonly DateTime _specifiedDateTime;
+        private readonly DateTime _specifiedDateTimeUtc;
 
 
         public DateTime CurrentUtcDateTime => _specifiedDateTimeUtc;

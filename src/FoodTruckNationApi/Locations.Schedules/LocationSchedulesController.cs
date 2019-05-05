@@ -37,8 +37,8 @@ namespace FoodTruckNationApi.Locations.Schedules
             this.scheduleService = scheduleService;
         }
 
-        private IDateTimeProvider dateTimeProvider;
-        private IScheduleService scheduleService;
+        private readonly IDateTimeProvider dateTimeProvider;
+        private readonly IScheduleService scheduleService;
 
         #region Route Name Constants
 

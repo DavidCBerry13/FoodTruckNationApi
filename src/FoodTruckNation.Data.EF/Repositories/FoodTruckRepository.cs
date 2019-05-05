@@ -13,16 +13,16 @@ namespace FoodTruckNation.Data.EF.Repositories
     {
         public FoodTruckRepository(FoodTruckContext context)
         {
-            this.foodTruckContext = context;
+            _foodTruckContext = context;
         }
 
 
-        private FoodTruckContext foodTruckContext;
+        private readonly FoodTruckContext _foodTruckContext;
 
 
         public IList<FoodTruck> GetAllFoodTrucks()
         {
-            var foodTrucks = this.foodTruckContext.FoodTrucks                
+            var foodTrucks = _foodTruckContext.FoodTrucks                
                 .Include(f => f.Tags)
                 .ThenInclude(t => t.Tag)
                 .Include(f => f.Reviews)
@@ -44,7 +44,7 @@ namespace FoodTruckNation.Data.EF.Repositories
         /// <returns>A FoodTruck object or null if no food truck is found with the given id</returns>
         public FoodTruck GetFoodTruck(int foodTruckId)
         {
-            var foodTruck = this.foodTruckContext.FoodTrucks
+            var foodTruck = _foodTruckContext.FoodTrucks
                 .Include(f => f.SocialMediaAccounts)
                 .ThenInclude(x => x.Platform)
                 .Include(f => f.Tags)               
@@ -68,7 +68,7 @@ namespace FoodTruckNation.Data.EF.Repositories
         /// the given tag, an empty list is returned</returns>
         public IList<FoodTruck> GetFoodTruckByTag(string tag)
         {
-            var foodTruck = this.foodTruckContext.FoodTrucks
+            var foodTruck = _foodTruckContext.FoodTrucks
                 .Include(f => f.Tags)
                 .ThenInclude(t => t.Tag)
                 .Include(f => f.Reviews)
@@ -85,14 +85,14 @@ namespace FoodTruckNation.Data.EF.Repositories
 
         public void Save(FoodTruck foodTruck)
         {
-            this.foodTruckContext.ChangeTracker.TrackGraph(foodTruck, EfExtensions.ConvertStateOfNode);
+            this._foodTruckContext.ChangeTracker.TrackGraph(foodTruck, EfExtensions.ConvertStateOfNode);
         }
 
 
 
         public void Delete(FoodTruck foodTruck)
         {
-            this.foodTruckContext.Remove(foodTruck);
+            this._foodTruckContext.Remove(foodTruck);
         }
 
     }

@@ -93,6 +93,26 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         }
 
 
+        [Fact]
+        public void WhenTagParameterPassedToAPI_SearchIsDoneByTag()
+        {
+            // Arrange
+            var mockLogger = this.GetMockLogger<FoodTrucksController>();
+            var searchTag = "Tacos";
+
+            var mockService = new Mock<IFoodTruckService>();
+            mockService.Setup(r => r.GetAllFoodTrucks())
+                .Returns(foodTruckList);
+            FoodTrucksController controller = new FoodTrucksController(mockLogger.Object, mapper, mockService.Object);
+
+            // Act
+            var response = controller.Get(searchTag);
+
+            // Assert
+            mockService.Verify(r => r.GetAllFoodTrucks(), Times.Never());
+            mockService.Verify(r => r.GetFoodTrucksByTag(searchTag), Times.Once());
+        }
+
 
 
 

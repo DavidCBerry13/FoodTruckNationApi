@@ -33,7 +33,7 @@ namespace FoodTruckNationApi.FoodTrucks.Tags
         }
 
 
-        private IFoodTruckService foodTruckService;
+        private readonly IFoodTruckService foodTruckService;
 
 
         /// <summary>

@@ -13,21 +13,21 @@ namespace FoodTruckNation.Data.EF.Repositories
     {
         public TagRepository(FoodTruckContext context)
         {
-            this.dataContext = context;
+            _dataContext = context;
         }
 
-        private FoodTruckContext dataContext;
+        private readonly FoodTruckContext _dataContext;
 
 
         public IList<Tag> GetAllTags()
         {
-           return this.dataContext.Tags.AsNoTracking().ToList();
+           return _dataContext.Tags.AsNoTracking().ToList();
         }
 
 
         public IList<Tag> GetAllTagsInUse()
         {
-            return this.dataContext.FoodTrucks
+            return _dataContext.FoodTrucks
                 .Include(f => f.Tags)
                 .ThenInclude(t => t.Tag)
                 .SelectMany(ft => ft.Tags.Select(ftt => ftt.Tag))
@@ -40,7 +40,7 @@ namespace FoodTruckNation.Data.EF.Repositories
 
         public Tag GetTagById(int id)
         {
-            return this.dataContext.Tags
+            return _dataContext.Tags
                 .Where(t => t.TagId == id)
                 .AsNoTracking()
                 .FirstOrDefault();
@@ -48,7 +48,7 @@ namespace FoodTruckNation.Data.EF.Repositories
 
         public Tag GetTagByName(string name)
         {
-            return this.dataContext.Tags
+            return _dataContext.Tags
                 .Where(t => t.Text == name)
                 .AsNoTracking()
                 .FirstOrDefault();
@@ -56,7 +56,7 @@ namespace FoodTruckNation.Data.EF.Repositories
 
         public void SaveTag(Tag tag)
         {
-            this.dataContext.ChangeTracker.TrackGraph(tag, EfExtensions.ConvertStateOfNode);
+            _dataContext.ChangeTracker.TrackGraph(tag, EfExtensions.ConvertStateOfNode);
         }
     }
 }

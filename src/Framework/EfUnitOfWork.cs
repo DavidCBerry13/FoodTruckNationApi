@@ -16,7 +16,7 @@ namespace Framework
         }
 
 
-        private T dataContext;
+        private readonly T dataContext;
 
 
 

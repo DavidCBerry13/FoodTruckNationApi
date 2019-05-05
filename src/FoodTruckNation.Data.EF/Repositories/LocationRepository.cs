@@ -14,18 +14,18 @@ namespace FoodTruckNation.Data.EF.Repositories
 
         public LocationRepository(FoodTruckContext context)
         {
-            this.foodTruckContext = context;
+            _foodTruckContext = context;
         }
 
 
-        private FoodTruckContext foodTruckContext;
+        private readonly FoodTruckContext _foodTruckContext;
 
 
 
 
         public Location GetLocation(int locationId)
         {
-            var location = this.foodTruckContext.Locations
+            var location = _foodTruckContext.Locations
                 .Where(l => l.LocationId == locationId)
                 .AsNoTracking()
                 .SingleOrDefault();
@@ -35,7 +35,7 @@ namespace FoodTruckNation.Data.EF.Repositories
 
         public List<Location> GetLocations()
         {
-            var locations = this.foodTruckContext.Locations
+            var locations = _foodTruckContext.Locations
                 .AsNoTracking()
                 .ToList();
 
@@ -46,13 +46,13 @@ namespace FoodTruckNation.Data.EF.Repositories
 
         public void Save(Location location)
         {
-            this.foodTruckContext.ChangeTracker.TrackGraph(location, EfExtensions.ConvertStateOfNode);
+            _foodTruckContext.ChangeTracker.TrackGraph(location, EfExtensions.ConvertStateOfNode);
         }
 
 
         public void Delete(Location location)
         {
-            this.foodTruckContext.Remove(location);
+            _foodTruckContext.Remove(location);
         }
 
     }

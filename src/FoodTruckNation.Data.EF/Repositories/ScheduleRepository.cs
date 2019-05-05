@@ -5,6 +5,7 @@ using System.Text;
 using FoodTruckNation.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Framework;
 
 namespace FoodTruckNation.Data.EF.Repositories
 {
@@ -13,28 +14,21 @@ namespace FoodTruckNation.Data.EF.Repositories
 
         public ScheduleRepository(FoodTruckContext context)
         {
-            this.foodTruckContext = context;
+            this._foodTruckContext = context;
 
-            this.baseQuery = this.foodTruckContext.Schedules
+            this._baseQuery = _foodTruckContext.Schedules
                 .Include(s => s.Location)
                 .Include(s => s.FoodTruck);
         }
 
 
-        private FoodTruckContext foodTruckContext;
-        private IQueryable<Schedule> baseQuery;
+        private readonly FoodTruckContext _foodTruckContext;
+        private readonly IQueryable<Schedule> _baseQuery;
 
 
         public Schedule GetSchedule(int scheduleId)
         {
-            //var schedule = this.foodTruckContext.Schedules
-            //    .Include(s => s.Location)
-            //    .Include(s => s.FoodTruck)
-            //    .Where(s => s.ScheduleId >= scheduleId)
-            //    .AsNoTracking()
-            //    .FirstOrDefault();
-
-            var schedule = this.baseQuery
+            var schedule = _baseQuery
                 .Where(s => s.ScheduleId >= scheduleId)
                 .AsNoTracking()
                 .FirstOrDefault();
@@ -44,7 +38,7 @@ namespace FoodTruckNation.Data.EF.Repositories
 
         public List<Schedule> GetSchedules(DateTime startDate, DateTime endDate)
         {
-            var foodTruckSchedules = this.foodTruckContext.Schedules
+            var foodTruckSchedules = _foodTruckContext.Schedules
                 .Include(s => s.Location)
                 .Include(s => s.FoodTruck)
                 .Where(s => s.ScheduledStart >= startDate)
@@ -57,7 +51,7 @@ namespace FoodTruckNation.Data.EF.Repositories
 
         public List<Schedule> GetSchedulesForFoodTruck(int foodTruckId, DateTime startDate, DateTime endDate)
         {
-            var foodTruckSchedules = this.foodTruckContext.Schedules
+            var foodTruckSchedules = _foodTruckContext.Schedules
                 .Include(s => s.Location)                
                 .Include(s => s.FoodTruck)
                 .Where(s => s.FoodTruckId == foodTruckId)                
@@ -71,7 +65,7 @@ namespace FoodTruckNation.Data.EF.Repositories
 
         public List<Schedule> GetSchedulesForLocation(int locationId, DateTime startDate, DateTime endDate)
         {
-            var foodTruckSchedules = this.foodTruckContext.Schedules
+            var foodTruckSchedules = _foodTruckContext.Schedules
                 .Include(s => s.Location)
                 .Include(s => s.FoodTruck)
                 .Where(s => s.LocationId == locationId)
@@ -85,7 +79,7 @@ namespace FoodTruckNation.Data.EF.Repositories
 
         public void Save(Schedule schedule)
         {
-            throw new NotImplementedException();
+            _foodTruckContext.ChangeTracker.TrackGraph(schedule, EfExtensions.ConvertStateOfNode);
         }
     }
 }
