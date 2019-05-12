@@ -1,12 +1,9 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Framework.ApiUtil.Models;
-using Framework.ApiUtil.Results;
 
 namespace Framework.ApiUtil.Controllers
 {
@@ -21,13 +18,13 @@ namespace Framework.ApiUtil.Controllers
 
         public BaseController(ILogger<BaseController> logger, IMapper mapper) : base()
         {
-            this.logger = logger;
-            this.mapper = mapper;
+            _logger = logger;
+            _mapper = mapper;
         }
 
 
-        protected ILogger logger;
-        protected IMapper mapper;
+        protected ILogger _logger;
+        protected IMapper _mapper;
 
 
 
@@ -35,7 +32,7 @@ namespace Framework.ApiUtil.Controllers
         {
             base.OnActionExecuting(context);
 
-            context.HttpContext.Items.Add("URL_HELPER", this.Url);
+            context.HttpContext.Items.Add("URL_HELPER", Url);
         }
 
 
@@ -55,7 +52,7 @@ namespace Framework.ApiUtil.Controllers
         protected virtual IActionResult CreateConcurrencyConflictErrorResult<TModel, TObject>(ConcurrencyException<TObject> concurrencyException)
         {
             var conflictingObject = concurrencyException.TypedObject;
-            var model = this.mapper.Map<TObject, TModel>(conflictingObject);
+            var model = _mapper.Map<TObject, TModel>(conflictingObject);
             var message = new ConcurrencyErrorModel<TModel>()
             {
                 Message = concurrencyException.Message,

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -17,16 +17,16 @@ namespace Framework
 
         internal EntityResult(ResultCode status, string errorMessage, T entity)           
         {
-            this.ResultStatus = status;
-            this.ErrorMessage = errorMessage;
-            this.Value = entity;
+            ResultStatus = status;
+            ErrorMessage = errorMessage;
+            Value = entity;
         }
 
         #region Properties
 
         public ResultCode ResultStatus { get; private set; }
 
-        public String ErrorMessage { get; private set; }
+        public string ErrorMessage { get; private set; }
 
         public T Value { get; private set; }
 
@@ -38,27 +38,27 @@ namespace Framework
 
         public static EntityResult<T> Success(T value)
         {
-            return new EntityResult<T>(ResultCode.SUCCESS, String.Empty, value);
+            return new EntityResult<T>(ResultCode.SUCCESS, string.Empty, value);
         }
 
-        public static EntityResult<T> Failure(String errorMessage)
+        public static EntityResult<T> Failure(string errorMessage)
         {
             return new EntityResult<T>(ResultCode.FAILURE, errorMessage, default(T));
         }
 
 
-        public static EntityResult<T> NotFound(String errorMessage)
+        public static EntityResult<T> NotFound(string errorMessage)
         {
             return new EntityResult<T>(ResultCode.NOTFOUND, errorMessage, default(T));
         }
 
 
-        public static EntityResult<T> Forbidden(String errorMessage) 
+        public static EntityResult<T> Forbidden(string errorMessage) 
         {
             return new EntityResult<T>(ResultCode.FORBIDDEN, errorMessage, default(T));
         }
 
-        public static EntityResult<T> Error(String errorMessage)
+        public static EntityResult<T> Error(string errorMessage)
         {
             return new EntityResult<T>(ResultCode.ERROR, errorMessage, default(T));
         }

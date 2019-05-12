@@ -1,4 +1,4 @@
-﻿using Framework;
+using Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,14 +17,14 @@ namespace FoodTruckNation.Core.Domain
             _foodTruck = null;
             _reviewDate = DateTime.Today;
             _rating = 1;
-            _details = String.Empty;
+            _details = string.Empty;
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        public Review(FoodTruck foodTruck, DateTime reviewDate, int rating, String details) 
+        public Review(FoodTruck foodTruck, DateTime reviewDate, int rating, string details) 
             : base(ObjectState.NEW)
         {
             _foodTruck = foodTruck;
@@ -34,7 +34,7 @@ namespace FoodTruckNation.Core.Domain
         }
 
 
-        protected Review(int reviewId, FoodTruck foodTruck, DateTime reviewDate, int rating, String details)
+        protected Review(int reviewId, FoodTruck foodTruck, DateTime reviewDate, int rating, string details)
             : base(ObjectState.UNCHANGED)
         {
             _reviewId = reviewId;
@@ -52,14 +52,14 @@ namespace FoodTruckNation.Core.Domain
         private FoodTruck _foodTruck;
         private DateTime _reviewDate;
         private int _rating;
-        private String _details;
+        private string _details;
 
         #endregion
 
 
         #region Validation Constants
 
-        public const String COMMENTS_VALIDATION = @"^\w[\w ?,-'""!\.]{1,1023}$";
+        public const string COMMENTS_VALIDATION = @"^\w[\w ?,-'""!\.]{1,1023}$";
 
         #endregion
 
@@ -97,7 +97,7 @@ namespace FoodTruckNation.Core.Domain
         }
 
 
-        public String Details
+        public string Details
         {
             get { return _details; }
             private set { _details = value; }

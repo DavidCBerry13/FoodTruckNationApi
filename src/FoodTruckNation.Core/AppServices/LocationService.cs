@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using FoodTruckNation.Core.Domain;
@@ -16,14 +16,14 @@ namespace FoodTruckNation.Core.AppServices
         public LocationService(ILoggerFactory loggerFactory, IUnitOfWork uow, ILocationRepository locationRepository)
             : base(loggerFactory, uow)
         {
-            this.locationRepository = locationRepository;
+            _locationRepository = locationRepository;
         }
 
 
         #region Member Variables
 
 
-        private ILocationRepository locationRepository;
+        private readonly ILocationRepository _locationRepository;
 
         #endregion
 
@@ -31,7 +31,7 @@ namespace FoodTruckNation.Core.AppServices
 
         public Location GetLocation(int id)
         {
-            var locations = this.locationRepository.GetLocation(id);
+            var locations = _locationRepository.GetLocation(id);
             return locations;
         }
 
@@ -39,7 +39,7 @@ namespace FoodTruckNation.Core.AppServices
 
         public List<Location> GetLocations()
         {
-            var locations = this.locationRepository.GetLocations();
+            var locations = _locationRepository.GetLocations();
             return locations;
         }
 
@@ -52,8 +52,8 @@ namespace FoodTruckNation.Core.AppServices
             Location location = new Location(createLocationCommand.Name, createLocationCommand.StreetAddress, createLocationCommand.City,
                 createLocationCommand.State, createLocationCommand.ZipCode);
 
-            this.locationRepository.Save(location);
-            this.UnitOfWork.SaveChanges();
+            _locationRepository.Save(location);
+            UnitOfWork.SaveChanges();
 
             return location;
         }
@@ -61,7 +61,7 @@ namespace FoodTruckNation.Core.AppServices
 
         public Location UpdateLocation(UpdateLocationCommand updateLocationCommand)
         {
-            Location location = this.locationRepository.GetLocation(updateLocationCommand.LocationId);
+            Location location = _locationRepository.GetLocation(updateLocationCommand.LocationId);
             if (location == null)
                 throw new ObjectNotFoundException($"No location was found with the id {updateLocationCommand.LocationId}");
 
@@ -74,8 +74,8 @@ namespace FoodTruckNation.Core.AppServices
 
             
 
-            this.locationRepository.Save(location);
-            this.UnitOfWork.SaveChanges();
+            _locationRepository.Save(location);
+            UnitOfWork.SaveChanges();
 
             return location;
         }
@@ -83,13 +83,13 @@ namespace FoodTruckNation.Core.AppServices
 
         public void DeleteLocation(int locationId)
         {
-            Location location = this.locationRepository.GetLocation(locationId);
+            Location location = _locationRepository.GetLocation(locationId);
 
             if (location == null)
                 throw new ObjectNotFoundException($"Location id {locationId} not found so it could not be deleted");
             
-            this.locationRepository.Delete(location);
-            this.UnitOfWork.SaveChanges();
+            _locationRepository.Delete(location);
+            UnitOfWork.SaveChanges();
         }
 
 

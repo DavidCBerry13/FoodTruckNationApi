@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.Domain;
 using System;
@@ -17,7 +17,7 @@ namespace FoodTruckNation.Core.Mappers
 
         public LocationMappingProfile()
         {
-            this.AddUpdateLocationCommandToLocationMap();
+            AddUpdateLocationCommandToLocationMap();
         }
 
 
@@ -25,7 +25,7 @@ namespace FoodTruckNation.Core.Mappers
 
         internal void AddUpdateLocationCommandToLocationMap()
         {
-            this.CreateMap<UpdateLocationCommand, Location>();
+            CreateMap<UpdateLocationCommand, Location>();
         }
 
     }

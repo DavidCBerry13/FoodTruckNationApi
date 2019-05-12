@@ -1,15 +1,10 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
-using Microsoft.Extensions.Logging;
-using Framework.ApiUtil;
-using AutoMapper;
 using Framework.ApiUtil.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace FoodTruckNationApi.Tags
 {
@@ -33,11 +28,11 @@ namespace FoodTruckNationApi.Tags
         public TagsController(ILogger<TagsController> logger, IMapper mapper, ITagService tagService)
             : base(logger, mapper)
         {
-            this.tagService = tagService;
+            _tagService = tagService;
         }
 
 
-        private ITagService tagService;
+        private readonly ITagService _tagService;
 
 
         /// <summary>
@@ -53,14 +48,14 @@ namespace FoodTruckNationApi.Tags
             IList<Tag> tags = null;
             if (inUseOnly)
             {
-                tags = this.tagService.GetTagsInUse();
+                tags = _tagService.GetTagsInUse();
             }
             else
             {
-                tags = this.tagService.GetAllTags();
+                tags = _tagService.GetAllTags();
             }
 
-            var models = this.mapper.Map<IList<Tag>, List<string>>(tags);
+            var models = _mapper.Map<IList<Tag>, List<string>>(tags);
             return Ok(models);
             
         }

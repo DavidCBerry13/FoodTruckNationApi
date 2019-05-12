@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,19 +8,19 @@ namespace FoodTruckNation.Core.Commands
     {
         public CreateFoodTruckCommand()
         {
-            this.Tags = new List<string>();
-            this.SocialMediaAccounts = new List<FoodTruckSocialMediaAccountData>();
+            Tags = new List<string>();
+            SocialMediaAccounts = new List<FoodTruckSocialMediaAccountData>();
         }
 
 
 
-        public String Name { get; set; }
+        public string Name { get; set; }
 
-        public String Description { get; set; }
+        public string Description { get; set; }
 
-        public String Website { get; set; }
+        public string Website { get; set; }
 
-        public List<String> Tags { get; set; }
+        public List<string> Tags { get; set; }
 
         public List<FoodTruckSocialMediaAccountData> SocialMediaAccounts { get; set; }
     }
@@ -31,7 +31,7 @@ namespace FoodTruckNation.Core.Commands
 
         public int SocialMediaPlatformId { get; set; }
 
-        public String AccountName { get; set; }
+        public string AccountName { get; set; }
     }
 
 

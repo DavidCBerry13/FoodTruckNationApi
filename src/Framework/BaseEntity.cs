@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
@@ -14,7 +14,7 @@ namespace Framework
 
         public BaseEntity(ObjectState initialState)
         {
-            this.ObjectState = initialState;
+            ObjectState = initialState;
         }
 
 
@@ -23,13 +23,13 @@ namespace Framework
 
         protected internal void SetObjectModified()
         {
-            if (this.ObjectState == ObjectState.UNCHANGED)
-                this.ObjectState = ObjectState.MODIFIED;           
+            if (ObjectState == ObjectState.UNCHANGED)
+                ObjectState = ObjectState.MODIFIED;           
         }
 
         protected internal void SetObjectDeleted()
         {
-            this.ObjectState = ObjectState.DELETED;
+            ObjectState = ObjectState.DELETED;
         }
     }
 }

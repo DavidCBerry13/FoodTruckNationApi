@@ -1,4 +1,4 @@
-﻿using FoodTruckNation.Core.Domain;
+using FoodTruckNation.Core.Domain;
 using Framework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -34,14 +34,14 @@ namespace FoodTruckNation.Data.EF
         {
             base.OnModelCreating(modelBuilder);
 
-            this.ConfigureFoodTruck(modelBuilder);
-            this.ConfigureTag(modelBuilder);
-            this.ConfigureFoodTruckTag(modelBuilder);
-            this.ConfigureReview(modelBuilder);
-            this.ConfigureLocation(modelBuilder);
-            this.ConfigureSchedule(modelBuilder);
-            this.ConfigureSocialMediaPlatform(modelBuilder);
-            this.ConfigureSocialMediaAccount(modelBuilder);
+            ConfigureFoodTruck(modelBuilder);
+            ConfigureTag(modelBuilder);
+            ConfigureFoodTruckTag(modelBuilder);
+            ConfigureReview(modelBuilder);
+            ConfigureLocation(modelBuilder);
+            ConfigureSchedule(modelBuilder);
+            ConfigureSocialMediaPlatform(modelBuilder);
+            ConfigureSocialMediaAccount(modelBuilder);
         }
 
 
@@ -59,12 +59,12 @@ namespace FoodTruckNation.Data.EF
                 .Ignore(t => t.ObjectState);
 
             modelBuilder.Entity<Tag>().Property(p => p.TagId)
-                .HasField("tagId")
+                .HasField("_tagId")
                 .UseSqlServerIdentityColumn()
                 .HasColumnName("TagId");
 
             modelBuilder.Entity<Tag>().Property(p => p.Text)
-                .HasField("tagText")
+                .HasField("_tagText")
                 .HasColumnName("TagName");
         }
 
@@ -79,7 +79,7 @@ namespace FoodTruckNation.Data.EF
                 .Ignore(t => t.ObjectState);
 
             modelBuilder.Entity<FoodTruckTag>().Property(p => p.FoodTruckTagId)
-               .HasField("foodTruckTagId")
+               .HasField("_foodTruckTagId")
                .UseSqlServerIdentityColumn()
                .HasColumnName("FoodTruckTagId");
 
@@ -106,28 +106,28 @@ namespace FoodTruckNation.Data.EF
                 .Ignore(l => l.ObjectState);
 
             modelBuilder.Entity<Location>().Property(p => p.LocationId)
-                .HasField("locationId")
+                .HasField("_locationId")
                 .UseSqlServerIdentityColumn()
                 .HasColumnName("LocationId");
 
             modelBuilder.Entity<Location>().Property(p => p.Name)
-                .HasField("locationName")                
+                .HasField("_locationName")                
                 .HasColumnName("LocationName");
 
             modelBuilder.Entity<Location>().Property(p => p.StreetAddress)
-                .HasField("streetAddress")
+                .HasField("_streetAddress")
                 .HasColumnName("StreetAddress");
 
             modelBuilder.Entity<Location>().Property(p => p.City)
-                .HasField("city")
+                .HasField("_city")
                 .HasColumnName("City");
 
             modelBuilder.Entity<Location>().Property(p => p.State)
-                .HasField("state")
+                .HasField("_state")
                 .HasColumnName("State");
 
             modelBuilder.Entity<Location>().Property(p => p.ZipCode)
-                .HasField("zipCode")
+                .HasField("_zipCode")
                 .HasColumnName("ZipCode");
 
         }
@@ -143,24 +143,24 @@ namespace FoodTruckNation.Data.EF
                 .Ignore(f => f.ObjectState);
 
             modelBuilder.Entity<FoodTruck>().Property(p => p.FoodTruckId)
-                .HasField("foodTruckId")
+                .HasField("_foodTruckId")
                 .UseSqlServerIdentityColumn()
                 .HasColumnName("FoodTruckId");
 
             modelBuilder.Entity<FoodTruck>().Property(p => p.Name)
-                .HasField("name")
+                .HasField("_name")
                 .HasColumnName("TruckName");
 
             modelBuilder.Entity<FoodTruck>().Property(p => p.Description)
-                .HasField("description")
+                .HasField("_description")
                 .HasColumnName("Description");
 
             modelBuilder.Entity<FoodTruck>().Property(p => p.Website)
-                .HasField("website")
+                .HasField("_website")
                 .HasColumnName("Website");
 
             modelBuilder.Entity<FoodTruck>().Property(p => p.LastModifiedDate)
-                .HasField("lastModifiedDate")
+                .HasField("_lastModifiedDate")
                 .HasColumnName("RowValidFrom")
                 .IsConcurrencyToken()
                 .ValueGeneratedOnAddOrUpdate();
@@ -236,24 +236,24 @@ namespace FoodTruckNation.Data.EF
                 .Ignore(s => s.ObjectState);
 
             modelBuilder.Entity<Schedule>().Property(x => x.ScheduleId)
-                .HasField("scheduleId")
+                .HasField("_scheduleId")
                 .UseSqlServerIdentityColumn()
                 .HasColumnName("ScheduleId");
 
             modelBuilder.Entity<Schedule>().Property(x => x.FoodTruckId)
-                .HasField("foodTruckId")
+                .HasField("_foodTruckId")
                 .HasColumnName("FoodTruckId");
             
             modelBuilder.Entity<Schedule>().Property(x => x.LocationId)
-                .HasField("locationId")
+                .HasField("_locationId")
                 .HasColumnName("LocationId");
 
             modelBuilder.Entity<Schedule>().Property(x => x.ScheduledStart)
-                .HasField("scheduleStart")
+                .HasField("_scheduleStart")
                 .HasColumnName("StartTime");
 
             modelBuilder.Entity<Schedule>().Property(x => x.ScheduledEnd)
-                .HasField("scheduleEnd")
+                .HasField("_scheduleEnd")
                 .HasColumnName("EndTime");
 
 

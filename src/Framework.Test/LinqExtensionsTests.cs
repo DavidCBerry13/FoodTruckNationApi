@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
@@ -26,7 +26,7 @@ namespace Framework.Test
             var target = new List<String>() { "Red", "Green" };
 
             // Act
-            var missingColors = colors.WhereNotExists(target, (x, y) => (x == y)).ToList();
+            var missingColors = colors.WhereNotExists(target, (x, y) => x == y).ToList();
 
             // Assert
             missingColors.Count.Should().Be(2);

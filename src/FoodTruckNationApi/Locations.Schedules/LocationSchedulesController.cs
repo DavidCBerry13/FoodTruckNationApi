@@ -33,16 +33,16 @@ namespace FoodTruckNationApi.Locations.Schedules
             IScheduleService scheduleService, IDateTimeProvider dateTimeProvider)
             : base(logger, mapper)
         {
-            this.dateTimeProvider = dateTimeProvider;
-            this.scheduleService = scheduleService;
+            _dateTimeProvider = dateTimeProvider;
+            _scheduleService = scheduleService;
         }
 
-        private readonly IDateTimeProvider dateTimeProvider;
-        private readonly IScheduleService scheduleService;
+        private readonly IDateTimeProvider _dateTimeProvider;
+        private readonly IScheduleService _scheduleService;
 
         #region Route Name Constants
 
-        public const String GET_ALL_SCHEDULES_FOR_LOCATION = "GetAllSchedulesForLocation";
+        internal const string GET_ALL_SCHEDULES_FOR_LOCATION = "GetAllSchedulesForLocation";
 
         #endregion
 
@@ -59,15 +59,15 @@ namespace FoodTruckNationApi.Locations.Schedules
         public IActionResult Get(int locationId, GetLocationSchedulesParameters parameters)
         {
             if (!parameters.StartDate.HasValue)
-                parameters.StartDate = this.dateTimeProvider.CurrentDateTime.Date;
+                parameters.StartDate = _dateTimeProvider.CurrentDateTime.Date;
 
             if (!parameters.EndDate.HasValue)
                 parameters.EndDate = parameters.StartDate.Value.AddDays(7).Date;
 
-            List<Schedule> schedules = scheduleService.GetSchedulesForLocation(locationId,
+            List<Schedule> schedules = _scheduleService.GetSchedulesForLocation(locationId,
                 parameters.StartDate.Value, parameters.EndDate.Value);
 
-            List<LocationScheduleModel> models = this.mapper.Map<List<Schedule>, List<LocationScheduleModel>>(schedules);
+            List<LocationScheduleModel> models = _mapper.Map<List<Schedule>, List<LocationScheduleModel>>(schedules);
 
             return Ok(models);
         }

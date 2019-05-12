@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNationApi.Schedules;
@@ -20,12 +20,12 @@ namespace FoodTruckNationApi.Test.Schedules
             var config = new MapperConfiguration(cfg => {
                 cfg.AddProfile<SchedulesAutomapperProfile>();
             });
-            mapper = new Mapper(config,
+            _mapper = new Mapper(config,
                 t => SchedulesControllerTests.Resolve<Type, object>(t));
         }
 
 
-        private readonly IMapper mapper;
+        private readonly IMapper _mapper;
 
 
         [Fact]
@@ -36,7 +36,7 @@ namespace FoodTruckNationApi.Test.Schedules
             var expectedStartDate = now.Date;
             var expectedEndDate = now.Date.AddDays(7);
 
-            var mockLogger = this.GetMockLogger<SchedulesController>();
+            var mockLogger = GetMockLogger<SchedulesController>();
 
             var mockScheduleService = new Mock<IScheduleService>();
             mockScheduleService.Setup(r => r.GetSchedules(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
@@ -44,7 +44,7 @@ namespace FoodTruckNationApi.Test.Schedules
 
             var dateTimeProvider = new UnitTestDateTimeProvider(now);
 
-            SchedulesController controller = new SchedulesController(mockLogger.Object, mapper, 
+            SchedulesController controller = new SchedulesController(mockLogger.Object, _mapper, 
                 mockScheduleService.Object, dateTimeProvider);
 
 
@@ -63,13 +63,13 @@ namespace FoodTruckNationApi.Test.Schedules
             var expectedStartDate = new DateTime(2018, 4, 1);
             var expectedEndDate = new DateTime(2018, 4, 15);
 
-            var mockLogger = this.GetMockLogger<SchedulesController>();
+            var mockLogger = GetMockLogger<SchedulesController>();
             var mockScheduleService = new Mock<IScheduleService>();
             mockScheduleService.Setup(r => r.GetSchedules(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(new List<Schedule>());
             var mockDateTimeProvider = new Mock<IDateTimeProvider>();
 
-            SchedulesController controller = new SchedulesController(mockLogger.Object, mapper,
+            SchedulesController controller = new SchedulesController(mockLogger.Object, _mapper,
                 mockScheduleService.Object, mockDateTimeProvider.Object);
 
             // Act

@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
+using AutoMapper;
 using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.Domain;
 using Framework.ApiUtil;
@@ -14,15 +16,15 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
 
         public FoodTruckSchedulesAutomapperProfile()
         {
-            this.ScheduleToFoodTruckScheduleModelMap();
-            this.LocationToScheduleLocationModelMap();
-            this.AddCreateFoodTruckScheduleMaps();
+            ScheduleToFoodTruckScheduleModelMap();
+            LocationToScheduleLocationModelMap();
+            AddCreateFoodTruckScheduleMaps();
         }
 
 
         internal void ScheduleToFoodTruckScheduleModelMap()
         {
-            this.CreateMap<Schedule, FoodTruckScheduleModel>()
+            CreateMap<Schedule, FoodTruckScheduleModel>()
                 .ForMember(
                     dest => dest.StartTime,
                     opt => opt.MapFrom(src => src.ScheduledStart)
@@ -42,7 +44,7 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
 
 
             // For the links in the Meta object
-            this.CreateMap<Schedule, FoodTruckScheduleModel.FoodTruckScheduleLinks>()
+            CreateMap<Schedule, FoodTruckScheduleModel.FoodTruckScheduleLinks>()
                 .ForMember(
                     dest => dest.Self,
                     opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
@@ -71,7 +73,7 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
 
         internal void LocationToScheduleLocationModelMap()
         {
-            this.CreateMap<Location, FoodTruckScheduleModel.LocationModel>()
+            CreateMap<Location, FoodTruckScheduleModel.LocationModel>()
                 .ForMember(
                     dest => dest.LocationName,
                     opt => opt.MapFrom(src => src.Name)
@@ -83,7 +85,7 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
 
 
             // For the links in the Meta object
-            this.CreateMap<Location, FoodTruckScheduleModel.LocationModel.LocationLinks>()
+            CreateMap<Location, FoodTruckScheduleModel.LocationModel.LocationLinks>()
                 .ForMember(
                     dest => dest.Self,
                     opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
@@ -107,10 +109,12 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
 
         }
 
-        public void AddCreateFoodTruckScheduleMaps()
+        internal void AddCreateFoodTruckScheduleMaps()
         {
-            this.CreateMap<CreateFoodTruckScheduleModel, CreateFoodTruckScheduleCommand>();
+            CreateMap<CreateFoodTruckScheduleModel, CreateFoodTruckScheduleCommand>();
         }
 
     }
 }
+
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

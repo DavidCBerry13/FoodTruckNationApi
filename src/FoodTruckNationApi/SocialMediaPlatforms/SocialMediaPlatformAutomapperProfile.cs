@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FoodTruckNation.Core.Domain;
 using System;
 using System.Collections.Generic;
@@ -14,14 +14,14 @@ namespace FoodTruckNationApi.SocialMediaPlatforms
     {
         public SocialMediaPlatformAutomapperProfile()
         {
-            this.AddSocialMediaPlatformToSocialMediaPlatformModelMapping();
+            AddSocialMediaPlatformToSocialMediaPlatformModelMapping();
         }
 
 
         public void AddSocialMediaPlatformToSocialMediaPlatformModelMapping()
         {
 
-            this.CreateMap<SocialMediaPlatform, SocialMediaPlatformModel>()
+            CreateMap<SocialMediaPlatform, SocialMediaPlatformModel>()
                 .ForMember(
                     dest => dest.SocialMediaPlatformId,
                     opt => opt.MapFrom(src => src.PlatformId)

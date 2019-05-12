@@ -1,4 +1,4 @@
-﻿using Framework;
+using Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,7 +14,7 @@ namespace FoodTruckNation.Core.Domain
         }
 
 
-        public SocialMediaAccount(SocialMediaPlatform platform, FoodTruck truck, String accountName) 
+        public SocialMediaAccount(SocialMediaPlatform platform, FoodTruck truck, string accountName) 
             : base(ObjectState.NEW)
         {
             _foodTruck = truck;
@@ -27,7 +27,7 @@ namespace FoodTruckNation.Core.Domain
 
         #region Validation Constants
 
-        public const String ACCOUNT_NAME_VALIDATION = @"^[\w@][\w\.-]{1,39}$";
+        public const string ACCOUNT_NAME_VALIDATION = @"^[\w@][\w\.-]{1,39}$";
 
 
         #endregion
@@ -37,7 +37,7 @@ namespace FoodTruckNation.Core.Domain
         private FoodTruck _foodTruck;
         private int _platformId;
         private SocialMediaPlatform _socialMediaPlatform;
-        private String _accountName;
+        private string _accountName;
 
 
         public int SocialMediaAccountId
@@ -74,20 +74,20 @@ namespace FoodTruckNation.Core.Domain
         }
 
 
-        public String AccountName
+        public string AccountName
         {
             get { return _accountName; }
             set
             {
                 _accountName = value;
-                this.SetObjectModified();
+                SetObjectModified();
             }
         }
 
 
         internal void SetDeleted()
         {
-            this.SetObjectDeleted();
+            SetObjectDeleted();
         }
     }
 }

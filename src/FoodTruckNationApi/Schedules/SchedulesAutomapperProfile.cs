@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNationApi.FoodTrucks.Schedules;
 using Framework.ApiUtil;
@@ -22,7 +22,7 @@ namespace FoodTruckNationApi.Schedules
 
         internal void ScheduleToScheduleModel()
         {
-            this.CreateMap<Schedule, ScheduleModel>()
+            CreateMap<Schedule, ScheduleModel>()
                 .ForMember(
                     dest => dest.FoodTruck,
                     opt => opt.MapFrom(src => src.FoodTruck)
@@ -37,7 +37,7 @@ namespace FoodTruckNationApi.Schedules
         internal void FoodtruckToScheduleFoodTruckModel()
         {
             // FoodTruck Truck
-            this.CreateMap<FoodTruck, ScheduleModel.FoodTruckModel>()
+            CreateMap<FoodTruck, ScheduleModel.FoodTruckModel>()
                 .ForMember(
                     dest => dest.Tags,
                     opt => opt.MapFrom(src => src.Tags.Select(t => t.Tag.Text).ToList())
@@ -49,7 +49,7 @@ namespace FoodTruckNationApi.Schedules
 
 
             // For the links in the Meta object
-            this.CreateMap<FoodTruck, ScheduleModel.FoodTruckLinks>()
+            CreateMap<FoodTruck, ScheduleModel.FoodTruckLinks>()
                 .ForMember(
                     dest => dest.Self,
                     opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
@@ -85,7 +85,7 @@ namespace FoodTruckNationApi.Schedules
 
         internal void LocationToScheduleLocationModel()
         {
-            this.CreateMap<Location, ScheduleModel.LocationModel>()
+            CreateMap<Location, ScheduleModel.LocationModel>()
                 .ForMember(
                     dest => dest.LocationName,
                     opt => opt.MapFrom(src => src.Name)
@@ -97,7 +97,7 @@ namespace FoodTruckNationApi.Schedules
 
 
             // For the links in the Meta object
-            this.CreateMap<Location, ScheduleModel.LocationLinks>()
+            CreateMap<Location, ScheduleModel.LocationLinks>()
                 .ForMember(
                     dest => dest.Self,
                     opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>

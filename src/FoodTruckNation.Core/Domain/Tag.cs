@@ -1,4 +1,4 @@
-﻿using Framework;
+using Framework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -30,16 +30,16 @@ namespace FoodTruckNation.Core.Domain
         /// </summary>
         /// <param name="id">An int of the tag id number</param>
         /// <param name="text">A String of the tag text</param>
-        internal Tag (int id, String text) : base(ObjectState.UNCHANGED)
+        internal Tag (int id, string text) : base(ObjectState.UNCHANGED)
         {
-            this.tagId = id;
-            this.tagText = text;
+            _tagId = id;
+            _tagText = text;
         }
 
 
-        public Tag(String text) : base(ObjectState.NEW)
+        public Tag(string text) : base(ObjectState.NEW)
         {
-            this.tagText = text;
+            _tagText = text;
         }
 
 
@@ -49,21 +49,21 @@ namespace FoodTruckNation.Core.Domain
 
         public const int TAG_TEXT_MAX_LENGTH = 30;
 
-        public const String TAG_TEXT_REGEX = "^[A-Za-z][\\w -]{2,29}$";
+        public const string TAG_TEXT_REGEX = "^[A-Za-z][\\w -]{2,29}$";
 
         #endregion
 
 
-        private int tagId;
-        private String tagText;
+        private int _tagId;
+        private string _tagText;
 
         /// <summary>
         /// Gets the unique id number of this tag
         /// </summary>
         public int TagId
         {
-            get { return this.tagId; }
-            private set { this.tagId = value; }
+            get { return _tagId; }
+            private set { _tagId = value; }
         }
 
 
@@ -74,13 +74,13 @@ namespace FoodTruckNation.Core.Domain
         [MinLength(TAG_TEXT_MIN_LENGTH)]
         [MaxLength(TAG_TEXT_MAX_LENGTH)]
         [RegularExpression(TAG_TEXT_REGEX)]
-        public String Text
+        public string Text
         {
-            get { return this.tagText; }
+            get { return _tagText; }
             set
             {
-                this.tagText = value;
-                this.SetObjectModified();
+                _tagText = value;
+                SetObjectModified();
             }
         }
 
@@ -92,13 +92,13 @@ namespace FoodTruckNation.Core.Domain
             if (other == null)
                 return false;
 
-            return this.tagText == other.tagText;
+            return _tagText == other._tagText;
         }
 
 
         public override int GetHashCode()
         {
-            return this.tagText.GetHashCode();
+            return _tagText.GetHashCode();
         }
 
     }

@@ -13,6 +13,9 @@ using Framework.ApiUtil.Models;
 
 namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
 {
+    /// <summary>
+    /// API Controller to get/add/update social media accounts for a food truck
+    /// </summary>
     [Produces("application/json")]
     [Route("api/FoodTrucks/{foodTruckId}/SocialMediaAccounts")]
     [ApiVersion("1.1")]
@@ -22,17 +25,17 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
         public FoodTruckSocialMediaController(ILogger<FoodTruckSocialMediaController> logger, IMapper mapper, IFoodTruckService foodTruckService)
             : base(logger, mapper)
         {
-            this.foodTruckService = foodTruckService;
+            _foodTruckService = foodTruckService;
         }
 
 
-        private IFoodTruckService foodTruckService;
+        private readonly IFoodTruckService _foodTruckService;
 
 
 
-        public const String GET_FOOD_TRUCK_SOCIAL_ACCOUNTS = "GetFoodTruckSocialMediaAccounts";
+        public const string GET_FOOD_TRUCK_SOCIAL_ACCOUNTS = "GetFoodTruckSocialMediaAccounts";
 
-        public const String GET_FOOD_TRUCK_SOCIAL_ACCOUNT_BY_ID = "GetFoodTruckSocialMediaAccountById";
+        public const string GET_FOOD_TRUCK_SOCIAL_ACCOUNT_BY_ID = "GetFoodTruckSocialMediaAccountById";
 
 
         /// <summary>
@@ -49,12 +52,12 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Get(int foodTruckId)
         {
-            var foodTruck = this.foodTruckService.GetFoodTruck(foodTruckId);
+            var foodTruck = _foodTruckService.GetFoodTruck(foodTruckId);
             if (foodTruck == null)
                 return NotFound(new ApiMessageModel() { Message = $"No food truck with the id of {foodTruckId} found" } );
 
-            var models = this.mapper.Map<List<SocialMediaAccount>, List<SocialMediaAccountModelV11>>(foodTruck.SocialMediaAccounts);
-            return this.Ok(models);
+            var models = _mapper.Map<List<SocialMediaAccount>, List<SocialMediaAccountModelV11>>(foodTruck.SocialMediaAccounts);
+            return Ok(models);
         }
 
 
@@ -73,13 +76,13 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Get(int foodTruckId, int socialAccountId)
         {
-            var foodTruck = this.foodTruckService.GetFoodTruck(foodTruckId);
+            var foodTruck = _foodTruckService.GetFoodTruck(foodTruckId);
             if (foodTruck == null)
                 return NotFound(new ApiMessageModel() { Message = $"No food truck with the id of {foodTruckId} found" });
 
 
-            var models = this.mapper.Map<List<SocialMediaAccount>, List<SocialMediaAccountModelV11>>(foodTruck.SocialMediaAccounts);
-            return this.Ok(models);
+            var models = _mapper.Map<List<SocialMediaAccount>, List<SocialMediaAccountModelV11>>(foodTruck.SocialMediaAccounts);
+            return Ok(models);
         }
 
         /// <summary>
@@ -101,13 +104,13 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Post(int foodTruckId, [FromBody]CreateSocialMediaAccountModel socialMediaAccountModel)
         {
-            var account = this.foodTruckService.AddSocialMediaAccount(foodTruckId, 
+            var account = _foodTruckService.AddSocialMediaAccount(foodTruckId, 
                 socialMediaAccountModel.SocialMediaPlatformId,
                 socialMediaAccountModel.AccountName);
 
-            var model = this.mapper.Map<SocialMediaAccount, SocialMediaAccountModelV11>(account);
-            return this.CreatedAtRoute(GET_FOOD_TRUCK_SOCIAL_ACCOUNT_BY_ID,
-                new { foodTruckId = foodTruckId, socialAccountId = account.SocialMediaAccountId },
+            var model = _mapper.Map<SocialMediaAccount, SocialMediaAccountModelV11>(account);
+            return CreatedAtRoute(GET_FOOD_TRUCK_SOCIAL_ACCOUNT_BY_ID,
+                new { foodTruckId, socialAccountId = account.SocialMediaAccountId },
                 model);
         }
         
@@ -115,12 +118,12 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
         [HttpPut("{socialAccountId}")]
         public IActionResult Put(int foodTruckId, int socialMediaAccountId, [FromBody]UpdateSocialMediaAccount updateModel)
         {
-            var account = this.foodTruckService.UpdateSocialMediaAccount(foodTruckId,
+            var account = _foodTruckService.UpdateSocialMediaAccount(foodTruckId,
                 socialMediaAccountId,
                 updateModel.AccountName);
 
-            var model = this.mapper.Map<SocialMediaAccount, SocialMediaAccountModelV11>(account);
-            return this.Ok(model);
+            var model = _mapper.Map<SocialMediaAccount, SocialMediaAccountModelV11>(account);
+            return Ok(model);
         }
 
 
@@ -139,9 +142,9 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Delete(int foodTruckId, int socialMediaAccountId)
         {
-            this.foodTruckService.DeleteSocialMediaAccount(foodTruckId, socialMediaAccountId);
+            _foodTruckService.DeleteSocialMediaAccount(foodTruckId, socialMediaAccountId);
 
-            return this.Ok(new ApiMessageModel() { Message = $"Social Media Account deleted" });
+            return Ok(new ApiMessageModel() { Message = $"Social Media Account deleted" });
         }
     }
 }

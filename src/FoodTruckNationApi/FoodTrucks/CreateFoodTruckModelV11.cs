@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,25 +13,25 @@ namespace FoodTruckNationApi.FoodTrucks
         /// </summary>
         public CreateFoodTruckModelV11()
         {
-            this.Tags = new List<string>();
-            this.SocialMediaAccounts = new List<SocialMediaAccountModel>();
+            Tags = new List<string>();
+            SocialMediaAccounts = new List<SocialMediaAccountModel>();
         }
 
         /// <summary>
         /// Gets the name to give to the new Food Truck
         /// </summary>
-        public String Name { get; set; }
+        public string Name { get; set; }
 
 
         /// <summary>
         /// Gets the description of the new food truck
         /// </summary>
-        public String Description { get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// Gets the Website of the new food truck
         /// </summary>
-        public String Website { get; set; }
+        public string Website { get; set; }
 
         /// <summary>
         /// Gets a list of tags to be attached to the new food truck.
@@ -41,7 +41,7 @@ namespace FoodTruckNationApi.FoodTrucks
         /// with tag objects in the system.  Also, some tags may exist, some may not, so it is up
         /// to the application to determine this and treat each tag appropriately.
         /// </remarks>
-        public List<String> Tags { get; set; }
+        public List<string> Tags { get; set; }
 
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace FoodTruckNationApi.FoodTrucks
             /// <summary>
             /// The account name on this social media platform for the food truck
             /// </summary>
-            public String AccountName { get; set; }
+            public string AccountName { get; set; }
 
         }
 

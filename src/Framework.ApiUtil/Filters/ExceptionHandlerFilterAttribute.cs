@@ -1,4 +1,4 @@
-﻿using Framework.ApiUtil.Models;
+using Framework.ApiUtil.Models;
 using Framework.ApiUtil.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -19,10 +19,10 @@ namespace Framework.ApiUtil.Filters
     {
         public ExceptionHandlerFilterAttribute(ILoggerFactory loggerFactory)
         {
-            this.logger = loggerFactory.CreateLogger(this.GetType().FullName);
+            _logger = loggerFactory.CreateLogger(GetType().FullName);
         }
 
-        private ILogger logger;
+        private readonly ILogger _logger;
 
 
 
@@ -37,39 +37,39 @@ namespace Framework.ApiUtil.Filters
         {
             Exception ex = context.Exception;    // For convenience
 
-            String logMessage = $"{ex.GetType().Name} occured in action {context.ActionDescriptor.DisplayName} - {ex.Message}";
+            string logMessage = $"{ex.GetType().Name} occured in action {context.ActionDescriptor.DisplayName} - {ex.Message}";
 
             if (ex is InvalidDataException)
             {
-                logger.LogError(new EventId(400), ex, logMessage);
+                _logger.LogError(new EventId(400), ex, logMessage);
 
                 var message = new ApiMessageModel() { Message = ex.Message };
                 context.Result = new BadRequestObjectResult(message);
             }
             else if (ex is SecurityException)
             {
-                logger.LogError(new EventId(403), ex, logMessage);
+                _logger.LogError(new EventId(403), ex, logMessage);
 
                 var message = new ApiMessageModel() { Message = "Access to this resource is forbidden" };
                 context.Result = new ForbiddenObjectResult(message);
             }
             else if (ex is ResourceAlreadyExistsException)
             {
-                logger.LogWarning(new EventId(409), ex, logMessage);
+                _logger.LogWarning(new EventId(409), ex, logMessage);
 
                 var message = new ApiMessageModel() { Message = ex.Message };
                 context.Result = new ConflictObjectResult(message);
             }
             else if (ex is ObjectNotFoundException)
             {
-                logger.LogWarning(new EventId(404), ex, logMessage);
+                _logger.LogWarning(new EventId(404), ex, logMessage);
 
                 var message = new ApiMessageModel() { Message = ex.Message };
                 context.Result = new NotFoundObjectResult(message);
             }
             else
             {
-                logger.LogError(new EventId(500), ex, logMessage);
+                _logger.LogError(new EventId(500), ex, logMessage);
 
                 var message = new ApiMessageModel() { Message = "An error has occurred on the server.  The error has been logged so it can be investigated by our support teams" };
                 context.Result = new InternalServerErrorObjectResult(message);

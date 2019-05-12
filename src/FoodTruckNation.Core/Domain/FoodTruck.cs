@@ -1,7 +1,7 @@
-﻿using Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Framework;
 
 namespace FoodTruckNation.Core.Domain
 {
@@ -15,8 +15,8 @@ namespace FoodTruckNation.Core.Domain
         /// <summary>
         /// Private constructor needed by Entity Framework (and maybe Newtonsoft?)
         /// </summary>
-        private FoodTruck() 
-            : this(String.Empty, String.Empty, String.Empty, ObjectState.UNCHANGED)
+        private FoodTruck()
+            : this(string.Empty, string.Empty, string.Empty, ObjectState.UNCHANGED)
         {
 
         }
@@ -28,10 +28,10 @@ namespace FoodTruckNation.Core.Domain
         /// <param name="name">A String of the name of this food truck</param>
         /// <param name="description">A String of the description of this food truck</param>
         /// <param name="website">A String of the website for this food truck</param>
-        public FoodTruck(int foodTruckId, String name, String description, String website)
+        public FoodTruck(int foodTruckId, string name, string description, string website)
             : this(name, description, website, ObjectState.UNCHANGED)
         {
-            this.foodTruckId = foodTruckId;
+            _foodTruckId = foodTruckId;
         }
 
         /// <summary>
@@ -40,10 +40,10 @@ namespace FoodTruckNation.Core.Domain
         /// <param name="name">A String of the name of the new food truck</param>
         /// <param name="description">A String of the description of the food truck</param>
         /// <param name="website">A String of the website for the food truck</param>
-        public FoodTruck(String name, String description, String website)
+        public FoodTruck(string name, string description, string website)
             : this(name, description, website, ObjectState.NEW)
         {
-            
+
         }
 
         /// <summary>
@@ -54,92 +54,91 @@ namespace FoodTruckNation.Core.Domain
         /// <param name="description">A String of the description of this food truck</param>
         /// <param name="website">A String of the website for this food truck</param>
         /// <param name="objectState">An ObjectState value tracking if this is a new or existing (unchanged) food truck</param>
-        protected FoodTruck(String name, String description, String website, ObjectState objectState)
+        protected FoodTruck(string name, string description, string website, ObjectState objectState)
             : base(objectState)
         {
-            
-            this.name = name;
-            this.description = description;
-            this.website = website;
-            this.tags = new List<FoodTruckTag>();
-            this.reviews = new List<Review>();
-            this.schedules = new List<Schedule>();
-            this.socialMediaAccounts = new List<SocialMediaAccount>();
+            _name = name;
+            _description = description;
+            _website = website;
+            _tags = new List<FoodTruckTag>();
+            _reviews = new List<Review>();
+            _schedules = new List<Schedule>();
+            _socialMediaAccounts = new List<SocialMediaAccount>();
         }
 
         #region Member Variables
 
-        private int foodTruckId;
-        private String name;
-        private String description;
-        private String website;
-        private DateTime lastModifiedDate;
-        private List<FoodTruckTag> tags;
-        private List<Review> reviews;
-        private List<Schedule> schedules;
-        private List<SocialMediaAccount> socialMediaAccounts;
+        private int _foodTruckId;
+        private string _name;
+        private string _description;
+        private string _website;
+        private DateTime _lastModifiedDate;
+        private readonly List<FoodTruckTag> _tags;
+        private readonly List<Review> _reviews;
+        private readonly List<Schedule> _schedules;
+        private readonly List<SocialMediaAccount> _socialMediaAccounts;
         #endregion
 
 
         #region Validation Constants
 
-        public const String NAME_VALIDATION = @"^\w[\w ?,!\.'-]{1,39}$";
+        public const string NAME_VALIDATION = @"^\w[\w ?,!\.'-]{1,39}$";
 
-        public const String DESCRIPTION_VALIDATION = @"^\w[\w ?,!\.]{1,511}$";
+        public const string DESCRIPTION_VALIDATION = @"^\w[\w ?,!\.]{1,511}$";
 
-        public const String WEBSITE_VALIDATION = @"^https?:\/\/([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$";
+        public const string WEBSITE_VALIDATION = @"^https?:\/\/([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$";
 
         #endregion
 
 
         public int FoodTruckId
         {
-            get { return this.foodTruckId; }
-            private set { this.foodTruckId = value; }
+            get { return _foodTruckId; }
+            private set { _foodTruckId = value; }
         }
 
-        public String Name
+        public string Name
         {
-            get { return this.name; }
+            get { return _name; }
             set
             {
-                this.name = value;
-                this.SetObjectModified();
+                _name = value;
+                SetObjectModified();
             }
         }
 
-        public String Description
+        public string Description
         {
-            get { return this.description; }
+            get { return _description; }
             set
             {
-                this.description = value;
-                this.SetObjectModified();
+                _description = value;
+                SetObjectModified();
             }
         }
 
-        public String Website
+        public string Website
         {
-            get { return this.website; }
+            get { return _website; }
             set
             {
-                this.website = value;
-                this.SetObjectModified();
+                _website = value;
+                SetObjectModified();
             }
         }
 
 
         public DateTime LastModifiedDate
         {
-            get { return this.lastModifiedDate;  }
-            internal set { this.lastModifiedDate = value; }
+            get { return _lastModifiedDate; }
+            internal set { _lastModifiedDate = value; }
         }
 
         public List<FoodTruckTag> Tags
         {
             get
             {
-                return this.tags.Where(t => t.ObjectState.IsActiveState())
+                return _tags.Where(t => t.ObjectState.IsActiveState())
                     .ToList();
             }
         }
@@ -150,12 +149,12 @@ namespace FoodTruckNation.Core.Domain
             // If the tag is already on the truck, then just return
             // A different implementation may throw an exception here, but for
             // a food truck tag, it is OK just to return
-            if (this.tags.Any(t => t.Tag == tag))
-                return;            
+            if (_tags.Any(t => t.Tag == tag))
+                return;
 
             FoodTruckTag foodTruckTag = new FoodTruckTag(this, tag);
-            this.tags.Add(foodTruckTag);
-            this.SetObjectModified();
+            _tags.Add(foodTruckTag);
+            SetObjectModified();
         }
 
 
@@ -163,13 +162,13 @@ namespace FoodTruckNation.Core.Domain
         public void RemoveTag(FoodTruckTag foodTruckTag)
         {
             foodTruckTag.SetDeleted();
-            this.SetObjectModified();
+            SetObjectModified();
         }
 
 
         public int ReviewCount
         {
-            get { return this.reviews.Count;  }
+            get { return _reviews.Count; }
         }
 
 
@@ -177,27 +176,27 @@ namespace FoodTruckNation.Core.Domain
         {
             get
             {
-                if (this.reviews.Count == 0)
+                if (_reviews.Count == 0)
                     return 0.0;
 
-                return this.reviews.Average(r => r.Rating);
+                return _reviews.Average(r => r.Rating);
             }
         }
-        
+
 
         public List<Review> Reviews
         {
             get
             {
-                return this.reviews.ToList();
+                return _reviews.ToList();
             }
         }
 
 
         public void AddReview(Review review)
         {
-            this.reviews.Add(review);
-            this.SetObjectModified();   
+            _reviews.Add(review);
+            SetObjectModified();
         }
 
 
@@ -205,15 +204,15 @@ namespace FoodTruckNation.Core.Domain
         {
             get
             {
-                return this.schedules.ToList();
+                return _schedules.ToList();
             }
         }
 
 
         public void AddSchedule(Schedule schedule)
         {
-            this.schedules.Add(schedule);
-            this.SetObjectModified();   
+            _schedules.Add(schedule);
+            SetObjectModified();
         }
 
 
@@ -222,7 +221,7 @@ namespace FoodTruckNation.Core.Domain
         {
             get
             {
-                return this.socialMediaAccounts
+                return _socialMediaAccounts
                     .Where(a => a.ObjectState.IsActiveState())
                     .ToList();
             }
@@ -231,15 +230,15 @@ namespace FoodTruckNation.Core.Domain
 
         public void AddSocialMediaAccount(SocialMediaAccount account)
         {
-            this.socialMediaAccounts.Add(account);
-            this.SetObjectModified();
+            _socialMediaAccounts.Add(account);
+            SetObjectModified();
         }
 
 
         public void RemoveSocialMediaAccount(SocialMediaAccount account)
         {
             account.SetDeleted();
-            this.SetObjectModified();
+            SetObjectModified();
         }
 
     }

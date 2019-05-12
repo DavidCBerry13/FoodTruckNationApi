@@ -1,37 +1,37 @@
-﻿using FoodTruckNation.Core.AppInterfaces;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.DataInterfaces;
 using FoodTruckNation.Core.Domain;
 using Framework;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 
 namespace FoodTruckNation.Core.AppServices
 {
     public class FoodTruckService : BaseService, IFoodTruckService
     {
-        
+
 
         public FoodTruckService(ILoggerFactory loggerFactory, IUnitOfWork uow, IDateTimeProvider dateTimeProvider,
             IFoodTruckRepository foodTruckRepository, ITagRepository tagRepository, ISocialMediaPlatformRepository socialMediaPlatformRepository)
             : base(loggerFactory, uow)
         {
-            this.dateTimeProvider = dateTimeProvider;
-            this.foodTruckRepository = foodTruckRepository;
-            this.tagRepository = tagRepository;
-            this.socialMediaPlatformRepository = socialMediaPlatformRepository;
+            _dateTimeProvider = dateTimeProvider;
+            _foodTruckRepository = foodTruckRepository;
+            _tagRepository = tagRepository;
+            _socialMediaPlatformRepository = socialMediaPlatformRepository;
         }
 
 
         #region Member Variables
 
-        private readonly IDateTimeProvider dateTimeProvider;
-        private readonly IFoodTruckRepository foodTruckRepository;
-        private readonly ITagRepository tagRepository;
-        private readonly ISocialMediaPlatformRepository socialMediaPlatformRepository;
+        private readonly IDateTimeProvider _dateTimeProvider;
+        private readonly IFoodTruckRepository _foodTruckRepository;
+        private readonly ITagRepository _tagRepository;
+        private readonly ISocialMediaPlatformRepository _socialMediaPlatformRepository;
 
         #endregion
 
@@ -40,7 +40,7 @@ namespace FoodTruckNation.Core.AppServices
         {
             try
             {
-                var foodTrucks = this.foodTruckRepository.GetAllFoodTrucks();
+                var foodTrucks = _foodTruckRepository.GetAllFoodTrucks();
                 return foodTrucks.ToList();
             }
             catch (Exception ex)
@@ -51,15 +51,15 @@ namespace FoodTruckNation.Core.AppServices
         }
 
 
-        public List<FoodTruck> GetFoodTrucksByTag(String tag)
+        public List<FoodTruck> GetFoodTrucksByTag(string tag)
         {
             try
             {
-                var foodTrucks = this.foodTruckRepository.GetFoodTruckByTag(tag);
+                var foodTrucks = _foodTruckRepository.GetFoodTruckByTag(tag);
                 return foodTrucks.ToList();
             }
             catch (Exception ex)
-            {                
+            {
                 Logger.LogError(new EventId(102), ex, $"Error thrown while calling FoodTruckService.GetFoodTrucksByTag(), tag={tag}");
                 throw;
             }
@@ -71,11 +71,11 @@ namespace FoodTruckNation.Core.AppServices
         {
             try
             {
-                var foodTruck = this.foodTruckRepository.GetFoodTruck(id);
+                var foodTruck = _foodTruckRepository.GetFoodTruck(id);
                 return foodTruck;
             }
             catch (Exception ex)
-            {                
+            {
                 Logger.LogError(new EventId(103), ex, $"Error thrown while calling FoodTruckService.GetFoodTruck(), id={id}");
                 throw;
             }
@@ -90,7 +90,7 @@ namespace FoodTruckNation.Core.AppServices
                 var foodTruck = new FoodTruck(foodTruckInfo.Name, foodTruckInfo.Description, foodTruckInfo.Website);
 
                 // Converts tag strings into tag objects (including creating tags that don't exist)
-                var tagObjects = this.DecodeTags(foodTruckInfo.Tags);
+                var tagObjects = DecodeTags(foodTruckInfo.Tags);
 
                 // Attaches the tags to the Food Truck Object
                 tagObjects.ForEach(obj => foodTruck.AddTag(obj));
@@ -98,17 +98,17 @@ namespace FoodTruckNation.Core.AppServices
                 // Social Media Accounts
                 foreach (var accountInfo in foodTruckInfo.SocialMediaAccounts)
                 {
-                    var platform = this.socialMediaPlatformRepository.GetSocialMediaPlatform(accountInfo.SocialMediaPlatformId);
+                    var platform = _socialMediaPlatformRepository.GetSocialMediaPlatform(accountInfo.SocialMediaPlatformId);
                     if (platform == null)
                         throw new InvalidDataException($"The id {accountInfo.SocialMediaPlatformId} is not a valid social media platform id");
-                    
+
                     SocialMediaAccount account = new SocialMediaAccount(platform, foodTruck, accountInfo.AccountName);
                     foodTruck.AddSocialMediaAccount(account);
                 }
 
                 // Persist to the database
-                this.foodTruckRepository.Save(foodTruck);
-                this.UnitOfWork.SaveChanges();
+                _foodTruckRepository.Save(foodTruck);
+                UnitOfWork.SaveChanges();
 
                 return foodTruck;
             }
@@ -121,11 +121,11 @@ namespace FoodTruckNation.Core.AppServices
         }
 
 
-        internal List<Tag> DecodeTags(IEnumerable<String> inputTags)
+        internal List<Tag> DecodeTags(IEnumerable<string> inputTags)
         {
             List<Tag> tagObjects = new List<Tag>();
 
-            var allTags = this.tagRepository.GetAllTags();
+            var allTags = _tagRepository.GetAllTags();
             foreach (var tag in inputTags)
             {
                 var tagObject = allTags.SingleOrDefault(t => t.Text == tag);
@@ -138,7 +138,7 @@ namespace FoodTruckNation.Core.AppServices
                 {
                     // This is a completely new tag
                     Tag newTag = new Tag(tag);
-                    tagObjects.Add(newTag);                    
+                    tagObjects.Add(newTag);
                 }
             }
             return tagObjects;
@@ -152,7 +152,7 @@ namespace FoodTruckNation.Core.AppServices
             try
             {
                 // Creates our Food Truck object
-                var foodTruck = this.foodTruckRepository.GetFoodTruck(foodTruckInfo.FoodTruckId);
+                var foodTruck = _foodTruckRepository.GetFoodTruck(foodTruckInfo.FoodTruckId);
 
                 if (foodTruck == null)
                     throw new ObjectNotFoundException($"No food truck was found with the id {foodTruckInfo.FoodTruckId}");
@@ -164,15 +164,15 @@ namespace FoodTruckNation.Core.AppServices
                 foodTruck.LastModifiedDate = foodTruckInfo.LastModifiedDate;
 
                 // Persist the changes to the database
-                this.foodTruckRepository.Save(foodTruck);
-                this.UnitOfWork.SaveChanges();
+                _foodTruckRepository.Save(foodTruck);
+                UnitOfWork.SaveChanges();
 
                 return foodTruck;
             }
             catch (DBConcurrencyException ce)
             {
                 // This is the object in the database - so the object our update conflicted with
-                var foodTruck = this.foodTruckRepository.GetFoodTruck(foodTruckInfo.FoodTruckId);
+                var foodTruck = _foodTruckRepository.GetFoodTruck(foodTruckInfo.FoodTruckId);
 
                 Logger.LogWarning(new EventId(125), ce, $"Concurrency exception thrown while calling FoodTruckService.UpdateFoodTruck() - Update Command = || {foodTruckInfo.ToJson()} || Database Object = || {foodTruck.ToJson() } ||");
 
@@ -188,7 +188,7 @@ namespace FoodTruckNation.Core.AppServices
         }
 
 
-        internal List<FoodTruckTag> FindRemovedTags(List<String> inputTags, List<FoodTruckTag> foodTruckTags)
+        internal List<FoodTruckTag> FindRemovedTags(List<string> inputTags, List<FoodTruckTag> foodTruckTags)
         {
             var removedTags = foodTruckTags.Where(foodTruckTag => inputTags.Any(inputTag => inputTag == foodTruckTag.Tag.Text)).ToList();
             return removedTags;
@@ -198,36 +198,36 @@ namespace FoodTruckNation.Core.AppServices
 
         public void DeleteFoodTruck(int foodTruckId)
         {
-            FoodTruck foodTruck = this.foodTruckRepository.GetFoodTruck(foodTruckId);
+            FoodTruck foodTruck = _foodTruckRepository.GetFoodTruck(foodTruckId);
 
             if (foodTruck == null)
-               throw new ObjectNotFoundException($"Food truck id {foodTruckId} not found so it could not be deleted");
+                throw new ObjectNotFoundException($"Food truck id {foodTruckId} not found so it could not be deleted");
 
-            this.foodTruckRepository.Delete(foodTruck);
-            this.UnitOfWork.SaveChanges();
+            _foodTruckRepository.Delete(foodTruck);
+            UnitOfWork.SaveChanges();
         }
 
 
 
 
-        public FoodTruck AddFoodTruckTags(int foodTruckId, List<String> tags)
+        public FoodTruck AddFoodTruckTags(int foodTruckId, List<string> tags)
         {
             try
             {
                 // Get the Food Truck object
-                var foodTruck = this.foodTruckRepository.GetFoodTruck(foodTruckId);
+                var foodTruck = _foodTruckRepository.GetFoodTruck(foodTruckId);
                 if (foodTruck == null)
                     throw new ObjectNotFoundException("No food truck with the id of {foodTruckId} could be found");
 
                 // Converts tag strings into tag objects (including creating tags that don't exist)
-                var tagObjects = this.DecodeTags(tags);
+                var tagObjects = DecodeTags(tags);
 
                 // Attaches the tags to the Food Truck Object
                 tagObjects.ForEach(obj => foodTruck.AddTag(obj));
 
                 // Persist to the database
-                this.foodTruckRepository.Save(foodTruck);
-                this.UnitOfWork.SaveChanges();
+                _foodTruckRepository.Save(foodTruck);
+                UnitOfWork.SaveChanges();
 
                 return foodTruck;
             }
@@ -238,62 +238,62 @@ namespace FoodTruckNation.Core.AppServices
             }
         }
 
-        public FoodTruck UpdateFoodTruckTags(int foodTruckId, List<String> tags)
+        public FoodTruck UpdateFoodTruckTags(int foodTruckId, List<string> tags)
         {
             // Get the Food Truck object
-            var foodTruck = this.foodTruckRepository.GetFoodTruck(foodTruckId);
+            var foodTruck = _foodTruckRepository.GetFoodTruck(foodTruckId);
             if (foodTruck == null)
                 throw new ObjectNotFoundException("No food truck with the id of {foodTruckId} could be found");
 
             // Handle Tags on Object but not in Input list (i.e. tags to be removed)
-            var removedTags = foodTruck.Tags.WhereNotExists(tags, (foodTruckTag, inputTag) => (foodTruckTag.Tag.Text == inputTag));
+            var removedTags = foodTruck.Tags.WhereNotExists(tags, (foodTruckTag, inputTag) => ( foodTruckTag.Tag.Text == inputTag ));
             removedTags.ToList().ForEach(removedTag => foodTruck.RemoveTag(removedTag));
 
             // Now deal with the tags that are on the object
-            var newTags = tags.WhereNotExists(foodTruck.Tags, (inputTag, foodTruckTag) => (inputTag == foodTruckTag.Tag.Text));
+            var newTags = tags.WhereNotExists(foodTruck.Tags, (inputTag, foodTruckTag) => ( inputTag == foodTruckTag.Tag.Text ));
 
             // Converts tag strings into tag objects (including creating tags that don't exist)
-            var tagObjects = this.DecodeTags(newTags);
+            var tagObjects = DecodeTags(newTags);
 
             // Attaches the tags to the Food Truck Object
             tagObjects.ForEach(obj => foodTruck.AddTag(obj));
 
 
             // Persist to the database
-            this.foodTruckRepository.Save(foodTruck);
-            this.UnitOfWork.SaveChanges();
+            _foodTruckRepository.Save(foodTruck);
+            UnitOfWork.SaveChanges();
 
             return foodTruck;
         }
 
-        public void DeleteFoodTruckTag(int foodTruckId, String tag)
+        public void DeleteFoodTruckTag(int foodTruckId, string tag)
         {
             // Get the Food Truck object
-            var foodTruck = this.foodTruckRepository.GetFoodTruck(foodTruckId);
+            var foodTruck = _foodTruckRepository.GetFoodTruck(foodTruckId);
             if (foodTruck == null)
                 throw new ObjectNotFoundException("No food truck with the id of {foodTruckId} could be found");
 
-            var tagToRemove = foodTruck.Tags.FirstOrDefault(t => t.Tag.Text.Equals(tag, StringComparison.CurrentCultureIgnoreCase) );
-            if ( tagToRemove == null)
+            var tagToRemove = foodTruck.Tags.FirstOrDefault(t => t.Tag.Text.Equals(tag, StringComparison.CurrentCultureIgnoreCase));
+            if (tagToRemove == null)
                 throw new ObjectNotFoundException("No tag of {tag} found on the food truck with the id of {foodTruckId}");
 
             foodTruck.RemoveTag(tagToRemove);
 
             // Persist to the database
-            this.foodTruckRepository.Save(foodTruck);
-            this.UnitOfWork.SaveChanges();
+            _foodTruckRepository.Save(foodTruck);
+            UnitOfWork.SaveChanges();
         }
 
 
 
 
-        public SocialMediaAccount AddSocialMediaAccount(int foodTruckId, int socialMediaPlatformId, String accountName)
+        public SocialMediaAccount AddSocialMediaAccount(int foodTruckId, int socialMediaPlatformId, string accountName)
         {
-            var foodTruck = this.foodTruckRepository.GetFoodTruck(foodTruckId);
+            var foodTruck = _foodTruckRepository.GetFoodTruck(foodTruckId);
             if (foodTruck == null)
                 throw new ObjectNotFoundException("No food truck with the id of {foodTruckId} could be found");
 
-            var platform = this.socialMediaPlatformRepository.GetSocialMediaPlatform(socialMediaPlatformId);
+            var platform = _socialMediaPlatformRepository.GetSocialMediaPlatform(socialMediaPlatformId);
             if (platform == null)
                 throw new ObjectNotFoundException("No social media platform with the id {socialMediaPlatformId} could be found");
 
@@ -301,15 +301,15 @@ namespace FoodTruckNation.Core.AppServices
             foodTruck.AddSocialMediaAccount(account);
 
             // Persist to the database
-            this.foodTruckRepository.Save(foodTruck);
-            this.UnitOfWork.SaveChanges();
+            _foodTruckRepository.Save(foodTruck);
+            UnitOfWork.SaveChanges();
 
             return account;
         }
 
-        public SocialMediaAccount UpdateSocialMediaAccount(int foodTruckId, int socialMediaAccountId, String accountName)
+        public SocialMediaAccount UpdateSocialMediaAccount(int foodTruckId, int socialMediaAccountId, string accountName)
         {
-            var foodTruck = this.foodTruckRepository.GetFoodTruck(foodTruckId);
+            var foodTruck = _foodTruckRepository.GetFoodTruck(foodTruckId);
             if (foodTruck == null)
                 throw new ObjectNotFoundException($"No food truck with the id of {foodTruckId} could be found");
 
@@ -320,19 +320,19 @@ namespace FoodTruckNation.Core.AppServices
             account.AccountName = accountName;
 
             // Persist to the database
-            this.foodTruckRepository.Save(foodTruck);
-            this.UnitOfWork.SaveChanges();
+            _foodTruckRepository.Save(foodTruck);
+            UnitOfWork.SaveChanges();
 
             return account;
         }
 
         public void DeleteSocialMediaAccount(int foodTruckId, int socialMediaPlatformId)
         {
-            var foodTruck = this.foodTruckRepository.GetFoodTruck(foodTruckId);
+            var foodTruck = _foodTruckRepository.GetFoodTruck(foodTruckId);
             if (foodTruck == null)
                 throw new ObjectNotFoundException("No food truck with the id of {foodTruckId} could be found");
 
-            var platform = this.socialMediaPlatformRepository.GetSocialMediaPlatform(socialMediaPlatformId);
+            var platform = _socialMediaPlatformRepository.GetSocialMediaPlatform(socialMediaPlatformId);
             if (platform == null)
                 throw new ObjectNotFoundException($"No social media platform with the id {socialMediaPlatformId} could be found");
 
@@ -343,8 +343,8 @@ namespace FoodTruckNation.Core.AppServices
             foodTruck.RemoveSocialMediaAccount(account);
 
             // Persist to the database
-            this.foodTruckRepository.Save(foodTruck);
-            this.UnitOfWork.SaveChanges();
+            _foodTruckRepository.Save(foodTruck);
+            UnitOfWork.SaveChanges();
 
             return;
         }
@@ -354,7 +354,7 @@ namespace FoodTruckNation.Core.AppServices
 
         public List<Review> GetFoodTruckReviews(int foodTruckId)
         {
-            FoodTruck foodTruck = this.foodTruckRepository.GetFoodTruck(foodTruckId);
+            FoodTruck foodTruck = _foodTruckRepository.GetFoodTruck(foodTruckId);
 
             if (foodTruck == null)
                 throw new ObjectNotFoundException($"Food truck id {foodTruckId} was not found");
@@ -364,29 +364,29 @@ namespace FoodTruckNation.Core.AppServices
 
         public Review GetFoodTruckReview(int foodTruckId, int reviewId)
         {
-            FoodTruck foodTruck = this.foodTruckRepository.GetFoodTruck(foodTruckId);
+            FoodTruck foodTruck = _foodTruckRepository.GetFoodTruck(foodTruckId);
 
             if (foodTruck == null)
                 throw new ObjectNotFoundException($"Food truck id {foodTruckId} was not found");
 
-            var review =  foodTruck.Reviews.FirstOrDefault(r => r.ReviewId == reviewId);            
+            var review = foodTruck.Reviews.FirstOrDefault(r => r.ReviewId == reviewId);
             return review;
         }
 
 
         public Review CreateFoodTruckReview(CreateReviewCommand command)
         {
-            FoodTruck foodTruck = this.foodTruckRepository.GetFoodTruck(command.FoodTruckId);
+            FoodTruck foodTruck = _foodTruckRepository.GetFoodTruck(command.FoodTruckId);
 
             if (foodTruck == null)
                 throw new ObjectNotFoundException($"Food truck id {command.FoodTruckId} was not found");
 
-            Review review = new Review(foodTruck, this.dateTimeProvider.CurrentDateTime, command.Rating, command.Comments);
+            Review review = new Review(foodTruck, _dateTimeProvider.CurrentDateTime, command.Rating, command.Comments);
             foodTruck.AddReview(review);
 
             // Persist the changes to the database
-            this.foodTruckRepository.Save(foodTruck);
-            this.UnitOfWork.SaveChanges();
+            _foodTruckRepository.Save(foodTruck);
+            UnitOfWork.SaveChanges();
 
             return review;
         }

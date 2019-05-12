@@ -1,4 +1,4 @@
-﻿using Framework;
+using Framework;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -15,8 +15,8 @@ namespace FoodTruckNation.Core.AppServices
 
         public BaseService(ILoggerFactory loggerFactory, IUnitOfWork uow)
         {
-            this.Logger = loggerFactory.CreateLogger(this.GetType());
-            this.UnitOfWork = uow;
+            Logger = loggerFactory.CreateLogger(GetType());
+            UnitOfWork = uow;
         }
 
 

@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FoodTruckNation.Core.Domain;
 using System;
 using System.Collections.Generic;
@@ -12,14 +12,14 @@ namespace FoodTruckNationApi.Tags
 
         public TagMappingProfile()
         {
-            this.AddTagToStringMapping();
+            AddTagToStringMapping();
         }
 
 
         public void AddTagToStringMapping()
         {
 
-            this.CreateMap<Tag, String>()
+            CreateMap<Tag, string>()
                 .ConvertUsing(tag => tag.Text );
         }
 

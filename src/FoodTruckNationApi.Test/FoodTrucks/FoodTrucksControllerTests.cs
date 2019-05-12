@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNationApi.FoodTrucks;
@@ -97,7 +97,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         public void WhenTagParameterPassedToAPI_SearchIsDoneByTag()
         {
             // Arrange
-            var mockLogger = this.GetMockLogger<FoodTrucksController>();
+            var mockLogger = GetMockLogger<FoodTrucksController>();
             var searchTag = "Tacos";
 
             var mockService = new Mock<IFoodTruckService>();

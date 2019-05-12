@@ -1,4 +1,4 @@
-﻿#pragma warning disable 1591
+#pragma warning disable 1591
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,26 +33,20 @@ namespace FoodTruckNationApi
     public class Startup
     {
 
-        //private readonly IConfigurationRoot configuration;
-        private readonly IHostingEnvironment hostingEnvironment;
-        private readonly ILoggerFactory loggerFactory;
+
 
         public Startup(IHostingEnvironment env, IConfiguration configuration, ILoggerFactory loggerFactory)
         {
             // Hold onto a reference to the hosting environment and the logger factory
-            this.hostingEnvironment = env;
-            this.loggerFactory = loggerFactory;
-
-            this.Configuration = configuration;
-
-            
-            // For NLog            
-            env.ConfigureNLog("nlog.config");
+            _hostingEnvironment = env;
+            _loggerFactory = loggerFactory;
+            _configuration = configuration;            
         }
 
 
-
-        public IConfiguration Configuration { get; }
+        private readonly IConfiguration _configuration;
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly ILoggerFactory _loggerFactory;
 
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -61,17 +55,17 @@ namespace FoodTruckNationApi
             services.AddMvc(options =>
             {
                 options.Filters.Add(new ValidationAttribute());
-                options.Filters.Add(new ExceptionHandlerFilterAttribute(this.loggerFactory));
+                options.Filters.Add(new ExceptionHandlerFilterAttribute(_loggerFactory));
                 
             })            
             // .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)  // Uncomment to use ApiController Attribute
             .AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 
             services.AddCors();
-            this.ConfigureServicesDI(services);
+            ConfigureServicesDI(services);
             services.AddAutoMapper();
-            this.ConfigureServicesVersioning(services);
-            this.ConfigureServicesSwagger(services);
+            ConfigureServicesVersioning(services);
+            ConfigureServicesSwagger(services);
 
             var memoryThreshhold = 800000000; // 800 MB
             var healthBuilder = new HealthBuilder()
@@ -81,7 +75,7 @@ namespace FoodTruckNationApi
                 .HealthChecks.AddPingCheck("google ping", "google.com", TimeSpan.FromSeconds(10))
                 // Check that our SQL Server is still up and running
                 .HealthChecks.AddSqlCheck("Food Truck Database", 
-                    this.Configuration.GetConnectionString("FoodTruckConnectionString"), TimeSpan.FromSeconds(10))
+                    _configuration.GetConnectionString("FoodTruckConnectionString"), TimeSpan.FromSeconds(10))
                 .OutputHealth.AsJson()
                 .BuildAndAddTo(services);
             services.AddHealthEndpoints();
@@ -131,17 +125,17 @@ namespace FoodTruckNationApi
         /// <param name="services"></param>
         private void ConfigureServicesDI(IServiceCollection services)
         {
-            services.AddSingleton<IConfiguration>(this.Configuration);
+            services.AddSingleton<IConfiguration>(_configuration);
 
-            if (this.hostingEnvironment.EnvironmentName == "IntegrationTests")
+            if (_hostingEnvironment.EnvironmentName == "IntegrationTests")
             {
-                var testDbName = this.Configuration["TestName"];
+                var testDbName = _configuration["TestName"];
                 services.ConfigureInMemoryDataAccess(testDbName);
             }
             else
             {
-                var connectionString = this.Configuration.GetConnectionString("FoodTruckConnectionString");
-                services.ConfigureSqlServerDataAccess(connectionString, loggerFactory);
+                var connectionString = _configuration.GetConnectionString("FoodTruckConnectionString");
+                services.ConfigureSqlServerDataAccess(connectionString, _loggerFactory);
             }
 
             services.ConfigureFoodTruckServices();
@@ -157,7 +151,7 @@ namespace FoodTruckNationApi
         /// <param name="services"></param>
         private void ConfigureServicesSwagger(IServiceCollection services)
         {
-            var pathToXmlComments = Configuration["Swagger:FileName"];
+            var pathToXmlComments = _configuration["Swagger:FileName"];
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1.1", new Info { Title = "Food Truck API v1.1", Version = "v1.1" });

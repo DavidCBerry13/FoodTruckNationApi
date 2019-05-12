@@ -1,9 +1,10 @@
-﻿using AutoMapper;
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
+using AutoMapper;
 using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.Domain;
 using Framework.ApiUtil;
 using System;
-using System.Collections.Generic;
 
 
 namespace FoodTruckNationApi.FoodTrucks.Reviews
@@ -13,14 +14,14 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
 
         public FoodTruckReviewsAutomapperProfile()
         {
-            this.AddReviewModelMaps();
-            this.AddCreateReviewModelMaps();
+            AddReviewModelMaps();
+            AddCreateReviewModelMaps();
         }
 
 
         internal void AddReviewModelMaps()
         {
-            this.CreateMap<Review, ReviewModel>()
+            CreateMap<Review, ReviewModel>()
                 .ForMember(
                     dest => dest.Comments,
                     opt => opt.MapFrom(src => src.Details)
@@ -32,7 +33,7 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
 
 
             // For the links in the Meta object
-            this.CreateMap<Review, ReviewLinks>()
+            CreateMap<Review, ReviewLinks>()
                 .ForMember(
                     dest => dest.Self,
                     opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
@@ -58,8 +59,10 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
 
         internal void AddCreateReviewModelMaps()
         {
-            this.CreateMap<CreateReviewModel, CreateReviewCommand>();
+            CreateMap<CreateReviewModel, CreateReviewCommand>();
         }
 
     }
 }
+
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

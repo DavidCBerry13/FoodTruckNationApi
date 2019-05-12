@@ -1,10 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Framework.ApiUtil;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using FoodTruckNation.Core.AppInterfaces;
@@ -25,22 +21,22 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
         public FoodTruckReviewsController(ILogger<FoodTruckReviewsController> logger, IMapper mapper, IFoodTruckService foodTruckService)
             : base(logger, mapper)
         {
-            this.foodTruckService = foodTruckService;
+            _foodTruckService = foodTruckService;
         }
 
 
-        private IFoodTruckService foodTruckService;
+        private readonly IFoodTruckService _foodTruckService;
 
 
         /// <summary>
         /// Route name for the route that gets all reviews for a food truck
         /// </summary>
-        public const String GET_ALL_FOOD_TRUCK_REVIEWS = "GetAllFoodTruckReviews";
+        internal const string GET_ALL_FOOD_TRUCK_REVIEWS = "GetAllFoodTruckReviews";
 
         /// <summary>
         /// Route name for the route that gets a single review for a food truck
         /// </summary>
-        public const String GET_SINGLE_FOOD_TRUCK_REVIEW = "GetFoodTruckReviewsById";
+        internal const string GET_SINGLE_FOOD_TRUCK_REVIEW = "GetFoodTruckReviewsById";
 
 
         /// <summary>
@@ -57,10 +53,10 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Get(int foodTruckId)
         {
-            var reviews = this.foodTruckService.GetFoodTruckReviews(foodTruckId);
+            var reviews = _foodTruckService.GetFoodTruckReviews(foodTruckId);
 
-            var models = this.mapper.Map<List<Review>, List<ReviewModel>>(reviews);
-            return this.Ok(models);            
+            var models = _mapper.Map<List<Review>, List<ReviewModel>>(reviews);
+            return Ok(models);            
         }
 
 
@@ -79,13 +75,13 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Get(int foodTruckId, int reviewId)
         {
-            var review = this.foodTruckService.GetFoodTruckReview(foodTruckId, reviewId);
+            var review = _foodTruckService.GetFoodTruckReview(foodTruckId, reviewId);
 
             if (review == null)
-                return this.NotFound($"Review {reviewId} not found for food truck id {foodTruckId}");
+                return NotFound($"Review {reviewId} not found for food truck id {foodTruckId}");
 
-            var model = this.mapper.Map<Review, ReviewModel>(review);
-            return this.Ok(model);
+            var model = _mapper.Map<Review, ReviewModel>(review);
+            return Ok(model);
         }
 
         /// <summary>
@@ -106,13 +102,13 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
         public IActionResult Post(int foodTruckId, [FromBody]CreateReviewModel createModel)
         {
             var createCommand = new CreateReviewCommand() { FoodTruckId = foodTruckId };
-            this.mapper.Map<CreateReviewModel, CreateReviewCommand>(createModel, createCommand);
+            _mapper.Map<CreateReviewModel, CreateReviewCommand>(createModel, createCommand);
 
-            Review foodTruck = this.foodTruckService.CreateFoodTruckReview(createCommand);
+            Review foodTruck = _foodTruckService.CreateFoodTruckReview(createCommand);
 
-            var model = this.mapper.Map<Review, ReviewModel>(foodTruck);
-            return this.CreatedAtRoute(GET_SINGLE_FOOD_TRUCK_REVIEW, 
-                new { FoodTruckId = model.FoodTruckId, ReviewId = model.ReviewId }, model);
+            var model = _mapper.Map<Review, ReviewModel>(foodTruck);
+            return CreatedAtRoute(GET_SINGLE_FOOD_TRUCK_REVIEW, 
+                new { model.FoodTruckId, model.ReviewId }, model);
         }
 
     }

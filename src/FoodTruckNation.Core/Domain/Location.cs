@@ -1,4 +1,4 @@
-﻿using Framework;
+using Framework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -22,116 +22,116 @@ namespace FoodTruckNation.Core.Domain
         }
 
 
-        internal Location(int id, String name, String streetAddress, String city,
-            String state, String zipCode) : base(ObjectState.UNCHANGED)
+        internal Location(int id, string name, string streetAddress, string city,
+            string state, string zipCode) : base(ObjectState.UNCHANGED)
         {
-            this.locationId = id;
-            this.locationName = name;
-            this.streetAddress = streetAddress;
-            this.city = city;
-            this.state = state;
-            this.zipCode = zipCode;
+            _locationId = id;
+            _locationName = name;
+            _streetAddress = streetAddress;
+            _city = city;
+            _state = state;
+            _zipCode = zipCode;
         }
 
 
-        public Location(String name, String streetAddress, String city,
-            String state, String zipCode) : base(ObjectState.NEW)
+        public Location(string name, string streetAddress, string city,
+            string state, string zipCode) : base(ObjectState.NEW)
         {
-            this.locationName = name;
-            this.streetAddress = streetAddress;
-            this.city = city;
-            this.state = state;
-            this.zipCode = zipCode;
+            _locationName = name;
+            _streetAddress = streetAddress;
+            _city = city;
+            _state = state;
+            _zipCode = zipCode;
         }
 
 
-        private int locationId;
-        private String locationName;
-        private String streetAddress;
-        private String city;
-        private String state;
-        private String zipCode;
+        private int _locationId;
+        private string _locationName;
+        private string _streetAddress;
+        private string _city;
+        private string _state;
+        private string _zipCode;
 
 
 
         #region Validation Constants
 
-        public const String NAME_VALIDATION = @"^\w[\w ?,!\.'-\(\)]{1,49}$";
+        public const string NAME_VALIDATION = @"^\w[\w ?,!\.'-\(\)]{1,49}$";
 
-        public const String ADDRESS_VALIDATION = @"^\w[\w ?,!'\.]{1,49}$";
+        public const string ADDRESS_VALIDATION = @"^\w[\w ?,!'\.]{1,49}$";
 
-        public const String CITY_VALIDATION = @"^\w[\w ?,!\.]{1,29}$";
+        public const string CITY_VALIDATION = @"^\w[\w ?,!\.]{1,29}$";
 
-        public const String STATE_VALIDATION = @"^((A[LKSZR])|(C[AOT])|(D[EC])|(F[ML])|(G[AU])|(HI)|(I[DLNA])|(K[SY])|(LA)|(M[EHDAINSOT])|(N[EVHJMYCD])|(MP)|(O[HKR])|(P[WAR])|(RI)|(S[CD])|(T[NX])|(UT)|(V[TIA])|(W[AVIY]))$";
+        public const string STATE_VALIDATION = @"^((A[LKSZR])|(C[AOT])|(D[EC])|(F[ML])|(G[AU])|(HI)|(I[DLNA])|(K[SY])|(LA)|(M[EHDAINSOT])|(N[EVHJMYCD])|(MP)|(O[HKR])|(P[WAR])|(RI)|(S[CD])|(T[NX])|(UT)|(V[TIA])|(W[AVIY]))$";
 
-        public const String ZIP_CODE_VALIDATION = @"^\d{5}$";
+        public const string ZIP_CODE_VALIDATION = @"^\d{5}$";
 
         #endregion
 
 
         public int LocationId
         {
-            get { return this.locationId; }
-            internal set { this.locationId = value; }            
+            get { return _locationId; }
+            internal set { _locationId = value; }            
         }
 
 
 
         [Required]
-        public String Name
+        public string Name
         {
-            get { return this.locationName; }
+            get { return _locationName; }
             set
             {
-                this.locationName = value;
-                this.SetObjectModified();
+                _locationName = value;
+                SetObjectModified();
             }
         }
 
 
         [Required]
-        public String StreetAddress
+        public string StreetAddress
         {
-            get { return this.streetAddress; }
+            get { return _streetAddress; }
             set
             {
-                this.streetAddress = value;
-                this.SetObjectModified();
+                _streetAddress = value;
+                SetObjectModified();
             }
         }
 
         [Required]
-        public String City
+        public string City
         {
-            get { return this.city; }
+            get { return _city; }
             set
             {
-                this.city = value;
-                this.SetObjectModified();
+                _city = value;
+                SetObjectModified();
             }
         }
 
 
 
         [Required]
-        public String State
+        public string State
         {
-            get { return this.state; }
+            get { return _state; }
             set
             {
-                this.state = value;
-                this.SetObjectModified();
+                _state = value;
+                SetObjectModified();
             }
         }
 
         [Required]
-        public String ZipCode
+        public string ZipCode
         {
-            get { return this.zipCode; }
+            get { return _zipCode; }
             set
             {
-                this.zipCode = value;
-                this.SetObjectModified();
+                _zipCode = value;
+                SetObjectModified();
             }
         }
 

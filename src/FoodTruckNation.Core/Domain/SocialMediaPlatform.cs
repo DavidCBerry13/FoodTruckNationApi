@@ -1,4 +1,4 @@
-﻿using Framework;
+using Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,7 +19,7 @@ namespace FoodTruckNation.Core.Domain
         }
 
 
-        public SocialMediaPlatform(String name, String urlTemplate, String accountNameRegex) : base(ObjectState.NEW)
+        public SocialMediaPlatform(string name, string urlTemplate, string accountNameRegex) : base(ObjectState.NEW)
         {
             _name = name;
             _urlTemplate = urlTemplate;
@@ -27,7 +27,7 @@ namespace FoodTruckNation.Core.Domain
         }
 
 
-        internal SocialMediaPlatform(int platformId, String name, String urlTemplate, String accountNameRegex) : base(ObjectState.UNCHANGED)
+        internal SocialMediaPlatform(int platformId, string name, string urlTemplate, string accountNameRegex) : base(ObjectState.UNCHANGED)
         {
             _platformId = platformId;
             _name = name;
@@ -36,9 +36,9 @@ namespace FoodTruckNation.Core.Domain
         }
 
         private int _platformId;
-        private String _name;
-        private String _urlTemplate;
-        private String _accountNameRegex;
+        private string _name;
+        private string _urlTemplate;
+        private string _accountNameRegex;
 
 
         public int PlatformId
@@ -48,14 +48,14 @@ namespace FoodTruckNation.Core.Domain
         }
 
 
-        public String Name
+        public string Name
         {
             get { return _name; }
             private set { _name = value; }
         }
 
 
-        public String UrlTemplate
+        public string UrlTemplate
         {
             get { return _urlTemplate; }
             private set { _urlTemplate = value; }
@@ -63,7 +63,7 @@ namespace FoodTruckNation.Core.Domain
 
 
 
-        public String AccountNameRegex
+        public string AccountNameRegex
         {
             get { return _accountNameRegex; }
             private set { _accountNameRegex = value; }
@@ -71,10 +71,10 @@ namespace FoodTruckNation.Core.Domain
         }
 
 
-        public bool IsValidAccountName(String accountName)
+        public bool IsValidAccountName(string accountName)
         {
-            if (!String.IsNullOrWhiteSpace(this.AccountNameRegex))
-                Regex.IsMatch(accountName, this.AccountNameRegex);
+            if (!string.IsNullOrWhiteSpace(AccountNameRegex))
+                Regex.IsMatch(accountName, AccountNameRegex);
 
             return true;
         }

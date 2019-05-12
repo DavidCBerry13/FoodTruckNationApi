@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.Domain;
 using Framework.ApiUtil;
@@ -14,13 +14,13 @@ namespace FoodTruckNationApi.Locations
 
         public LocationsAutomapperProfile()
         {
-            this.AddLocationModelMaps();
+            AddLocationModelMaps();
         }
 
 
         private void AddLocationModelMaps()
         {
-            this.CreateMap<Location, LocationModel>()
+            CreateMap<Location, LocationModel>()
                 .ForMember(
                     dest => dest.LocationName,
                     opt => opt.MapFrom(src => src.Name)
@@ -31,7 +31,7 @@ namespace FoodTruckNationApi.Locations
                 );
 
             // For the links in the Meta object
-            this.CreateMap<Location, LocationLinks>()
+            CreateMap<Location, LocationLinks>()
                 .ForMember(
                     dest => dest.Self,
                     opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
@@ -57,12 +57,12 @@ namespace FoodTruckNationApi.Locations
 
         private void AddCreateLocationModelMaps()
         {
-            this.CreateMap<CreateLocationModel, CreateLocationCommand>();
+            CreateMap<CreateLocationModel, CreateLocationCommand>();
         }
 
         private void AddUpdateLocationModelMaps()
         {
-            this.CreateMap<UpdateLocationModel, UpdateLocationCommand>();
+            CreateMap<UpdateLocationModel, UpdateLocationCommand>();
 
         }
     }

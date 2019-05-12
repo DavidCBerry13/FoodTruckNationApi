@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using Framework;
 using System;
 using System.Collections.Generic;
@@ -26,7 +26,7 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
                 .WithMessage("The maximum time to schedule a food truck at a location is 16 hours");
         }
 
-        private IDateTimeProvider _dateTimeProvider;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
     }
 }

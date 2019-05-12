@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using Framework;
@@ -16,18 +16,18 @@ namespace FoodTruckNation.Core.AppServices
         public TagService(ILoggerFactory loggerFactory, IUnitOfWork uow, ITagRepository tagRepository)
             : base(loggerFactory, uow)
         {
-            this.tagRepository = tagRepository;
+            _tagRepository = tagRepository;
         }
 
 
-        private ITagRepository tagRepository;
+        private readonly ITagRepository _tagRepository;
 
 
         public IList<Tag> GetAllTags()
         {
             try
             {
-                var tags = this.tagRepository.GetAllTags();
+                var tags = _tagRepository.GetAllTags();
                 return tags;
             }
             catch (Exception ex)
@@ -42,7 +42,7 @@ namespace FoodTruckNation.Core.AppServices
         {
             try
             {
-                var tags = this.tagRepository.GetAllTagsInUse();
+                var tags = _tagRepository.GetAllTagsInUse();
                 return tags;
             }
             catch (Exception ex)
@@ -57,7 +57,7 @@ namespace FoodTruckNation.Core.AppServices
         {
             try
             {
-                var tag = this.tagRepository.GetTagById(tagId);
+                var tag = _tagRepository.GetTagById(tagId);
                 return tag;
             }
             catch (Exception ex)
@@ -73,7 +73,7 @@ namespace FoodTruckNation.Core.AppServices
         {
             try
             {
-                var tag = this.tagRepository.GetTagByName(tagName);
+                var tag = _tagRepository.GetTagByName(tagName);
                 return tag;
             }
             catch (Exception ex)
@@ -91,8 +91,8 @@ namespace FoodTruckNation.Core.AppServices
             {
                 Tag tag = new Tag(tagText);
 
-                this.tagRepository.SaveTag(tag);
-                this.UnitOfWork.SaveChanges();
+                _tagRepository.SaveTag(tag);
+                UnitOfWork.SaveChanges();
 
                 return tag;
             }
@@ -108,15 +108,15 @@ namespace FoodTruckNation.Core.AppServices
         {
             try
             {
-                Tag tag = this.tagRepository.GetTagById(updateTagCommand.TagId);
+                Tag tag = _tagRepository.GetTagById(updateTagCommand.TagId);
 
                 if (tag == null)
                     throw new ObjectNotFoundException($"No tag found with the id of {updateTagCommand.TagId}");
 
                 tag.Text = updateTagCommand.TagText;
 
-                this.tagRepository.SaveTag(tag);
-                this.UnitOfWork.SaveChanges();
+                _tagRepository.SaveTag(tag);
+                UnitOfWork.SaveChanges();
 
                 return tag;
             }

@@ -1,4 +1,4 @@
-﻿using FoodTruckNation.Core.DataInterfaces;
+using FoodTruckNation.Core.DataInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,9 +14,9 @@ namespace FoodTruckNation.Data.EF.Repositories
 
         public ScheduleRepository(FoodTruckContext context)
         {
-            this._foodTruckContext = context;
+            _foodTruckContext = context;
 
-            this._baseQuery = _foodTruckContext.Schedules
+            _baseQuery = _foodTruckContext.Schedules
                 .Include(s => s.Location)
                 .Include(s => s.FoodTruck);
         }

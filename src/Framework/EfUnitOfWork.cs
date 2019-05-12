@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,11 +12,11 @@ namespace Framework
 
         public EfUnitOfWork(T dbContext)
         {
-            this.dataContext = dbContext;
+            _dataContext = dbContext;
         }
 
 
-        private readonly T dataContext;
+        private readonly T _dataContext;
 
 
 
@@ -24,7 +24,7 @@ namespace Framework
         {
             try
             {
-                this.dataContext.SaveChanges();
+                _dataContext.SaveChanges();
             }
             catch (DbUpdateConcurrencyException ce)
             {

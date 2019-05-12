@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,14 +7,14 @@ namespace Framework
     public class ResultCode
     {
 
-        private ResultCode(String name, bool success)
+        private ResultCode(string name, bool success)
         {
-            this.Name = name;
-            this.IsSuccessful = success;
+            Name = name;
+            IsSuccessful = success;
         }
 
 
-        public String Name { get; private set; }
+        public string Name { get; private set; }
 
         public bool IsSuccessful { get; private set; }
 

@@ -35,10 +35,10 @@ namespace FoodTruckNationApi.Locations
         public LocationsController(ILogger<LocationsController> logger, ILocationService locationService, IMapper mapper)
             : base(logger, mapper)
         {
-            this.locationService = locationService;
+            _locationService = locationService;
         }
 
-        private ILocationService locationService;
+        private readonly ILocationService _locationService;
 
 
         #region Constants
@@ -46,12 +46,12 @@ namespace FoodTruckNationApi.Locations
         /// <summary>
         /// Route Name Constant for route that will get all locations
         /// </summary>
-        public const String GET_ALL_LOCATIONS = "GetLocations";
+        public const string GET_ALL_LOCATIONS = "GetLocations";
 
         /// <summary>
         /// Route name constant for route that gets an individual location
         /// </summary>
-        public const String GET_LOCATION_BY_ID = "GetLocationById";
+        public const string GET_LOCATION_BY_ID = "GetLocationById";
 
         #endregion
 
@@ -68,8 +68,8 @@ namespace FoodTruckNationApi.Locations
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Get()
         {
-            var locations = this.locationService.GetLocations();
-            var locationModels = this.mapper.Map<List<Location>, List<LocationModel>>(locations);
+            var locations = _locationService.GetLocations();
+            var locationModels = _mapper.Map<List<Location>, List<LocationModel>>(locations);
             return Ok(locationModels);
         }
 
@@ -88,16 +88,16 @@ namespace FoodTruckNationApi.Locations
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Get(int id)
         {
-            var location = this.locationService.GetLocation(id);
+            var location = _locationService.GetLocation(id);
 
             if ( location != null)
             {
-                var locationModel = this.mapper.Map<Location, LocationModel>(location);
+                var locationModel = _mapper.Map<Location, LocationModel>(location);
                 return Ok(locationModel);
             }  
             else
             {
-                return this.NotFound(new ApiMessageModel { Message = $"No location could be found with the id {id}"});
+                return NotFound(new ApiMessageModel { Message = $"No location could be found with the id {id}"});
             }
         }
 
@@ -115,11 +115,11 @@ namespace FoodTruckNationApi.Locations
         [ProducesResponseType(typeof(ApiMessageModel), 409)]
         public IActionResult Post([FromBody]CreateLocationModel createModel)
         {
-            var createLocationCommand = this.mapper.Map<CreateLocationModel, CreateLocationCommand>(createModel);
-            Location location = this.locationService.CreateLocation(createLocationCommand);
+            var createLocationCommand = _mapper.Map<CreateLocationModel, CreateLocationCommand>(createModel);
+            Location location = _locationService.CreateLocation(createLocationCommand);
 
-            var model = this.mapper.Map<Location, LocationModel>(location);
-            return this.CreatedAtRoute("GetLocationById", new { id = location.LocationId }, model);
+            var model = _mapper.Map<Location, LocationModel>(location);
+            return CreatedAtRoute("GetLocationById", new { id = location.LocationId }, model);
         }
 
 
@@ -141,12 +141,12 @@ namespace FoodTruckNationApi.Locations
         public IActionResult Put(int id, [FromBody]UpdateLocationModel updateModel)
         {
             var updateCommand = new UpdateLocationCommand() { LocationId = id };
-            this.mapper.Map<UpdateLocationModel, UpdateLocationCommand>(updateModel, updateCommand);
+            _mapper.Map<UpdateLocationModel, UpdateLocationCommand>(updateModel, updateCommand);
 
-            Location location = this.locationService.UpdateLocation(updateCommand);
+            Location location = _locationService.UpdateLocation(updateCommand);
 
-            var model = this.mapper.Map<Location, LocationModel>(location);
-            return this.Ok(model);
+            var model = _mapper.Map<Location, LocationModel>(location);
+            return Ok(model);
         }
 
 
@@ -162,9 +162,9 @@ namespace FoodTruckNationApi.Locations
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Delete(int id)
         {
-            this.locationService.DeleteLocation(id);
+            _locationService.DeleteLocation(id);
 
-            return this.Ok(new ApiMessageModel() { Message = $"Location {id} has been deleted" });
+            return Ok(new ApiMessageModel() { Message = $"Location {id} has been deleted" });
         }
     }
 }

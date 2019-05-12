@@ -1,4 +1,4 @@
-﻿using FoodTruckNation.Core.AppInterfaces;
+using FoodTruckNation.Core.AppInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,22 +12,22 @@ namespace FoodTruckNation.Core.AppServices
 
         public SocialMediaPlatformService(ISocialMediaPlatformRepository repository)
         {
-            this._socialMediaPlatformRepository = repository;
+            _socialMediaPlatformRepository = repository;
         }
 
 
-        private ISocialMediaPlatformRepository _socialMediaPlatformRepository;
+        private readonly ISocialMediaPlatformRepository _socialMediaPlatformRepository;
 
 
         public List<SocialMediaPlatform> GetAllSocialMediaPlatforms()
         {
-            return this._socialMediaPlatformRepository.GetSocialMediaPlatforms();
+            return _socialMediaPlatformRepository.GetSocialMediaPlatforms();
         }
 
 
         public SocialMediaPlatform GetSocialMediaPlatform(int platformId)
         {
-            return this._socialMediaPlatformRepository.GetSocialMediaPlatform(platformId);
+            return _socialMediaPlatformRepository.GetSocialMediaPlatform(platformId);
         }
 
     }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +13,10 @@ using Framework;
 
 namespace FoodTruckNationApi.Schedules
 {
+
+    /// <summary>
+    /// API Controller allowing you to get the schedules for all food trucks in a given date range
+    /// </summary>
     [Produces("application/json")]
     [Route("api/Schedules")]
     [ApiVersion("1.0")]
@@ -28,8 +32,8 @@ namespace FoodTruckNationApi.Schedules
         }
 
 
-        private IScheduleService _scheduleService;
-        private IDateTimeProvider _dateTimeProvider;
+        private readonly IScheduleService _scheduleService;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
         /// <summary>
         /// Gets a list of food truck schedules (appointments) for all food trucks for
@@ -41,11 +45,11 @@ namespace FoodTruckNationApi.Schedules
         [HttpGet]
         public IEnumerable<ScheduleModel> Get([FromQuery]GetSchedulesParameters parameters)
         {
-            var startDate = parameters.StartDate.HasValue ? parameters.StartDate.Value : _dateTimeProvider.CurrentDateTime.Date; ;
-            var endDate = parameters.EndDate.HasValue ? parameters.EndDate.Value : _dateTimeProvider.CurrentDateTime.Date.AddDays(7);
+            var startDate = parameters.StartDate ?? _dateTimeProvider.CurrentDateTime.Date; ;
+            var endDate = parameters.EndDate ?? _dateTimeProvider.CurrentDateTime.Date.AddDays(7);
 
-            var schedules = this._scheduleService.GetSchedules(startDate, endDate);
-            var scheduleModels = this.mapper.Map<List<Schedule>, List<ScheduleModel>>(schedules);
+            var schedules = _scheduleService.GetSchedules(startDate, endDate);
+            var scheduleModels = _mapper.Map<List<Schedule>, List<ScheduleModel>>(schedules);
             return scheduleModels;
         }
 

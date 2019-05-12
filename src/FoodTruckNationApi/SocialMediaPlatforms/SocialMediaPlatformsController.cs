@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,11 +29,11 @@ namespace FoodTruckNationApi.SocialMediaPlatforms
             ISocialMediaPlatformService socialMediaPlatformService)
             : base(logger, mapper)
         {
-            this._socialMediaPlatformService = socialMediaPlatformService;
+            _socialMediaPlatformService = socialMediaPlatformService;
         }
 
 
-        private ISocialMediaPlatformService _socialMediaPlatformService;
+        private readonly ISocialMediaPlatformService _socialMediaPlatformService;
 
 
         #region Route Names
@@ -41,7 +41,7 @@ namespace FoodTruckNationApi.SocialMediaPlatforms
         /// <summary>
         /// Route Name Constant for route that will get all social media platforms
         /// </summary>
-        public const String GET_ALL_SOCIAL_MEDIA_PLATFORMS = "GetSocialMediaPlatforms";
+        internal const string GET_ALL_SOCIAL_MEDIA_PLATFORMS = "GetSocialMediaPlatforms";
 
         #endregion
 
@@ -56,9 +56,9 @@ namespace FoodTruckNationApi.SocialMediaPlatforms
         [HttpGet(Name = GET_ALL_SOCIAL_MEDIA_PLATFORMS)]
         public IActionResult Get()
         {
-            var platforms = this._socialMediaPlatformService.GetAllSocialMediaPlatforms();
+            var platforms = _socialMediaPlatformService.GetAllSocialMediaPlatforms();
 
-            var models = this.mapper.Map<List<SocialMediaPlatform>, List<SocialMediaPlatformModel>>(platforms);
+            var models = _mapper.Map<List<SocialMediaPlatform>, List<SocialMediaPlatformModel>>(platforms);
 
             return Ok(models);
         }

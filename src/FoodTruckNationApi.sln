@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTruckNationApi", "FoodTruckNationApi\FoodTruckNationApi.csproj", "{F802C7EA-9819-4C28-B493-585C11483589}"
 EndProject
@@ -21,7 +21,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.ApiUtil.Tests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Metrics.Health.Checks.Sql", "App.Metrics.Health.Checks.Sql\App.Metrics.Health.Checks.Sql.csproj", "{2874062D-F123-47F8-9F30-D7E6A4AC69BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodTruckNationApi.Tests.Integration", "FoodTruckNationApi.Tests.Integration\FoodTruckNationApi.Tests.Integration.csproj", "{BA101816-95DA-4907-8237-2DBB96075D13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTruckNationApi.Tests.Integration", "FoodTruckNationApi.Tests.Integration\FoodTruckNationApi.Tests.Integration.csproj", "{BA101816-95DA-4907-8237-2DBB96075D13}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{32ACDCEF-0D51-490F-8673-6C2A708DB460}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

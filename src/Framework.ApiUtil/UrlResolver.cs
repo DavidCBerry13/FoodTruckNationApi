@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -28,7 +28,7 @@ namespace Framework.ApiUtil
     /// combination of objects and not need a separate resolver class for each domain object/model object pair.
     /// </para>
     /// </remarks>
-    public class UrlResolver : IMemberValueResolver<object, object, RouteUrlInfo, String>
+    public class UrlResolver : IMemberValueResolver<object, object, RouteUrlInfo, string>
     {
         /// <summary>
         /// Creates a new Urlresolver class to be used during mapping resolution to create URL links
@@ -38,7 +38,7 @@ namespace Framework.ApiUtil
         public UrlResolver(IHttpContextAccessor httpContextAccessor)
         {
             var httpContext = httpContextAccessor.HttpContext;
-            this.urlHelper = (IUrlHelper)httpContext.Items["URL_HELPER"];
+            _urlHelper = (IUrlHelper)httpContext.Items["URL_HELPER"];
         }
 
         // This is here so the TestUrlResolver can extend the class
@@ -48,7 +48,7 @@ namespace Framework.ApiUtil
         }
 
 
-        private readonly IUrlHelper urlHelper;
+        private readonly IUrlHelper _urlHelper;
 
         /// <summary>
         /// Resolves a URL in a modul object by using a route name and route paramters in the supplied RouteUrlInfo object
@@ -61,7 +61,7 @@ namespace Framework.ApiUtil
         /// <returns>A String of the generated URL</returns>
         public virtual string Resolve(object source, object destination, RouteUrlInfo sourceMember, string destMember, ResolutionContext context)
         {
-            return this.urlHelper.Link(sourceMember.RouteName, sourceMember.RouteParams);
+            return _urlHelper.Link(sourceMember.RouteName, sourceMember.RouteParams);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Framework;
+using Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,10 +17,10 @@ namespace FoodTruckNation.Core.Domain
         public Schedule()
             :base(ObjectState.UNCHANGED)
         {
-            this.foodTruck = null;
-            this.location = null;
-            this.scheduleStart = DateTime.MinValue;
-            this.scheduleEnd = DateTime.MinValue;
+            _foodTruck = null;
+            _location = null;
+            _scheduleStart = DateTime.MinValue;
+            _scheduleEnd = DateTime.MinValue;
         }
 
 
@@ -30,90 +30,90 @@ namespace FoodTruckNation.Core.Domain
         public Schedule(FoodTruck foodTruck, Location location, DateTime startTime, DateTime endTime) 
             : base(ObjectState.NEW)
         {
-            this.foodTruckId = foodTruck.FoodTruckId;
-            this.foodTruck = foodTruck;
-            this.locationId = location.LocationId;
-            this.location = location;
-            this.ScheduledStart = startTime;
-            this.ScheduledEnd = endTime;
+            _foodTruckId = foodTruck.FoodTruckId;
+            _foodTruck = foodTruck;
+            _locationId = location.LocationId;
+            _location = location;
+            ScheduledStart = startTime;
+            ScheduledEnd = endTime;
         }
 
 
         internal Schedule(int scheduleId, FoodTruck foodTruck, Location location, DateTime startTime, DateTime endTime)
             : base(ObjectState.UNCHANGED)
         {
-            this.scheduleId = scheduleId;
-            this.foodTruckId = foodTruck.FoodTruckId;
-            this.foodTruck = foodTruck;
-            this.locationId = location.LocationId;
-            this.location = location;
-            this.ScheduledStart = startTime;
-            this.ScheduledEnd = endTime;
+            _scheduleId = scheduleId;
+            _foodTruckId = foodTruck.FoodTruckId;
+            _foodTruck = foodTruck;
+            _locationId = location.LocationId;
+            _location = location;
+            ScheduledStart = startTime;
+            ScheduledEnd = endTime;
         }
 
 
 
-        private int scheduleId;
-        private int foodTruckId;
-        private FoodTruck foodTruck;
-        private int locationId;
-        private Location location;
-        private DateTime scheduleStart;
-        private DateTime scheduleEnd;
+        private int _scheduleId;
+        private int _foodTruckId;
+        private FoodTruck _foodTruck;
+        private int _locationId;
+        private Location _location;
+        private DateTime _scheduleStart;
+        private DateTime _scheduleEnd;
 
 
 
         public int ScheduleId
         {
-            get { return this.scheduleId;  }
-            private set { this.scheduleId = value; }
+            get { return _scheduleId;  }
+            private set { _scheduleId = value; }
         }
 
 
         public int FoodTruckId
         {
-            get { return this.foodTruckId; }
-            private set { this.foodTruckId = value; }
+            get { return _foodTruckId; }
+            private set { _foodTruckId = value; }
         }
 
         public FoodTruck FoodTruck
         {
-            get { return this.foodTruck; }
-            private set { this.foodTruck = value; }
+            get { return _foodTruck; }
+            private set { _foodTruck = value; }
         }
 
 
         public int LocationId
         {
-            get { return this.locationId; }
-            private set { this.locationId = value; }
+            get { return _locationId; }
+            private set { _locationId = value; }
         }
 
         public Location Location
         {
-            get { return this.location; }
-            private set { this.location = value; }
+            get { return _location; }
+            private set { _location = value; }
         }
 
 
         public DateTime ScheduledStart
         {
-            get { return this.scheduleStart; }
+            get { return _scheduleStart; }
             set
             {
-                this.scheduleStart = value;
-                this.SetObjectModified();
+                _scheduleStart = value;
+                SetObjectModified();
             }
         }
 
 
         public DateTime ScheduledEnd
         {
-            get { return this.scheduleEnd; }
+            get { return _scheduleEnd; }
             set
             {
-                this.scheduleEnd = value;
-                this.SetObjectModified();
+                _scheduleEnd = value;
+                SetObjectModified();
             }
         }
 
@@ -123,7 +123,7 @@ namespace FoodTruckNation.Core.Domain
         /// </summary>
         public void CancelScheduledAppointment()
         {
-            this.SetObjectDeleted();
+            SetObjectDeleted();
         }
 
     }

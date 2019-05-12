@@ -20,7 +20,6 @@ namespace FoodTruckNationApi.FoodTrucks
     /// </summary>
     [Produces("application/json")]
     [Route("api/FoodTrucks")]
-    //[ApiController]
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
     public class FoodTrucksController : BaseController
@@ -35,11 +34,11 @@ namespace FoodTruckNationApi.FoodTrucks
         public FoodTrucksController(ILogger<FoodTrucksController> logger, IMapper mapper, IFoodTruckService foodTruckService)
             : base(logger, mapper)
         {
-            this.foodTruckService = foodTruckService;
+            _foodTruckService = foodTruckService;
         }
 
 
-        private IFoodTruckService foodTruckService;
+        private readonly IFoodTruckService _foodTruckService;
 
 
         #region Route Constants
@@ -47,32 +46,32 @@ namespace FoodTruckNationApi.FoodTrucks
         /// <summary>
         /// Route Name Constant for route that will get all food trucks
         /// </summary>
-        public const String GET_ALL_FOOD_TRUCKS = "GetFoodTrucks";
+        public const string GET_ALL_FOOD_TRUCKS = "GetFoodTrucks";
 
         /// <summary>
         /// Route Name Constant for route that will get all food trucks
         /// </summary>
-        public const String GET_ALL_FOOD_TRUCKS_V11 = "GetFoodTrucksV11";
+        public const string GET_ALL_FOOD_TRUCKS_V11 = "GetFoodTrucksV11";
 
         /// <summary>
         /// Route name constant for route that gets an individual food truck
         /// </summary>
-        public const String GET_FOOD_TRUCK_BY_ID = "GetFoodTruckById";
+        public const string GET_FOOD_TRUCK_BY_ID = "GetFoodTruckById";
 
         /// <summary>
         /// Route name constant for route that gets an individual food truck
         /// </summary>
-        public const String GET_FOOD_TRUCK_BY_ID_V11 = "GetFoodTruckByIdV11";
+        public const string GET_FOOD_TRUCK_BY_ID_V11 = "GetFoodTruckByIdV11";
 
         /// <summary>
         /// Route name constant for route that creates a new Food Truck
         /// </summary>
-        public const String CREATE_FOOD_TRUCK = "CreatFoodTruck";
+        public const string CREATE_FOOD_TRUCK = "CreatFoodTruck";
 
         /// <summary>
         /// Route name constant for route that creates a new Food Truck
         /// </summary>
-        public const String CREATE_FOOD_TRUCK_V11 = "CreatFoodTruckV11";
+        public const string CREATE_FOOD_TRUCK_V11 = "CreatFoodTruckV11";
 
         #endregion
 
@@ -89,20 +88,20 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(List<FoodTruckModel>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.0")]
-        public IActionResult Get([FromQuery]String tag = null)
+        public IActionResult Get([FromQuery]string tag = null)
         {
             // Since we have just one filter possibility, we'll leave this as a simple if statement
             // If we had more/more complex filter criteria, then splitting the logic into multiple methods would be in order
             List<FoodTruck> foodTrucks = null;
             if (tag == null)
             {
-                foodTrucks = this.foodTruckService.GetAllFoodTrucks();
+                foodTrucks = _foodTruckService.GetAllFoodTrucks();
             }
             else
             {
-                foodTrucks = this.foodTruckService.GetFoodTrucksByTag(tag);
+                foodTrucks = _foodTruckService.GetFoodTrucksByTag(tag);
             }
-            var models = this.mapper.Map<List<FoodTruck>, List<FoodTruckModel>>(foodTrucks);
+            var models = _mapper.Map<List<FoodTruck>, List<FoodTruckModel>>(foodTrucks);
 
             return Ok(models);
         }
@@ -119,20 +118,20 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(List<FoodTruckModel>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.1")]
-        public IActionResult GetV11([FromQuery]String tag = null)
+        public IActionResult GetV11([FromQuery]string tag = null)
         {
             // Since we have just one filter possibility, we'll leave this as a simple if statement
             // If we had more/more complex filter criteria, then splitting the logic into multiple methods would be in order
             List<FoodTruck> foodTrucks = null;
             if (tag == null)
             {
-                foodTrucks = this.foodTruckService.GetAllFoodTrucks();
+                foodTrucks = _foodTruckService.GetAllFoodTrucks();
             }
             else
             {
-                foodTrucks = this.foodTruckService.GetFoodTrucksByTag(tag);
+                foodTrucks = _foodTruckService.GetFoodTrucksByTag(tag);
             }
-            var models = this.mapper.Map<List<FoodTruck>, List<FoodTruckModelV11>>(foodTrucks);
+            var models = _mapper.Map<List<FoodTruck>, List<FoodTruckModelV11>>(foodTrucks);
 
             return Ok(models);
         }
@@ -153,15 +152,15 @@ namespace FoodTruckNationApi.FoodTrucks
         [MapToApiVersion("1.0")]
         public ActionResult<FoodTruckModel> Get(int id)
         {
-            FoodTruck foodTruck = this.foodTruckService.GetFoodTruck(id);
+            FoodTruck foodTruck = _foodTruckService.GetFoodTruck(id);
 
             if (foodTruck == null)
             {
-                return this.NotFound(new ApiMessageModel() { Message = $"No food truck found with id {id}" });
+                return NotFound(new ApiMessageModel() { Message = $"No food truck found with id {id}" });
             }
             else
             {
-                var model = this.mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
+                var model = _mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
                 return model;
             }
         }
@@ -183,15 +182,15 @@ namespace FoodTruckNationApi.FoodTrucks
         [MapToApiVersion("1.1")]
         public ActionResult<FoodTruckModelV11> GetV11(int id)
         {
-            FoodTruck foodTruck = this.foodTruckService.GetFoodTruck(id);
+            FoodTruck foodTruck = _foodTruckService.GetFoodTruck(id);
 
             if (foodTruck == null)
             {
-                return this.NotFound(new ApiMessageModel() { Message = $"No food truck found with id {id}" });
+                return NotFound(new ApiMessageModel() { Message = $"No food truck found with id {id}" });
             }
             else
             {
-                var model = this.mapper.Map<FoodTruck, FoodTruckModelV11>(foodTruck);
+                var model = _mapper.Map<FoodTruck, FoodTruckModelV11>(foodTruck);
                 return model;
             }
         }
@@ -213,12 +212,12 @@ namespace FoodTruckNationApi.FoodTrucks
         [MapToApiVersion("1.0")]
         public IActionResult Post([FromBody]CreateFoodTruckModel createModel)
         {
-            var createCommand = this.mapper.Map<CreateFoodTruckModel, CreateFoodTruckCommand>(createModel);
+            var createCommand = _mapper.Map<CreateFoodTruckModel, CreateFoodTruckCommand>(createModel);
 
-            FoodTruck foodTruck = this.foodTruckService.CreateFoodTruck(createCommand);
+            FoodTruck foodTruck = _foodTruckService.CreateFoodTruck(createCommand);
 
-            var model = this.mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
-            return this.CreatedAtRoute(GET_FOOD_TRUCK_BY_ID, new { id = model.FoodTruckId }, model);
+            var model = _mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
+            return CreatedAtRoute(GET_FOOD_TRUCK_BY_ID, new { id = model.FoodTruckId }, model);
         }
 
 
@@ -237,12 +236,12 @@ namespace FoodTruckNationApi.FoodTrucks
         [MapToApiVersion("1.1")]
         public IActionResult PostV11([FromBody]CreateFoodTruckModelV11 createModel)
         {
-            var createCommand = this.mapper.Map<CreateFoodTruckModelV11, CreateFoodTruckCommand>(createModel);
+            var createCommand = _mapper.Map<CreateFoodTruckModelV11, CreateFoodTruckCommand>(createModel);
 
-            FoodTruck foodTruck = this.foodTruckService.CreateFoodTruck(createCommand);
+            FoodTruck foodTruck = _foodTruckService.CreateFoodTruck(createCommand);
 
-            var model = this.mapper.Map<FoodTruck, FoodTruckModelV11>(foodTruck);
-            return this.CreatedAtRoute(GET_FOOD_TRUCK_BY_ID, new { id = model.FoodTruckId }, model);
+            var model = _mapper.Map<FoodTruck, FoodTruckModelV11>(foodTruck);
+            return CreatedAtRoute(GET_FOOD_TRUCK_BY_ID, new { id = model.FoodTruckId }, model);
         }
 
 
@@ -278,18 +277,18 @@ namespace FoodTruckNationApi.FoodTrucks
         public IActionResult Put(int id, [FromBody]UpdateFoodTruckModel updateModel)
         {
             var updateCommand = new UpdateFoodTruckCommand() { FoodTruckId = id };
-            this.mapper.Map<UpdateFoodTruckModel, UpdateFoodTruckCommand>(updateModel, updateCommand);
+            _mapper.Map<UpdateFoodTruckModel, UpdateFoodTruckCommand>(updateModel, updateCommand);
 
             try
             {
-                FoodTruck foodTruck = this.foodTruckService.UpdateFoodTruck(updateCommand);
-                var model = this.mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
-                return this.Ok(model);
+                FoodTruck foodTruck = _foodTruckService.UpdateFoodTruck(updateCommand);
+                var model = _mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
+                return Ok(model);
             }
             catch (ConcurrencyException<FoodTruck> ce)
             {
-                String logMessage = $"Unable to update food truck {id} due to concurrency exception";
-                return this.CreateConcurrencyConflictErrorResult<FoodTruckModel, FoodTruck>(ce);
+                string logMessage = $"Unable to update food truck {id} due to concurrency exception";
+                return CreateConcurrencyConflictErrorResult<FoodTruckModel, FoodTruck>(ce);
             }
         }
 
@@ -325,18 +324,18 @@ namespace FoodTruckNationApi.FoodTrucks
         public IActionResult PutV11(int id, [FromBody]UpdateFoodTruckModel updateModel)
         {
             var updateCommand = new UpdateFoodTruckCommand() { FoodTruckId = id };
-            this.mapper.Map<UpdateFoodTruckModel, UpdateFoodTruckCommand>(updateModel, updateCommand);
+            _mapper.Map<UpdateFoodTruckModel, UpdateFoodTruckCommand>(updateModel, updateCommand);
 
             try
             {
-                FoodTruck foodTruck = this.foodTruckService.UpdateFoodTruck(updateCommand);
-                var model = this.mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
-                return this.Ok(model);
+                FoodTruck foodTruck = _foodTruckService.UpdateFoodTruck(updateCommand);
+                var model = _mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
+                return Ok(model);
             }
             catch (ConcurrencyException<FoodTruck> ce)
             {
-                String logMessage = $"Unable to update food truck {id} due to concurrency exception";
-                return this.CreateConcurrencyConflictErrorResult<FoodTruckModelV11, FoodTruck>(ce);
+                string logMessage = $"Unable to update food truck {id} due to concurrency exception";
+                return CreateConcurrencyConflictErrorResult<FoodTruckModelV11, FoodTruck>(ce);
             }
         }
 
@@ -355,9 +354,9 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Delete(int id)
         {
-            this.foodTruckService.DeleteFoodTruck(id);
+            _foodTruckService.DeleteFoodTruck(id);
 
-            return this.Ok(new ApiMessageModel() { Message = $"Food truck {id} has been deleted" });
+            return Ok(new ApiMessageModel() { Message = $"Food truck {id} has been deleted" });
         }
 
 

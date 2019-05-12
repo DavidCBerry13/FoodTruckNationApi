@@ -1,4 +1,4 @@
-﻿using Framework;
+using Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,35 +21,30 @@ namespace FoodTruckNation.Core.Domain
         protected internal FoodTruckTag(int id, FoodTruck foodTruck, Tag tag)
             : base(ObjectState.UNCHANGED)
         {
-            this.foodTruckTagId = id;
-            this.FoodTruck = foodTruck;
-            this.FoodTruckId = this.FoodTruck.FoodTruckId;
-            this.Tag = tag;
-            this.TagId = this.Tag.TagId;
+            _foodTruckTagId = id;
+            FoodTruck = foodTruck;
+            FoodTruckId = foodTruck.FoodTruckId;
+            Tag = tag;
+            TagId = tag.TagId;
         }
 
 
         public FoodTruckTag(FoodTruck foodTruck, Tag tag)
             : base(ObjectState.NEW)
         {
-            //this.foodTruckTagId = default(int);
-            this.FoodTruck = foodTruck;
-            this.FoodTruckId = this.FoodTruck.FoodTruckId;
-            this.Tag = tag;
-            this.TagId = this.Tag.TagId;
+            FoodTruck = foodTruck;
+            FoodTruckId = foodTruck.FoodTruckId;
+            Tag = tag;
+            TagId = tag.TagId;
         }
 
 
-        private int foodTruckTagId;
-        //private FoodTruck foodTruck;
-        //private Tag tag;
+        private int? _foodTruckTagId;
 
-
-
-        public int FoodTruckTagId
+        public int? FoodTruckTagId
         {
-            get { return this.foodTruckTagId; }
-            private set { this.foodTruckTagId = value; }
+            get { return _foodTruckTagId;  }
+            private set { _foodTruckTagId = value; }
         }
 
         public int FoodTruckId
@@ -79,7 +74,7 @@ namespace FoodTruckNation.Core.Domain
 
         internal void SetDeleted()
         {
-            this.SetObjectDeleted();
+            SetObjectDeleted();
         }
 
     }

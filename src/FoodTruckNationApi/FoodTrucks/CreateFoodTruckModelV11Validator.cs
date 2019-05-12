@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
 using System;
@@ -35,11 +35,11 @@ namespace FoodTruckNationApi.FoodTrucks
             var socialMediaPlatforms = socialMediaPlatformService.GetAllSocialMediaPlatforms();
 
             RuleForEach(f => f.SocialMediaAccounts)
-                .Must(sma => !String.IsNullOrWhiteSpace(sma.AccountName))
+                .Must(sma => !string.IsNullOrWhiteSpace(sma.AccountName))
                 .WithMessage("Social media account names cannot be blank or null")
                 .Must(sma => socialMediaPlatforms.Any(p => p.PlatformId == sma.SocialMediaPlatformId))
                 .WithMessage((model, sma) => $"No social media platform with an id of ${sma.SocialMediaPlatformId} could be found")
-                .Must(sma => this.ValidateAccountNamePassesRegex(sma, socialMediaPlatforms))
+                .Must(sma => ValidateAccountNamePassesRegex(sma, socialMediaPlatforms))
                 .WithMessage((model, sma) => $"No social media platform with an id of ${sma.SocialMediaPlatformId} could be found");
         }
 

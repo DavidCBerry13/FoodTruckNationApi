@@ -1,4 +1,4 @@
-﻿using FoodTruckNation.Core.DataInterfaces;
+using FoodTruckNation.Core.DataInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -85,14 +85,14 @@ namespace FoodTruckNation.Data.EF.Repositories
 
         public void Save(FoodTruck foodTruck)
         {
-            this._foodTruckContext.ChangeTracker.TrackGraph(foodTruck, EfExtensions.ConvertStateOfNode);
+            _foodTruckContext.ChangeTracker.TrackGraph(foodTruck, EfExtensions.ConvertStateOfNode);
         }
 
 
 
         public void Delete(FoodTruck foodTruck)
         {
-            this._foodTruckContext.Remove(foodTruck);
+            _foodTruckContext.Remove(foodTruck);
         }
 
     }

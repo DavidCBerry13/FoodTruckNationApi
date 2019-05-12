@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,22 +8,22 @@ namespace Framework
 
     public abstract class ConcurrencyException : Exception
     {
-        protected ConcurrencyException(String message, Object value) : base(message)
+        protected ConcurrencyException(string message, object value) : base(message)
         {
 
         }
 
-        public Object CurrentObject { get; set; }
+        public object CurrentObject { get; set; }
 
     }
 
 
     public class ConcurrencyException<T> : ConcurrencyException
     {
-        public ConcurrencyException(String message, T currentObject) 
+        public ConcurrencyException(string message, T currentObject) 
             : base(message, currentObject)
         {
-            this.TypedObject = currentObject;
+            TypedObject = currentObject;
         }
 
 
