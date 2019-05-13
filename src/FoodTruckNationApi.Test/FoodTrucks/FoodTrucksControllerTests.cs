@@ -21,8 +21,8 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             Tag tagFour = new Tag(4, "Tag Four");
 
             SocialMediaPlatform facebook = new SocialMediaPlatform(1, "Facebook", "http://facebook.com/{0}", null);
-            SocialMediaPlatform twitter = new SocialMediaPlatform(2, "Facebook", "http://twitter.com/{0}", null);
-            SocialMediaPlatform instagram = new SocialMediaPlatform(3, "Facebook", "http://instagram.com/{0}", null);
+            SocialMediaPlatform twitter = new SocialMediaPlatform(2, "Twitter", "http://twitter.com/{0}", null);
+            SocialMediaPlatform instagram = new SocialMediaPlatform(3, "Instagram", "http://instagram.com/{0}", null);
 
             foodTruckOne = new FoodTruck(1, "Food Truck One", "Food Truck One Description", @"http://www.foodtruckone.com");
             foodTruckOne.AddTag(tagOne);
@@ -48,7 +48,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
 
 
             var config = new MapperConfiguration(cfg => {
-                cfg.AddProfile<FoodTruckAutomapperProfile>();             
+                cfg.AddProfile<FoodTruckModelAutomapperProfile>();             
             });            
             mapper = new Mapper(config, 
                 t => FoodTrucksControllerTests.Resolve<Type, object>(t));
@@ -76,7 +76,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         public void WhenNoParametersPassedToAPI_WeCallMethodToGetAllFoodTrucks()
         {
             // Arrange
-            var mockLogger = this.GetMockLogger<FoodTrucksController>();
+            var mockLogger = GetMockLogger<FoodTrucksController>();
             
             
             var mockService = new Mock<IFoodTruckService>();

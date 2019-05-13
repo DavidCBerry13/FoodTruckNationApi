@@ -18,7 +18,7 @@ namespace FoodTruckNationApi.Test.Schedules
         public SchedulesControllerTests()
         {
             var config = new MapperConfiguration(cfg => {
-                cfg.AddProfile<SchedulesAutomapperProfile>();
+                cfg.AddProfile<ScheduleModelAutomapperProfile>();
             });
             _mapper = new Mapper(config,
                 t => SchedulesControllerTests.Resolve<Type, object>(t));

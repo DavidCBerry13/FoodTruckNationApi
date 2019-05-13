@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FluentAssertions;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNationApi.FoodTrucks;
@@ -15,7 +15,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         public FoodTrucksAutoMapperProfileTests()
         {
             var config = new MapperConfiguration(cfg => {
-                cfg.AddProfile<FoodTruckAutomapperProfile>();
+                cfg.AddProfile<FoodTruckModelAutomapperProfile>();
             });
             mapper = new Mapper(config,
                 t => FoodTrucksAutoMapperProfileTests.Resolve<Type, object>(t));
