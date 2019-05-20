@@ -5,13 +5,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using NLog.Web;
-using NLog.Extensions.Logging;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.AppServices;
 using Framework;
 using System.IO;
-//using Microsoft.Extensions.PlatformAbstractions;  // For ApiControllerAttribute Compatibility Setting
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -27,6 +24,7 @@ using System;
 using App.Metrics.Health.Checks.Sql;
 using FoodTruckNation.Data.EF;
 using FoodTruckNation.Core;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FoodTruckNationApi
 {
@@ -54,11 +52,10 @@ namespace FoodTruckNationApi
         {
             services.AddMvc(options =>
             {
-                options.Filters.Add(new ValidationAttribute());
-                options.Filters.Add(new ExceptionHandlerFilterAttribute(_loggerFactory));
-                
-            })            
-            // .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)  // Uncomment to use ApiController Attribute
+                //options.Filters.Add(new ValidationAttribute());
+                options.Filters.Add(new ExceptionHandlerFilterAttribute(_loggerFactory));                
+            })
+             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)  // Uncomment to use ApiController Attribute
             .AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 
             services.AddCors();

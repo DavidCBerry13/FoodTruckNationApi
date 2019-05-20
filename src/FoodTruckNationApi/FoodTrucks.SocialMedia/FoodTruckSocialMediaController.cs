@@ -33,9 +33,9 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
 
 
 
-        public const string GET_FOOD_TRUCK_SOCIAL_ACCOUNTS = "GetFoodTruckSocialMediaAccounts";
+        internal const string GET_FOOD_TRUCK_SOCIAL_ACCOUNTS = "GetFoodTruckSocialMediaAccounts";
 
-        public const string GET_FOOD_TRUCK_SOCIAL_ACCOUNT_BY_ID = "GetFoodTruckSocialMediaAccountById";
+        internal const string GET_FOOD_TRUCK_SOCIAL_ACCOUNT_BY_ID = "GetFoodTruckSocialMediaAccountById";
 
 
         /// <summary>

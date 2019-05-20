@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using FoodTruckNationApi.Locations;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace FoodTruckNationApi.Test.Locations
 
         public LocationModelValidatorTest()
         {
-            locationOne = new CreateLocationModel()
+            _locationOne = new CreateLocationModel()
             {
                 Name = "US Bank Building",
                 StreetAddress = "777 E Wisconsin Ave",
@@ -23,16 +23,17 @@ namespace FoodTruckNationApi.Test.Locations
         }
 
 
-        private CreateLocationModel locationOne;
+        private readonly CreateLocationModel _locationOne;
 
 
         [Theory]
         [InlineData("US Bank Center", "777 E Wisconsin Ave", "Milwaukee", "WI", "53202")]
         [InlineData("U.S. Bank Center", "777 E Wisconsin Ave", "Milwaukee", "WI", "53202")]
         [InlineData("U.S. Bank Center", "777 E. Wisconsin Ave", "Milwaukee", "WI", "53202")]
-        [InlineData("L'Enfant Plaza", "429 L'Enfant Plaza SW", "Washington", "DC", "20024")] 
-        public void ValidLocationObjectsShouldPass(String name, String address, String city, 
-            String state, String zipCode)
+        [InlineData("L'Enfant Plaza", "429 L'Enfant Plaza SW", "Washington", "DC", "20024")]
+        [InlineData("Willis Tower-Wacker Drive", "200 S Wacker Dr", "Chicago", "IL", "60606")]
+    public void ValidLocationObjectsShouldPass(string name, string address, string city, 
+            string state, string zipCode)
         {
             // Arrange
             CreateLocationModel model = new CreateLocationModel()
@@ -58,14 +59,14 @@ namespace FoodTruckNationApi.Test.Locations
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public void InvalidLocationNamesShouldFail(String name)
+        public void InvalidLocationNamesShouldFail(string name)
         {
             // Arrange
-            locationOne.Name = name;
+            _locationOne.Name = name;
 
             // Act
             CreateLocationModelValidator validator = new CreateLocationModelValidator();
-            var result = validator.Validate(locationOne);
+            var result = validator.Validate(_locationOne);
 
             // Assert
             result.IsValid.Should().BeFalse();
@@ -76,14 +77,14 @@ namespace FoodTruckNationApi.Test.Locations
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public void InvalidStreetAddressesShouldFail(String streetAddress)
+        public void InvalidStreetAddressesShouldFail(string streetAddress)
         {
             // Arrange
-            locationOne.StreetAddress = streetAddress;
+            _locationOne.StreetAddress = streetAddress;
 
             // Act
             CreateLocationModelValidator validator = new CreateLocationModelValidator();
-            var result = validator.Validate(locationOne);
+            var result = validator.Validate(_locationOne);
 
             // Assert
             result.IsValid.Should().BeFalse();
@@ -93,14 +94,14 @@ namespace FoodTruckNationApi.Test.Locations
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public void InvalidCityShouldFail(String city)
+        public void InvalidCityShouldFail(string city)
         {
             // Arrange
-            locationOne.City = city;
+            _locationOne.City = city;
 
             // Act
             CreateLocationModelValidator validator = new CreateLocationModelValidator();
-            var result = validator.Validate(locationOne);
+            var result = validator.Validate(_locationOne);
 
             // Assert
             result.IsValid.Should().BeFalse();
@@ -114,14 +115,14 @@ namespace FoodTruckNationApi.Test.Locations
         [InlineData("WIS")]
         [InlineData("W")]
         [InlineData("WS")]
-        public void InvalidStateShouldFail(String state)
+        public void InvalidStateShouldFail(string state)
         {
             // Arrange
-            locationOne.State = state;
+            _locationOne.State = state;
 
             // Act
             CreateLocationModelValidator validator = new CreateLocationModelValidator();
-            var result = validator.Validate(locationOne);
+            var result = validator.Validate(_locationOne);
 
             // Assert
             result.IsValid.Should().BeFalse();
@@ -138,14 +139,14 @@ namespace FoodTruckNationApi.Test.Locations
         [InlineData(" 53202")]
         [InlineData("53202 ")]
         [InlineData("53 202")]
-        public void InvalidZipCodeShouldFail(String zipCode)
+        public void InvalidZipCodeShouldFail(string zipCode)
         {
             // Arrange
-            locationOne.ZipCode = zipCode;
+            _locationOne.ZipCode = zipCode;
 
             // Act
             CreateLocationModelValidator validator = new CreateLocationModelValidator();
-            var result = validator.Validate(locationOne);
+            var result = validator.Validate(_locationOne);
 
             // Assert
             result.IsValid.Should().BeFalse();

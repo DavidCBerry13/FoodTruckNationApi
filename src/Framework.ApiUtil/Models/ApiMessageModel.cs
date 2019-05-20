@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -16,6 +16,6 @@ namespace Framework.ApiUtil.Models
     public class ApiMessageModel
     {
 
-        public String Message { get; set; }
+        public string Message { get; set; }
     }
 }

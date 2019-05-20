@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -17,12 +17,12 @@ namespace Framework.ApiUtil.Models
         /// <summary>
         /// The name of the field with an issue.
         /// </summary>
-        public String Field { get; set; }
+        public string Field { get; set; }
 
         /// <summary>
         /// A message containing a description of the error
         /// </summary>
-        public String Message { get; set; }
+        public string Message { get; set; }
 
     }
 }

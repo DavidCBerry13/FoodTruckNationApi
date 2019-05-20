@@ -56,7 +56,7 @@ namespace FoodTruckNation.Core.Domain
 
         #region Validation Constants
 
-        public const string NAME_VALIDATION = @"^\w[\w ?,!\.'-\(\)]{1,49}$";
+        public const string NAME_VALIDATION = @"^\w[\w ?,!\.'\-\(\)]{1,49}$";
 
         public const string ADDRESS_VALIDATION = @"^\w[\w ?,!'\.]{1,49}$";
 
