@@ -12,11 +12,11 @@ namespace Framework.ApiUtil.Controllers
     /// Base controller class to encapsulate functionality common to all API controllers
     /// </summary>
     [ApiController]
-    public abstract class BaseController : Controller
+    public abstract class ApiControllerBase : ControllerBase, IActionFilter
     {
 
 
-        public BaseController(ILogger<BaseController> logger, IMapper mapper) : base()
+        public ApiControllerBase(ILogger<ApiControllerBase> logger, IMapper mapper) : base()
         {
             _logger = logger;
             _mapper = mapper;
@@ -29,12 +29,7 @@ namespace Framework.ApiUtil.Controllers
 
 
 
-        public override void OnActionExecuting(ActionExecutingContext context)
-        {
-            base.OnActionExecuting(context);
 
-            context.HttpContext.Items.Add("URL_HELPER", Url);
-        }
 
 
         /// <summary>
@@ -60,6 +55,18 @@ namespace Framework.ApiUtil.Controllers
                 CurrentObject = model
             };
             return new ConflictObjectResult(message);
+        }
+
+        [NonAction]
+        public void OnActionExecuting(ActionExecutingContext context)
+        {
+            context.HttpContext.Items.Add("URL_HELPER", Url);
+        }
+
+        [NonAction]
+        public void OnActionExecuted(ActionExecutedContext context)
+        {
+            
         }
     }
 }

@@ -21,7 +21,7 @@ namespace FoodTruckNationApi.Schedules
     [Route("api/Schedules")]
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
-    public class SchedulesController : BaseController
+    public class SchedulesController : ApiControllerBase
     {
 
         public SchedulesController(ILogger<SchedulesController> logger, IMapper mapper, 

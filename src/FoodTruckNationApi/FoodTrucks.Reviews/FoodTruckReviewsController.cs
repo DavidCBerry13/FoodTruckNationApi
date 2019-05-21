@@ -15,7 +15,7 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
     [Route("api/FoodTrucks/{foodTruckId}/Reviews")]
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
-    public class FoodTruckReviewsController : BaseController
+    public class FoodTruckReviewsController : ApiControllerBase
     {
 
         public FoodTruckReviewsController(ILogger<FoodTruckReviewsController> logger, IMapper mapper, IFoodTruckService foodTruckService)

@@ -19,7 +19,7 @@ namespace FoodTruckNationApi.Locations.Schedules
     [Route("api/Locations/{locationId}/Schedules")]
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
-    public class LocationSchedulesController : BaseController
+    public class LocationSchedulesController : ApiControllerBase
     {
         /// <summary>
         /// Creates a LocationSchedulesController, the controller responsible for returning schedules

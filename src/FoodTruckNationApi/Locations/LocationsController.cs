@@ -24,7 +24,7 @@ namespace FoodTruckNationApi.Locations
     [Route("api/Locations")]
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
-    public class LocationsController : BaseController
+    public class LocationsController : ApiControllerBase
     {
         /// <summary>
         /// Create a new LocationsController

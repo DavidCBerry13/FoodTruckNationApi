@@ -21,7 +21,7 @@ namespace FoodTruckNationApi.SocialMediaPlatforms
     [Produces("application/json")]
     [Route("api/SocialMediaPlatforms")]
     [ApiVersion("1.1")]
-    public class SocialMediaPlatformsController : BaseController
+    public class SocialMediaPlatformsController : ApiControllerBase
     {
 
 

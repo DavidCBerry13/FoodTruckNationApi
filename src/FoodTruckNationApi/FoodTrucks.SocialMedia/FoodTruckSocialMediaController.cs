@@ -19,7 +19,7 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
     [Produces("application/json")]
     [Route("api/FoodTrucks/{foodTruckId}/SocialMediaAccounts")]
     [ApiVersion("1.1")]
-    public class FoodTruckSocialMediaController : BaseController
+    public class FoodTruckSocialMediaController : ApiControllerBase
     {
 
         public FoodTruckSocialMediaController(ILogger<FoodTruckSocialMediaController> logger, IMapper mapper, IFoodTruckService foodTruckService)

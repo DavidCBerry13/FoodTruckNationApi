@@ -22,7 +22,7 @@ namespace FoodTruckNationApi.FoodTrucks
     [Route("api/FoodTrucks")]
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
-    public class FoodTrucksController : BaseController
+    public class FoodTrucksController : ApiControllerBase
     {
 
         /// <summary>

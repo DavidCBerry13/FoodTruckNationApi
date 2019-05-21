@@ -16,7 +16,7 @@ namespace FoodTruckNationApi.Tags
     [Route("api/Tags")]
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
-    public class TagsController : BaseController
+    public class TagsController : ApiControllerBase
     {
 
         /// <summary>
