@@ -15,9 +15,13 @@
   
   <ItemGroup>
     <Compile Remove="Filters\**" />
+    <Compile Remove="wwwroot\**" />
     <Content Remove="Filters\**" />
+    <Content Remove="wwwroot\**" />
     <EmbeddedResource Remove="Filters\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
     <None Remove="Filters\**" />
+    <None Remove="wwwroot\**" />
   </ItemGroup>
   
   <ItemGroup>
@@ -28,7 +32,6 @@
 
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
-    <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="App.Metrics.AspNetCore.Health" Version="3.1.0" />
