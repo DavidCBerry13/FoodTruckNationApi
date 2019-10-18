@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Framework.ApiUtil.Models;
+using Framework.Exceptions;
 
 namespace Framework.ApiUtil.Controllers
 {

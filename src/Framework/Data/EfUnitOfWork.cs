@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 
-namespace Framework
+namespace Framework.Data
 {
     public class EfUnitOfWork<T> : IUnitOfWork where T : DbContext
     {

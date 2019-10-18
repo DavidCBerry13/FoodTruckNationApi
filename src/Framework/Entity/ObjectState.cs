@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Framework
+namespace Framework.Entity
 {
     /// <summary>
     /// Enum with values to track object state

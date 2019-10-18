@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using FoodTruckNation.Core.AppInterfaces;
 using AutoMapper;
 using FoodTruckNation.Core.Domain;
-using Framework;
+using Framework.Utility;
 
 namespace FoodTruckNationApi.Schedules
 {

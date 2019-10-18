@@ -9,6 +9,7 @@ using AutoMapper;
 using Framework.ApiUtil.Models;
 using Framework.ApiUtil.Controllers;
 using Framework;
+using Framework.Exceptions;
 
 namespace FoodTruckNationApi.FoodTrucks
 {

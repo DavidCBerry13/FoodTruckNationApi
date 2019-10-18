@@ -4,7 +4,7 @@ using System.Linq;
 using AutoMapper;
 using FluentValidation;
 using FoodTruckNation.Core.Commands;
-using Framework;
+using Framework.Utility;
 
 namespace FoodTruckNationApi.FoodTrucks.Schedules
 {

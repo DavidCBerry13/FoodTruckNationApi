@@ -1,6 +1,6 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using FoodTruckNationApi.FoodTrucks.Schedules;
-using Framework;
+using Framework.Utility;
 using System;
 using System.Collections.Generic;
 using System.Text;

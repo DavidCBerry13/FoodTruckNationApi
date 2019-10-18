@@ -5,7 +5,7 @@ using System.Text;
 using FoodTruckNation.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using Framework;
+using Framework.Data;
 
 namespace FoodTruckNation.Data.EF.Repositories
 {

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Framework
+namespace Framework.Utility
 {
     public static class ObjectExtensions
     {

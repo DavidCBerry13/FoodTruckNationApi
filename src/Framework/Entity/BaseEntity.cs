@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Framework
+namespace Framework.Entity
 {
     /// <summary>
     /// Serves as a base object for all entity objects.  Specifically, it contains a property to trck

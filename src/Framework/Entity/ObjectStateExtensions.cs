@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Framework
+namespace Framework.Entity
 {
 
     /// <summary>

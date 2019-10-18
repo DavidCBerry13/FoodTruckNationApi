@@ -5,7 +5,8 @@ using FoodTruckNation.Core.Domain;
 using FoodTruckNation.Core.DataInterfaces;
 using Microsoft.Extensions.Logging;
 using FoodTruckNation.Core.Commands;
-using Framework;
+using Framework.Data;
+using Framework.Exceptions;
 using FoodTruckNation.Core.AppInterfaces;
 
 namespace FoodTruckNation.Core.AppServices

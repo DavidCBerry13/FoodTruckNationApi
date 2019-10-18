@@ -8,7 +8,7 @@ using Framework.ApiUtil.Controllers;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using FoodTruckNation.Core.AppInterfaces;
-using Framework;
+using Framework.Utility;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNation.Core.Commands;
 using Framework.ApiUtil.Models;

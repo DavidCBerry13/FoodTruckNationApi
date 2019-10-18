@@ -3,6 +3,7 @@ using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNationApi.Schedules;
 using Framework;
+using Framework.Utility;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;

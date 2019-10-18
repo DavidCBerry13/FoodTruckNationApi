@@ -1,6 +1,6 @@
-﻿using FoodTruckNation.Core.DataInterfaces;
+using FoodTruckNation.Core.DataInterfaces;
 using FoodTruckNation.Data.EF.Repositories;
-using Framework;
+using Framework.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

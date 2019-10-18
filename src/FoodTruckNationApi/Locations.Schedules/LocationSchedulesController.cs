@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Framework.ApiUtil.Controllers;
 using FoodTruckNation.Core.AppInterfaces;
-using Framework;
+using Framework.Utility;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using FoodTruckNation.Core.Domain;

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Framework;
+using Framework.Entity;
 
 namespace FoodTruckNation.Core.Domain
 {

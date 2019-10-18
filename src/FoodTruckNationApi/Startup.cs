@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.AppServices;
 using Framework;
+using Framework.Utility;
 using System.IO;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
