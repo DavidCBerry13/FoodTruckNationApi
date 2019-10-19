@@ -56,7 +56,7 @@ namespace Framework.Test.ResultType
             var message = "The droids you were looking for were not found";
 
             // Act
-            var result = Result.Failure<ObjectNotFoundError>(new ObjectNotFoundError(message));
+            var result = Result.Failure<string>(new ObjectNotFoundError(message));
 
             // Assert
             result.IsSuccess.Should().Be(false);
@@ -81,21 +81,7 @@ namespace Framework.Test.ResultType
         }
 
 
-        [Fact]
-        public void Test_CreatingTypedFailureResultWithErrorClass_HasSuccessAsFalseAndMessage_AndNoValue()
-        {
-            // Arrange
-            var message = "The droids you were looking for were not found";
 
-            // Act
-            var result = Result.Failure<string, ObjectNotFoundError>(new ObjectNotFoundError(message));
-
-            // Assert
-            result.IsSuccess.Should().Be(false);
-            result.Error.Should().BeOfType<ObjectNotFoundError>();
-            result.Error.Message.Should().Be(message);
-            result.Value.Should().BeNull();
-        }
 
     }
 }
