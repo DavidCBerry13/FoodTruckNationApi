@@ -1,5 +1,7 @@
-﻿using FoodTruckNation.Core.Domain;
+using FoodTruckNation.Core.Commands;
+using FoodTruckNation.Core.Domain;
 using Framework;
+using Framework.ResultType;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,17 +11,17 @@ namespace FoodTruckNation.Core.AppInterfaces
     public interface ITagService
     {
 
-        IList<Tag> GetAllTags();
+        Result<IList<Tag>> GetAllTags();
 
-        IList<Tag> GetTagsInUse();
+        Result<IList<Tag>> GetTagsInUse();
 
-        Tag GetTagById(int tagId);
+        Result<Tag> GetTagById(int tagId);
 
-        Tag GetTagByName(String tag);
+        Result<Tag> GetTagByName(string tag);
 
-        Tag CreateNewTag(String tag);
+        Result<Tag> CreateNewTag(string tag);
 
-        // TODO: Update Tag Method
+        Result<Tag> UpdateTag(UpdateTagCommand updateTagCommand);
 
 
     }

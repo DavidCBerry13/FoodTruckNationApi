@@ -5,6 +5,7 @@ using System;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Framework.ApiUtil.Models;
 using Framework.Exceptions;
+using Framework.ResultType;
 
 namespace Framework.ApiUtil.Controllers
 {
@@ -57,6 +58,23 @@ namespace Framework.ApiUtil.Controllers
             };
             return new ConflictObjectResult(message);
         }
+
+
+        protected ActionResult MapErrorResult(Result result)
+        {
+            switch (result.Error)
+            {
+                case InvalidDataError e:
+                    return BadRequest(new ApiMessageModel() { Message = e.Message });
+                case ObjectNotFoundError e:
+                    return NotFound(new ApiMessageModel() { Message = e.Message });
+                //case ObjectAlreadyExistsError<Tag> e:
+                //    return CreateConcurrencyConflictErrorResult<Tag, string>(e);
+                default:
+                    return this.InternalServerError(new ApiMessageModel() { Message = "An unexpected error has occured.  The error has been logged and is being investigated" });
+            }
+        }
+
 
         [NonAction]
         public void OnActionExecuting(ActionExecutingContext context)
