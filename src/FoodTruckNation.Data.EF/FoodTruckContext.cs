@@ -324,25 +324,5 @@ namespace FoodTruckNation.Data.EF
         }
 
 
-
-
-        protected internal void SeedData(ModelBuilder modelBuilder)
-        {
-
-            modelBuilder.Entity<Location>().HasData(
-                new Location(1, "Chicago Museum Campus", "460 McFetridge Dr", "Chicago", "IL", "60605"),
-                new Location(2, "Willis Tower/South Wacker Drive", "200 S Wacker Dr", "Chicago", "IL", "60606"),
-                new Location(3, "Millenium Park", "201 E Randolph St", "Chicago", "IL", "60601"),
-                new Location(4, "Lincoln Park Zoo", "2000 N Stockton Dr", "Chicago", "IL", "60614")
-            );
-
-            modelBuilder.Entity<FoodTruck>().HasData(
-                new FoodTruck(1, "Dogs of Chicago", "Chicago Style Hot Dogs", "http://dogsofchicago.foodtruckdemo.com"),
-                new FoodTruck(2, "Chicago Deep Dish", "Chicago Style Deep Dish Pizza", "http://chicagodeepdish.foodtruckdemo.com"),
-                new FoodTruck(3, "Sushi on a Roll", "Everyone loves Sushi", "http://sushionaroll.foodtruckdemo.com")
-                );
-        }
-
-
     }
 }

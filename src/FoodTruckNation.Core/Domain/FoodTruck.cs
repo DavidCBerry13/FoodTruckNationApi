@@ -28,7 +28,7 @@ namespace FoodTruckNation.Core.Domain
         /// <param name="name">A String of the name of this food truck</param>
         /// <param name="description">A String of the description of this food truck</param>
         /// <param name="website">A String of the website for this food truck</param>
-        public FoodTruck(int foodTruckId, string name, string description, string website)
+        internal FoodTruck(int foodTruckId, string name, string description, string website)
             : this(name, description, website, ObjectState.UNCHANGED)
         {
             _foodTruckId = foodTruckId;
