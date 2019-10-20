@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using FoodTruckNationApi.FoodTrucks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -21,19 +21,32 @@ namespace FoodTruckNationApi.Tests.Integration
     public class FoodTrucksTests
     {
 
+
+        [Fact]
+        [Trait("Category", "Integration")]
+        public async Task ShouldReturnAllFoodTrucks()
+        {
+            // Arrange
+            var testServer = TestUtil.CreateTestServer();
+            var testClient = testServer.CreateClient();
+
+            // Act
+            var response = await testClient.GetAsync("/api/FoodTrucks");
+
+            // Assert
+            response.StatusCode.Should().BeEquivalentTo(HttpStatusCode.OK);
+
+            var models = await response.Content.ReadAsAsync<List<FoodTruckModel>>();
+            models.Count.Should().Be(3);            
+        }
+
+
         [Fact]
         [Trait("Category", "Integration")]
         public async Task ShouldReturnSingleFoodTruckWhenIdExists()
         {
             // Arrange
-            var testServer = TestUtil.CreateTestServer("GetFoodTruckById");
-
-            FoodTruck foodTruck = new FoodTruck(1, "Food Truck One", "Description of food truck one", "http://foodtruckone.com");
-
-            var context = testServer.GetDbContext<FoodTruckContext>();
-            context.FoodTrucks.Add(foodTruck);
-            context.SaveChanges();
-
+            var testServer = TestUtil.CreateTestServer();
             var testClient = testServer.CreateClient();
 
             // Act
@@ -44,7 +57,7 @@ namespace FoodTruckNationApi.Tests.Integration
 
             var model = await response.Content.ReadAsAsync<FoodTruckModel>();
             model.FoodTruckId.Should().Be(1);
-            model.Name.Should().Be("Food Truck One");
+            model.Name.Should().Be("Dogs of Chicago");
         }
 
 
@@ -53,22 +66,16 @@ namespace FoodTruckNationApi.Tests.Integration
         public async Task ShouldReturn404NotFoundWhenFoodTruckIdDoesNotExist()
         {
             // Arrange
-            var testServer = TestUtil.CreateTestServer("GetFoodTruckById");
-
-            FoodTruck foodTruck = new FoodTruck(1, "Food Truck One", "Description of food truck one", "http://foodtruckone.com");
-
-            var context = testServer.GetDbContext<FoodTruckContext>();
-            context.FoodTrucks.Add(foodTruck);
-            context.SaveChanges();
-
+            var testServer = TestUtil.CreateTestServer();
             var testClient = testServer.CreateClient();
 
             // Act
-            var response = await testClient.GetAsync("/api/FoodTrucks/2");
+            var response = await testClient.GetAsync("/api/FoodTrucks/4");
 
             // Assert
             response.StatusCode.Should().BeEquivalentTo(HttpStatusCode.NotFound);
         }
+
 
 
     }

@@ -127,8 +127,8 @@ namespace FoodTruckNationApi
 
             if (_hostingEnvironment.EnvironmentName == "IntegrationTests")
             {
-                var testDbName = _configuration["TestName"];
-                services.ConfigureInMemoryDataAccess(testDbName);
+                var connectionString = "DataSource=:memory:";
+                services.ConfigureSqlLiteDatabase(connectionString);
             }
             else
             {
