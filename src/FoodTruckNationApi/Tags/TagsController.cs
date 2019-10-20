@@ -49,15 +49,7 @@ namespace FoodTruckNationApi.Tags
                 ? _tagService.GetTagsInUse()
                 : _tagService.GetAllTags();
 
-            if (result.IsSuccess)
-            {
-                var models = _mapper.Map<IList<Tag>, List<string>>(result.Value);
-                return Ok(models);
-            }
-            else
-            {
-                return MapErrorResult(result);
-            }            
+            return CreateResponse<IList<Tag>, List<string>>(result);
         }
 
 

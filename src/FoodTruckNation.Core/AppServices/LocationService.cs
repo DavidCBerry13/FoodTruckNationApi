@@ -8,6 +8,7 @@ using FoodTruckNation.Core.Commands;
 using Framework.Data;
 using Framework.Exceptions;
 using FoodTruckNation.Core.AppInterfaces;
+using Framework.ResultType;
 
 namespace FoodTruckNation.Core.AppServices
 {
@@ -30,23 +31,25 @@ namespace FoodTruckNation.Core.AppServices
 
 
 
-        public Location GetLocation(int id)
+        public Result<Location> GetLocation(int id)
         {
-            var locations = _locationRepository.GetLocation(id);
-            return locations;
+            var location = _locationRepository.GetLocation(id);
+            return (location != null)
+                ? Result.Success<Location>(location)
+                : Result.Failure<Location>($"No location found with the id of {id}");
         }
 
 
 
-        public List<Location> GetLocations()
+        public Result<List<Location>> GetLocations()
         {
             var locations = _locationRepository.GetLocations();
-            return locations;
+            return Result.Success<List<Location>>(locations);
         }
 
 
 
-        public Location CreateLocation(CreateLocationCommand createLocationCommand)
+        public Result<Location> CreateLocation(CreateLocationCommand createLocationCommand)
         {
             // TODO: Standardize address and check to see if this location already exists
 
@@ -56,15 +59,15 @@ namespace FoodTruckNation.Core.AppServices
             _locationRepository.Save(location);
             UnitOfWork.SaveChanges();
 
-            return location;
+            return Result.Success<Location>(location);
         }
 
 
-        public Location UpdateLocation(UpdateLocationCommand updateLocationCommand)
+        public Result<Location> UpdateLocation(UpdateLocationCommand updateLocationCommand)
         {
             Location location = _locationRepository.GetLocation(updateLocationCommand.LocationId);
             if (location == null)
-                throw new ObjectNotFoundException($"No location was found with the id {updateLocationCommand.LocationId}");
+                return Result.Failure<Location>($"No location was found with the id {updateLocationCommand.LocationId}");
 
             // Update the properties
             location.Name = updateLocationCommand.Name;
@@ -78,19 +81,21 @@ namespace FoodTruckNation.Core.AppServices
             _locationRepository.Save(location);
             UnitOfWork.SaveChanges();
 
-            return location;
+            return Result.Success<Location>(location);
         }
 
 
-        public void DeleteLocation(int locationId)
+        public Result DeleteLocation(int locationId)
         {
             Location location = _locationRepository.GetLocation(locationId);
 
             if (location == null)
-                throw new ObjectNotFoundException($"Location id {locationId} not found so it could not be deleted");
+                return Result.Failure(new ObjectNotFoundError($"Location id {locationId} not found so it could not be deleted"));
             
             _locationRepository.Delete(location);
             UnitOfWork.SaveChanges();
+
+            return Result.Success();
         }
 
 

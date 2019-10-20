@@ -37,6 +37,12 @@ namespace Framework.ResultType
             return new Result(false, new Error(errorMessage));
         }
 
+
+        public static Result Failure(Error error)
+        {
+            return new Result(false, error);
+        }
+
         public static Result<TValue> Failure<TValue>(Error error) 
         {
             return new Result<TValue>(false, default(TValue), error);

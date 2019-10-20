@@ -60,16 +60,88 @@ namespace Framework.ApiUtil.Controllers
         }
 
 
-        protected ActionResult MapErrorResult(Result result)
+        protected virtual ActionResult CreateConcurrencyConflictErrorResult<TEntity, TModel>(ConcurrencyError<TEntity> concurrencyError)
+        {
+            var model = _mapper.Map<TEntity, TModel>(concurrencyError.ConflictingObject);
+            var message = new ConcurrencyErrorModel<TModel>()
+            {
+                Message = concurrencyError.Message,
+                CurrentObject = model
+            };
+            return new ConflictObjectResult(message);
+        }
+
+        protected virtual ActionResult CreateObjectExistsConflictErrorResult<TEntity, TModel>(ObjectAlreadyExistsError<TEntity> objectExistsError)
+        {
+            var model = _mapper.Map<TEntity, TModel>(objectExistsError.ExistingObject);
+            var message = new ConcurrencyErrorModel<TModel>()
+            {
+                Message = objectExistsError.Message,
+                CurrentObject = model
+            };
+            return new ConflictObjectResult(message);
+        }
+
+
+        /// <summary>
+        /// Creates an HTTP 200 (OK) response for successful result objects mapping the entity object(s) to mapping objects
+        /// or creates an appropriate Error response  if the provided result object is not marked as successful
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <typeparam name="TModel"></typeparam>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        protected ActionResult CreateResponse<TEntity, TModel>(Result<TEntity> result)
+        {
+            Func<TEntity, ActionResult> function = (entity) =>
+            {
+                var model = _mapper.Map<TEntity, TModel>(result.Value);
+                return Ok(model);
+            };
+
+            return CreateResponse<TEntity, TModel>(result, function);
+        }
+
+
+        protected ActionResult CreateResponse<TEntity, TModel>(Result<TEntity> result, Func<TEntity, ActionResult> successFunction)
+        {
+            if (result.IsSuccess)
+            {
+                return successFunction(result.Value);
+            }
+            else
+            {
+                return MapErrorResult<TEntity, TModel>(result);
+            }
+        }
+
+
+        protected internal ActionResult MapErrorResult<TEntity, TModel>(Result result)
+        {
+            switch (result.Error)
+            {
+                case InvalidDataError error:
+                    return BadRequest(new ApiMessageModel() { Message = error.Message });
+                case ObjectNotFoundError error:
+                    return NotFound(new ApiMessageModel() { Message = error.Message });
+                case ObjectAlreadyExistsError<TEntity> error:
+                    return CreateObjectExistsConflictErrorResult<TEntity, TModel>(error);
+                case ConcurrencyError<TEntity> error:
+                    return CreateConcurrencyConflictErrorResult<TEntity, TModel>(error);
+                default:
+                    return this.InternalServerError(new ApiMessageModel() { Message = "An unexpected error has occured.  The error has been logged and is being investigated" });
+            }
+        }
+
+
+        protected internal ActionResult MapErrorResult(Result result)
         {
             switch (result.Error)
             {
                 case InvalidDataError e:
-                    return BadRequest(new ApiMessageModel() { Message = e.Message });
+                    return BadRequest(new ApiMessageModel() { Message = e.Message });                    
                 case ObjectNotFoundError e:
                     return NotFound(new ApiMessageModel() { Message = e.Message });
-                //case ObjectAlreadyExistsError<Tag> e:
-                //    return CreateConcurrencyConflictErrorResult<Tag, string>(e);
                 default:
                     return this.InternalServerError(new ApiMessageModel() { Message = "An unexpected error has occured.  The error has been logged and is being investigated" });
             }

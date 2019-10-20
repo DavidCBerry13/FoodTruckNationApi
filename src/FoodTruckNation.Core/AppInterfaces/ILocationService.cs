@@ -1,28 +1,27 @@
-﻿using FoodTruckNation.Core.Commands;
+using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.Domain;
-using Framework;
+using Framework.ResultType;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace FoodTruckNation.Core.AppInterfaces
 {
     public interface ILocationService
     {
 
-        List<Location> GetLocations();
+        Result<List<Location>> GetLocations();
 
 
-        Location GetLocation(int id);
+        Result<Location> GetLocation(int id);
 
 
-        Location CreateLocation(CreateLocationCommand locationInfo);
+        Result<Location> CreateLocation(CreateLocationCommand locationInfo);
 
 
-        Location UpdateLocation(UpdateLocationCommand locationInfo);
+        Result<Location> UpdateLocation(UpdateLocationCommand locationInfo);
 
 
-        void DeleteLocation(int locationId);
+        Result DeleteLocation(int locationId);
 
 
     }
