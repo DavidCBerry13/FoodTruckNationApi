@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNation.Core.Commands;
 using Framework;
+using Framework.ResultType;
 
 namespace FoodTruckNation.Core.AppInterfaces
 {
@@ -14,35 +15,35 @@ namespace FoodTruckNation.Core.AppInterfaces
     public interface IFoodTruckService
     {
 
-        List<FoodTruck> GetAllFoodTrucks();
+        Result<List<FoodTruck>> GetAllFoodTrucks();
 
-        List<FoodTruck> GetFoodTrucksByTag(String tag);
+        Result<List<FoodTruck>> GetFoodTrucksByTag(string tag);
 
-        FoodTruck GetFoodTruck(int id);
+        Result<FoodTruck> GetFoodTruck(int id);
 
-        FoodTruck CreateFoodTruck(CreateFoodTruckCommand command);
+        Result<FoodTruck> CreateFoodTruck(CreateFoodTruckCommand command);
 
-        FoodTruck UpdateFoodTruck(UpdateFoodTruckCommand command);
+        Result<FoodTruck> UpdateFoodTruck(UpdateFoodTruckCommand command);
 
-        void DeleteFoodTruck(int foodTruckId);
+        Result DeleteFoodTruck(int foodTruckId);
 
-        List<Review> GetFoodTruckReviews(int foodTruckId);
+        Result<List<Review>> GetFoodTruckReviews(int foodTruckId);
 
-        Review GetFoodTruckReview(int foodTruckId, int reviewId);
+        Result<Review> GetFoodTruckReview(int foodTruckId, int reviewId);
 
-        Review CreateFoodTruckReview(CreateReviewCommand command);
+        Result<Review> CreateFoodTruckReview(CreateReviewCommand command);
 
-        FoodTruck AddFoodTruckTags(int foodTruckId, List<String> tags);
+        Result<FoodTruck> AddFoodTruckTags(int foodTruckId, List<string> tags);
 
-        FoodTruck UpdateFoodTruckTags(int foodTruckId, List<String> tags);
+        Result<FoodTruck> UpdateFoodTruckTags(int foodTruckId, List<string> tags);
 
-        void DeleteFoodTruckTag(int foodTruckId, String tag);
+        Result DeleteFoodTruckTag(int foodTruckId, string tag);
 
-        SocialMediaAccount AddSocialMediaAccount(int foodTruckId, int socialMediaPlatformId, String accountName);
+        Result<SocialMediaAccount> AddSocialMediaAccount(int foodTruckId, int socialMediaPlatformId, string accountName);
 
-        SocialMediaAccount UpdateSocialMediaAccount(int foodTruckId, int socialMediaAccountId, String accountName);
+        Result<SocialMediaAccount> UpdateSocialMediaAccount(int foodTruckId, int socialMediaAccountId, string accountName);
 
-        void DeleteSocialMediaAccount(int foodTruckId, int socialMediaPlatformId);
+        Result DeleteSocialMediaAccount(int foodTruckId, int socialMediaPlatformId);
 
     }
 }

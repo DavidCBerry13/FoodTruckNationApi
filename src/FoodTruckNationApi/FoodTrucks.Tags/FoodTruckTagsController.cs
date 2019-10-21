@@ -48,16 +48,17 @@ namespace FoodTruckNationApi.FoodTrucks.Tags
         [ProducesResponseType(typeof(List<string>), 200)]
         public IActionResult Get(int foodTruckId)
         {
-            FoodTruck foodTruck = _foodTruckService.GetFoodTruck(foodTruckId);
+            var result = _foodTruckService.GetFoodTruck(foodTruckId);
 
-            if (foodTruck == null)
+            if (result.IsSuccess)
             {
-                return NotFound(new ApiMessageModel() { Message = $"No food truck found with id {foodTruckId}" });
+                var model = _mapper.Map<List<FoodTruckTag>, List<string>>(result.Value.Tags);
+                return Ok(model);
             }
             else
             {
-                var model = _mapper.Map<List<FoodTruckTag>, List<string>>(foodTruck.Tags);
-                return Ok(model);
+                return MapErrorResult<List<FoodTruckTag>, List<string>>(result);
+
             }
         }
 
@@ -82,10 +83,8 @@ namespace FoodTruckNationApi.FoodTrucks.Tags
         [ProducesResponseType(typeof(FoodTruckModel), 200)]
         public IActionResult Post(int foodTruckId, [FromBody]List<string> tags)
         {
-            FoodTruck foodTruck = _foodTruckService.AddFoodTruckTags(foodTruckId, tags);
-
-            var model = _mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
-            return Ok(model);
+            var result = _foodTruckService.AddFoodTruckTags(foodTruckId, tags);
+            return CreateResponse<FoodTruck, FoodTruckModel>(result);
         }
 
         /// <summary>
@@ -109,10 +108,8 @@ namespace FoodTruckNationApi.FoodTrucks.Tags
         [ProducesResponseType(typeof(FoodTruckModel), 200)]
         public IActionResult Put(int foodTruckId, [FromBody]List<string> tags)
         {
-            FoodTruck foodTruck = _foodTruckService.UpdateFoodTruckTags(foodTruckId, tags);
-
-            var model = _mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
-            return Ok(model);
+            var result = _foodTruckService.UpdateFoodTruckTags(foodTruckId, tags);
+            return CreateResponse<FoodTruck, FoodTruckModel>(result);
         }
 
 
@@ -129,9 +126,11 @@ namespace FoodTruckNationApi.FoodTrucks.Tags
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Delete(int foodTruckId, string tag)
         {
-            _foodTruckService.DeleteFoodTruckTag(foodTruckId, tag);
+            var result = _foodTruckService.DeleteFoodTruckTag(foodTruckId, tag);
 
-            return Ok(new ApiMessageModel() { Message = $"Tag {tag} has been deleted on food truck {foodTruckId}" });
+            return ( result.IsSuccess )
+                ? Ok(new ApiMessageModel() { Message = $"Tag {tag} has been deleted on food truck {foodTruckId}" })
+                : MapErrorResult(result);
         }
     }
 }

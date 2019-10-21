@@ -1,7 +1,8 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNationApi.FoodTrucks;
+using Framework.ResultType;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
             mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(new List<SocialMediaPlatform>());
+                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -56,7 +57,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
             mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(new List<SocialMediaPlatform>());
+                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -80,7 +81,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
             mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(new List<SocialMediaPlatform>());
+                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -103,7 +104,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
             mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(new List<SocialMediaPlatform>());
+                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -127,7 +128,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
             mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(new List<SocialMediaPlatform>());
+                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -151,7 +152,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
             mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(new List<SocialMediaPlatform>());
+                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -182,7 +183,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
             mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(new List<SocialMediaPlatform>());
+                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -214,7 +215,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
             mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(new List<SocialMediaPlatform>());
+                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -239,7 +240,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
             mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(new List<SocialMediaPlatform>());
+                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -263,7 +264,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
             mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(new List<SocialMediaPlatform>());
+                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -287,7 +288,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
             mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(new List<SocialMediaPlatform>());
+                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -311,7 +312,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
             mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(new List<SocialMediaPlatform>());
+                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -343,10 +344,10 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
             mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(new List<SocialMediaPlatform>()
+                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()
                 {
                     new SocialMediaPlatform(1, "FooTruckMedia", "",  @"\w{1,20}")
-                });
+                }));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -378,10 +379,10 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
             mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(new List<SocialMediaPlatform>()
+                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()
                 {
                     new SocialMediaPlatform(1, "FooTruckMedia", "",  @"\w{1,20}")
-                });
+                }));
 
 
             // Act
@@ -414,10 +415,10 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
             mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(new List<SocialMediaPlatform>()
+                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()
                 {
                     new SocialMediaPlatform(1, "FooTruckMedia", "",  @"\w{1,20}")
-                });
+                }));
 
 
             // Act

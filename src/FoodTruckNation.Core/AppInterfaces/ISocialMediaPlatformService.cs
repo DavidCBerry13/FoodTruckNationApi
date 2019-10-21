@@ -1,4 +1,5 @@
-﻿using FoodTruckNation.Core.Domain;
+using FoodTruckNation.Core.Domain;
+using Framework.ResultType;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,9 +9,9 @@ namespace FoodTruckNation.Core.AppInterfaces
     public interface ISocialMediaPlatformService
     {
 
-        SocialMediaPlatform GetSocialMediaPlatform(int platformId);
+        Result<SocialMediaPlatform> GetSocialMediaPlatform(int platformId);
 
-        List<SocialMediaPlatform> GetAllSocialMediaPlatforms();
+        Result<List<SocialMediaPlatform>> GetAllSocialMediaPlatforms();
 
 
     }

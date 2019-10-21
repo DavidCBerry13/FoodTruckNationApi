@@ -67,10 +67,8 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
                 parameters.EndDate = _dateTimeProvider.CurrentDateTime.AddDays(7).Date;
 
 
-            var schedules = _scheduleService.GetSchedulesForFoodTruck(foodTruckId, parameters.StartDate.Value, parameters.EndDate.Value);
-            var models = _mapper.Map<List<Schedule>, List<FoodTruckScheduleModel>>(schedules);
-
-            return Ok(models);
+            var result = _scheduleService.GetSchedulesForFoodTruck(foodTruckId, parameters.StartDate.Value, parameters.EndDate.Value);
+            return CreateResponse<List<Schedule>, List<FoodTruckScheduleModel>>(result);
         }
 
 
@@ -89,10 +87,8 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
         [HttpGet("{scheduleId}", Name = GET_SINGLE_FOOD_TRUCK_SCHEDULE)]
         public IActionResult Get(int foodTruckId, int scheduleId)
         {
-            var schedule = _scheduleService.GetSchedule(foodTruckId, scheduleId);
-            var model = _mapper.Map<Schedule, FoodTruckScheduleModel>(schedule);
-
-            return Ok(model);
+            var result = _scheduleService.GetSchedule(foodTruckId, scheduleId);
+            return CreateResponse<Schedule, FoodTruckScheduleModel>(result);
         }
 
         /// <summary>
@@ -113,11 +109,15 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
             var createCommand = new CreateFoodTruckScheduleCommand() { FoodTruckId = foodTruckId };
             _mapper.Map<CreateFoodTruckScheduleModel, CreateFoodTruckScheduleCommand>(createModel, createCommand);
 
-            Schedule schedule = _scheduleService.AddFoodTruckSchedule(createCommand);
+            var result = _scheduleService.AddFoodTruckSchedule(createCommand);
 
-            var model = _mapper.Map<Schedule, FoodTruckScheduleModel>(schedule);
-            return CreatedAtRoute(GET_SINGLE_FOOD_TRUCK_SCHEDULE,
-                new { foodTruckId = model.FoodTruckId, scheduleId = model.ScheduleId }, model);           
+            return CreateResponse<Schedule, FoodTruckScheduleModel>(result,
+                (schedule) =>
+                {
+                    var model = _mapper.Map<Schedule, FoodTruckScheduleModel>(schedule);
+                    return CreatedAtRoute(GET_SINGLE_FOOD_TRUCK_SCHEDULE,
+                        new { foodTruckId = model.FoodTruckId, scheduleId = model.ScheduleId }, model);
+                });        
         }
 
         // PUT: api/FoodTruckSchedules/5
@@ -141,9 +141,11 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Delete(int foodTruckId, int scheduleId)
         {
-            _scheduleService.DeleteFoodTruckSchedule(foodTruckId, scheduleId);
+            var result = _scheduleService.DeleteFoodTruckSchedule(foodTruckId, scheduleId);
 
-            return Ok(new ApiMessageModel() { Message = "Schedule was deleted" } );
+            return ( result.IsSuccess )
+                ? Ok(new ApiMessageModel() { Message = $"Schedule {scheduleId} has been deleted for food truck {foodTruckId}" })
+                : MapErrorResult(result);
         }
     }
 }

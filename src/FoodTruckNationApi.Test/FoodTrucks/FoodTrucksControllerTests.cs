@@ -2,10 +2,12 @@ using AutoMapper;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNationApi.FoodTrucks;
+using Framework.ResultType;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
 
@@ -81,7 +83,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             
             var mockService = new Mock<IFoodTruckService>();
             mockService.Setup(r => r.GetAllFoodTrucks())
-                .Returns(foodTruckList);
+                .Returns(Result.Success<List<FoodTruck>>(foodTruckList));
             FoodTrucksController controller = new FoodTrucksController(mockLogger.Object,  mapper, mockService.Object);
 
             // Act
@@ -89,7 +91,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
 
             // Assert
             mockService.Verify(r => r.GetAllFoodTrucks(), Times.Once());
-            mockService.Verify(r => r.GetFoodTrucksByTag(It.IsAny<String>()), Times.Never());
+            mockService.Verify(r => r.GetFoodTrucksByTag(It.IsAny<string>()), Times.Never());
         }
 
 
@@ -101,8 +103,8 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             var searchTag = "Tacos";
 
             var mockService = new Mock<IFoodTruckService>();
-            mockService.Setup(r => r.GetAllFoodTrucks())
-                .Returns(foodTruckList);
+            mockService.Setup(r => r.GetFoodTrucksByTag(searchTag))
+                .Returns(Result.Success<List<FoodTruck>>(foodTruckList.Where(f => f.Tags.Any(t => t.Tag.Text == searchTag)).ToList()));
             FoodTrucksController controller = new FoodTrucksController(mockLogger.Object, mapper, mockService.Object);
 
             // Act

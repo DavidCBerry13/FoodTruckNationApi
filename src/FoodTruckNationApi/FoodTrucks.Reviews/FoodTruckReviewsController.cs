@@ -51,12 +51,10 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
         [ProducesResponseType(typeof(List<ReviewModel>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public IActionResult Get(int foodTruckId)
+        public ActionResult<List<ReviewModel>> Get(int foodTruckId)
         {
-            var reviews = _foodTruckService.GetFoodTruckReviews(foodTruckId);
-
-            var models = _mapper.Map<List<Review>, List<ReviewModel>>(reviews);
-            return Ok(models);            
+            var result = _foodTruckService.GetFoodTruckReviews(foodTruckId);
+            return CreateResponse<List<Review>, List<ReviewModel>>(result);          
         }
 
 
@@ -73,15 +71,10 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
         [ProducesResponseType(typeof(ReviewModel), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public IActionResult Get(int foodTruckId, int reviewId)
+        public ActionResult<Review> Get(int foodTruckId, int reviewId)
         {
-            var review = _foodTruckService.GetFoodTruckReview(foodTruckId, reviewId);
-
-            if (review == null)
-                return NotFound($"Review {reviewId} not found for food truck id {foodTruckId}");
-
-            var model = _mapper.Map<Review, ReviewModel>(review);
-            return Ok(model);
+            var result = _foodTruckService.GetFoodTruckReview(foodTruckId, reviewId);
+            return CreateResponse<Review, ReviewModel>(result);
         }
 
         /// <summary>
@@ -104,11 +97,12 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
             var createCommand = new CreateReviewCommand() { FoodTruckId = foodTruckId };
             _mapper.Map<CreateReviewModel, CreateReviewCommand>(createModel, createCommand);
 
-            Review foodTruck = _foodTruckService.CreateFoodTruckReview(createCommand);
+            var result = _foodTruckService.CreateFoodTruckReview(createCommand);
 
-            var model = _mapper.Map<Review, ReviewModel>(foodTruck);
-            return CreatedAtRoute(GET_SINGLE_FOOD_TRUCK_REVIEW, 
-                new { model.FoodTruckId, model.ReviewId }, model);
+            return CreateResponse<Review, ReviewModel>(result, (entity) => {
+                var model = _mapper.Map<Review, ReviewModel>(entity);
+                return CreatedAtRoute(GET_SINGLE_FOOD_TRUCK_REVIEW, new { foodTruckId = entity.FoodTruckId, reviewId = entity.ReviewId }, model);
+            });
         }
 
     }

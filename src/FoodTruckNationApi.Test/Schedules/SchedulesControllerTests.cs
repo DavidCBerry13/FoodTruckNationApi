@@ -3,6 +3,7 @@ using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNationApi.Schedules;
 using Framework;
+using Framework.ResultType;
 using Framework.Utility;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -41,7 +42,7 @@ namespace FoodTruckNationApi.Test.Schedules
 
             var mockScheduleService = new Mock<IScheduleService>();
             mockScheduleService.Setup(r => r.GetSchedules(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(new List<Schedule>());
+                .Returns(Result.Success<List<Schedule>>(new List<Schedule>()));
 
             var dateTimeProvider = new UnitTestDateTimeProvider(now);
 
@@ -67,7 +68,7 @@ namespace FoodTruckNationApi.Test.Schedules
             var mockLogger = GetMockLogger<SchedulesController>();
             var mockScheduleService = new Mock<IScheduleService>();
             mockScheduleService.Setup(r => r.GetSchedules(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(new List<Schedule>());
+                .Returns(Result.Success<List<Schedule>>(new List<Schedule>()));
             var mockDateTimeProvider = new Mock<IDateTimeProvider>();
 
             SchedulesController controller = new SchedulesController(mockLogger.Object, _mapper,
