@@ -3,6 +3,8 @@ using AutoMapper;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
 using Framework.ApiUtil.Controllers;
+using Framework.ApiUtil.Models;
+using Framework.ResultType;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -41,23 +43,13 @@ namespace FoodTruckNationApi.Tags
         /// <param name="inUseOnly"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Get([FromQuery]bool inUseOnly = false)
+        public ActionResult<IList<Tag>> Get([FromQuery]bool inUseOnly = false)
         {
-            // Since we have just one filter possibility, we'll leave this as a simple if statement
-            // If we had more/more complex filter criteria, then splitting the logic into multiple methods would be in order
-            IList<Tag> tags = null;
-            if (inUseOnly)
-            {
-                tags = _tagService.GetTagsInUse();
-            }
-            else
-            {
-                tags = _tagService.GetAllTags();
-            }
+            Result<IList<Tag>> result = inUseOnly
+                ? _tagService.GetTagsInUse()
+                : _tagService.GetAllTags();
 
-            var models = _mapper.Map<IList<Tag>, List<string>>(tags);
-            return Ok(models);
-            
+            return CreateResponse<IList<Tag>, List<string>>(result);
         }
 
 

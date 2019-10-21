@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNation.Core.DataInterfaces;
+using Framework.ResultType;
 
 namespace FoodTruckNation.Core.AppServices
 {
@@ -19,15 +20,18 @@ namespace FoodTruckNation.Core.AppServices
         private readonly ISocialMediaPlatformRepository _socialMediaPlatformRepository;
 
 
-        public List<SocialMediaPlatform> GetAllSocialMediaPlatforms()
+        public Result<List<SocialMediaPlatform>> GetAllSocialMediaPlatforms()
         {
-            return _socialMediaPlatformRepository.GetSocialMediaPlatforms();
+            return Result.Success(_socialMediaPlatformRepository.GetSocialMediaPlatforms());
         }
 
 
-        public SocialMediaPlatform GetSocialMediaPlatform(int platformId)
+        public Result<SocialMediaPlatform> GetSocialMediaPlatform(int platformId)
         {
-            return _socialMediaPlatformRepository.GetSocialMediaPlatform(platformId);
+            var socialMediaPlatform = _socialMediaPlatformRepository.GetSocialMediaPlatform(platformId);
+            return ( socialMediaPlatform != null )
+                ? Result.Success<SocialMediaPlatform>(socialMediaPlatform)
+                : Result.Failure<SocialMediaPlatform>(new ObjectNotFoundError($"No social media platform was found with the id {platformId}"));
         }
 
     }

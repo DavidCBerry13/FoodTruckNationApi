@@ -4,6 +4,7 @@ using System.Text;
 using System.Linq;
 using Xunit;
 using FluentAssertions;
+using Framework.Utility;
 
 namespace Framework.Test
 {

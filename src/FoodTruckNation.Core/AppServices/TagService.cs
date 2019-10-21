@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
-using Framework;
+using Framework.Data;
+using Framework.Exceptions;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.DataInterfaces;
 using FoodTruckNation.Core.Domain;
-
+using Framework.ResultType;
 
 namespace FoodTruckNation.Core.AppServices
 {
@@ -23,12 +24,12 @@ namespace FoodTruckNation.Core.AppServices
         private readonly ITagRepository _tagRepository;
 
 
-        public IList<Tag> GetAllTags()
+        public Result<IList<Tag>> GetAllTags()
         {
             try
             {
                 var tags = _tagRepository.GetAllTags();
-                return tags;
+                return Result.Success<IList<Tag>>(tags);
             }
             catch (Exception ex)
             {
@@ -38,12 +39,12 @@ namespace FoodTruckNation.Core.AppServices
         }
 
 
-        public IList<Tag> GetTagsInUse()
+        public Result<IList<Tag>> GetTagsInUse()
         {
             try
             {
                 var tags = _tagRepository.GetAllTagsInUse();
-                return tags;
+                return Result.Success<IList<Tag>>(tags);
             }
             catch (Exception ex)
             {
@@ -53,12 +54,14 @@ namespace FoodTruckNation.Core.AppServices
         }
 
 
-        public Tag GetTagById(int tagId)
+        public Result<Tag> GetTagById(int tagId)
         {
             try
             {
                 var tag = _tagRepository.GetTagById(tagId);
-                return tag;
+                return (tag != null) 
+                    ? Result.Success<Tag>(tag) 
+                    : Result.Failure<Tag>($"No tag found with the tag id of {tagId}");
             }
             catch (Exception ex)
             {
@@ -69,12 +72,14 @@ namespace FoodTruckNation.Core.AppServices
 
 
 
-        public Tag GetTagByName(string tagName)
+        public Result<Tag> GetTagByName(string tagName)
         {
             try
             {
                 var tag = _tagRepository.GetTagByName(tagName);
-                return tag;
+                return ( tag != null )
+                    ? Result.Success<Tag>(tag)
+                    : Result.Failure<Tag>($"No tag found with the name of {tagName}");
             }
             catch (Exception ex)
             {
@@ -85,7 +90,7 @@ namespace FoodTruckNation.Core.AppServices
 
 
 
-        public Tag CreateNewTag(string tagText)
+        public Result<Tag> CreateNewTag(string tagText)
         {
             try
             {
@@ -94,7 +99,7 @@ namespace FoodTruckNation.Core.AppServices
                 _tagRepository.SaveTag(tag);
                 UnitOfWork.SaveChanges();
 
-                return tag;
+                return Result.Success<Tag>(tag);
             }
             catch (Exception ex)
             {
@@ -104,21 +109,21 @@ namespace FoodTruckNation.Core.AppServices
         }
 
 
-        public Tag UpdateTag(UpdateTagCommand updateTagCommand)
+        public Result<Tag> UpdateTag(UpdateTagCommand updateTagCommand)
         {
             try
             {
                 Tag tag = _tagRepository.GetTagById(updateTagCommand.TagId);
 
                 if (tag == null)
-                    throw new ObjectNotFoundException($"No tag found with the id of {updateTagCommand.TagId}");
+                    return Result.Failure<Tag>(new ObjectNotFoundError($"No tag was found with the id of {updateTagCommand.TagId}"));
 
                 tag.Text = updateTagCommand.TagText;
 
                 _tagRepository.SaveTag(tag);
                 UnitOfWork.SaveChanges();
 
-                return tag;
+                return Result.Success<Tag>(tag);
             }
             catch (Exception ex)
             {

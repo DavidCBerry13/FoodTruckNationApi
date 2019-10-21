@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Moq;
@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 using Framework.ApiUtil.Models;
 using System.Security;
 using Framework.ApiUtil.Results;
+using Framework.Exceptions;
 
 namespace Framework.ApiUtil.Tests.Filters
 {

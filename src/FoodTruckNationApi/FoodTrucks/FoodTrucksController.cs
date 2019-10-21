@@ -9,6 +9,7 @@ using AutoMapper;
 using Framework.ApiUtil.Models;
 using Framework.ApiUtil.Controllers;
 using Framework;
+using Framework.Exceptions;
 
 namespace FoodTruckNationApi.FoodTrucks
 {
@@ -88,22 +89,15 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(List<FoodTruckModel>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.0")]
-        public IActionResult Get([FromQuery]string tag = null)
+        public ActionResult<FoodTruckModel> Get([FromQuery]string tag = null)
         {
-            // Since we have just one filter possibility, we'll leave this as a simple if statement
+            // Since we have just one filter possibility, we'll leave this as a simple conditional statement
             // If we had more/more complex filter criteria, then splitting the logic into multiple methods would be in order
-            List<FoodTruck> foodTrucks = null;
-            if (tag == null)
-            {
-                foodTrucks = _foodTruckService.GetAllFoodTrucks();
-            }
-            else
-            {
-                foodTrucks = _foodTruckService.GetFoodTrucksByTag(tag);
-            }
-            var models = _mapper.Map<List<FoodTruck>, List<FoodTruckModel>>(foodTrucks);
+            var result = (tag == null)
+                ? _foodTruckService.GetAllFoodTrucks()
+                : _foodTruckService.GetFoodTrucksByTag(tag);
 
-            return Ok(models);
+            return CreateResponse<List<FoodTruck>, List<FoodTruckModel>>(result);
         }
 
 
@@ -115,26 +109,20 @@ namespace FoodTruckNationApi.FoodTrucks
         /// <returns></returns>
         /// <response code="200">Success.  A list of food trucks will be returned</response>
         [HttpGet(Name = GET_ALL_FOOD_TRUCKS_V11)]
-        [ProducesResponseType(typeof(List<FoodTruckModel>), 200)]
+        [ProducesResponseType(typeof(List<FoodTruckModelV11>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.1")]
-        public IActionResult GetV11([FromQuery]string tag = null)
+        public ActionResult<List<FoodTruckModelV11>> GetV11([FromQuery]string tag = null)
         {
             // Since we have just one filter possibility, we'll leave this as a simple if statement
             // If we had more/more complex filter criteria, then splitting the logic into multiple methods would be in order
-            List<FoodTruck> foodTrucks = null;
-            if (tag == null)
-            {
-                foodTrucks = _foodTruckService.GetAllFoodTrucks();
-            }
-            else
-            {
-                foodTrucks = _foodTruckService.GetFoodTrucksByTag(tag);
-            }
-            var models = _mapper.Map<List<FoodTruck>, List<FoodTruckModelV11>>(foodTrucks);
+            var result = ( tag == null )
+                ? _foodTruckService.GetAllFoodTrucks()
+                : _foodTruckService.GetFoodTrucksByTag(tag);
 
-            return Ok(models);
+            return CreateResponse<List<FoodTruck>, List<FoodTruckModelV11>>(result);
         }
+
 
 
         /// <summary>
@@ -152,17 +140,8 @@ namespace FoodTruckNationApi.FoodTrucks
         [MapToApiVersion("1.0")]
         public ActionResult<FoodTruckModel> Get(int id)
         {
-            FoodTruck foodTruck = _foodTruckService.GetFoodTruck(id);
-
-            if (foodTruck == null)
-            {
-                return NotFound(new ApiMessageModel() { Message = $"No food truck found with id {id}" });
-            }
-            else
-            {
-                var model = _mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
-                return model;
-            }
+            var result = _foodTruckService.GetFoodTruck(id);
+            return CreateResponse<FoodTruck, FoodTruckModel>(result);
         }
 
 
@@ -176,23 +155,14 @@ namespace FoodTruckNationApi.FoodTrucks
         /// <response code="404">Not Found.  No food truck was found with the supplied id</response>
         /// <response code="500">Internal Server Error.  An unexpected error internal to the application has occured.  The error has been logged automatically by the system.</response>
         [HttpGet("{id:int}", Name = GET_FOOD_TRUCK_BY_ID_V11)]
-        [ProducesResponseType(typeof(FoodTruckModel), 200)]
+        [ProducesResponseType(typeof(FoodTruckModelV11), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.1")]
         public ActionResult<FoodTruckModelV11> GetV11(int id)
         {
-            FoodTruck foodTruck = _foodTruckService.GetFoodTruck(id);
-
-            if (foodTruck == null)
-            {
-                return NotFound(new ApiMessageModel() { Message = $"No food truck found with id {id}" });
-            }
-            else
-            {
-                var model = _mapper.Map<FoodTruck, FoodTruckModelV11>(foodTruck);
-                return model;
-            }
+            var result = _foodTruckService.GetFoodTruck(id);
+            return CreateResponse<FoodTruck, FoodTruckModelV11>(result);
         }
 
 
@@ -210,14 +180,20 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(ApiMessageModel), 409)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.0")]
-        public IActionResult Post([FromBody]CreateFoodTruckModel createModel)
+        public ActionResult<FoodTruckModel> Post([FromBody]CreateFoodTruckModel createModel)
         {
             var createCommand = _mapper.Map<CreateFoodTruckModel, CreateFoodTruckCommand>(createModel);
+            var result = _foodTruckService.CreateFoodTruck(createCommand);
 
-            FoodTruck foodTruck = _foodTruckService.CreateFoodTruck(createCommand);
-
-            var model = _mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
-            return CreatedAtRoute(GET_FOOD_TRUCK_BY_ID, new { id = model.FoodTruckId }, model);
+            if (result.IsSuccess)
+            {               
+                var model = _mapper.Map<FoodTruck, FoodTruckModel>(result.Value);
+                return CreatedAtRoute(GET_FOOD_TRUCK_BY_ID, new { id = model.FoodTruckId }, model);
+            }
+            else
+            {
+                return MapErrorResult<FoodTruck, FoodTruckModel>(result);
+            }
         }
 
 
@@ -230,18 +206,24 @@ namespace FoodTruckNationApi.FoodTrucks
         /// <response code="409">Conflict.  A food truck with the same name found so this food truck could not be created</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPost(Name = CREATE_FOOD_TRUCK_V11)]
-        [ProducesResponseType(typeof(FoodTruckModel), 200)]
+        [ProducesResponseType(typeof(FoodTruckModelV11), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 409)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.1")]
-        public IActionResult PostV11([FromBody]CreateFoodTruckModelV11 createModel)
+        public ActionResult<FoodTruckModelV11> PostV11([FromBody]CreateFoodTruckModelV11 createModel)
         {
             var createCommand = _mapper.Map<CreateFoodTruckModelV11, CreateFoodTruckCommand>(createModel);
+            var result = _foodTruckService.CreateFoodTruck(createCommand);
 
-            FoodTruck foodTruck = _foodTruckService.CreateFoodTruck(createCommand);
-
-            var model = _mapper.Map<FoodTruck, FoodTruckModelV11>(foodTruck);
-            return CreatedAtRoute(GET_FOOD_TRUCK_BY_ID, new { id = model.FoodTruckId }, model);
+            if (result.IsSuccess)
+            {
+                var model = _mapper.Map<FoodTruck, FoodTruckModelV11>(result.Value);
+                return CreatedAtRoute(GET_FOOD_TRUCK_BY_ID, new { id = model.FoodTruckId }, model);
+            }
+            else
+            {
+                return MapErrorResult<FoodTruck, FoodTruckModelV11>(result);
+            }
         }
 
 
@@ -274,22 +256,13 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(ConcurrencyErrorModel<FoodTruckModel>), 409)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.0")]
-        public IActionResult Put(int id, [FromBody]UpdateFoodTruckModel updateModel)
+        public ActionResult<FoodTruckModel> Put(int id, [FromBody]UpdateFoodTruckModel updateModel)
         {
             var updateCommand = new UpdateFoodTruckCommand() { FoodTruckId = id };
             _mapper.Map<UpdateFoodTruckModel, UpdateFoodTruckCommand>(updateModel, updateCommand);
 
-            try
-            {
-                FoodTruck foodTruck = _foodTruckService.UpdateFoodTruck(updateCommand);
-                var model = _mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
-                return Ok(model);
-            }
-            catch (ConcurrencyException<FoodTruck> ce)
-            {
-                string logMessage = $"Unable to update food truck {id} due to concurrency exception";
-                return CreateConcurrencyConflictErrorResult<FoodTruckModel, FoodTruck>(ce);
-            }
+            var result = _foodTruckService.UpdateFoodTruck(updateCommand);
+            return CreateResponse<FoodTruck, FoodTruckModel>(result);
         }
 
 
@@ -316,27 +289,18 @@ namespace FoodTruckNationApi.FoodTrucks
         /// <response code="409">The food truck could not be updated due to a conflict, usually due to a concurrency problem.  More details are in the message property and the conficting object is also returned</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPut("{id}", Name = "UpdateFoodTruck")]
-        [ProducesResponseType(typeof(FoodTruckModel), 200)]
+        [ProducesResponseType(typeof(FoodTruckModelV11), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ConcurrencyErrorModel<FoodTruckModelV11>), 409)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.1")]
-        public IActionResult PutV11(int id, [FromBody]UpdateFoodTruckModel updateModel)
+        public ActionResult<FoodTruckModelV11> PutV11(int id, [FromBody]UpdateFoodTruckModel updateModel)
         {
             var updateCommand = new UpdateFoodTruckCommand() { FoodTruckId = id };
             _mapper.Map<UpdateFoodTruckModel, UpdateFoodTruckCommand>(updateModel, updateCommand);
 
-            try
-            {
-                FoodTruck foodTruck = _foodTruckService.UpdateFoodTruck(updateCommand);
-                var model = _mapper.Map<FoodTruck, FoodTruckModel>(foodTruck);
-                return Ok(model);
-            }
-            catch (ConcurrencyException<FoodTruck> ce)
-            {
-                string logMessage = $"Unable to update food truck {id} due to concurrency exception";
-                return CreateConcurrencyConflictErrorResult<FoodTruckModelV11, FoodTruck>(ce);
-            }
+            var result = _foodTruckService.UpdateFoodTruck(updateCommand);
+            return CreateResponse<FoodTruck, FoodTruckModelV11>(result);
         }
 
 
@@ -354,9 +318,11 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Delete(int id)
         {
-            _foodTruckService.DeleteFoodTruck(id);
+            var result = _foodTruckService.DeleteFoodTruck(id);
 
-            return Ok(new ApiMessageModel() { Message = $"Food truck {id} has been deleted" });
+            return ( result.IsSuccess )
+                ? Ok(new ApiMessageModel() { Message = $"Food truck {id} has been deleted" })
+                : MapErrorResult(result);
         }
 
 

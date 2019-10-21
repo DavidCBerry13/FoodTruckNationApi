@@ -68,9 +68,8 @@ namespace FoodTruckNationApi.Locations
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Get()
         {
-            var locations = _locationService.GetLocations();
-            var locationModels = _mapper.Map<List<Location>, List<LocationModel>>(locations);
-            return Ok(locationModels);
+            var result = _locationService.GetLocations();
+            return CreateResponse<List<Location>, List<LocationModel>>(result);
         }
 
 
@@ -88,17 +87,8 @@ namespace FoodTruckNationApi.Locations
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Get(int id)
         {
-            var location = _locationService.GetLocation(id);
-
-            if ( location != null)
-            {
-                var locationModel = _mapper.Map<Location, LocationModel>(location);
-                return Ok(locationModel);
-            }  
-            else
-            {
-                return NotFound(new ApiMessageModel { Message = $"No location could be found with the id {id}"});
-            }
+            var result = _locationService.GetLocation(id);
+            return CreateResponse<Location, LocationModel>(result);
         }
 
         /// <summary>
@@ -116,10 +106,12 @@ namespace FoodTruckNationApi.Locations
         public IActionResult Post([FromBody]CreateLocationModel createModel)
         {
             var createLocationCommand = _mapper.Map<CreateLocationModel, CreateLocationCommand>(createModel);
-            Location location = _locationService.CreateLocation(createLocationCommand);
+            var result = _locationService.CreateLocation(createLocationCommand);
 
-            var model = _mapper.Map<Location, LocationModel>(location);
-            return CreatedAtRoute("GetLocationById", new { id = location.LocationId }, model);
+            return CreateResponse<Location, LocationModel>(result, (entity) => {
+                var model = _mapper.Map<Location, LocationModel>(entity);
+                return CreatedAtRoute("GetLocationById", new { id = entity.LocationId }, model);
+            });            
         }
 
 
@@ -143,10 +135,8 @@ namespace FoodTruckNationApi.Locations
             var updateCommand = new UpdateLocationCommand() { LocationId = id };
             _mapper.Map<UpdateLocationModel, UpdateLocationCommand>(updateModel, updateCommand);
 
-            Location location = _locationService.UpdateLocation(updateCommand);
-
-            var model = _mapper.Map<Location, LocationModel>(location);
-            return Ok(model);
+            var result = _locationService.UpdateLocation(updateCommand);
+            return CreateResponse<Location, LocationModel>(result);
         }
 
 
@@ -162,9 +152,11 @@ namespace FoodTruckNationApi.Locations
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Delete(int id)
         {
-            _locationService.DeleteLocation(id);
+            var result = _locationService.DeleteLocation(id);
 
-            return Ok(new ApiMessageModel() { Message = $"Location {id} has been deleted" });
+            return ( result.IsSuccess )
+                ? Ok(new ApiMessageModel() { Message = $"Location {id} has been deleted" })
+                : MapErrorResult(result);
         }
     }
 }

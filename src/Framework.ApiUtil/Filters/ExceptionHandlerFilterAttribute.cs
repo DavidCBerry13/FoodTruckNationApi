@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Security;
 using System.Text;
+using Framework.Exceptions;
 
 namespace Framework.ApiUtil.Filters
 {

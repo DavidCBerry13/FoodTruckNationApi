@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Framework.ApiUtil.Controllers;
 using FoodTruckNation.Core.AppInterfaces;
-using Framework;
+using Framework.Utility;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using FoodTruckNation.Core.Domain;
@@ -64,12 +64,9 @@ namespace FoodTruckNationApi.Locations.Schedules
             if (!parameters.EndDate.HasValue)
                 parameters.EndDate = parameters.StartDate.Value.AddDays(7).Date;
 
-            List<Schedule> schedules = _scheduleService.GetSchedulesForLocation(locationId,
+            var result = _scheduleService.GetSchedulesForLocation(locationId,
                 parameters.StartDate.Value, parameters.EndDate.Value);
-
-            List<LocationScheduleModel> models = _mapper.Map<List<Schedule>, List<LocationScheduleModel>>(schedules);
-
-            return Ok(models);
+            return CreateResponse<List<Schedule>, List<LocationScheduleModel>>(result);
         }
         
     }

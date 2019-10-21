@@ -1,7 +1,9 @@
-﻿using FoodTruckNation.Core.DataInterfaces;
+using FoodTruckNation.Core.DataInterfaces;
 using FoodTruckNation.Data.EF.Repositories;
-using Framework;
+using Framework.Data;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -14,7 +16,7 @@ namespace FoodTruckNation.Data.EF
     {
 
 
-        public static void ConfigureSqlServerDataAccess(this IServiceCollection services, String connectionString, 
+        public static void ConfigureSqlServerDataAccess(this IServiceCollection services, string connectionString, 
             ILoggerFactory loggerFactory)
         {
             services.AddDbContext<FoodTruckContext>(options => options
@@ -22,19 +24,33 @@ namespace FoodTruckNation.Data.EF
                 .UseLoggerFactory(loggerFactory)
             );
 
-
             ConfigureRepositories(services);
         }
 
 
-        public static void ConfigureInMemoryDataAccess(this IServiceCollection services, String testDbName)
+
+        public static void ConfigureSqlLiteDatabase(this IServiceCollection services, string connectionString)
         {
+            // Configures the contest
+            var connection = new SqliteConnection(connectionString);
+            connection.Open();
+
             services.AddDbContext<FoodTruckContext>(options =>
-                options.UseInMemoryDatabase(databaseName: testDbName)
+                options.UseSqlite(connection)
             );
 
+            // Make sure the database exists
+            var builder = new DbContextOptionsBuilder<FoodTruckContext>();
+            builder.UseSqlite(connection);
+
+            using (var context = new FoodTruckContext(builder.Options))
+            {
+                context.Database.EnsureCreated();
+            }
+
             ConfigureRepositories(services);
         }
+
 
 
 

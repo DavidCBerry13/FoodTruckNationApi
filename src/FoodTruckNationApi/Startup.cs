@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.AppServices;
 using Framework;
+using Framework.Utility;
 using System.IO;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
@@ -126,8 +127,8 @@ namespace FoodTruckNationApi
 
             if (_hostingEnvironment.EnvironmentName == "IntegrationTests")
             {
-                var testDbName = _configuration["TestName"];
-                services.ConfigureInMemoryDataAccess(testDbName);
+                var connectionString = "DataSource=:memory:";
+                services.ConfigureSqlLiteDatabase(connectionString);
             }
             else
             {

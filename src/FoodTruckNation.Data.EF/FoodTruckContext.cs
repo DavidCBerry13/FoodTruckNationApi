@@ -1,5 +1,5 @@
 using FoodTruckNation.Core.Domain;
-using Framework;
+using Framework.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Logging;

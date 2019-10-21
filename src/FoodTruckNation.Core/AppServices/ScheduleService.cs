@@ -2,12 +2,15 @@ using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.DataInterfaces;
 using FoodTruckNation.Core.Domain;
-using Framework;
+using Framework.Data;
+using Framework.Utility;
+using Framework.Exceptions;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Framework.ResultType;
 
 namespace FoodTruckNation.Core.AppServices
 {
@@ -36,58 +39,66 @@ namespace FoodTruckNation.Core.AppServices
         #endregion
 
 
-        public Schedule GetSchedule(int scheduleId)
+        public Result<Schedule> GetSchedule(int scheduleId)
         {
-            return _scheduleRepository.GetSchedule(scheduleId);
+            var schedule = _scheduleRepository.GetSchedule(scheduleId);
+            return ( schedule != null )
+                ? Result.Success<Schedule>(schedule)
+                : Result.Failure<Schedule>(new ObjectNotFoundError($"No schedule found with id {scheduleId}"));
         }
 
 
-        public Schedule GetSchedule(int foodTruckId, int scheduleId)
-        {
-            var foodTruck = _foodTruckRepository.GetFoodTruck(foodTruckId);
-            if (foodTruck == null)
-                throw new ObjectNotFoundException($"No food truck with the id {foodTruckId} found");
-
-            return _scheduleRepository.GetSchedule(scheduleId);
-        }
-
-        public List<Schedule> GetSchedules(DateTime startDate, DateTime endDate)
-        {
-            return _scheduleRepository.GetSchedules(startDate, endDate);
-        }
-
-
-        public List<Schedule> GetSchedulesForFoodTruck(int foodTruckId, DateTime startDate, DateTime endDate)
+        public Result<Schedule> GetSchedule(int foodTruckId, int scheduleId)
         {
             var foodTruck = _foodTruckRepository.GetFoodTruck(foodTruckId);
             if (foodTruck == null)
-                throw new ObjectNotFoundException($"No food truck with the id {foodTruckId} found");
+                Result.Failure<Schedule>(new ObjectNotFoundError($"No food truck found with id {foodTruckId}"));
 
-            return _scheduleRepository.GetSchedulesForFoodTruck(foodTruckId, startDate, endDate);
+            var schedule = _scheduleRepository.GetSchedule(scheduleId);
+            return ( schedule != null )
+                ? Result.Success<Schedule>(schedule)
+                : Result.Failure<Schedule>(new ObjectNotFoundError($"No schedule found with id {scheduleId}"));
+        }
 
+        public Result<List<Schedule>> GetSchedules(DateTime startDate, DateTime endDate)
+        {
+            var schedules = _scheduleRepository.GetSchedules(startDate, endDate);
+            return Result.Success<List<Schedule>>(schedules);
         }
 
 
-        public List<Schedule> GetSchedulesForLocation(int locationId, DateTime startDate, DateTime endDate)
+        public Result<List<Schedule>> GetSchedulesForFoodTruck(int foodTruckId, DateTime startDate, DateTime endDate)
+        {
+            var foodTruck = _foodTruckRepository.GetFoodTruck(foodTruckId);
+            if (foodTruck == null)
+                Result.Failure<Schedule>(new ObjectNotFoundError($"No food truck found with id {foodTruckId}"));
+
+            var schedules = _scheduleRepository.GetSchedulesForFoodTruck(foodTruckId, startDate, endDate);
+            return Result.Success<List<Schedule>>(schedules);
+        }
+
+
+        public Result<List<Schedule>> GetSchedulesForLocation(int locationId, DateTime startDate, DateTime endDate)
         {
             var location = _locationRepository.GetLocation(locationId);
             if (location == null)
-                throw new ObjectNotFoundException($"No location with the id {locationId} found");
+                return Result.Failure<List<Schedule>>(new ObjectNotFoundError($"No location with the id {locationId} found"));
 
-            return _scheduleRepository.GetSchedulesForLocation(locationId, startDate, endDate);
+            var schedules = _scheduleRepository.GetSchedulesForLocation(locationId, startDate, endDate);
+            return Result.Success<List<Schedule>>(schedules);
         }
 
 
-        public Schedule AddFoodTruckSchedule(CreateFoodTruckScheduleCommand command)
+        public Result<Schedule> AddFoodTruckSchedule(CreateFoodTruckScheduleCommand command)
         {
             var foodTruck = _foodTruckRepository.GetFoodTruck(command.FoodTruckId);
             if (foodTruck == null)
-                throw new ObjectNotFoundException($"No food truck with the id {command.FoodTruckId} found");
+                return Result.Failure<Schedule>(new ObjectNotFoundError($"No food truck found with id {command.FoodTruckId}"));
 
 
             var location = _locationRepository.GetLocation(command.LocationId);
             if (location == null)
-                throw new ObjectNotFoundException($"No location with the id {command.LocationId} found");
+                return Result.Failure<Schedule>(new ObjectNotFoundError($"No location with the id {command.LocationId} found"));
 
             // Create the new schedule object and add it to the food truck
             Schedule schedule = new Schedule(foodTruck, location, command.StartTime, command.EndTime);
@@ -97,25 +108,27 @@ namespace FoodTruckNation.Core.AppServices
             _foodTruckRepository.Save(foodTruck);
             UnitOfWork.SaveChanges();
 
-            return schedule;
+            return Result.Success<Schedule>(schedule);
         }
 
 
-        public void DeleteFoodTruckSchedule(int foodTruckId, int scheduleId)
+        public Result DeleteFoodTruckSchedule(int foodTruckId, int scheduleId)
         {
             var foodTruck = _foodTruckRepository.GetFoodTruck(foodTruckId);
             if (foodTruck == null)
-                throw new ObjectNotFoundException($"No food truck with the id {foodTruckId} found so the schedule could not be deleted");
+                return Result.Failure(new ObjectNotFoundError($"No food truck with the id {foodTruckId} found so the schedule could not be deleted"));
 
             var schedule = foodTruck.Schedules.FirstOrDefault(s => s.ScheduleId == scheduleId);
             if (schedule == null)
-                throw new ObjectNotFoundException($"No schedule with the id {scheduleId} found so the schedule could not be deleted");
+                return Result.Failure(new ObjectNotFoundError($"No schedule with the id {scheduleId} found so the schedule could not be deleted"));
 
             schedule.CancelScheduledAppointment();
 
             // Persist to the database
             _foodTruckRepository.Save(foodTruck);
             UnitOfWork.SaveChanges();
+
+            return Result.Success();
         }
 
     }
