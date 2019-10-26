@@ -13,6 +13,7 @@ using Framework;
 using AutoMapper;
 using Framework.ApiUtil.Models;
 using Framework.ApiUtil.Controllers;
+using Framework.ResultType;
 
 namespace FoodTruckNationApi.Locations
 {
@@ -68,7 +69,17 @@ namespace FoodTruckNationApi.Locations
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Get()
         {
-            var result = _locationService.GetLocations();
+            Result<List<Location>> result = _locationService.GetLocations();
+
+            if (result.IsSuccess)
+            {
+                var model = _mapper.Map<List<Location>, List<LocationModel>>(result.Value);
+                return Ok(model);
+            }
+            else
+            {
+                return MapErrorResult<List<Location>, List<LocationModel>>(result);
+            }
             return CreateResponse<List<Location>, List<LocationModel>>(result);
         }
 
@@ -85,10 +96,26 @@ namespace FoodTruckNationApi.Locations
         [ProducesResponseType(typeof(LocationModel), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public IActionResult Get(int id)
+        public ActionResult<LocationModel> Get(int id)
         {
-            var result = _locationService.GetLocation(id);
-            return CreateResponse<Location, LocationModel>(result);
+            Result<Location> result = _locationService.GetLocation(id);
+            if (result.IsSuccess)
+            {
+                var model = _mapper.Map<Location, LocationModel>(result.Value);
+                return Ok(model);
+            }
+            else
+            {
+                switch (result.Error)
+                {
+                    case InvalidDataError error:
+                        return BadRequest(new ApiMessageModel() { Message = error.Message });
+                    case ObjectNotFoundError error:
+                        return NotFound(new ApiMessageModel() { Message = error.Message });
+                    default:
+                        return this.InternalServerError(new ApiMessageModel() { Message = "An unexpected error has occured.  The error has been logged and is being investigated" });
+                }
+            }
         }
 
         /// <summary>

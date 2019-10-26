@@ -66,7 +66,6 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
             if (!parameters.EndDate.HasValue)
                 parameters.EndDate = _dateTimeProvider.CurrentDateTime.AddDays(7).Date;
 
-
             var result = _scheduleService.GetSchedulesForFoodTruck(foodTruckId, parameters.StartDate.Value, parameters.EndDate.Value);
             return CreateResponse<List<Schedule>, List<FoodTruckScheduleModel>>(result);
         }
@@ -120,10 +119,18 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
                 });        
         }
 
-        // PUT: api/FoodTruckSchedules/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpPut("{scheduleId}")]
+        public ActionResult<Schedule> Put(int foodTruckId, int scheduleId, [FromBody]UpdateFoodTruckScheduleModel updateModel)
         {
+            var updateCommand = _mapper.Map<UpdateFoodTruckScheduleModel, UpdateFoodTruckScheduleCommand>(updateModel);
+            var result = _scheduleService.UpdateFoodTruckSchedule(updateCommand);
+            return CreateResponse<Schedule, FoodTruckScheduleModel>(result,
+                (schedule) =>
+                {
+                    var model = _mapper.Map<Schedule, FoodTruckScheduleModel>(schedule);
+                    return CreatedAtRoute(GET_SINGLE_FOOD_TRUCK_SCHEDULE,
+                    new { foodTruckId = model.FoodTruckId, scheduleId = model.ScheduleId }, model);
+                });
         }
 
         /// <summary>

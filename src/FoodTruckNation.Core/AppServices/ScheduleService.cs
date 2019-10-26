@@ -95,14 +95,40 @@ namespace FoodTruckNation.Core.AppServices
             if (foodTruck == null)
                 return Result.Failure<Schedule>(new ObjectNotFoundError($"No food truck found with id {command.FoodTruckId}"));
 
-
             var location = _locationRepository.GetLocation(command.LocationId);
             if (location == null)
-                return Result.Failure<Schedule>(new ObjectNotFoundError($"No location with the id {command.LocationId} found"));
+                return Result.Failure<Schedule>(new InvalidDataError($"No location with the id {command.LocationId} found"));
 
             // Create the new schedule object and add it to the food truck
             Schedule schedule = new Schedule(foodTruck, location, command.StartTime, command.EndTime);
             foodTruck.AddSchedule(schedule);
+
+            // Persist to the database
+            _foodTruckRepository.Save(foodTruck);
+            UnitOfWork.SaveChanges();
+
+            return Result.Success<Schedule>(schedule);
+        }
+
+
+
+        public Result<Schedule> UpdateFoodTruckSchedule(UpdateFoodTruckScheduleCommand command)
+        {
+            var foodTruck = _foodTruckRepository.GetFoodTruck(command.FoodTruckId);
+            if (foodTruck == null)
+                return Result.Failure<Schedule>(new ObjectNotFoundError($"No food truck found with id {command.FoodTruckId}"));
+
+            var location = _locationRepository.GetLocation(command.LocationId);
+            if (location == null)
+                return Result.Failure<Schedule>(new InvalidDataError($"No location with the id {command.LocationId} found"));
+
+            Schedule schedule = foodTruck.Schedules.FirstOrDefault(s => s.ScheduleId == command.ScheduleId);
+            if (schedule == null)
+                return Result.Failure<Schedule>(new ObjectNotFoundError($"No schedule found with id {command.ScheduleId}"));
+
+            schedule.Location = location;
+            schedule.ScheduledStart = command.StartTime;
+            schedule.ScheduledEnd = command.EndTime;
 
             // Persist to the database
             _foodTruckRepository.Save(foodTruck);

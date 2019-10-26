@@ -56,7 +56,7 @@ namespace FoodTruckNationApi
                 //options.Filters.Add(new ValidationAttribute());
                 options.Filters.Add(new ExceptionHandlerFilterAttribute(_loggerFactory));                
             })
-             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)  // Uncomment to use ApiController Attribute
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
             .AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 
             services.AddCors();

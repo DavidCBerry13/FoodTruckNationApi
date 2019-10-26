@@ -25,6 +25,9 @@ namespace FoodTruckNation.Core.AppInterfaces
         Result<Schedule> AddFoodTruckSchedule(CreateFoodTruckScheduleCommand command);
 
 
+        Result<Schedule> UpdateFoodTruckSchedule(UpdateFoodTruckScheduleCommand command);
+
+
         Result DeleteFoodTruckSchedule(int foodTruckId, int scheduleId);
 
     }

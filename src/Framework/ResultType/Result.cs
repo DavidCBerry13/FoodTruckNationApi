@@ -19,7 +19,6 @@ namespace Framework.ResultType
         }
 
 
-
         public static Result Success()
         {
             return new Result(true, NoError.NO_ERROR);
@@ -49,12 +48,10 @@ namespace Framework.ResultType
         }
 
 
-
         public static Result<TValue> Failure<TValue>(string errorMessage)
         {
             return new Result<TValue>(false, default(TValue), new Error(errorMessage));
         }
-
 
     }
 

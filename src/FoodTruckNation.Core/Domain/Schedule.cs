@@ -92,7 +92,7 @@ namespace FoodTruckNation.Core.Domain
         public Location Location
         {
             get { return _location; }
-            private set { _location = value; }
+            set { _location = value; }
         }
 
 
