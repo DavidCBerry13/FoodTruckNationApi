@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTruckNationApi", "FoodTruckNationApi\FoodTruckNationApi.csproj", "{F802C7EA-9819-4C28-B493-585C11483589}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTruckNationApi", "FoodTruckNationApi22\FoodTruckNationApi.csproj", "{F802C7EA-9819-4C28-B493-585C11483589}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTruckNation.Data.EF", "FoodTruckNation.Data.EF\FoodTruckNation.Data.EF.csproj", "{F62C5396-F0A9-4B16-8A65-0354E5606688}"
 EndProject
