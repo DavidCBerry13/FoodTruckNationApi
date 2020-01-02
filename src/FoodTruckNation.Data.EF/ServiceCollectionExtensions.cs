@@ -16,12 +16,10 @@ namespace FoodTruckNation.Data.EF
     {
 
 
-        public static void ConfigureSqlServerDataAccess(this IServiceCollection services, string connectionString, 
-            ILoggerFactory loggerFactory)
+        public static void ConfigureSqlServerDataAccess(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<FoodTruckContext>(options => options
-                .UseSqlServer(connectionString)
-                .UseLoggerFactory(loggerFactory)
+                .UseSqlServer(connectionString)                
             );
 
             ConfigureRepositories(services);

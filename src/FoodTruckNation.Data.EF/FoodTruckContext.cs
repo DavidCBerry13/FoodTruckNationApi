@@ -60,7 +60,7 @@ namespace FoodTruckNation.Data.EF
 
             modelBuilder.Entity<Tag>().Property(p => p.TagId)
                 .HasField("_tagId")
-                .UseSqlServerIdentityColumn()
+                .UseIdentityColumn()
                 .HasColumnName("TagId");
 
             modelBuilder.Entity<Tag>().Property(p => p.Text)
@@ -80,7 +80,7 @@ namespace FoodTruckNation.Data.EF
 
             modelBuilder.Entity<FoodTruckTag>().Property(p => p.FoodTruckTagId)
                .HasField("_foodTruckTagId")
-               .UseSqlServerIdentityColumn()
+               .UseIdentityColumn()
                .HasColumnName("FoodTruckTagId");
 
             modelBuilder.Entity<FoodTruckTag>()
@@ -107,7 +107,7 @@ namespace FoodTruckNation.Data.EF
 
             modelBuilder.Entity<Location>().Property(p => p.LocationId)
                 .HasField("_locationId")
-                .UseSqlServerIdentityColumn()
+                .UseIdentityColumn()
                 .HasColumnName("LocationId");
 
             modelBuilder.Entity<Location>().Property(p => p.Name)
@@ -144,7 +144,7 @@ namespace FoodTruckNation.Data.EF
 
             modelBuilder.Entity<FoodTruck>().Property(p => p.FoodTruckId)
                 .HasField("_foodTruckId")
-                .UseSqlServerIdentityColumn()
+                .UseIdentityColumn()
                 .HasColumnName("FoodTruckId");
 
             modelBuilder.Entity<FoodTruck>().Property(p => p.Name)
@@ -199,7 +199,7 @@ namespace FoodTruckNation.Data.EF
 
             modelBuilder.Entity<Review>().Property(x => x.ReviewId)
                 .HasField("_reviewId")
-                .UseSqlServerIdentityColumn()
+                .UseIdentityColumn()
                 .HasColumnName("ReviewId");
 
             modelBuilder.Entity<Review>().Property(x => x.FoodTruckId)
@@ -237,7 +237,7 @@ namespace FoodTruckNation.Data.EF
 
             modelBuilder.Entity<Schedule>().Property(x => x.ScheduleId)
                 .HasField("_scheduleId")
-                .UseSqlServerIdentityColumn()
+                .UseIdentityColumn()
                 .HasColumnName("ScheduleId");
 
             modelBuilder.Entity<Schedule>().Property(x => x.FoodTruckId)
@@ -280,7 +280,7 @@ namespace FoodTruckNation.Data.EF
 
             modelBuilder.Entity<SocialMediaPlatform>().Property(p => p.PlatformId)
                 .HasField("_platformId")
-                .UseSqlServerIdentityColumn()
+                .UseIdentityColumn()
                 .HasColumnName("PlatformId");
 
             modelBuilder.Entity<SocialMediaPlatform>().Property(p => p.Name)
@@ -305,7 +305,7 @@ namespace FoodTruckNation.Data.EF
 
             modelBuilder.Entity<SocialMediaAccount>().Property(p => p.SocialMediaAccountId)
                .HasField("_socialMediaAccountId")
-               .UseSqlServerIdentityColumn()
+               .UseIdentityColumn()
                .HasColumnName("SocialMediaAccountId");
 
             modelBuilder.Entity<SocialMediaAccount>().Property(p => p.AccountName)

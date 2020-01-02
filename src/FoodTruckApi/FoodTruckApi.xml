@@ -1,0 +1,1516 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FoodTruckApi</name>
+    </assembly>
+    <members>
+        <member name="F:FoodTruckNationApi.FoodTrucks.Reviews.FoodTruckReviewsController.GET_ALL_FOOD_TRUCK_REVIEWS">
+            <summary>
+            Route name for the route that gets all reviews for a food truck
+            </summary>
+        </member>
+        <member name="F:FoodTruckNationApi.FoodTrucks.Reviews.FoodTruckReviewsController.GET_SINGLE_FOOD_TRUCK_REVIEW">
+            <summary>
+            Route name for the route that gets a single review for a food truck
+            </summary>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.Reviews.FoodTruckReviewsController.Get(System.Int32)">
+            <summary>
+            Gets all of the reviews for the specified food truck
+            </summary>
+            <param name="foodTruckId">The int of the unique id number of the food truck</param>
+            <returns>An IActionResult containing the list of reviews for the food truck</returns>
+            <response code="200">Success.  A list of reviews for the food truck is being returned</response>
+            <response code="404">Not Found.  No food truck was found with the given id</response>
+            <response code="500">Internal Server Error.  An unexpected error internal to the application has occured.  The error has been logged automatically by the system.</response>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.Reviews.FoodTruckReviewsController.Get(System.Int32,System.Int32)">
+            <summary>
+            Gets an individual review for a food truck, as specified by the food truck id and the review id
+            </summary>
+            <param name="foodTruckId">The int of the unique id number of the food truck</param>
+            <param name="reviewId">The int of the id number of the review</param>
+            <returns></returns>
+            <response code="200">Success.  The specified review is being returned</response>
+            <response code="404">Not Found.  Either no food truck was found with the given id or no review was found for this truck with the specified id</response>
+            <response code="500">Internal Server Error.  An unexpected error internal to the application has occured.  The error has been logged automatically by the system.</response>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.Reviews.FoodTruckReviewsController.Post(System.Int32,FoodTruckNationApi.FoodTrucks.Reviews.CreateReviewModel)">
+            <summary>
+            Creates a new review for the specified food truck
+            </summary>
+            <param name="foodTruckId">The int of the unique id number of the food truck to create a review for</param>
+            <param name="createModel"></param>
+            <returns></returns>
+            <response code="201">Created.  The new review was successfully created.  A ReviewModel object for the review is returned and a link to the endpoint is included in the Location header</response>
+            <response code="400">Bad Request.  The request was invalid.  A list of errors will be returned</response>
+            <response code="404">Not Found.  No food truck was found with the given id so no review could be added</response>
+            <response code="500">Internal Server Error.  An unexpected error internal to the application has occured.  The error has been logged automatically by the system.</response>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.Reviews.CreateReviewModel">
+            <summary>
+            Represents the data that needs to be submitted to create a review for a food truck
+            </summary>
+            <remarks>
+            Note that this 
+            </remarks>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Reviews.CreateReviewModel.Rating">
+            <summary>
+            The overall rating on a scale of 1 through 5
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Reviews.CreateReviewModel.Comments">
+            <summary>
+            Additional comments to include with the review
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.Reviews.ReviewModel">
+            <summary>
+            Represents the review of a food truck as returned by the API
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Reviews.ReviewModel.ReviewId">
+            <summary>
+            The unique id number of this review
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Reviews.ReviewModel.FoodTruckId">
+            <summary>
+            The id number of the food truck this review is for
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Reviews.ReviewModel.ReviewDate">
+            <summary>
+            The date this review was submitted
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Reviews.ReviewModel.Rating">
+            <summary>
+            The rating (1-5) of this review
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Reviews.ReviewModel.Comments">
+            <summary>
+            Additional comments left on the review
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Reviews.ReviewModel.Meta">
+            <summary>
+            Metadata object containing the URL links to related information for this review
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.Reviews.ReviewModel.ReviewLinks">
+            <summary>
+            Represents URL links to related data in the API for a review
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Reviews.ReviewModel.ReviewLinks.Self">
+            <summary>
+            URL link the this individual review
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Reviews.ReviewModel.ReviewLinks.FoodTruck">
+            <summary>
+            URL link to the Food Truck the review is for
+            </summary>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckSchedulesController.Get(System.Int32,FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleParameters)">
+            <summary>
+            Gets all the Schedules (appointments) for a Food Truck in the given date range
+            </summary>
+            <param name="foodTruckId">An int of the food truck id</param>
+            <param name="parameters">A FoodTruckScheduleParameters object that encapsulates the optional parameters that can be passed to this action (example the start and end date)</param>
+            <returns></returns>
+            <response code="200">Success.  A list of location schedule objects of what food trucks are scheduled at this location are returned</response>
+            <response code="404">Not Found.  The requested food truck id could not be found</response>
+            <response code="500">Internal Server Error.  An unexpected error occured.  This error has been logged so support personel can troubleshoot the problem</response>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckSchedulesController.Get(System.Int32,System.Int32)">
+            <summary>
+            Gets an individual schedule (appointment) for a food truck
+            </summary>
+            <param name="foodTruckId">An int of the food truck id the schedule is for</param>
+            <param name="scheduleId">An int of the unique id of the schedule</param>
+            <returns></returns>
+            <response code="200">Success.  A location schedule object of of an individual appointment for this food truck</response>
+            <response code="404">Not Found.  The requested food truck id could not be found or the individual schedule could not be found</response>
+            <response code="500">Internal Server Error.  An unexpected error occured.  This error has been logged so support personel can troubleshoot the problem</response>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckSchedulesController.Post(System.Int32,FoodTruckNationApi.FoodTrucks.Schedules.CreateFoodTruckScheduleModel)">
+            <summary>
+            Creates a new schedule (appointment) for a food truck
+            </summary>
+            <param name="foodTruckId">An int of the id of the food truck to create the schedule for</param>
+            <param name="createModel">The data required to create the new schedule for the food truck</param>
+            <returns></returns>
+            <response code="201">Success.  A new schedule was created and has been returned</response>
+            <response code="404">Not Found.  The requested food truck id could not be found</response>
+            <response code="500">Internal Server Error.  An unexpected error occured.  This error has been logged so support personel can troubleshoot the problem</response>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckSchedulesController.Delete(System.Int32,System.Int32)">
+            <summary>
+            Deleted the given schedule for the food truck
+            </summary>
+            <param name="foodTruckId">The id of the food truck the schule is for</param>
+            <param name="scheduleId">The id of the schedule</param>
+            <returns></returns>
+            <response code="200">Success.  A message is returned to confirm the deletion</response>
+            <response code="404">Not Found.  Either the food truck of the schedule could not be found (the message will indicate which one)</response>
+            <response code="500">Internal Server Error.  An unexpected error occured.  This error has been logged so support personel can troubleshoot the problem</response>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.Schedules.CreateFoodTruckScheduleModel">
+            <summary>
+            Defines the data needed to schedule a food truck to be at a certain location at a certain time
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.CreateFoodTruckScheduleModel.LocationId">
+            <summary>
+            The id of the location where the food truck will be at this time
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.CreateFoodTruckScheduleModel.StartTime">
+            <summary>
+            The date/time the food truck will arrive
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.CreateFoodTruckScheduleModel.EndTime">
+            <summary>
+            The date/time the food truck will leave
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel">
+            <summary>
+            Defines the data received when querying the schedule for a particular food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel.ScheduleId">
+            <summary>
+            Unique identifier of this schedule record
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel.FoodTruckId">
+            <summary>
+            Id number of the food truck this schedule is for
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel.Location">
+            <summary>
+            Location of where this scheduled event is to take place
+            </summary>
+            <remarks>
+            This model object contains the full LocationModel object rather than
+            just a location id so clients do not have to make subsequent calls to
+            the API to get the location information for each schedule
+            </remarks>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel.StartTime">
+            <summary>
+            The starting date/time this food truck will be at this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel.EndTime">
+            <summary>
+            The ending date/time the food truck is scheduled to be at this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel.Meta">
+            <summary>
+            URL Links to related objects
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel.LocationModel.LocationId">
+            <summary>
+            Gets the unique id of this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel.LocationModel.LocationName">
+            <summary>
+            The name of this location, usually the name of a park or business that is associated with the location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel.LocationModel.StreetAddress">
+            <summary>
+            The street address of this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel.LocationModel.City">
+            <summary>
+            The city this location is in
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel.LocationModel.State">
+            <summary>
+            The state of this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel.LocationModel.ZipCode">
+            <summary>
+            The zip code of this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel.LocationModel.Meta">
+            <summary>
+            Meta data object containing associated links for the location
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel.LocationModel.LocationLinks">
+            <summary>
+            Class to encapsulate the links (urls) for a location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel.LocationModel.LocationLinks.Self">
+            <summary>
+            Gets the URL that refers to this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel.LocationModel.LocationLinks.Schedules">
+            <summary>
+            URL link containing the upcoming schedules of food trucks at this location
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel.FoodTruckScheduleLinks">
+            <summary>
+            Model class to encapsulate the links for a FoodTruckSchedule object
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel.FoodTruckScheduleLinks.Self">
+            <summary>
+            URL Link to this food truck scedule object
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleModel.FoodTruckScheduleLinks.FoodTruck">
+            <summary>
+            URL Link to the Food Truck this schedule belongs to
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleParameters">
+            <summary>
+            Object to specify optional parameters when getting a food truck's schedule
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleParameters.StartDate">
+            <summary>
+            The starting date (inclusive) of the date range to get the schedule for
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleParameters.EndDate">
+            <summary>
+            The ending date (including) of the date range to get the schedule for
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleParametersValidator">
+            <summary>
+            Validator class for the FoodTruckScheduleParameters object - the object that contains optional parameters when
+            getting a Good Trucks Schedule
+            </summary>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.Schedules.FoodTruckScheduleParametersValidator.#ctor">
+            <summary>
+            Creates a FoodTruckScheduleParametersValidator object
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.UpdateFoodTruckScheduleModel.LocationId">
+            <summary>
+            The id of the location where the food truck will be at this time
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.UpdateFoodTruckScheduleModel.StartTime">
+            <summary>
+            The date/time the food truck will arrive
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.Schedules.UpdateFoodTruckScheduleModel.EndTime">
+            <summary>
+            The date/time the food truck will leave
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.Tags.FoodTruckTagsController">
+            <summary>
+            API Controller used to get and add/update tags to a food truck
+            </summary>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.Tags.FoodTruckTagsController.#ctor(Microsoft.Extensions.Logging.ILogger{FoodTruckNationApi.FoodTrucks.Tags.FoodTruckTagsController},AutoMapper.IMapper,FoodTruckNation.Core.AppInterfaces.IFoodTruckService)">
+            <summary>
+            Creates a new FoodTruckTagsController
+            </summary>
+            <param name="logger">An ILogger object used to log messages from this controller</param>
+            <param name="mapper">An Automapper IMapper object used for object mapping within this controller</param>
+            <param name="foodTruckService">An IFoodTruckService object that contains the business logic for food truck functions</param>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.Tags.FoodTruckTagsController.Get(System.Int32)">
+            <summary>
+            Gets the list of tags on the specified food truck
+            </summary>
+            <param name="foodTruckId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.Tags.FoodTruckTagsController.Post(System.Int32,System.Collections.Generic.List{System.String})">
+            <summary>
+            Adds the given tags to the food truck
+            </summary>
+            <remarks>
+            This endpoint allows you to add one or more tags to an existing food truck.  The tags
+            may already exist or they don't have to.  New tags will automatically be created and 
+            added to the food truck
+            <para>
+            This response marks a departure from REST conventions in that I am returning the entire
+            FoodTruckModel object rather than a list of the updated tags.  This is a decision point
+            and for this example, I am making the decision the client would most likely want an updated
+            representation of the entire food truck, not just the list of tags
+            </para>
+            </remarks>
+            <param name="foodTruckId"></param>
+            <param name="tags"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.Tags.FoodTruckTagsController.Put(System.Int32,System.Collections.Generic.List{System.String})">
+            <summary>
+            Updates the list of tags to the food truck to the specified list
+            </summary>
+            <remarks>
+            This method effectively replaces the existing list of tags on the food truck with
+            the list specified.  Any new tags in the specified list are added to the food truck, 
+            where as any existing tags not included in the list will be removed from the food truck.
+            <para>
+            This response marks a departure from REST conventions in that I am returning the entire
+            FoodTruckModel object rather than a list of the updated tags.  This is a decision point
+            and for this example, I am making the decision the client would most likely want an updated
+            representation of the entire food truck, not just the list of tags
+            </para>
+            </remarks>
+            <param name="foodTruckId"></param>
+            <param name="tags"></param>
+            <response code="200">Success.  A FoodTruckModel that represents the current state of the food truck is returned</response>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.Tags.FoodTruckTagsController.Delete(System.Int32,System.String)">
+            <summary>
+            Deletes the specified tag for the given food truck
+            </summary>
+            <param name="foodTruckId"></param>
+            <param name="tag"></param>
+            <returns></returns>
+            <response code="200">Success.  A message indicating the tag has been removed is returned</response>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.FoodTrucksController">
+            <summary>
+            Controller for the API endpoints related to food trucks.  Only endpoints on the core food truck object are contained
+            in this controller.  Child objects have their own controllers that are of the form FoodTruck{Child Object}Contoller,
+            for example, FoodTruckReviewsController
+            </summary>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.FoodTrucksController.#ctor(Microsoft.Extensions.Logging.ILogger{FoodTruckNationApi.FoodTrucks.FoodTrucksController},AutoMapper.IMapper,FoodTruckNation.Core.AppInterfaces.IFoodTruckService)">
+            <summary>
+            Creates a new FoodTruckController
+            </summary>
+            <param name="logger">An ILogger object used to for any logging inside of this controller</param>
+            <param name="mapper">An Automapper IMapper object used for object mapping within this controller</param>
+            <param name="foodTruckService">An IFoodTruckService object that contains the business logic for food truck functions</param>
+        </member>
+        <member name="F:FoodTruckNationApi.FoodTrucks.FoodTrucksController.GET_ALL_FOOD_TRUCKS">
+            <summary>
+            Route Name Constant for route that will get all food trucks
+            </summary>
+        </member>
+        <member name="F:FoodTruckNationApi.FoodTrucks.FoodTrucksController.GET_ALL_FOOD_TRUCKS_V11">
+            <summary>
+            Route Name Constant for route that will get all food trucks
+            </summary>
+        </member>
+        <member name="F:FoodTruckNationApi.FoodTrucks.FoodTrucksController.GET_FOOD_TRUCK_BY_ID">
+            <summary>
+            Route name constant for route that gets an individual food truck
+            </summary>
+        </member>
+        <member name="F:FoodTruckNationApi.FoodTrucks.FoodTrucksController.GET_FOOD_TRUCK_BY_ID_V11">
+            <summary>
+            Route name constant for route that gets an individual food truck
+            </summary>
+        </member>
+        <member name="F:FoodTruckNationApi.FoodTrucks.FoodTrucksController.CREATE_FOOD_TRUCK">
+            <summary>
+            Route name constant for route that creates a new Food Truck
+            </summary>
+        </member>
+        <member name="F:FoodTruckNationApi.FoodTrucks.FoodTrucksController.CREATE_FOOD_TRUCK_V11">
+            <summary>
+            Route name constant for route that creates a new Food Truck
+            </summary>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.FoodTrucksController.Get(System.String)">
+            <summary>
+            Gets a list of all food trucks in the system.  Optionally, a tag value can be provided that will return only food trucks tagged with the given tag
+            </summary>
+            <param name="tag">An optional tag to filter the food trucks by</param>
+            <returns></returns>
+            <response code="200">Success.  A list of food trucks will be returned</response>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.FoodTrucksController.GetV11(System.String)">
+            <summary>
+            Gets a list of all food trucks in the system.  Optionally, a tag value can be provided that will return only food trucks tagged with the given tag
+            </summary>
+            <param name="tag">An optional tag to filter the food trucks by</param>
+            <returns></returns>
+            <response code="200">Success.  A list of food trucks will be returned</response>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.FoodTrucksController.Get(System.Int32)">
+            <summary>
+            Gets the food truck with the given id
+            </summary>
+            <param name="id">An into of the unique id of the food truck</param>
+            <returns></returns>
+            <response code="200">Success.  A food truck with the given id was found and is being returned</response>
+            <response code="404">Not Found.  No food truck was found with the supplied id</response>
+            <response code="500">Internal Server Error.  An unexpected error internal to the application has occured.  The error has been logged automatically by the system.</response>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.FoodTrucksController.GetV11(System.Int32)">
+            <summary>
+            Gets the food truck with the given id
+            </summary>
+            <param name="id">An into of the unique id of the food truck</param>
+            <returns></returns>
+            <response code="200">Success.  A food truck with the given id was found and is being returned</response>
+            <response code="404">Not Found.  No food truck was found with the supplied id</response>
+            <response code="500">Internal Server Error.  An unexpected error internal to the application has occured.  The error has been logged automatically by the system.</response>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.FoodTrucksController.Post(FoodTruckNationApi.FoodTrucks.CreateFoodTruckModel)">
+            <summary>
+            Creates a new food truck with the supplied information
+            </summary>
+            <param name="createModel">A CreateFoodTruckModel object with the information needed to create the food truck</param>
+            <returns></returns>
+            <response code="200">Success.  The new food truck has been created</response>
+            <response code="409">Conflict.  A food truck with the same name found so this food truck could not be created</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.FoodTrucksController.PostV11(FoodTruckNationApi.FoodTrucks.CreateFoodTruckModelV11)">
+            <summary>
+            Creates a new food truck with the supplied information, including social media accounts
+            </summary>
+            <param name="createModel">A CreateFoodTruckModel object with the information needed to create the food truck</param>
+            <returns></returns>
+            <response code="200">Success.  The new food truck has been created</response>
+            <response code="409">Conflict.  A food truck with the same name found so this food truck could not be created</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.FoodTrucksController.Put(System.Int32,FoodTruckNationApi.FoodTrucks.UpdateFoodTruckModel)">
+            <summary>
+            Updates the core data elements of a food truck.
+            </summary>
+            <remarks>
+            This endpoint only updates the properties directly on the food truck.  To
+            change elements on 'child' objects of the food truck (tags, social media accounts,
+            reviews, schedules), you need to look in the appropriate association controller, 
+            for example FoodTruckTagsController.
+            <para>
+            This decision was made because when editing a food truck, I think it is more likely
+            someone will just want to edit elements like the name or description.  It seemed 
+            unnatural to make them also include the tags or social media accounts as part of
+            the same update operation.  
+            </para>
+            </remarks>
+            <param name="id">An int of the id of the food truck to update</param>
+            <param name="updateModel">An UpdateFoodTruckModel of the </param>
+            <returns></returns>
+            <response code="200">Success.  The food truck has been updated</response>
+            <response code="404">No food truck with the given id could be found</response>
+            <response code="409">The food truck could not be updated due to a conflict, usually due to a concurrency problem.  More details are in the message property and the conficting object is also returned</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.FoodTrucksController.PutV11(System.Int32,FoodTruckNationApi.FoodTrucks.UpdateFoodTruckModel)">
+            <summary>
+            Updates the core data elements of a food truck.
+            </summary>
+            <remarks>
+            This endpoint only updates the properties directly on the food truck.  To
+            change elements on 'child' objects of the food truck (tags, social media accounts,
+            reviews, schedules), you need to look in the appropriate association controller, 
+            for example FoodTruckTagsController.
+            <para>
+            This decision was made because when editing a food truck, I think it is more likely
+            someone will just want to edit elements like the name or description.  It seemed 
+            unnatural to make them also include the tags or social media accounts as part of
+            the same update operation.  
+            </para>
+            </remarks>
+            <param name="id">An int of the id of the food truck to update</param>
+            <param name="updateModel">An UpdateFoodTruckModel of the </param>
+            <returns></returns>
+            <response code="200">Success.  The food truck has been updated</response>
+            <response code="404">No food truck with the given id could be found</response>
+            <response code="409">The food truck could not be updated due to a conflict, usually due to a concurrency problem.  More details are in the message property and the conficting object is also returned</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.FoodTrucksController.Delete(System.Int32)">
+            <summary>
+            Deletes the food truck with the given id
+            </summary>
+            <param name="id">An int of the food truck to be deleted</param>
+            <returns></returns>
+            <response code="200">Success.  The food truck has been deleted</response>
+            <response code="404">No food truck with the given id could be found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.CreateFoodTruckModel">
+            <summary>
+            Model class representing the data needed to create a new FoodTruck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.CreateFoodTruckModel.Name">
+            <summary>
+            Gets the name to give to the new Food Truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.CreateFoodTruckModel.Description">
+            <summary>
+            Gets the description of the new food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.CreateFoodTruckModel.Website">
+            <summary>
+            Gets the Website of the new food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.CreateFoodTruckModel.Tags">
+            <summary>
+            Gets a list of tags to be attached to the new food truck.
+            </summary>
+            <remarks>
+            This list is just a list of strings, so the application has to match these strings up
+            with tag objects in the system.  Also, some tags may exist, some may not, so it is up
+            to the application to determine this and treat each tag appropriately.
+            </remarks>
+        </member>
+        <member name="M:FoodTruckNationApi.FoodTrucks.CreateFoodTruckModelV11.#ctor">
+            <summary>
+            Represents version 1.1 of the create food truck model
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.CreateFoodTruckModelV11.Name">
+            <summary>
+            Gets the name to give to the new Food Truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.CreateFoodTruckModelV11.Description">
+            <summary>
+            Gets the description of the new food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.CreateFoodTruckModelV11.Website">
+            <summary>
+            Gets the Website of the new food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.CreateFoodTruckModelV11.Tags">
+            <summary>
+            Gets a list of tags to be attached to the new food truck.
+            </summary>
+            <remarks>
+            This list is just a list of strings, so the application has to match these strings up
+            with tag objects in the system.  Also, some tags may exist, some may not, so it is up
+            to the application to determine this and treat each tag appropriately.
+            </remarks>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.CreateFoodTruckModelV11.SocialMediaAccounts">
+            <summary>
+            Gets a list of social media accounts to be attached to the new food truck.
+            </summary>
+            <remarks>
+            This property is included because it is likely on the form that creates a food
+            truck will collect this information as well, so the client will want to create
+            a new food truck in one operation, not multiple operations
+            </remarks>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.CreateFoodTruckModelV11.SocialMediaAccountModel">
+            <summary>
+            Represents a Social Media Account for the Food Truck that is being added at creation time of the truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.CreateFoodTruckModelV11.SocialMediaAccountModel.SocialMediaPlatformId">
+            <summary>
+            The id number of the social media platform this account is for
+            </summary>
+            <remarks>
+            Use the SocialMediaPlatforms endpoint to get the valid ids of Social Media Platforms
+            </remarks>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.CreateFoodTruckModelV11.SocialMediaAccountModel.AccountName">
+            <summary>
+            The account name on this social media platform for the food truck
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.CreateFoodTruckModelV11Validator">
+            <summary>
+            Validator class for Version 1.1 of CreateFoodTruck Models
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.FoodTruckModel">
+            <summary>
+            Model class to represent the food truck data sent back to the client
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModel.FoodTruckId">
+            <summary>
+            The unique id number of this food truck.  This is the id used to get a single food truck on get by id API calls
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModel.Name">
+            <summary>
+            The name of the food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModel.Description">
+            <summary>
+            A text description of the offerings of the food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModel.Website">
+            <summary>
+            The website for the food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModel.Tags">
+            <summary>
+            A list of tags associated with the food truck.  This list is just a string list of the tag text
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModel.ReviewCount">
+            <summary>
+            Gets the number of reviews present for this food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModel.ReviewAverage">
+            <summary>
+            Gets the average review for the food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModel.LastModifiedDate">
+            <summary>
+            The last time this food truck object was modified.  This is needed when updating the object
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModel.Meta">
+            <summary>
+            Meta data object containing associated links for the food truck
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.FoodTruckModel.FoodTruckLinks">
+            <summary>
+            Class to encapsulate the links (urls) for a food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModel.FoodTruckLinks.Self">
+            <summary>
+            Gets the URL that refers to this food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModel.FoodTruckLinks.Reviews">
+            <summary>
+            Gets the url for the reviews of this food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModel.FoodTruckLinks.Schedules">
+            <summary>
+            Gets the url for the schedules of this food truck
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.FoodTruckModelV11">
+            <summary>
+            Version 1.1 of the food ruck model.  This version includes social media
+            account for the food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModelV11.FoodTruckId">
+            <summary>
+            The unique id number of this food truck.  This is the id used to get a single food truck on get by id API calls
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModelV11.Name">
+            <summary>
+            The name of the food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModelV11.Description">
+            <summary>
+            A text description of the offerings of the food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModelV11.Website">
+            <summary>
+            The website for the food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModelV11.LastModifiedDate">
+            <summary>
+            The last time this food truck object was modified.  This is needed when updating the object
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModelV11.Tags">
+            <summary>
+            A list of tags associated with the food truck.  This list is just a string list of the tag text
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModelV11.ReviewCount">
+            <summary>
+            Gets the number of reviews present for this food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModelV11.ReviewAverage">
+            <summary>
+            Gets the average review for the food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModelV11.SocialMediaAccounts">
+            <summary>
+            List of social media accounts for this food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModelV11.Meta">
+            <summary>
+            Meta data object containing associated links for the food truck
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.FoodTruckModelV11.FoodTruckLinks">
+            <summary>
+            Class to encapsulate the links (urls) for a food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModelV11.FoodTruckLinks.Self">
+            <summary>
+            Gets the URL that refers to this food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModelV11.FoodTruckLinks.Reviews">
+            <summary>
+            Gets the url for the reviews of this food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModelV11.FoodTruckLinks.Schedules">
+            <summary>
+            Gets the url for the schedules of this food truck
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.FoodTruckModelV11.SocialMediaAccountModel">
+            <summary>
+            Represents the social media account for a food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModelV11.SocialMediaAccountModel.PlatformName">
+            <summary>
+            The social media platform this account is for (Facebook, Twitter, etc)
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.FoodTruckModelV11.SocialMediaAccountModel.AccountName">
+            <summary>
+            The account name on the platform for this food truck
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.FoodTrucks.UpdateFoodTruckModel">
+            <summary>
+            Model used to update the properties of a Food Truck
+            </summary>
+            <remarks>
+            This object is intended to be used in a PUT operation to the API.  Therefore, every field 
+            on the food truck will be updated with the information in this object.  Therefore, if there is
+            a field you do not want changed, then you need to populate that field with its current value
+            in this object
+            </remarks>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.UpdateFoodTruckModel.Name">
+            <summary>
+            The name to give a food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.UpdateFoodTruckModel.Description">
+            <summary>
+            The description of the food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.UpdateFoodTruckModel.Website">
+            <summary>
+            The website of the food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.FoodTrucks.UpdateFoodTruckModel.LastModifiedDate">
+            <summary>
+            The last time this food truck object was modified.
+            </summary>
+            <remarks>
+            This value is required so the API can perform a concurrency check on the object
+            being updated and make sure it has not changed since fetched by the client
+            </remarks>
+        </member>
+        <member name="T:FoodTruckNationApi.Api.FoodTrucks.SocialMedia.FoodTruckSocialMediaController">
+            <summary>
+            API Controller to get/add/update social media accounts for a food truck
+            </summary>
+        </member>
+        <member name="M:FoodTruckNationApi.Api.FoodTrucks.SocialMedia.FoodTruckSocialMediaController.Get(System.Int32)">
+            <summary>
+            Gets the list of social media accounts for this food truck
+            </summary>
+            <param name="foodTruckId">The id number of this food truck</param>
+            <returns></returns>
+            <response code="200">Success.  A list of the current social media accounts for the food truck is returned</response>
+            <response code="404">Not Found.  No food truck could be found for this id</response>
+            <response code="500">Internal Server Error.  An unexpected problem occured on the server occured.  The error has been logged by the server</response>
+        </member>
+        <member name="M:FoodTruckNationApi.Api.FoodTrucks.SocialMedia.FoodTruckSocialMediaController.Get(System.Int32,System.Int32)">
+            <summary>
+            Gets a specific social media account for a food truck
+            </summary>
+            <param name="foodTruckId">The id of the food truck</param>
+            <param name="socialAccountId">The id of the social media account to fetch</param>
+            <returns></returns>
+            <response code="200">Success.  A corresponding social media account will be returned</response>
+            <response code="404">Not Found.  Either the food truck or the specified social media account could not be found</response>
+            <response code="500">Internal Server Error.  An unexpected problem occured on the server occured.  The error has been logged by the server</response>
+        </member>
+        <member name="M:FoodTruckNationApi.Api.FoodTrucks.SocialMedia.FoodTruckSocialMediaController.Post(System.Int32,FoodTruckNationApi.Api.FoodTrucks.SocialMedia.CreateSocialMediaAccountModel)">
+            <summary>
+            Creates a new Social Media Account for the specified food truck
+            </summary>
+            <param name="foodTruckId">The id of the food truck to create the social media account for</param>
+            <param name="socialMediaAccountModel">A model object containing the social media account information</param>
+            <returns></returns>
+            <response code="200">Success.  The social media account was created</response>
+            <response code="400">Request error.  The request contained invalid data, like an account name that does not correspond to the rules of this social media platform</response>
+            <response code="404">Not Found.  No food truck with the specified id could be found to create a social media account for</response>
+            <response code="409">Conflict.  This food truck already contains a social media account for the specified platform</response>
+            <response code="500">Internal Server Error.  An unexpected problem occured on the server occured.  The error has been logged by the server</response>
+        </member>
+        <member name="M:FoodTruckNationApi.Api.FoodTrucks.SocialMedia.FoodTruckSocialMediaController.Delete(System.Int32,System.Int32)">
+            <summary>
+            Deletes a social media account for a food truck
+            </summary>
+            <param name="foodTruckId">The id of the food truck</param>
+            <param name="socialMediaAccountId">The id of the social media account to delete</param>
+            <returns></returns>
+            <response code="200">Success.  The social media account has been deleted</response>
+            <response code="404">Not Found.  Either the food truck or the specified social media account could not be found</response>
+            <response code="500">Internal Server Error.  An unexpected problem occured on the server occured.  The error has been logged by the server</response>
+        </member>
+        <member name="T:FoodTruckNationApi.Api.FoodTrucks.SocialMedia.CreateSocialMediaAccountModel">
+            <summary>
+            Represents the data needed to create a social media account for a food truck
+            </summary>
+            <remarks>
+            The id of the food truck the social media account is for is passed in as part of
+            the URL (in the route), so it is not present in this object that will be POSTed
+            to the API
+            </remarks>
+        </member>
+        <member name="P:FoodTruckNationApi.Api.FoodTrucks.SocialMedia.CreateSocialMediaAccountModel.SocialMediaPlatformId">
+            <summary>
+            The id number of the social media platform the account is for
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Api.FoodTrucks.SocialMedia.CreateSocialMediaAccountModel.AccountName">
+            <summary>
+            The social media account name used by the food truck on this platform
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.Locations.Schedules.LocationSchedulesController">
+            <summary>
+            API Endpoints related to the schedules of food trucks at a given location
+            </summary>
+        </member>
+        <member name="M:FoodTruckNationApi.Locations.Schedules.LocationSchedulesController.#ctor(Microsoft.Extensions.Logging.ILogger{FoodTruckNationApi.Locations.Schedules.LocationSchedulesController},AutoMapper.IMapper,FoodTruckNation.Core.AppInterfaces.IScheduleService,Framework.Utility.IDateTimeProvider)">
+            <summary>
+            Creates a LocationSchedulesController, the controller responsible for returning schedules
+            (appointments) for a specific location
+            </summary>
+            <param name="logger"></param>
+            <param name="mapper"></param>
+            <param name="scheduleService"></param>
+            <param name="dateTimeProvider"></param>
+        </member>
+        <member name="M:FoodTruckNationApi.Locations.Schedules.LocationSchedulesController.Get(System.Int32,FoodTruckNationApi.Locations.Schedules.GetLocationSchedulesParameters)">
+            <summary>
+            Gets all of the food trucks scheduled at a location for a given date range
+            </summary>
+            <remarks>
+            If no date range data is provided, then this enpoint will use a date range of the next seven days
+            </remarks>
+            <param name="locationId">The id number of the location</param>
+            <param name="parameters">An optional date range to get the scheduled food trucks for</param>
+            <returns></returns>
+        </member>
+        <member name="T:FoodTruckNationApi.Locations.Schedules.GetLocationSchedulesParameters">
+            <summary>
+            Represents the parameters that can be passed to the GET operation of the 
+            Locations/{locationId}/Schedules end point
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.Schedules.GetLocationSchedulesParameters.StartDate">
+            <summary>
+            Optional start time for the date range to get schedules for
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.Schedules.GetLocationSchedulesParameters.EndDate">
+            <summary>
+            Optional end time for the date range to get schedules for
+            </summary>
+        </member>
+        <member name="F:FoodTruckNationApi.Locations.Schedules.GetLocationSchedulesParametersValidator.MAX_DAY_RANGE">
+            <summary>
+            Maximum date range (in days) that can be specified to get schedules for
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel">
+            <summary>
+            Model object to represent the schedule of a food truck being at a location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.ScheduleId">
+            <summary>
+            id of this schedule
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.LocationId">
+            <summary>
+            Id number of this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.FoodTruck">
+            <summary>
+            The food truck for this scheduled event.  This is the Model of a food truck,
+            not just a food truck id so clients don't have to make subsequent calls from
+            the API to get the food truck information
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.StartTime">
+            <summary>
+            The start date/time the food truck will be at this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.EndTime">
+            <summary>
+            The end date/time the food truck will be at this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.Meta">
+            <summary>
+            URL links to related data about this location schedule event
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.FoodTruckModel">
+            <summary>
+            Represents the information about a Food truck at a location at a certain time
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.FoodTruckModel.FoodTruckId">
+            <summary>
+            The unique id number of this food truck.  This is the id used to get a single food truck on get by id API calls
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.FoodTruckModel.Name">
+            <summary>
+            The name of the food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.FoodTruckModel.Description">
+            <summary>
+            A text description of the offerings of the food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.FoodTruckModel.Website">
+            <summary>
+            The website for the food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.FoodTruckModel.Tags">
+            <summary>
+            A list of tags associated with the food truck.  This list is just a string list of the tag text
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.FoodTruckModel.Meta">
+            <summary>
+            Links for the Food truck object
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.FoodTruckLinks">
+            <summary>
+            Class to encapsulate the links (urls) for a food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.FoodTruckLinks.Self">
+            <summary>
+            Gets the URL that refers to this food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.FoodTruckLinks.Reviews">
+            <summary>
+            Gets the url for the reviews of this food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.FoodTruckLinks.Schedules">
+            <summary>
+            Gets the url for the schedules of this food truck
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.LocationScheduleLinks">
+            <summary>
+            Model representing links to associated information for this location schedule
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.LocationScheduleLinks.Self">
+            <summary>
+            URL Link to the schedule event
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.Schedules.LocationScheduleModel.LocationScheduleLinks.Location">
+            <summary>
+            URL link to the location this schedule event is at
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.Locations.LocationsController">
+            <summary>
+            Controller containing endpoints related to locations where food trucks gather at
+            </summary>
+        </member>
+        <member name="M:FoodTruckNationApi.Locations.LocationsController.#ctor(Microsoft.Extensions.Logging.ILogger{FoodTruckNationApi.Locations.LocationsController},FoodTruckNation.Core.AppInterfaces.ILocationService,AutoMapper.IMapper)">
+            <summary>
+            Create a new LocationsController
+            </summary>
+            <param name="logger">An ILogger instance to be used for any logging from this controller</param>
+            <param name="locationService">An ILocationService of the service layer object for this controller to use</param>
+            <param name="mapper">An IMapper class used by this controller to map objects</param>
+        </member>
+        <member name="F:FoodTruckNationApi.Locations.LocationsController.GET_ALL_LOCATIONS">
+            <summary>
+            Route Name Constant for route that will get all locations
+            </summary>
+        </member>
+        <member name="F:FoodTruckNationApi.Locations.LocationsController.GET_LOCATION_BY_ID">
+            <summary>
+            Route name constant for route that gets an individual location
+            </summary>
+        </member>
+        <member name="M:FoodTruckNationApi.Locations.LocationsController.Get">
+            <summary>
+            Gets a list of all locations where food trucks can gather at
+            </summary>
+            <returns></returns>
+            <response code="200">Success</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:FoodTruckNationApi.Locations.LocationsController.Get(System.Int32)">
+            <summary>
+             Gets the location identified by the given id number
+            </summary>
+            <param name="id">The unique id number of this location</param>
+            <returns></returns>
+            <response code="200">Success</response>
+            <response code="404">No location with the supplied ID was found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:FoodTruckNationApi.Locations.LocationsController.Post(FoodTruckNationApi.Locations.CreateLocationModel)">
+            <summary>
+            Creates a new Location where food trucks may be at
+            </summary>
+            <param name="createModel">A CreateLocationModel object containing all of the data needed to create a new location</param>
+            <returns></returns>
+            <response code="201">Created</response>
+            <response code="400">Request not valid.  Check the errors and try again</response>
+            <response code="409">A Location with the same address already exists</response>
+        </member>
+        <member name="M:FoodTruckNationApi.Locations.LocationsController.Put(System.Int32,FoodTruckNationApi.Locations.UpdateLocationModel)">
+            <summary>
+            Updates the given location with new information
+            </summary>
+            <param name="id">The id number of the location to update</param>
+            <param name="updateModel">An UpdateLocationModel object with the new information for the location</param>
+            <response code="200">OK.  The location has been updated with the provided information</response>
+            <response code="400">Bad Requst.  The provided data to update the location with is invalid (check the message in the response for specifics)</response>
+            <response code="404">Not Found.  No location could be foudn with the specified id</response>
+            <response code="409">Conflict.  Updating the location as requested would conflict with another already existing location.  Check the response message for details</response>
+            <response code="500">Internal Server Error.  An unexpected error occured.  The error has been logged so support teams can look into the problem</response>
+        </member>
+        <member name="M:FoodTruckNationApi.Locations.LocationsController.Delete(System.Int32)">
+            <summary>
+            Delete the location with the given id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:FoodTruckNationApi.Locations.CreateLocationModel">
+            <summary>
+            Represents the information that must be provided when creating a new location where food trucks gather
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.CreateLocationModel.Name">
+            <summary>
+            The descriptive name to give to this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.CreateLocationModel.StreetAddress">
+            <summary>
+            The street address of this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.CreateLocationModel.City">
+            <summary>
+            The city this location is in
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.CreateLocationModel.State">
+            <summary>
+            The two digit state abbreviation of where this lcoation is
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.CreateLocationModel.ZipCode">
+            <summary>
+            The five digit zip code of this location
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.Locations.LocationModel">
+            <summary>
+            Model class to represent a location when data is sent back to the client
+            </summary>
+            <remarks>
+            Locations are places where food trucks gather
+            </remarks>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.LocationModel.LocationId">
+            <summary>
+            Gets the unique id of this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.LocationModel.LocationName">
+            <summary>
+            The name of this location, usually the name of a park or business that is associated with the location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.LocationModel.StreetAddress">
+            <summary>
+            The street address of this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.LocationModel.City">
+            <summary>
+            The city this location is in
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.LocationModel.State">
+            <summary>
+            The state of this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.LocationModel.ZipCode">
+            <summary>
+            The zip code of this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.LocationModel.Meta">
+            <summary>
+            Meta data object containing associated links for the location
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.Locations.LocationModel.LocationLinks">
+            <summary>
+            Class to encapsulate the links (urls) for a location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.LocationModel.LocationLinks.Self">
+            <summary>
+            Gets the URL that refers to this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.LocationModel.LocationLinks.Schedules">
+            <summary>
+            URL link containing the upcoming schedules of food trucks at this location
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.Locations.UpdateLocationModel">
+            <summary>
+            Model used to update the properties of a location
+            </summary>
+            <remarks>
+            This object is intended to be used in a PUT operation to the API.  Therefore, every field 
+            on the food truck will be updated with the information in this object.  Therefore, if there is
+            a field you do not want changed, then you need to populate that field with its current value
+            in this object
+            </remarks>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.UpdateLocationModel.Name">
+            <summary>
+            The descriptive name to give to this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.UpdateLocationModel.StreetAddress">
+            <summary>
+            The street address of this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.UpdateLocationModel.City">
+            <summary>
+            The city this location is in
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.UpdateLocationModel.State">
+            <summary>
+            The two digit state abbreviation of where this lcoation is
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Locations.UpdateLocationModel.ZipCode">
+            <summary>
+            The five digit zip code of this location
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.Schedules.GetSchedulesParameters">
+            <summary>
+            Represents the query string parameters that can be passed to the Get operation
+            on the Schedules controller
+            </summary>
+            <remarks>
+            These parameters are encapsulated into an object rather than just being
+            method parameters because then we can use Model State Validation to validate
+            any passed parameters are correct rather than doing that validation by hand
+            in the operation method itself
+            </remarks>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.GetSchedulesParameters.StartDate">
+            <summary>
+            Optional start date of the date range to get schedules for
+            </summary>
+            <remarks>
+            If you provide a start date, then you must also provide an end date
+            </remarks>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.GetSchedulesParameters.EndDate">
+            <summary>
+            Optional end date of the date range to get schedules for
+            </summary>
+            <remarks>
+            If you provide an end date, then a start fate must also be provided
+            </remarks>
+        </member>
+        <member name="T:FoodTruckNationApi.Schedules.GetSchedulesParametersValidator">
+            <summary>
+            Validator for GetSchedulesParameters object
+            </summary>
+            <remarks>
+            If a start date or end date is provided, then both must be provided
+            If provided, then end date must be >= start date
+            Maximum range is 60 days
+            </remarks>
+        </member>
+        <member name="F:FoodTruckNationApi.Schedules.GetSchedulesParametersValidator.MAX_DAY_RANGE">
+            <summary>
+            Maximum date range (in days) that can be specified to get schedules for
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.Schedules.ScheduleModel">
+            <summary>
+            Represents a Schedule of a food truck being at a certain location at a certain time
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.ScheduleId">
+            <summary>
+            Unique identifier of this schedule record
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.FoodTruck">
+            <summary>
+            Food truck associated with this schedule
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.Location">
+            <summary>
+            Location of where this scheduled event is to take place
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.StartTime">
+            <summary>
+            The starting date/time this food truck will be at this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.EndTime">
+            <summary>
+            The ending date/time the food truck is scheduled to be at this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.LocationModel.LocationId">
+            <summary>
+            Gets the unique id of this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.LocationModel.LocationName">
+            <summary>
+            The name of this location, usually the name of a park or business that is associated with the location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.LocationModel.StreetAddress">
+            <summary>
+            The street address of this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.LocationModel.City">
+            <summary>
+            The city this location is in
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.LocationModel.State">
+            <summary>
+            The state of this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.LocationModel.ZipCode">
+            <summary>
+            The zip code of this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.LocationModel.Meta">
+            <summary>
+            Meta data object containing associated links for the location
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.Schedules.ScheduleModel.LocationLinks">
+            <summary>
+            Class to encapsulate the links (urls) for a location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.LocationLinks.Self">
+            <summary>
+            Gets the URL that refers to this location
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.LocationLinks.Schedules">
+            <summary>
+            URL link containing the upcoming schedules of food trucks at this location
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.Schedules.ScheduleModel.FoodTruckModel">
+            <summary>
+            Represents a food truck for a schedule (appointment) item
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.FoodTruckModel.FoodTruckId">
+            <summary>
+            The unique id number of this food truck.  This is the id used to get a single food truck on get by id API calls
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.FoodTruckModel.Name">
+            <summary>
+            The name of the food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.FoodTruckModel.Description">
+            <summary>
+            A text description of the offerings of the food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.FoodTruckModel.Website">
+            <summary>
+            The website for the food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.FoodTruckModel.Tags">
+            <summary>
+            A list of tags associated with the food truck.  This list is just a string list of the tag text
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.FoodTruckModel.Meta">
+            <summary>
+            Meta data object containing associated links for the food truck
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.Schedules.ScheduleModel.FoodTruckLinks">
+            <summary>
+            Class to encapsulate the links (urls) for a food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.FoodTruckLinks.Self">
+            <summary>
+            Gets the URL that refers to this food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.FoodTruckLinks.Reviews">
+            <summary>
+            Gets the url for the reviews of this food truck
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.Schedules.ScheduleModel.FoodTruckLinks.Schedules">
+            <summary>
+            Gets the url for the schedules of this food truck
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.Schedules.SchedulesController">
+            <summary>
+            API Controller allowing you to get the schedules for all food trucks in a given date range
+            </summary>
+        </member>
+        <member name="M:FoodTruckNationApi.Schedules.SchedulesController.Get(FoodTruckNationApi.Schedules.GetSchedulesParameters)">
+            <summary>
+            Gets a list of food truck schedules (appointments) for all food trucks for
+            the provided date range.  If no date range is provided, then the next seven
+            days is the default date range used
+            </summary>
+            <param name="parameters">A GetSchedulesParameters object that encapsulates the query string arguments to this method, mainly, the start and end dates if any were included</param>
+            <returns></returns>
+        </member>
+        <member name="T:FoodTruckNationApi.SocialMediaPlatforms.SocialMediaPlatformModel">
+            <summary>
+            Represents a social media platform a food truck may have an account on
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.SocialMediaPlatforms.SocialMediaPlatformModel.SocialMediaPlatformId">
+            <summary>
+            Unique id number for this social media platform.
+            </summary>
+            <remarks>
+            When adding a new social media account to a Food Truck, this is the id number
+            passed with the request to identify the type of account being added
+            </remarks>
+        </member>
+        <member name="P:FoodTruckNationApi.SocialMediaPlatforms.SocialMediaPlatformModel.Name">
+            <summary>
+            The name of the Social Media Platform (Facebook, Twitter, Instagram, etc)
+            </summary>
+        </member>
+        <member name="P:FoodTruckNationApi.SocialMediaPlatforms.SocialMediaPlatformModel.AccountNameRegex">
+            <summary>
+            The regex that encapsulates the rules around an account name on this platform
+            </summary>
+        </member>
+        <member name="T:FoodTruckNationApi.SocialMediaPlatforms.SocialMediaPlatformsController">
+            <summary>
+            Controller exposing API endpoints related to what social media platforms are availible
+            for food trucks to have accounts on
+            </summary>
+        </member>
+        <member name="F:FoodTruckNationApi.SocialMediaPlatforms.SocialMediaPlatformsController.GET_ALL_SOCIAL_MEDIA_PLATFORMS">
+            <summary>
+            Route Name Constant for route that will get all social media platforms
+            </summary>
+        </member>
+        <member name="M:FoodTruckNationApi.SocialMediaPlatforms.SocialMediaPlatformsController.Get">
+            <summary>
+            Gets a list of all social media platforms that a food truck may have a social media account on
+            </summary>
+            <returns></returns>
+            <response code="200">Success.  A list of social media platforms will be returned</response>
+        </member>
+        <member name="T:FoodTruckNationApi.Tags.TagsController">
+            <summary>
+            Controller for API endpoints dealing with tags
+            </summary>
+        </member>
+        <member name="M:FoodTruckNationApi.Tags.TagsController.#ctor(Microsoft.Extensions.Logging.ILogger{FoodTruckNationApi.Tags.TagsController},AutoMapper.IMapper,FoodTruckNation.Core.AppInterfaces.ITagService)">
+            <summary>
+            Creates a new TagsController
+            </summary>
+            <param name="logger">An ILoggerFactory of the factory class used to create an ILogger instance for use in this controller</param>
+            <param name="mapper">An Automapper IMapper instance used to perform object mapping in the controller</param>
+            <param name="tagService">An iTagService instance of the tag service object where the business logic for tag functions resides</param>
+        </member>
+        <member name="M:FoodTruckNationApi.Tags.TagsController.Get(System.Boolean)">
+            <summary>
+            Gets a list of all of the tags in the system
+            </summary>
+            <param name="inUseOnly"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
