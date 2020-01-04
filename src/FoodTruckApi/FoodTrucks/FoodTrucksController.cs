@@ -6,10 +6,10 @@ using Microsoft.Extensions.Logging;
 using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.AppInterfaces;
 using AutoMapper;
-using Framework.ApiUtil.Models;
-using Framework.ApiUtil.Controllers;
-using Framework;
-using Framework.Exceptions;
+using DavidBerry.Framework.ApiUtil.Models;
+using DavidBerry.Framework.ApiUtil.Controllers;
+using DavidBerry.Framework;
+using DavidBerry.Framework.Exceptions;
 
 namespace FoodTruckNationApi.FoodTrucks
 {
@@ -186,7 +186,7 @@ namespace FoodTruckNationApi.FoodTrucks
             var result = _foodTruckService.CreateFoodTruck(createCommand);
 
             if (result.IsSuccess)
-            {               
+            {
                 var model = _mapper.Map<FoodTruck, FoodTruckModel>(result.Value);
                 return CreatedAtRoute(GET_FOOD_TRUCK_BY_ID, new { id = model.FoodTruckId }, model);
             }
@@ -234,13 +234,13 @@ namespace FoodTruckNationApi.FoodTrucks
         /// <remarks>
         /// This endpoint only updates the properties directly on the food truck.  To
         /// change elements on 'child' objects of the food truck (tags, social media accounts,
-        /// reviews, schedules), you need to look in the appropriate association controller, 
+        /// reviews, schedules), you need to look in the appropriate association controller,
         /// for example FoodTruckTagsController.
         /// <para>
         /// This decision was made because when editing a food truck, I think it is more likely
-        /// someone will just want to edit elements like the name or description.  It seemed 
+        /// someone will just want to edit elements like the name or description.  It seemed
         /// unnatural to make them also include the tags or social media accounts as part of
-        /// the same update operation.  
+        /// the same update operation.
         /// </para>
         /// </remarks>
         /// <param name="id">An int of the id of the food truck to update</param>
@@ -272,13 +272,13 @@ namespace FoodTruckNationApi.FoodTrucks
         /// <remarks>
         /// This endpoint only updates the properties directly on the food truck.  To
         /// change elements on 'child' objects of the food truck (tags, social media accounts,
-        /// reviews, schedules), you need to look in the appropriate association controller, 
+        /// reviews, schedules), you need to look in the appropriate association controller,
         /// for example FoodTruckTagsController.
         /// <para>
         /// This decision was made because when editing a food truck, I think it is more likely
-        /// someone will just want to edit elements like the name or description.  It seemed 
+        /// someone will just want to edit elements like the name or description.  It seemed
         /// unnatural to make them also include the tags or social media accounts as part of
-        /// the same update operation.  
+        /// the same update operation.
         /// </para>
         /// </remarks>
         /// <param name="id">An int of the id of the food truck to update</param>

@@ -3,24 +3,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using FoodTruckNation.Core;
 using FoodTruckNation.Data.EF;
-using Framework.ApiUtil;
-using Framework.ApiUtil.Controllers;
-using Framework.Utility;
+using DavidBerry.Framework.ApiUtil;
+using DavidBerry.Framework.ApiUtil.Controllers;
+using DavidBerry.Framework.TimeAndDate;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace FoodTruckApi

@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
-using Framework.Data;
-using Framework.Exceptions;
+using DavidBerry.Framework.Data;
+using DavidBerry.Framework.Exceptions;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.DataInterfaces;
 using FoodTruckNation.Core.Domain;
-using Framework.ResultType;
+using DavidBerry.Framework.ResultType;
 
 namespace FoodTruckNation.Core.AppServices
 {
@@ -59,8 +59,8 @@ namespace FoodTruckNation.Core.AppServices
             try
             {
                 var tag = _tagRepository.GetTagById(tagId);
-                return (tag != null) 
-                    ? Result.Success<Tag>(tag) 
+                return (tag != null)
+                    ? Result.Success<Tag>(tag)
                     : Result.Failure<Tag>($"No tag found with the tag id of {tagId}");
             }
             catch (Exception ex)

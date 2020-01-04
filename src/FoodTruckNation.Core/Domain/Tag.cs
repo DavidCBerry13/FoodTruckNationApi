@@ -1,4 +1,4 @@
-using Framework.Entity;
+using DavidBerry.Framework.Domain;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

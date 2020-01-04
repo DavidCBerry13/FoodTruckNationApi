@@ -6,11 +6,12 @@ using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.DataInterfaces;
 using FoodTruckNation.Core.Domain;
-using Framework.Data;
-using Framework.Utility;
-using Framework.Exceptions;
+using DavidBerry.Framework.Data;
+using DavidBerry.Framework.TimeAndDate;
+using DavidBerry.Framework.Util;
+using DavidBerry.Framework.Exceptions;
 using Microsoft.Extensions.Logging;
-using Framework.ResultType;
+using DavidBerry.Framework.ResultType;
 
 namespace FoodTruckNation.Core.AppServices
 {
@@ -144,7 +145,7 @@ namespace FoodTruckNation.Core.AppServices
             catch (DBConcurrencyException ce)
             {
                 // If there is a database conflict, then data access layer (like EF) will throw a DbConcurrencyException, so we catch it and turn
-                // it into an error to be passed up the stack with the existing object                
+                // it into an error to be passed up the stack with the existing object
                 var foodTruck = _foodTruckRepository.GetFoodTruck(foodTruckInfo.FoodTruckId);
                 return Result.Failure<FoodTruck>(
                     new ConcurrencyError<FoodTruck>($"The food truck could not be updated due to a concurrency exception.  This is most likely because the object has changed since the object was retrieved.  Compare your changes to the current state of the object (included) and resubmit as neccessary",

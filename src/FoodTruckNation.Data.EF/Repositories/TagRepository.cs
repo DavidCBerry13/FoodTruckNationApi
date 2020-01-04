@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using FoodTruckNation.Core.Domain;
-using Framework.Data;
+using DavidBerry.Framework.Data;
 
 namespace FoodTruckNation.Data.EF.Repositories
 {
@@ -33,7 +33,7 @@ namespace FoodTruckNation.Data.EF.Repositories
                 .SelectMany(ft => ft.Tags.Select(ftt => ftt.Tag))
                 .Distinct()
                 .AsNoTracking()
-                .ToList();                                   
+                .ToList();
         }
 
 

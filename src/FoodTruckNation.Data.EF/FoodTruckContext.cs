@@ -1,5 +1,5 @@
 using FoodTruckNation.Core.Domain;
-using Framework.Entity;
+using DavidBerry.Framework.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Logging;
@@ -111,7 +111,7 @@ namespace FoodTruckNation.Data.EF
                 .HasColumnName("LocationId");
 
             modelBuilder.Entity<Location>().Property(p => p.Name)
-                .HasField("_locationName")                
+                .HasField("_locationName")
                 .HasColumnName("LocationName");
 
             modelBuilder.Entity<Location>().Property(p => p.StreetAddress)
@@ -243,7 +243,7 @@ namespace FoodTruckNation.Data.EF
             modelBuilder.Entity<Schedule>().Property(x => x.FoodTruckId)
                 .HasField("_foodTruckId")
                 .HasColumnName("FoodTruckId");
-            
+
             modelBuilder.Entity<Schedule>().Property(x => x.LocationId)
                 .HasField("_locationId")
                 .HasColumnName("LocationId");

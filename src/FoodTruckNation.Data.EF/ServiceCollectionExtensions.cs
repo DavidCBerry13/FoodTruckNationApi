@@ -1,6 +1,6 @@
 using FoodTruckNation.Core.DataInterfaces;
 using FoodTruckNation.Data.EF.Repositories;
-using Framework.Data;
+using DavidBerry.Framework.Data;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite;
@@ -19,7 +19,7 @@ namespace FoodTruckNation.Data.EF
         public static void ConfigureSqlServerDataAccess(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<FoodTruckContext>(options => options
-                .UseSqlServer(connectionString)                
+                .UseSqlServer(connectionString)
             );
 
             ConfigureRepositories(services);

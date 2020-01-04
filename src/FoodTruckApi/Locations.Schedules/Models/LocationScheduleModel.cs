@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation;
 using FoodTruckNation.Core.Domain;
-using Framework.ApiUtil;
+using DavidBerry.Framework.ApiUtil;
 
 namespace FoodTruckNationApi.Locations.Schedules
 {

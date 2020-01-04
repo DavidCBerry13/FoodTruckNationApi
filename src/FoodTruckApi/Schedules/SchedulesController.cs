@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Framework.ApiUtil.Controllers;
+using DavidBerry.Framework.ApiUtil.Controllers;
 using Microsoft.Extensions.Logging;
 using FoodTruckNation.Core.AppInterfaces;
 using AutoMapper;
 using FoodTruckNation.Core.Domain;
-using Framework.Utility;
+using DavidBerry.Framework.TimeAndDate;
 
 namespace FoodTruckNationApi.Schedules
 {
@@ -24,7 +24,7 @@ namespace FoodTruckNationApi.Schedules
     public class SchedulesController : ApiControllerBase
     {
 
-        public SchedulesController(ILogger<SchedulesController> logger, IMapper mapper, 
+        public SchedulesController(ILogger<SchedulesController> logger, IMapper mapper,
             IScheduleService scheduleService, IDateTimeProvider dateTimeProvider) : base(logger, mapper)
         {
             _scheduleService = scheduleService;
@@ -54,7 +54,7 @@ namespace FoodTruckNationApi.Schedules
         }
 
 
-        
-        
+
+
     }
 }

@@ -11,11 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Framework\Framework.csproj" />
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <ProjectReference Include="..\DavidBerry.Framework\DavidBerry.Framework\DavidBerry.Framework.csproj" />
   </ItemGroup>
 
 </Project>

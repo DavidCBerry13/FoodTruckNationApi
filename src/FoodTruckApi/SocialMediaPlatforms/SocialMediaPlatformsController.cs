@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
-using Framework.ApiUtil.Controllers;
+using DavidBerry.Framework.ApiUtil.Controllers;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
-using Framework.ApiUtil.Models;
+using DavidBerry.Framework.ApiUtil.Models;
 
 namespace FoodTruckNationApi.SocialMediaPlatforms
 {
 
     /// <summary>
-    /// Controller exposing API endpoints related to what social media platforms are availible
+    /// Controller exposing API endpoints related to what social media platforms are available
     /// for food trucks to have accounts on
     /// </summary>
     [Produces("application/json")]
@@ -25,7 +25,7 @@ namespace FoodTruckNationApi.SocialMediaPlatforms
     {
 
 
-        public SocialMediaPlatformsController(ILogger<SocialMediaPlatformsController> logger, IMapper mapper, 
+        public SocialMediaPlatformsController(ILogger<SocialMediaPlatformsController> logger, IMapper mapper,
             ISocialMediaPlatformService socialMediaPlatformService)
             : base(logger, mapper)
         {

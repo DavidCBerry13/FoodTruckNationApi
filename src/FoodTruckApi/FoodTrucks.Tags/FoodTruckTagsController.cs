@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Framework.ApiUtil.Controllers;
+using DavidBerry.Framework.ApiUtil.Controllers;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using FoodTruckNation.Core.AppInterfaces;
-using Framework.ApiUtil.Models;
+using DavidBerry.Framework.ApiUtil.Models;
 using FoodTruckNation.Core.Domain;
 
 namespace FoodTruckNationApi.FoodTrucks.Tags
@@ -67,7 +67,7 @@ namespace FoodTruckNationApi.FoodTrucks.Tags
         /// </summary>
         /// <remarks>
         /// This endpoint allows you to add one or more tags to an existing food truck.  The tags
-        /// may already exist or they don't have to.  New tags will automatically be created and 
+        /// may already exist or they don't have to.  New tags will automatically be created and
         /// added to the food truck
         /// <para>
         /// This response marks a departure from REST conventions in that I am returning the entire
@@ -92,7 +92,7 @@ namespace FoodTruckNationApi.FoodTrucks.Tags
         /// </summary>
         /// <remarks>
         /// This method effectively replaces the existing list of tags on the food truck with
-        /// the list specified.  Any new tags in the specified list are added to the food truck, 
+        /// the list specified.  Any new tags in the specified list are added to the food truck,
         /// where as any existing tags not included in the list will be removed from the food truck.
         /// <para>
         /// This response marks a departure from REST conventions in that I am returning the entire

@@ -1,4 +1,4 @@
-using Framework.Entity;
+using DavidBerry.Framework.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,9 +22,9 @@ namespace FoodTruckNation.Core.Domain
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        public Review(FoodTruck foodTruck, DateTime reviewDate, int rating, string details) 
+        public Review(FoodTruck foodTruck, DateTime reviewDate, int rating, string details)
             : base(ObjectState.NEW)
         {
             _foodTruck = foodTruck;

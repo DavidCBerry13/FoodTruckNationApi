@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using FoodTruckNation.Core.AppInterfaces;
-using Framework.ApiUtil.Controllers;
+using DavidBerry.Framework.ApiUtil.Controllers;
 using FoodTruckNation.Core.Domain;
-using Framework.ApiUtil.Models;
+using DavidBerry.Framework.ApiUtil.Models;
 
 namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
 {
@@ -45,7 +45,7 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
         /// <returns></returns>
         /// <response code="200">Success.  A list of the current social media accounts for the food truck is returned</response>
         /// <response code="404">Not Found.  No food truck could be found for this id</response>
-        /// <response code="500">Internal Server Error.  An unexpected problem occured on the server occured.  The error has been logged by the server</response>
+        /// <response code="500">Internal Server Error.  An unexpected problem occurred on the server occurred.  The error has been logged by the server</response>
         [HttpGet(Name = "GetFoodTruckSocialMediaAccounts")]
         [ProducesResponseType(typeof(List<SocialMediaAccount>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
@@ -74,7 +74,7 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
         /// <returns></returns>
         /// <response code="200">Success.  A corresponding social media account will be returned</response>
         /// <response code="404">Not Found.  Either the food truck or the specified social media account could not be found</response>
-        /// <response code="500">Internal Server Error.  An unexpected problem occured on the server occured.  The error has been logged by the server</response>
+        /// <response code="500">Internal Server Error.  An unexpected problem occurred on the server occurred.  The error has been logged by the server</response>
         [HttpGet("{socialAccountId}", Name = GET_FOOD_TRUCK_SOCIAL_ACCOUNT_BY_ID)]
         [ProducesResponseType(typeof(SocialMediaAccount), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
@@ -82,7 +82,7 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
         public IActionResult Get(int foodTruckId, int socialAccountId)
         {
             var result = _foodTruckService.GetFoodTruck(foodTruckId);
-            
+
             if (result.IsSuccess)
             {
                 var model = _mapper.Map<SocialMediaAccount, SocialMediaAccountModelV11>(result.Value.SocialMediaAccounts.FirstOrDefault(x => x.SocialMediaAccountId == socialAccountId));
@@ -104,7 +104,7 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
         /// <response code="400">Request error.  The request contained invalid data, like an account name that does not correspond to the rules of this social media platform</response>
         /// <response code="404">Not Found.  No food truck with the specified id could be found to create a social media account for</response>
         /// <response code="409">Conflict.  This food truck already contains a social media account for the specified platform</response>
-        /// <response code="500">Internal Server Error.  An unexpected problem occured on the server occured.  The error has been logged by the server</response>
+        /// <response code="500">Internal Server Error.  An unexpected problem occurred on the server occurred.  The error has been logged by the server</response>
         [HttpPost]
         [ProducesResponseType(typeof(SocialMediaAccount), 201)]
         [ProducesResponseType(typeof(RequestErrorModel), 400)]
@@ -113,7 +113,7 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         public IActionResult Post(int foodTruckId, [FromBody]CreateSocialMediaAccountModel socialMediaAccountModel)
         {
-            var result = _foodTruckService.AddSocialMediaAccount(foodTruckId, 
+            var result = _foodTruckService.AddSocialMediaAccount(foodTruckId,
                 socialMediaAccountModel.SocialMediaPlatformId,
                 socialMediaAccountModel.AccountName);
 
@@ -124,7 +124,7 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
                    model);
             });
         }
-        
+
         // PUT: api/FoodTruckSocialMedia/5
         [HttpPut("{socialAccountId}")]
         public IActionResult Put(int foodTruckId, int socialMediaAccountId, [FromBody]UpdateSocialMediaAccount updateModel)
@@ -142,7 +142,7 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
         /// <returns></returns>
         /// <response code="200">Success.  The social media account has been deleted</response>
         /// <response code="404">Not Found.  Either the food truck or the specified social media account could not be found</response>
-        /// <response code="500">Internal Server Error.  An unexpected problem occured on the server occured.  The error has been logged by the server</response>
+        /// <response code="500">Internal Server Error.  An unexpected problem occurred on the server occurred.  The error has been logged by the server</response>
         [HttpDelete("{socialMediaAccountId}")]
         [ProducesResponseType(typeof(SocialMediaAccount), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]

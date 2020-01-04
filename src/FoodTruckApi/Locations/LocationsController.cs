@@ -6,14 +6,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using FoodTruckNation.Core.Domain;
 using Microsoft.Extensions.Logging;
-using Framework.ApiUtil;
+using DavidBerry.Framework.ApiUtil;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Commands;
-using Framework;
+using DavidBerry.Framework;
 using AutoMapper;
-using Framework.ApiUtil.Models;
-using Framework.ApiUtil.Controllers;
-using Framework.ResultType;
+using DavidBerry.Framework.ApiUtil.Models;
+using DavidBerry.Framework.ApiUtil.Controllers;
+using DavidBerry.Framework.ResultType;
 
 namespace FoodTruckNationApi.Locations
 {
@@ -138,7 +138,7 @@ namespace FoodTruckNationApi.Locations
             return CreateResponse<Location, LocationModel>(result, (entity) => {
                 var model = _mapper.Map<Location, LocationModel>(entity);
                 return CreatedAtRoute("GetLocationById", new { id = entity.LocationId }, model);
-            });            
+            });
         }
 
 

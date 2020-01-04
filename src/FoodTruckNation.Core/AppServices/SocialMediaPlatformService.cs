@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNation.Core.DataInterfaces;
-using Framework.ResultType;
+using DavidBerry.Framework.ResultType;
 
 namespace FoodTruckNation.Core.AppServices
 {

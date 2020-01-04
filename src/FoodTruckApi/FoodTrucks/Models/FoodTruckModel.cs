@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using FoodTruckNation.Core.Domain;
-using Framework.ApiUtil;
+using DavidBerry.Framework.ApiUtil;
 
 namespace FoodTruckNationApi.FoodTrucks
 {

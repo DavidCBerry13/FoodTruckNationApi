@@ -6,8 +6,8 @@ using AutoMapper;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNation.Core.Commands;
-using Framework.ApiUtil.Controllers;
-using Framework.ApiUtil.Models;
+using DavidBerry.Framework.ApiUtil.Controllers;
+using DavidBerry.Framework.ApiUtil.Models;
 
 namespace FoodTruckNationApi.FoodTrucks.Reviews
 {
@@ -54,7 +54,7 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
         public ActionResult<List<ReviewModel>> Get(int foodTruckId)
         {
             var result = _foodTruckService.GetFoodTruckReviews(foodTruckId);
-            return CreateResponse<List<Review>, List<ReviewModel>>(result);          
+            return CreateResponse<List<Review>, List<ReviewModel>>(result);
         }
 
 

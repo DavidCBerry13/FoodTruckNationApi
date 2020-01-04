@@ -1,4 +1,4 @@
-using Framework.Entity;
+using DavidBerry.Framework.Domain;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -72,7 +72,7 @@ namespace FoodTruckNation.Core.Domain
         public int LocationId
         {
             get { return _locationId; }
-            internal set { _locationId = value; }            
+            internal set { _locationId = value; }
         }
 
 

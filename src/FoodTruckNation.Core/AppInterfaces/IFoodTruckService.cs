@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNation.Core.Commands;
-using Framework;
-using Framework.ResultType;
+using DavidBerry.Framework;
+using DavidBerry.Framework.ResultType;
 
 namespace FoodTruckNation.Core.AppInterfaces
 {

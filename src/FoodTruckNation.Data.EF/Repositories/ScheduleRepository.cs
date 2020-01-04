@@ -5,7 +5,7 @@ using System.Text;
 using FoodTruckNation.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using Framework.Data;
+using DavidBerry.Framework.Data;
 
 namespace FoodTruckNation.Data.EF.Repositories
 {
@@ -52,9 +52,9 @@ namespace FoodTruckNation.Data.EF.Repositories
         public List<Schedule> GetSchedulesForFoodTruck(int foodTruckId, DateTime startDate, DateTime endDate)
         {
             var foodTruckSchedules = _foodTruckContext.Schedules
-                .Include(s => s.Location)                
+                .Include(s => s.Location)
                 .Include(s => s.FoodTruck)
-                .Where(s => s.FoodTruckId == foodTruckId)                
+                .Where(s => s.FoodTruckId == foodTruckId)
                 .Where(s => s.ScheduledStart >= startDate)
                 .Where(s => s.ScheduledEnd <= endDate)
                 .AsNoTracking()

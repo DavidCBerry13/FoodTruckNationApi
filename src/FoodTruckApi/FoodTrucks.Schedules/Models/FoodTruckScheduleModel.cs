@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FoodTruckNation.Core.Domain;
-using Framework.ApiUtil;
+using DavidBerry.Framework.ApiUtil;
 
 namespace FoodTruckNationApi.FoodTrucks.Schedules
 {

@@ -1,4 +1,4 @@
-using Framework.Entity;
+using DavidBerry.Framework.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,7 +27,7 @@ namespace FoodTruckNation.Core.Domain
         /// <summary>
         /// Constructor used by application code when a new scheduled time for a food truck is being created
         /// </summary>
-        public Schedule(FoodTruck foodTruck, Location location, DateTime startTime, DateTime endTime) 
+        public Schedule(FoodTruck foodTruck, Location location, DateTime startTime, DateTime endTime)
             : base(ObjectState.NEW)
         {
             _foodTruckId = foodTruck.FoodTruckId;

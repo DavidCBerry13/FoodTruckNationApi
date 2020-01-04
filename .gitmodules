@@ -1,0 +1,9 @@
+[submodule "DavidBerry.Framework"]
+	path = DavidBerry.Framework
+	url = https://github.com/DavidCBerry13/DavidBerry.Framework
+[submodule "src/DavidBerry.Framework"]
+	path = src/DavidBerry.Framework
+	url = https://github.com/DavidCBerry13/DavidBerry.Framework
+[submodule "src/DavidBerry.Framework.ApiUtil"]
+	path = src/DavidBerry.Framework.ApiUtil
+	url = https://github.com/DavidCBerry13/DavidBerry.Framework.ApiUtil

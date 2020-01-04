@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Framework.ApiUtil.Controllers;
+using DavidBerry.Framework.ApiUtil.Controllers;
 using FoodTruckNation.Core.AppInterfaces;
-using Framework.Utility;
+using DavidBerry.Framework.TimeAndDate;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using FoodTruckNation.Core.Domain;
@@ -50,7 +50,7 @@ namespace FoodTruckNationApi.Locations.Schedules
         /// Gets all of the food trucks scheduled at a location for a given date range
         /// </summary>
         /// <remarks>
-        /// If no date range data is provided, then this enpoint will use a date range of the next seven days
+        /// If no date range data is provided, then this endpoint will use a date range of the next seven days
         /// </remarks>
         /// <param name="locationId">The id number of the location</param>
         /// <param name="parameters">An optional date range to get the scheduled food trucks for</param>
@@ -68,6 +68,6 @@ namespace FoodTruckNationApi.Locations.Schedules
                 parameters.StartDate.Value, parameters.EndDate.Value);
             return CreateResponse<List<Schedule>, List<LocationScheduleModel>>(result);
         }
-        
+
     }
 }

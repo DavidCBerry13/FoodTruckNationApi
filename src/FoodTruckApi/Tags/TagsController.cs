@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using AutoMapper;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
-using Framework.ApiUtil.Controllers;
-using Framework.ApiUtil.Models;
-using Framework.ResultType;
+using DavidBerry.Framework.ApiUtil.Controllers;
+using DavidBerry.Framework.ApiUtil.Models;
+using DavidBerry.Framework.ResultType;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -25,7 +25,7 @@ namespace FoodTruckNationApi.Tags
         /// Creates a new TagsController
         /// </summary>
         /// <param name="logger">An ILoggerFactory of the factory class used to create an ILogger instance for use in this controller</param>
-        /// <param name="mapper">An Automapper IMapper instance used to perform object mapping in the controller</param>
+        /// <param name="mapper">An AutoMapper IMapper instance used to perform object mapping in the controller</param>
         /// <param name="tagService">An iTagService instance of the tag service object where the business logic for tag functions resides</param>
         public TagsController(ILogger<TagsController> logger, IMapper mapper, ITagService tagService)
             : base(logger, mapper)

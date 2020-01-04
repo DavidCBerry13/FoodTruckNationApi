@@ -1,5 +1,5 @@
 using FoodTruckNation.Core.Domain;
-using Framework.ResultType;
+using DavidBerry.Framework.ResultType;
 using System;
 using System.Collections.Generic;
 using System.Text;

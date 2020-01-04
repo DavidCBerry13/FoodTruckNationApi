@@ -2,15 +2,15 @@ using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.DataInterfaces;
 using FoodTruckNation.Core.Domain;
-using Framework.Data;
-using Framework.Utility;
-using Framework.Exceptions;
+using DavidBerry.Framework.Data;
+using DavidBerry.Framework.TimeAndDate;
+using DavidBerry.Framework.Exceptions;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Framework.ResultType;
+using DavidBerry.Framework.ResultType;
 
 namespace FoodTruckNation.Core.AppServices
 {

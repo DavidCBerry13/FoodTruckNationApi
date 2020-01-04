@@ -1,8 +1,8 @@
-using Framework;
+using DavidBerry.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Framework.Entity;
+using DavidBerry.Framework.Domain;
 
 namespace FoodTruckNation.Core.Domain
 {
@@ -15,7 +15,7 @@ namespace FoodTruckNation.Core.Domain
         }
 
 
-        public SocialMediaAccount(SocialMediaPlatform platform, FoodTruck truck, string accountName) 
+        public SocialMediaAccount(SocialMediaPlatform platform, FoodTruck truck, string accountName)
             : base(ObjectState.NEW)
         {
             _foodTruck = truck;

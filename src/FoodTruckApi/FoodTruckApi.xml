@@ -351,7 +351,7 @@
             </summary>
             <remarks>
             This endpoint allows you to add one or more tags to an existing food truck.  The tags
-            may already exist or they don't have to.  New tags will automatically be created and 
+            may already exist or they don't have to.  New tags will automatically be created and
             added to the food truck
             <para>
             This response marks a departure from REST conventions in that I am returning the entire
@@ -370,7 +370,7 @@
             </summary>
             <remarks>
             This method effectively replaces the existing list of tags on the food truck with
-            the list specified.  Any new tags in the specified list are added to the food truck, 
+            the list specified.  Any new tags in the specified list are added to the food truck,
             where as any existing tags not included in the list will be removed from the food truck.
             <para>
             This response marks a departure from REST conventions in that I am returning the entire
@@ -500,13 +500,13 @@
             <remarks>
             This endpoint only updates the properties directly on the food truck.  To
             change elements on 'child' objects of the food truck (tags, social media accounts,
-            reviews, schedules), you need to look in the appropriate association controller, 
+            reviews, schedules), you need to look in the appropriate association controller,
             for example FoodTruckTagsController.
             <para>
             This decision was made because when editing a food truck, I think it is more likely
-            someone will just want to edit elements like the name or description.  It seemed 
+            someone will just want to edit elements like the name or description.  It seemed
             unnatural to make them also include the tags or social media accounts as part of
-            the same update operation.  
+            the same update operation.
             </para>
             </remarks>
             <param name="id">An int of the id of the food truck to update</param>
@@ -524,13 +524,13 @@
             <remarks>
             This endpoint only updates the properties directly on the food truck.  To
             change elements on 'child' objects of the food truck (tags, social media accounts,
-            reviews, schedules), you need to look in the appropriate association controller, 
+            reviews, schedules), you need to look in the appropriate association controller,
             for example FoodTruckTagsController.
             <para>
             This decision was made because when editing a food truck, I think it is more likely
-            someone will just want to edit elements like the name or description.  It seemed 
+            someone will just want to edit elements like the name or description.  It seemed
             unnatural to make them also include the tags or social media accounts as part of
-            the same update operation.  
+            the same update operation.
             </para>
             </remarks>
             <param name="id">An int of the id of the food truck to update</param>
@@ -853,7 +853,7 @@
             <returns></returns>
             <response code="200">Success.  A list of the current social media accounts for the food truck is returned</response>
             <response code="404">Not Found.  No food truck could be found for this id</response>
-            <response code="500">Internal Server Error.  An unexpected problem occured on the server occured.  The error has been logged by the server</response>
+            <response code="500">Internal Server Error.  An unexpected problem occurred on the server occurred.  The error has been logged by the server</response>
         </member>
         <member name="M:FoodTruckNationApi.Api.FoodTrucks.SocialMedia.FoodTruckSocialMediaController.Get(System.Int32,System.Int32)">
             <summary>
@@ -864,7 +864,7 @@
             <returns></returns>
             <response code="200">Success.  A corresponding social media account will be returned</response>
             <response code="404">Not Found.  Either the food truck or the specified social media account could not be found</response>
-            <response code="500">Internal Server Error.  An unexpected problem occured on the server occured.  The error has been logged by the server</response>
+            <response code="500">Internal Server Error.  An unexpected problem occurred on the server occurred.  The error has been logged by the server</response>
         </member>
         <member name="M:FoodTruckNationApi.Api.FoodTrucks.SocialMedia.FoodTruckSocialMediaController.Post(System.Int32,FoodTruckNationApi.Api.FoodTrucks.SocialMedia.CreateSocialMediaAccountModel)">
             <summary>
@@ -877,7 +877,7 @@
             <response code="400">Request error.  The request contained invalid data, like an account name that does not correspond to the rules of this social media platform</response>
             <response code="404">Not Found.  No food truck with the specified id could be found to create a social media account for</response>
             <response code="409">Conflict.  This food truck already contains a social media account for the specified platform</response>
-            <response code="500">Internal Server Error.  An unexpected problem occured on the server occured.  The error has been logged by the server</response>
+            <response code="500">Internal Server Error.  An unexpected problem occurred on the server occurred.  The error has been logged by the server</response>
         </member>
         <member name="M:FoodTruckNationApi.Api.FoodTrucks.SocialMedia.FoodTruckSocialMediaController.Delete(System.Int32,System.Int32)">
             <summary>
@@ -888,7 +888,7 @@
             <returns></returns>
             <response code="200">Success.  The social media account has been deleted</response>
             <response code="404">Not Found.  Either the food truck or the specified social media account could not be found</response>
-            <response code="500">Internal Server Error.  An unexpected problem occured on the server occured.  The error has been logged by the server</response>
+            <response code="500">Internal Server Error.  An unexpected problem occurred on the server occurred.  The error has been logged by the server</response>
         </member>
         <member name="T:FoodTruckNationApi.Api.FoodTrucks.SocialMedia.CreateSocialMediaAccountModel">
             <summary>
@@ -915,7 +915,7 @@
             API Endpoints related to the schedules of food trucks at a given location
             </summary>
         </member>
-        <member name="M:FoodTruckNationApi.Locations.Schedules.LocationSchedulesController.#ctor(Microsoft.Extensions.Logging.ILogger{FoodTruckNationApi.Locations.Schedules.LocationSchedulesController},AutoMapper.IMapper,FoodTruckNation.Core.AppInterfaces.IScheduleService,Framework.Utility.IDateTimeProvider)">
+        <member name="M:FoodTruckNationApi.Locations.Schedules.LocationSchedulesController.#ctor(Microsoft.Extensions.Logging.ILogger{FoodTruckNationApi.Locations.Schedules.LocationSchedulesController},AutoMapper.IMapper,FoodTruckNation.Core.AppInterfaces.IScheduleService,DavidBerry.Framework.TimeAndDate.IDateTimeProvider)">
             <summary>
             Creates a LocationSchedulesController, the controller responsible for returning schedules
             (appointments) for a specific location
@@ -930,7 +930,7 @@
             Gets all of the food trucks scheduled at a location for a given date range
             </summary>
             <remarks>
-            If no date range data is provided, then this enpoint will use a date range of the next seven days
+            If no date range data is provided, then this endpoint will use a date range of the next seven days
             </remarks>
             <param name="locationId">The id number of the location</param>
             <param name="parameters">An optional date range to get the scheduled food trucks for</param>
@@ -1476,7 +1476,7 @@
         </member>
         <member name="T:FoodTruckNationApi.SocialMediaPlatforms.SocialMediaPlatformsController">
             <summary>
-            Controller exposing API endpoints related to what social media platforms are availible
+            Controller exposing API endpoints related to what social media platforms are available
             for food trucks to have accounts on
             </summary>
         </member>
@@ -1502,7 +1502,7 @@
             Creates a new TagsController
             </summary>
             <param name="logger">An ILoggerFactory of the factory class used to create an ILogger instance for use in this controller</param>
-            <param name="mapper">An Automapper IMapper instance used to perform object mapping in the controller</param>
+            <param name="mapper">An AutoMapper IMapper instance used to perform object mapping in the controller</param>
             <param name="tagService">An iTagService instance of the tag service object where the business logic for tag functions resides</param>
         </member>
         <member name="M:FoodTruckNationApi.Tags.TagsController.Get(System.Boolean)">

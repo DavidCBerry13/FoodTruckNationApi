@@ -5,10 +5,10 @@ using FoodTruckNation.Core.Domain;
 using FoodTruckNation.Core.DataInterfaces;
 using Microsoft.Extensions.Logging;
 using FoodTruckNation.Core.Commands;
-using Framework.Data;
-using Framework.Exceptions;
+using DavidBerry.Framework.Data;
+using DavidBerry.Framework.Exceptions;
 using FoodTruckNation.Core.AppInterfaces;
-using Framework.ResultType;
+using DavidBerry.Framework.ResultType;
 
 namespace FoodTruckNation.Core.AppServices
 {
@@ -76,7 +76,7 @@ namespace FoodTruckNation.Core.AppServices
             location.State = updateLocationCommand.State;
             location.ZipCode = updateLocationCommand.ZipCode;
 
-            
+
 
             _locationRepository.Save(location);
             UnitOfWork.SaveChanges();
@@ -91,7 +91,7 @@ namespace FoodTruckNation.Core.AppServices
 
             if (location == null)
                 return Result.Failure(new ObjectNotFoundError($"Location id {locationId} not found so it could not be deleted"));
-            
+
             _locationRepository.Delete(location);
             UnitOfWork.SaveChanges();
 

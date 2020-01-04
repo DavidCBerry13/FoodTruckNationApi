@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Framework.Entity;
+using DavidBerry.Framework.Domain;
 
 namespace FoodTruckNation.Core.Domain
 {
@@ -47,7 +47,7 @@ namespace FoodTruckNation.Core.Domain
         }
 
         /// <summary>
-        /// Protected constructor used by all the other constructors that actually instantiates the food truck 
+        /// Protected constructor used by all the other constructors that actually instantiates the food truck
         /// </summary>
         /// <param name="foodTruckId">An int of the unique id for this food truck</param>
         /// <param name="name">A String of the name of this food truck</param>

@@ -4,14 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Framework.ApiUtil.Controllers;
+using DavidBerry.Framework.ApiUtil.Controllers;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using FoodTruckNation.Core.AppInterfaces;
-using Framework.Utility;
+using DavidBerry.Framework.TimeAndDate;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNation.Core.Commands;
-using Framework.ApiUtil.Models;
+using DavidBerry.Framework.ApiUtil.Models;
 
 namespace FoodTruckNationApi.FoodTrucks.Schedules
 {
@@ -116,7 +116,7 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
                     var model = _mapper.Map<Schedule, FoodTruckScheduleModel>(schedule);
                     return CreatedAtRoute(GET_SINGLE_FOOD_TRUCK_SCHEDULE,
                         new { foodTruckId = model.FoodTruckId, scheduleId = model.ScheduleId }, model);
-                });        
+                });
         }
 
         [HttpPut("{scheduleId}")]
