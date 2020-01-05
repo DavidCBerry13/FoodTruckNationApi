@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DavidBerry.Framework.ApiUtil\DavidBerry.Framework.ApiUtil\DavidBerry.Framework.ApiUtil.csproj" />
+    <ProjectReference Include="..\FrameworkProjects\DavidBerry.Framework.ApiUtil\DavidBerry.Framework.ApiUtil\DavidBerry.Framework.ApiUtil.csproj" />
     <ProjectReference Include="..\FoodTruckNation.Core\FoodTruckNation.Core.csproj" />
     <ProjectReference Include="..\FoodTruckNation.Data.EF\FoodTruckNation.Data.EF.csproj" />
   </ItemGroup>

@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DavidBerry.Framework\DavidBerry.Framework\DavidBerry.Framework.csproj" />
+    <ProjectReference Include="..\FrameworkProjects\DavidBerry.Framework\DavidBerry.Framework\DavidBerry.Framework.csproj" />
   </ItemGroup>
 
 </Project>

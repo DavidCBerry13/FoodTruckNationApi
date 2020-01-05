@@ -1,1 +1,4 @@
 
+[submodule "src/FrameworkProjects"]
+	path = src/FrameworkProjects
+	url = https://github.com/DavidCBerry13/FrameworkProjects
