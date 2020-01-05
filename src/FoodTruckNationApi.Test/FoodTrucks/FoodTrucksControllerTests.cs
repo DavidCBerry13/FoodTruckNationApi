@@ -2,7 +2,7 @@ using AutoMapper;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNationApi.FoodTrucks;
-using Framework.ResultType;
+using DavidBerry.Framework.ResultType;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
@@ -50,9 +50,9 @@ namespace FoodTruckNationApi.Test.FoodTrucks
 
 
             var config = new MapperConfiguration(cfg => {
-                cfg.AddProfile<FoodTruckModelAutomapperProfile>();             
-            });            
-            mapper = new Mapper(config, 
+                cfg.AddProfile<FoodTruckModelAutomapperProfile>();
+            });
+            mapper = new Mapper(config,
                 t => FoodTrucksControllerTests.Resolve<Type, object>(t));
 
         }
@@ -79,8 +79,8 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         {
             // Arrange
             var mockLogger = GetMockLogger<FoodTrucksController>();
-            
-            
+
+
             var mockService = new Mock<IFoodTruckService>();
             mockService.Setup(r => r.GetAllFoodTrucks())
                 .Returns(Result.Success<List<FoodTruck>>(foodTruckList));

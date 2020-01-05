@@ -1,6 +1,6 @@
 using FluentAssertions;
 using FoodTruckNationApi.FoodTrucks.Schedules;
-using Framework.Utility;
+using DavidBerry.Framework.TimeAndDate;
 using System;
 using System.Collections.Generic;
 using System.Text;

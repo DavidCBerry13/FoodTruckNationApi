@@ -2,9 +2,9 @@ using AutoMapper;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNationApi.Schedules;
-using Framework;
-using Framework.ResultType;
-using Framework.Utility;
+using DavidBerry.Framework;
+using DavidBerry.Framework.ResultType;
+using DavidBerry.Framework.TimeAndDate;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
@@ -46,7 +46,7 @@ namespace FoodTruckNationApi.Test.Schedules
 
             var dateTimeProvider = new UnitTestDateTimeProvider(now);
 
-            SchedulesController controller = new SchedulesController(mockLogger.Object, _mapper, 
+            SchedulesController controller = new SchedulesController(mockLogger.Object, _mapper,
                 mockScheduleService.Object, dateTimeProvider);
 
 
