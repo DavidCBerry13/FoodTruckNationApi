@@ -8,7 +8,7 @@ using FoodTruckNation.Core.Commands;
 using DavidBerry.Framework.Data;
 using DavidBerry.Framework.Exceptions;
 using FoodTruckNation.Core.AppInterfaces;
-using DavidBerry.Framework.ResultType;
+using DavidBerry.Framework.Functional;
 
 namespace FoodTruckNation.Core.AppServices
 {

@@ -2,7 +2,7 @@ using AutoMapper;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNationApi.FoodTrucks;
-using DavidBerry.Framework.ResultType;
+using DavidBerry.Framework.Functional;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;

@@ -11,7 +11,7 @@ using DavidBerry.Framework.TimeAndDate;
 using DavidBerry.Framework.Util;
 using DavidBerry.Framework.Exceptions;
 using Microsoft.Extensions.Logging;
-using DavidBerry.Framework.ResultType;
+using DavidBerry.Framework.Functional;
 
 namespace FoodTruckNation.Core.AppServices
 {

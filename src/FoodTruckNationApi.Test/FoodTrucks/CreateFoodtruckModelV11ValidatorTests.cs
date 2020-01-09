@@ -2,7 +2,7 @@ using FluentAssertions;
 using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNationApi.FoodTrucks;
-using DavidBerry.Framework.ResultType;
+using DavidBerry.Framework.Functional;
 using Moq;
 using System;
 using System.Collections.Generic;

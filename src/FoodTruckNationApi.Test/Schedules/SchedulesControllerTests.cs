@@ -3,7 +3,7 @@ using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNationApi.Schedules;
 using DavidBerry.Framework;
-using DavidBerry.Framework.ResultType;
+using DavidBerry.Framework.Functional;
 using DavidBerry.Framework.TimeAndDate;
 using Microsoft.Extensions.Logging;
 using Moq;

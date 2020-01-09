@@ -13,7 +13,7 @@ using DavidBerry.Framework;
 using AutoMapper;
 using DavidBerry.Framework.ApiUtil.Models;
 using DavidBerry.Framework.ApiUtil.Controllers;
-using DavidBerry.Framework.ResultType;
+using DavidBerry.Framework.Functional;
 
 namespace FoodTruckNationApi.Locations
 {

@@ -4,7 +4,7 @@ using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.Domain;
 using DavidBerry.Framework.ApiUtil.Controllers;
 using DavidBerry.Framework.ApiUtil.Models;
-using DavidBerry.Framework.ResultType;
+using DavidBerry.Framework.Functional;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

@@ -1,7 +1,7 @@
 using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.Domain;
 using DavidBerry.Framework;
-using DavidBerry.Framework.ResultType;
+using DavidBerry.Framework.Functional;
 using System;
 using System.Collections.Generic;
 using System.Text;
