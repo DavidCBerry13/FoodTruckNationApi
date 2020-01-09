@@ -18,7 +18,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         [InlineData("Little Havana")]
         [InlineData("Burger-o-rama")]
         [InlineData("Hoppin' Jalepeno")]
-        public void ValidFoodTruckNamesPass(String name)
+        public void ValidFoodTruckNamesPass(string name)
         {
             // Arrange
             CreateFoodTruckModelV11 model = new CreateFoodTruckModelV11()
@@ -45,7 +45,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         [InlineData("Name With %")]
         [InlineData("Name with ^")]
         [InlineData("Name with &")]
-        public void InvalidFoodTruckNamesFail(String name)
+        public void InvalidFoodTruckNamesFail(string name)
         {
             // Arrange
             var model = new CreateFoodTruckModelV11()
@@ -171,7 +171,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         [InlineData(@"https://www.foodtruck.com/TheFoodTruck")]
         [InlineData(@"http://www.foodtruck.net")]
         [InlineData(@"https://www.foodtruck.net")]
-        public void ValidWebsitesPass(String website)
+        public void ValidWebsitesPass(string website)
         {
             // Arrange
             var model = new CreateFoodTruckModelV11()
@@ -203,7 +203,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         [InlineData(@"https:/www.foodtruck.net")]
         [InlineData(@"htp://www.foodtruck.net")]
         [InlineData(@"htps://www.foodtruck.net")]
-        public void InvalidWebsitesFail(String website)
+        public void InvalidWebsitesFail(string website)
         {
             // Arrange
             var model = new CreateFoodTruckModelV11()

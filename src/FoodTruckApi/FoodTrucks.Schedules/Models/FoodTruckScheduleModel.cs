@@ -62,27 +62,27 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
             /// <summary>
             /// The name of this location, usually the name of a park or business that is associated with the location
             /// </summary>
-            public String LocationName { get; set; }
+            public string LocationName { get; set; }
 
             /// <summary>
             /// The street address of this location
             /// </summary>
-            public String StreetAddress { get; set; }
+            public string StreetAddress { get; set; }
 
             /// <summary>
             /// The city this location is in
             /// </summary>
-            public String City { get; set; }
+            public string City { get; set; }
 
             /// <summary>
             /// The state of this location
             /// </summary>
-            public String State { get; set; }
+            public string State { get; set; }
 
             /// <summary>
             /// The zip code of this location
             /// </summary>
-            public String ZipCode { get; set; }
+            public string ZipCode { get; set; }
 
 
             /// <summary>
@@ -99,12 +99,12 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
                 /// <summary>
                 /// Gets the URL that refers to this location
                 /// </summary>
-                public String Self { get; set; }
+                public string Self { get; set; }
 
                 /// <summary>
                 /// URL link containing the upcoming schedules of food trucks at this location
                 /// </summary>
-                public String Schedules { get; set; }
+                public string Schedules { get; set; }
             }
         }
 
@@ -115,14 +115,14 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
         public class FoodTruckScheduleLinks
         {
             /// <summary>
-            /// URL Link to this food truck scedule object
+            /// URL Link to this food truck schedule object
             /// </summary>
-            public String Self { get; set; }
+            public string Self { get; set; }
 
             /// <summary>
             /// URL Link to the Food Truck this schedule belongs to
             /// </summary>
-            public String FoodTruck { get; set; }
+            public string FoodTruck { get; set; }
 
         }
 

@@ -11,6 +11,10 @@ using DavidBerry.Framework.ApiUtil.Models;
 
 namespace FoodTruckNationApi.FoodTrucks.Reviews
 {
+
+    /// <summary>
+    /// Controller to expose endpoints relating to reviews of food trucks (getting and posting reviews)
+    /// </summary>
     [Produces("application/json")]
     [Route("api/FoodTrucks/{foodTruckId}/Reviews")]
     [ApiVersion("1.0")]
@@ -18,6 +22,12 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
     public class FoodTruckReviewsController : ApiControllerBase
     {
 
+        /// <summary>
+        /// Creates a new FoodTruckReviewsController
+        /// </summary>
+        /// <param name="logger">An ILogger used for any logging in the controller</param>
+        /// <param name="mapper">An IMapper object used for mapping ViewModel objects in the controller</param>
+        /// <param name="foodTruckService">An IFoodTruckService object used for getting and positing food truck review data</param>
         public FoodTruckReviewsController(ILogger<FoodTruckReviewsController> logger, IMapper mapper, IFoodTruckService foodTruckService)
             : base(logger, mapper)
         {
@@ -46,7 +56,7 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
         /// <returns>An IActionResult containing the list of reviews for the food truck</returns>
         /// <response code="200">Success.  A list of reviews for the food truck is being returned</response>
         /// <response code="404">Not Found.  No food truck was found with the given id</response>
-        /// <response code="500">Internal Server Error.  An unexpected error internal to the application has occured.  The error has been logged automatically by the system.</response>
+        /// <response code="500">Internal Server Error.  An unexpected error internal to the application has occurred.  The error has been logged automatically by the system.</response>
         [HttpGet(Name = GET_ALL_FOOD_TRUCK_REVIEWS)]
         [ProducesResponseType(typeof(List<ReviewModel>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
@@ -66,7 +76,7 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
         /// <returns></returns>
         /// <response code="200">Success.  The specified review is being returned</response>
         /// <response code="404">Not Found.  Either no food truck was found with the given id or no review was found for this truck with the specified id</response>
-        /// <response code="500">Internal Server Error.  An unexpected error internal to the application has occured.  The error has been logged automatically by the system.</response>
+        /// <response code="500">Internal Server Error.  An unexpected error internal to the application has occurred.  The error has been logged automatically by the system.</response>
         [HttpGet("{reviewId:int}", Name = GET_SINGLE_FOOD_TRUCK_REVIEW)]
         [ProducesResponseType(typeof(ReviewModel), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
@@ -86,7 +96,7 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
         /// <response code="201">Created.  The new review was successfully created.  A ReviewModel object for the review is returned and a link to the endpoint is included in the Location header</response>
         /// <response code="400">Bad Request.  The request was invalid.  A list of errors will be returned</response>
         /// <response code="404">Not Found.  No food truck was found with the given id so no review could be added</response>
-        /// <response code="500">Internal Server Error.  An unexpected error internal to the application has occured.  The error has been logged automatically by the system.</response>
+        /// <response code="500">Internal Server Error.  An unexpected error internal to the application has occurred.  The error has been logged automatically by the system.</response>
         [HttpPost]
         [ProducesResponseType(typeof(ReviewModel), 201)]
         [ProducesResponseType(typeof(List<RequestErrorModel>), 400)]

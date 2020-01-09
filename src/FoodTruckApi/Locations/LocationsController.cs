@@ -80,7 +80,7 @@ namespace FoodTruckNationApi.Locations
             {
                 return MapErrorResult<List<Location>, List<LocationModel>>(result);
             }
-            return CreateResponse<List<Location>, List<LocationModel>>(result);
+            //return CreateResponse<List<Location>, List<LocationModel>>(result);
         }
 
 
