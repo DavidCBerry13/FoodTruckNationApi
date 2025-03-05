@@ -94,28 +94,28 @@ namespace FoodTruckNationApi.Locations
                     opt => opt.MapFrom(src => src)
                 );
 
-                // For the links in the Meta object
-                CreateMap<Location, LocationModel.LocationLinks>()
-                    .ForMember(
-                        dest => dest.Self,
-                        opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
-                            new RouteUrlInfo()
-                            {
-                                RouteName = LocationsController.GET_LOCATION_BY_ID,
-                                RouteParams = new { id = src.LocationId }
-                            }
-                        )
+            // For the links in the Meta object
+            CreateMap<Location, LocationModel.LocationLinks>()
+                .ForMember(
+                    dest => dest.Self,
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
+                        new RouteUrlInfo()
+                        {
+                            RouteName = LocationsController.GET_LOCATION_BY_ID,
+                            RouteParams = new { id = src.LocationId }
+                        }
                     )
-                    .ForMember(
-                        dest => dest.Schedules,
-                        opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
-                            new RouteUrlInfo()
-                            {
-                                RouteName = Schedules.LocationSchedulesController.GET_ALL_SCHEDULES_FOR_LOCATION,
-                                RouteParams = new { locationId = src.LocationId }
-                            }
-                        )
-                    );
+                )
+                .ForMember(
+                    dest => dest.Schedules,
+                    opt => opt.MapFrom<UrlResolver, RouteUrlInfo>(src =>
+                        new RouteUrlInfo()
+                        {
+                            RouteName = Schedules.LocationSchedulesController.GET_ALL_SCHEDULES_FOR_LOCATION,
+                            RouteParams = new { locationId = src.LocationId }
+                        }
+                    )
+                );
         }
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

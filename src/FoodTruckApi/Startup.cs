@@ -18,6 +18,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using FluentValidation;
+using Microsoft.AspNetCore.Identity;
+using FoodTruckNationApi.FoodTrucks;
 
 namespace FoodTruckApi
 {
@@ -35,8 +38,9 @@ namespace FoodTruckApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
+            services.AddControllers();
+
+            services.AddValidatorsFromAssemblyContaining<CreateFoodTruckModelValidator>();
 
             services.AddCors();
             services.AddAutoMapper(Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(UrlResolver)));
@@ -117,7 +121,7 @@ namespace FoodTruckApi
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 options.IncludeXmlComments(xmlPath);
-                options.CustomSchemaIds(x => x.FullName);
+                options.CustomSchemaIds(x => x.FullName.Replace("+", "."));
             });
         }
 
