@@ -10,6 +10,7 @@ using FoodTruckNation.Core.AppInterfaces;
 using AutoMapper;
 using FoodTruckNation.Core.Domain;
 using DavidBerry.Framework.TimeAndDate;
+using Asp.Versioning;
 
 namespace FoodTruckNationApi.Schedules
 {

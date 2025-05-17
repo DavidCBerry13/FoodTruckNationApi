@@ -10,6 +10,7 @@ using DavidBerry.Framework.ApiUtil.Models;
 using DavidBerry.Framework.ApiUtil.Controllers;
 using DavidBerry.Framework;
 using DavidBerry.Framework.Exceptions;
+using Asp.Versioning;
 
 namespace FoodTruckNationApi.FoodTrucks
 {
@@ -112,7 +113,7 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(List<FoodTruckModelV11>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.1")]
-        public ActionResult<List<FoodTruckModelV11>> GetV11([FromQuery]string tag = null)
+        public ActionResult<List<FoodTruckModelV11>> GetV11([FromQuery] string tag = null)
         {
             // Since we have just one filter possibility, we'll leave this as a simple if statement
             // If we had more/more complex filter criteria, then splitting the logic into multiple methods would be in order
@@ -210,7 +211,7 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(ApiMessageModel), 409)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.1")]
-        public ActionResult<FoodTruckModelV11> PostV11([FromBody]CreateFoodTruckModelV11 createModel)
+        public ActionResult<FoodTruckModelV11> PostV11([FromBody] CreateFoodTruckModelV11 createModel)
         {
             var createCommand = _mapper.Map<CreateFoodTruckModelV11, CreateFoodTruckCommand>(createModel);
             var result = _foodTruckService.CreateFoodTruck(createCommand);
@@ -294,7 +295,7 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(ConcurrencyErrorModel<FoodTruckModelV11>), 409)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.1")]
-        public ActionResult<FoodTruckModelV11> PutV11(int id, [FromBody]UpdateFoodTruckModel updateModel)
+        public ActionResult<FoodTruckModelV11> PutV11(int id, [FromBody] UpdateFoodTruckModel updateModel)
         {
             var updateCommand = new UpdateFoodTruckCommand() { FoodTruckId = id };
             _mapper.Map<UpdateFoodTruckModel, UpdateFoodTruckCommand>(updateModel, updateCommand);

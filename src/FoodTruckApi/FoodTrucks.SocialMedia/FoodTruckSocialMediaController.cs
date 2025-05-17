@@ -10,6 +10,7 @@ using FoodTruckNation.Core.AppInterfaces;
 using DavidBerry.Framework.ApiUtil.Controllers;
 using FoodTruckNation.Core.Domain;
 using DavidBerry.Framework.ApiUtil.Models;
+using Asp.Versioning;
 
 namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
 {

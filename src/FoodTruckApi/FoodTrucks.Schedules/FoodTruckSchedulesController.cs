@@ -12,6 +12,7 @@ using DavidBerry.Framework.TimeAndDate;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNation.Core.Commands;
 using DavidBerry.Framework.ApiUtil.Models;
+using Asp.Versioning;
 
 namespace FoodTruckNationApi.FoodTrucks.Schedules
 {

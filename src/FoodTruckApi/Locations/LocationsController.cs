@@ -14,6 +14,7 @@ using AutoMapper;
 using DavidBerry.Framework.ApiUtil.Models;
 using DavidBerry.Framework.ApiUtil.Controllers;
 using DavidBerry.Framework.Functional;
+using Asp.Versioning;
 
 namespace FoodTruckNationApi.Locations
 {

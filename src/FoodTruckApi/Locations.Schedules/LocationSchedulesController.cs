@@ -8,6 +8,7 @@ using DavidBerry.Framework.TimeAndDate;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using FoodTruckNation.Core.Domain;
+using Asp.Versioning;
 
 namespace FoodTruckNationApi.Locations.Schedules
 {

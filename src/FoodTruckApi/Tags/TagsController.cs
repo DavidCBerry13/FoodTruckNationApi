@@ -7,6 +7,7 @@ using DavidBerry.Framework.ApiUtil.Models;
 using DavidBerry.Framework.Functional;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Asp.Versioning;
 
 namespace FoodTruckNationApi.Tags
 {

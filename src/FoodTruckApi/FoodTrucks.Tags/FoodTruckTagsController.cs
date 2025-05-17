@@ -10,6 +10,7 @@ using AutoMapper;
 using FoodTruckNation.Core.AppInterfaces;
 using DavidBerry.Framework.ApiUtil.Models;
 using FoodTruckNation.Core.Domain;
+using Asp.Versioning;
 
 namespace FoodTruckNationApi.FoodTrucks.Tags
 {
