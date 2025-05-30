@@ -128,7 +128,7 @@ namespace FoodTruckNation.Core.AppServices
             catch (Exception ex)
             {
                 Logger.LogError(new EventId(101), ex, "Error thrown while calling TagService.UpdateTag()");
-                throw ex;
+                throw;
             }
         }
     }
