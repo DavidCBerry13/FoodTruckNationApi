@@ -58,6 +58,7 @@ namespace FoodTruckNation.Data.EF
 
             services.AddScoped<IFoodTruckRepository, FoodTruckRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<ILocalityRepository, LocalityRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();
             services.AddScoped<IScheduleRepository, ScheduleRepository>();
             services.AddScoped<ISocialMediaPlatformRepository, SocialMediaPlatformRepository>();

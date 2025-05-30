@@ -1,4 +1,4 @@
-﻿using FoodTruckNation.Core.AppInterfaces;
+using FoodTruckNation.Core.AppInterfaces;
 using FoodTruckNation.Core.AppServices;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -15,6 +15,7 @@ namespace FoodTruckNation.Core
         {
             services.AddScoped<IFoodTruckService, FoodTruckService>();
             services.AddScoped<ITagService, TagService>();
+            services.AddScoped<ILocalityService, LocalityService>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<ISocialMediaPlatformService, SocialMediaPlatformService>();

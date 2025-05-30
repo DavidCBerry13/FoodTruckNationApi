@@ -22,6 +22,8 @@ namespace FoodTruckNation.Data.EF
 
         public DbSet<Tag> Tags { get; set; }
 
+        public DbSet<Locality> Localities { get; set; }
+
         public DbSet<Location> Locations { get; set; }
 
         public DbSet<Schedule> Schedules { get; set; }
@@ -38,6 +40,7 @@ namespace FoodTruckNation.Data.EF
             ConfigureTag(modelBuilder);
             ConfigureFoodTruckTag(modelBuilder);
             ConfigureReview(modelBuilder);
+            ConfigureLocality(modelBuilder);
             ConfigureLocation(modelBuilder);
             ConfigureSchedule(modelBuilder);
             ConfigureSocialMediaPlatform(modelBuilder);
@@ -93,6 +96,25 @@ namespace FoodTruckNation.Data.EF
                 .HasOne<Tag>(x => x.Tag)
                 .WithMany()
                 .HasForeignKey(x => x.TagId);
+        }
+
+
+        private void ConfigureLocality(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Locality>()
+                .ToTable("Localities")
+                .HasKey(l => l.LocalityCode);
+
+            modelBuilder.Entity<Locality>()
+                .Ignore(l => l.ObjectState);
+
+            modelBuilder.Entity<Locality>().Property(p => p.LocalityCode)
+                .HasField("_localityCode")
+                .HasColumnName("LocalityCode");
+            
+            modelBuilder.Entity<Locality>().Property(p => p.Name)
+                .HasField("_localityName")
+                .HasColumnName("LocalityName");
         }
 
 

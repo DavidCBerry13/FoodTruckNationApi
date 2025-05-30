@@ -74,6 +74,8 @@
     <Build Include="Tables\SocialMediaPlatforms.sql" />
     <Build Include="Tables\SocialMediaAccounts.sql" />
     <None Include="Data\SocialMediaPlatformsData.sql" />
+    <Build Include="Tables\Localities.sql" />
+    <None Include="Data\LocalitiesData.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\FoodTruckData.sql" />
@@ -81,5 +83,8 @@
     <None Include="Data\FoodTruckTags.sql" />
     <None Include="Data\TagData.sql" />
     <None Include="Data\ReviewsData.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="FoodTruckDatabase.refactorlog" />
   </ItemGroup>
 </Project>
