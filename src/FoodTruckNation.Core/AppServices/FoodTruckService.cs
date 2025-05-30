@@ -142,7 +142,7 @@ namespace FoodTruckNation.Core.AppServices
 
                 return Result.Success<FoodTruck>(foodTruck);
             }
-            catch (DBConcurrencyException ce)
+            catch (DBConcurrencyException)
             {
                 // If there is a database conflict, then data access layer (like EF) will throw a DbConcurrencyException, so we catch it and turn
                 // it into an error to be passed up the stack with the existing object
