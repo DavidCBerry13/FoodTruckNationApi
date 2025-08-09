@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Asp.Versioning;
 using AutoMapper;
 using DavidBerry.Framework.ApiUtil.Controllers;
@@ -74,13 +75,11 @@ namespace FoodTruckApi.Localities
         [HttpGet(Name = GET_ALL_LOCALITIES)]
         [ProducesResponseType(typeof(List<LocalityModel>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public ActionResult<FoodTruckModel> Get()
+        public async Task<ActionResult<List<LocalityModel>>> Get()
         {
-            // Since we have just one filter possibility, we'll leave this as a simple conditional statement
-            // If we had more/more complex filter criteria, then splitting the logic into multiple methods would be in order
-            var result = _localityService.GetLocalities();
+            var result = await _localityService.GetLocalitiesAsync();
 
-            return CreateResponse<List<Locality>, List<LocalityModel>>(result);
+            return CreateResponse<IEnumerable<Locality>, List<LocalityModel>>(result);
         }
 
 
@@ -96,9 +95,9 @@ namespace FoodTruckApi.Localities
         [ProducesResponseType(typeof(LocalityModel), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public ActionResult<FoodTruckModel> Get(string code)
+        public async Task<ActionResult<LocalityModel>> Get(string code)
         {
-            var result = _localityService.GetLocality(code);
+            var result = await _localityService.GetLocalityAsync(code);
             return CreateResponse<Locality, LocalityModel>(result);
         }
 
@@ -116,10 +115,10 @@ namespace FoodTruckApi.Localities
         [ProducesResponseType(typeof(LocalityModel), 201)]
         [ProducesResponseType(typeof(ApiMessageModel), 409)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public ActionResult<LocalityModel> Post([FromBody] CreateLocalityModel createModel)
+        public async Task<ActionResult<LocalityModel>> Post([FromBody] CreateLocalityModel createModel)
         {
             var createCommand = _mapper.Map<CreateLocalityModel, CreateLocalityCommand>(createModel);
-            var result = _localityService.CreateLocality(createCommand);
+            var result = await _localityService.CreateLocalityAsync(createCommand);
 
             if (result.IsSuccess)
             {
@@ -144,12 +143,12 @@ namespace FoodTruckApi.Localities
         [ProducesResponseType(typeof(ConcurrencyErrorModel<FoodTruckModel>), 409)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.0")]
-        public ActionResult<LocalityModel> Put(string code, [FromBody] UpdateLocalityModel updateModel)
+        public async Task<ActionResult<LocalityModel>> Put(string code, [FromBody] UpdateLocalityModel updateModel)
         {
             var updateCommand = new UpdateLocalityCommand() { Code = code };
             _mapper.Map<UpdateLocalityModel, UpdateLocalityCommand>(updateModel, updateCommand);
 
-            var result = _localityService.UpdateLocality(updateCommand);
+            var result = await _localityService.UpdateLocalityAsync(updateCommand);
             return CreateResponse<Locality, LocalityModel>(result);
         }
 
@@ -166,9 +165,9 @@ namespace FoodTruckApi.Localities
         [ProducesResponseType(typeof(ApiMessageModel), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public IActionResult Delete(string code)
+        public async Task<IActionResult> Delete(string code)
         {
-            var result = _localityService.DeleteLocality(code);
+            var result = await _localityService.DeleteLocalityAsync(code);
 
             return ( result.IsSuccess )
                 ? Ok(new ApiMessageModel() { Message = $"Locality {code} has been deleted" })

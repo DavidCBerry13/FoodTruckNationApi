@@ -23,33 +23,35 @@ namespace FoodTruckNation.Data.EF.Repositories
         private readonly FoodTruckContext _foodTruckContext;
 
 
-        public void Delete(Locality locality)
+        public Task DeleteAsync(Locality locality)
         {
             _foodTruckContext.Remove(locality);
+            return Task.CompletedTask;
         }
 
-        public List<Locality> GetLocalities()
+        public async Task<IEnumerable<Locality>> GetLocalitiesAsync()
         {
-            var localities = _foodTruckContext.Localities
+            var localities = await _foodTruckContext.Localities
                 .AsNoTracking()
-                .ToList();
+                .ToListAsync();
 
             return localities;
         }
 
-        public Locality GetLocality(string localityCode)
+        public async Task<Locality> GetLocalityAsync(string localityCode)
         {
-            var locality = _foodTruckContext.Localities
+            var locality = await _foodTruckContext.Localities
                 .Where(l => l.LocalityCode == localityCode)
                 .AsNoTracking()
-                .SingleOrDefault();
+                .SingleOrDefaultAsync();
 
             return locality;
         }
 
-        public void Save(Locality locality)
+        public Task SaveAsync(Locality locality)
         {
             _foodTruckContext.ChangeTracker.TrackGraph(locality, EfExtensions.ConvertStateOfNode);
+            return Task.CompletedTask;
         }
     }
 }
