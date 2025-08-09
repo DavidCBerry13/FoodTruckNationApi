@@ -30,26 +30,26 @@ namespace FoodTruckNation.Core.AppServices
         #endregion
 
 
-        public Result<List<Locality>> GetLocalities()
+        public async Task<Result<IEnumerable<Locality>>> GetLocalitiesAsync()
         {
-            var localities = _localityRepository.GetLocalities();
-            return Result.Success<List<Locality>>(localities);
+            var localities = await _localityRepository.GetLocalitiesAsync();
+            return Result.Success<IEnumerable<Locality>>(localities);
         }
 
 
-        public Result<Locality> GetLocality(string code)
+        public async Task<Result<Locality>> GetLocalityAsync(string code)
         {
-            var locality = _localityRepository.GetLocality(code);
+            var locality = await _localityRepository.GetLocalityAsync(code);
             return ( locality != null )
                 ? Result.Success<Locality>(locality)
                 : Result.Failure<Locality>($"No locality found with the locality code of {code}");
         }
 
 
-        public Result<Locality> CreateLocality(CreateLocalityCommand localityInfo)
+        public async Task<Result<Locality>> CreateLocalityAsync(CreateLocalityCommand localityInfo)
         {
             // First, we need to check and see if a locality already exists with the provided locality code
-            var existingLocality = _localityRepository.GetLocality(localityInfo.Code);
+            var existingLocality = await _localityRepository.GetLocalityAsync(localityInfo.Code);
             if (existingLocality != null)
             {
                 return Result.Failure<Locality>(new ObjectAlreadyExistsError<Locality>($"A locality with the locality code of {localityInfo.Code} already exists", existingLocality));
@@ -57,39 +57,39 @@ namespace FoodTruckNation.Core.AppServices
 
             Locality locality = Locality.CreateNewLocality(localityInfo.Code, localityInfo.Name);
 
-            _localityRepository.Save(locality);
-            UnitOfWork.SaveChanges();
+            await _localityRepository.SaveAsync(locality);
+            await UnitOfWork.SaveChangesAsync();
 
             return Result.Success<Locality>(locality);
         }
 
 
-        public Result<Locality> UpdateLocality(UpdateLocalityCommand localityInfo)
+        public async Task<Result<Locality>> UpdateLocalityAsync(UpdateLocalityCommand localityInfo)
         {
-            Locality locality = _localityRepository.GetLocality(localityInfo.Code);
+            Locality locality = await _localityRepository.GetLocalityAsync(localityInfo.Code);
             if (locality == null)
                 return Result.Failure<Locality>($"No locality was found with the code {localityInfo.Code}");
 
             // Update the properties
             locality.Name = localityInfo.Name;
 
-            _localityRepository.Save(locality);
-            UnitOfWork.SaveChanges();
+            await _localityRepository.SaveAsync(locality);
+            await UnitOfWork.SaveChangesAsync();
 
             return Result.Success<Locality>(locality);
         }
 
 
 
-        public Result DeleteLocality(string code)
+        public async Task<Result> DeleteLocalityAsync(string code)
         {
-            Locality locality = _localityRepository.GetLocality(code);
+            Locality locality = await _localityRepository.GetLocalityAsync(code);
 
             if (locality == null)
                 return Result.Failure(new ObjectNotFoundError($"Locality code {code} not found so it could not be deleted"));
 
-            _localityRepository.Delete(locality);
-            UnitOfWork.SaveChanges();
+            await _localityRepository.DeleteAsync(locality);
+            await UnitOfWork.SaveChangesAsync();
 
             return Result.Success();
         }

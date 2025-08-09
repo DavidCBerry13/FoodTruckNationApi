@@ -10,16 +10,16 @@ namespace FoodTruckNation.Core.DataInterfaces
     public interface ILocalityRepository
     {
 
-        public Locality GetLocality(string localityCode);
+        public Task<Locality> GetLocalityAsync(string localityCode);
 
 
-        public List<Locality> GetLocalities();
+        public Task<IEnumerable<Locality>> GetLocalitiesAsync();
 
 
-        public void Save(Locality locality);
+        public Task SaveAsync(Locality locality);
 
 
-        public void Delete(Locality locality);
+        public Task DeleteAsync(Locality locality);
 
     }
 }

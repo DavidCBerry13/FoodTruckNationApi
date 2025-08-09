@@ -12,19 +12,19 @@ namespace FoodTruckNation.Core.AppInterfaces
     public interface ILocalityService
     {
 
-        Result<List<Locality>> GetLocalities();
+        public Task<Result<IEnumerable<Locality>>> GetLocalitiesAsync();
 
 
-        Result<Locality> GetLocality(string code);
+        public Task<Result<Locality>> GetLocalityAsync(string code);
 
 
-        Result<Locality> CreateLocality(CreateLocalityCommand localityInfo);
+        public Task<Result<Locality>> CreateLocalityAsync(CreateLocalityCommand localityInfo);
 
 
-        Result<Locality> UpdateLocality(UpdateLocalityCommand localityInfo);
+        public Task<Result<Locality>> UpdateLocalityAsync(UpdateLocalityCommand localityInfo);
 
 
-        Result DeleteLocality(string code);
+        public Task<Result> DeleteLocalityAsync(string code);
 
 
     }
