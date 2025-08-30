@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using AutoMapper;
 using FoodTruckNation.Core.Domain;
 using Asp.Versioning;
+using System.Threading.Tasks;
 
 namespace FoodTruckNationApi.Locations.Schedules
 {
@@ -57,7 +58,7 @@ namespace FoodTruckNationApi.Locations.Schedules
         /// <param name="parameters">An optional date range to get the scheduled food trucks for</param>
         /// <returns></returns>
         [HttpGet(Name=GET_ALL_SCHEDULES_FOR_LOCATION)]
-        public IActionResult Get(int locationId, GetLocationSchedulesParameters parameters)
+        public async Task<IActionResult> Get(int locationId, GetLocationSchedulesParameters parameters)
         {
             if (!parameters.StartDate.HasValue)
                 parameters.StartDate = _dateTimeProvider.CurrentDateTime.Date;
@@ -65,9 +66,9 @@ namespace FoodTruckNationApi.Locations.Schedules
             if (!parameters.EndDate.HasValue)
                 parameters.EndDate = parameters.StartDate.Value.AddDays(7).Date;
 
-            var result = _scheduleService.GetSchedulesForLocation(locationId,
+            var result = await _scheduleService.GetSchedulesForLocationAsync(locationId,
                 parameters.StartDate.Value, parameters.EndDate.Value);
-            return CreateResponse<List<Schedule>, List<LocationScheduleModel>>(result);
+            return CreateResponse<IEnumerable<Schedule>, IEnumerable<LocationScheduleModel>>(result);
         }
 
     }

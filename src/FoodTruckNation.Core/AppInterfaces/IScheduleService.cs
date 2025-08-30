@@ -4,31 +4,32 @@ using DavidBerry.Framework.Functional;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FoodTruckNation.Core.AppInterfaces
 {
     public interface IScheduleService
     {
 
-        Result<Schedule> GetSchedule(int scheduleId);
+        public Task<Result<Schedule>> GetScheduleAsync(int scheduleId);
 
-        Result<Schedule> GetSchedule(int foodTruckId, int scheduleId);
+        public Task<Result<Schedule>> GetScheduleAsync(int foodTruckId, int scheduleId);
 
-        Result<List<Schedule>> GetSchedules(DateTime startDate, DateTime endDate);
+        public Task<Result<IEnumerable<Schedule>>> GetSchedulesAsync(DateTime startDate, DateTime endDate);
 
-        Result<List<Schedule>> GetSchedulesForFoodTruck(int foodTruckId, DateTime startDate, DateTime endDate);
-
-
-        Result<List<Schedule>> GetSchedulesForLocation(int location, DateTime startDate, DateTime endDate);
+        public Task<Result<IEnumerable<Schedule>>> GetSchedulesForFoodTruckAsync(int foodTruckId, DateTime startDate, DateTime endDate);
 
 
-        Result<Schedule> AddFoodTruckSchedule(CreateFoodTruckScheduleCommand command);
+        public Task<Result<IEnumerable<Schedule>>> GetSchedulesForLocationAsync(int location, DateTime startDate, DateTime endDate);
 
 
-        Result<Schedule> UpdateFoodTruckSchedule(UpdateFoodTruckScheduleCommand command);
+        public Task<Result<Schedule>> AddFoodTruckScheduleAsync(CreateFoodTruckScheduleCommand command);
 
 
-        Result DeleteFoodTruckSchedule(int foodTruckId, int scheduleId);
+        public Task<Result<Schedule>> UpdateFoodTruckScheduleAsync(UpdateFoodTruckScheduleCommand command);
+
+
+        public Task<Result> DeleteFoodTruckScheduleAsync(int foodTruckId, int scheduleId);
 
     }
 }

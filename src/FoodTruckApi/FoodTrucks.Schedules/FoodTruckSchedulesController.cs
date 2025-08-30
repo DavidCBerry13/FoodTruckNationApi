@@ -59,7 +59,7 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [HttpGet(Name = GET_FOOD_TRUCK_SCHEDULE)]
-        public IActionResult Get(int foodTruckId, [FromQuery]FoodTruckScheduleParameters parameters)
+        public async Task<IActionResult> Get(int foodTruckId, [FromQuery]FoodTruckScheduleParameters parameters)
         {
             if (!parameters.StartDate.HasValue)
                 parameters.StartDate = _dateTimeProvider.CurrentDateTime.Date;
@@ -67,8 +67,8 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
             if (!parameters.EndDate.HasValue)
                 parameters.EndDate = _dateTimeProvider.CurrentDateTime.AddDays(7).Date;
 
-            var result = _scheduleService.GetSchedulesForFoodTruck(foodTruckId, parameters.StartDate.Value, parameters.EndDate.Value);
-            return CreateResponse<List<Schedule>, List<FoodTruckScheduleModel>>(result);
+            var result = await _scheduleService.GetSchedulesForFoodTruckAsync(foodTruckId, parameters.StartDate.Value, parameters.EndDate.Value);
+            return CreateResponse<IEnumerable<Schedule>, IEnumerable<FoodTruckScheduleModel>>(result);
         }
 
 
@@ -85,9 +85,9 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [HttpGet("{scheduleId}", Name = GET_SINGLE_FOOD_TRUCK_SCHEDULE)]
-        public IActionResult Get(int foodTruckId, int scheduleId)
+        public async Task<IActionResult> Get(int foodTruckId, int scheduleId)
         {
-            var result = _scheduleService.GetSchedule(foodTruckId, scheduleId);
+            var result = await _scheduleService.GetScheduleAsync(foodTruckId, scheduleId);
             return CreateResponse<Schedule, FoodTruckScheduleModel>(result);
         }
 
@@ -104,12 +104,12 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [HttpPost]
-        public IActionResult Post(int foodTruckId, [FromBody]CreateFoodTruckScheduleModel createModel)
+        public async Task<IActionResult> Post(int foodTruckId, [FromBody]CreateFoodTruckScheduleModel createModel)
         {
             var createCommand = new CreateFoodTruckScheduleCommand() { FoodTruckId = foodTruckId };
             _mapper.Map<CreateFoodTruckScheduleModel, CreateFoodTruckScheduleCommand>(createModel, createCommand);
 
-            var result = _scheduleService.AddFoodTruckSchedule(createCommand);
+            var result = await _scheduleService.AddFoodTruckScheduleAsync(createCommand);
 
             return CreateResponse<Schedule, FoodTruckScheduleModel>(result,
                 (schedule) =>
@@ -121,10 +121,10 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
         }
 
         [HttpPut("{scheduleId}")]
-        public ActionResult<Schedule> Put(int foodTruckId, int scheduleId, [FromBody]UpdateFoodTruckScheduleModel updateModel)
+        public async Task<ActionResult<Schedule>> Put(int foodTruckId, int scheduleId, [FromBody]UpdateFoodTruckScheduleModel updateModel)
         {
             var updateCommand = _mapper.Map<UpdateFoodTruckScheduleModel, UpdateFoodTruckScheduleCommand>(updateModel);
-            var result = _scheduleService.UpdateFoodTruckSchedule(updateCommand);
+            var result = await _scheduleService.UpdateFoodTruckScheduleAsync(updateCommand);
             return CreateResponse<Schedule, FoodTruckScheduleModel>(result,
                 (schedule) =>
                 {
@@ -147,9 +147,9 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
         [ProducesResponseType(typeof(ApiMessageModel), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public IActionResult Delete(int foodTruckId, int scheduleId)
+        public async Task<IActionResult> Delete(int foodTruckId, int scheduleId)
         {
-            var result = _scheduleService.DeleteFoodTruckSchedule(foodTruckId, scheduleId);
+            var result = await _scheduleService.DeleteFoodTruckScheduleAsync(foodTruckId, scheduleId);
 
             return ( result.IsSuccess )
                 ? Ok(new ApiMessageModel() { Message = $"Schedule {scheduleId} has been deleted for food truck {foodTruckId}" })

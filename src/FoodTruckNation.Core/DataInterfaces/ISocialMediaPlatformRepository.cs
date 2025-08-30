@@ -1,16 +1,17 @@
-﻿using FoodTruckNation.Core.Domain;
+using FoodTruckNation.Core.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FoodTruckNation.Core.DataInterfaces
 {
     public interface ISocialMediaPlatformRepository
     {
 
-        List<SocialMediaPlatform> GetSocialMediaPlatforms();
+        public Task<IEnumerable<SocialMediaPlatform>> GetSocialMediaPlatformsAsync();
 
-        SocialMediaPlatform GetSocialMediaPlatform(int platformId);
+        public Task<SocialMediaPlatform> GetSocialMediaPlatformAsync(int platformId);
 
     }
 }

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FoodTruckNation.Data.EF.Repositories
 {
@@ -23,37 +24,40 @@ namespace FoodTruckNation.Data.EF.Repositories
 
 
 
-        public Location GetLocation(int locationId)
+        public async Task<Location> GetLocationAsync(int locationId)
         {
-            var location = _foodTruckContext.Locations
+            var location = await _foodTruckContext.Locations
                 .Where(l => l.LocationId == locationId)
                 .AsNoTracking()
-                .SingleOrDefault();
+                .SingleOrDefaultAsync();
 
             return location;
         }
 
-        public List<Location> GetLocations()
+        public async Task<IEnumerable<Location>> GetLocationsAsync()
         {
-            var locations = _foodTruckContext.Locations
+            var locations = await _foodTruckContext.Locations
                 .AsNoTracking()
-                .ToList();
+                .ToListAsync();
 
             return locations;
         }
 
 
 
-        public void Save(Location location)
+        public Task SaveAsync(Location location)
         {
             _foodTruckContext.ChangeTracker.TrackGraph(location, EfExtensions.ConvertStateOfNode);
+            return Task.CompletedTask;
         }
 
 
-        public void Delete(Location location)
+        public Task DeleteAsync(Location location)
         {
             _foodTruckContext.Remove(location);
+            return Task.CompletedTask;
         }
+
 
     }
 }

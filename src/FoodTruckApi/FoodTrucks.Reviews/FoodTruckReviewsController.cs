@@ -9,6 +9,7 @@ using FoodTruckNation.Core.Commands;
 using DavidBerry.Framework.ApiUtil.Controllers;
 using DavidBerry.Framework.ApiUtil.Models;
 using Asp.Versioning;
+using System.Threading.Tasks;
 
 namespace FoodTruckNationApi.FoodTrucks.Reviews
 {
@@ -62,10 +63,10 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
         [ProducesResponseType(typeof(List<ReviewModel>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public ActionResult<List<ReviewModel>> Get(int foodTruckId)
+        public async Task<ActionResult<List<ReviewModel>>> Get(int foodTruckId)
         {
-            var result = _foodTruckService.GetFoodTruckReviews(foodTruckId);
-            return CreateResponse<List<Review>, List<ReviewModel>>(result);
+            var result = await _foodTruckService.GetFoodTruckReviewsAsync(foodTruckId);
+            return CreateResponse<IEnumerable<Review>, IEnumerable<ReviewModel>>(result);
         }
 
 
@@ -82,9 +83,9 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
         [ProducesResponseType(typeof(ReviewModel), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public ActionResult<Review> Get(int foodTruckId, int reviewId)
+        public async Task<ActionResult<Review>> Get(int foodTruckId, int reviewId)
         {
-            var result = _foodTruckService.GetFoodTruckReview(foodTruckId, reviewId);
+            var result = await _foodTruckService.GetFoodTruckReviewAsync(foodTruckId, reviewId);
             return CreateResponse<Review, ReviewModel>(result);
         }
 
@@ -103,12 +104,12 @@ namespace FoodTruckNationApi.FoodTrucks.Reviews
         [ProducesResponseType(typeof(List<RequestErrorModel>), 400)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public IActionResult Post(int foodTruckId, [FromBody]CreateReviewModel createModel)
+        public async Task<IActionResult> Post(int foodTruckId, [FromBody]CreateReviewModel createModel)
         {
             var createCommand = new CreateReviewCommand() { FoodTruckId = foodTruckId };
             _mapper.Map<CreateReviewModel, CreateReviewCommand>(createModel, createCommand);
 
-            var result = _foodTruckService.CreateFoodTruckReview(createCommand);
+            var result = await _foodTruckService.CreateFoodTruckReviewAsync(createCommand);
 
             return CreateResponse<Review, ReviewModel>(result, (entity) => {
                 var model = _mapper.Map<Review, ReviewModel>(entity);

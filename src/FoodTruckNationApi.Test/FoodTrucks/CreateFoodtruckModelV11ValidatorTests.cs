@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
+using System.Threading.Tasks;
 
 namespace FoodTruckNationApi.Test.FoodTrucks
 {
@@ -29,8 +30,8 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Tags = new List<string>() { "Burgers", "Sandwiches" }
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
-            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatformsAsync())
+                .Returns(Task.FromResult(Result.Success<IEnumerable<SocialMediaPlatform>>(new List<SocialMediaPlatform>())));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -56,8 +57,8 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Tags = new List<string>() { "Burgers", "Sandwiches" }
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
-            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatformsAsync())
+                .Returns(Task.FromResult(Result.Success<IEnumerable<SocialMediaPlatform>>(new List<SocialMediaPlatform>())));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -80,8 +81,8 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Tags = new List<string>() { "Burgers", "Sandwiches" }
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
-            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatformsAsync())
+                .Returns(Task.FromResult(Result.Success<IEnumerable<SocialMediaPlatform>>(new List<SocialMediaPlatform>())));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -103,8 +104,8 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Tags = new List<string>() { "Burgers", "Sandwiches" }
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
-            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatformsAsync())
+                .Returns(Task.FromResult(Result.Success<IEnumerable<SocialMediaPlatform>>(new List<SocialMediaPlatform>())));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -127,8 +128,8 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Tags = new List<string>() { "Burgers", "Sandwiches" }
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
-            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatformsAsync())
+                .Returns(Task.FromResult(Result.Success<IEnumerable<SocialMediaPlatform>>(new List<SocialMediaPlatform>())));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -151,8 +152,8 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Tags = new List<string>() { "Burgers", "Sandwiches" }
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
-            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatformsAsync())
+                .Returns(Task.FromResult(Result.Success<IEnumerable<SocialMediaPlatform>>(new List<SocialMediaPlatform>())));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -182,8 +183,8 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Tags = new List<string>() { "Burgers", "Sandwiches" }
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
-            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatformsAsync())
+                .Returns(Task.FromResult(Result.Success<IEnumerable<SocialMediaPlatform>>(new List<SocialMediaPlatform>())));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -214,8 +215,8 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Tags = new List<string>() { "Burgers", "Sandwiches" }
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
-            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatformsAsync())
+                .Returns(Task.FromResult(Result.Success<IEnumerable<SocialMediaPlatform>>(new List<SocialMediaPlatform>())));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -239,8 +240,8 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Tags = new List<string>()
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
-            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatformsAsync())
+                .Returns(Task.FromResult(Result.Success<IEnumerable<SocialMediaPlatform>>(new List<SocialMediaPlatform>())));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -263,8 +264,8 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Tags = null
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
-            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatformsAsync())
+                .Returns(Task.FromResult(Result.Success<IEnumerable<SocialMediaPlatform>>(new List<SocialMediaPlatform>())));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -287,8 +288,8 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Tags = new List<string>() { "Burgers", "" }
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
-            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatformsAsync())
+                .Returns(Task.FromResult(Result.Success<IEnumerable<SocialMediaPlatform>>(new List<SocialMediaPlatform>())));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -311,8 +312,8 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Tags = new List<string>() { "Burgers", "Pizza@" }
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
-            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()));
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatformsAsync())
+                .Returns(Task.FromResult(Result.Success<IEnumerable<SocialMediaPlatform>>(new List<SocialMediaPlatform>())));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -343,11 +344,11 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 }
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
-            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatformsAsync())
+                .Returns(Task.FromResult(Result.Success<IEnumerable<SocialMediaPlatform>>(new List<SocialMediaPlatform>()
                 {
                     new SocialMediaPlatform(1, "FooTruckMedia", "",  @"\w{1,20}")
-                }));
+                })));
 
             // Act
             var validator = new CreateFoodTruckModelV11Validator(mockSocialMediaService.Object);
@@ -378,11 +379,11 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 }
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
-            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatformsAsync())
+                .Returns(Task.FromResult(Result.Success<IEnumerable<SocialMediaPlatform>>(new List<SocialMediaPlatform>()
                 {
                     new SocialMediaPlatform(1, "FooTruckMedia", "",  @"\w{1,20}")
-                }));
+                })));
 
 
             // Act
@@ -414,11 +415,11 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 }
             };
             var mockSocialMediaService = new Mock<ISocialMediaPlatformService>();
-            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatforms())
-                .Returns(Result.Success<List<SocialMediaPlatform>>(new List<SocialMediaPlatform>()
+            mockSocialMediaService.Setup(m => m.GetAllSocialMediaPlatformsAsync())
+                .Returns(Task.FromResult(Result.Success<IEnumerable<SocialMediaPlatform>>(new List<SocialMediaPlatform>()
                 {
                     new SocialMediaPlatform(1, "FooTruckMedia", "",  @"\w{1,20}")
-                }));
+                })));
 
 
             // Act

@@ -1,10 +1,11 @@
-﻿using FoodTruckNation.Core.DataInterfaces;
+using FoodTruckNation.Core.DataInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using FoodTruckNation.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FoodTruckNation.Data.EF.Repositories
 {
@@ -20,19 +21,19 @@ namespace FoodTruckNation.Data.EF.Repositories
         private readonly FoodTruckContext _foodTruckContext;
 
 
-        public SocialMediaPlatform GetSocialMediaPlatform(int platformId)
+        public async Task<SocialMediaPlatform> GetSocialMediaPlatformAsync(int platformId)
         {
-            var platform = _foodTruckContext.SocialMediaPlatforms
-                .FirstOrDefault(p => p.PlatformId == platformId);
-                
+            var platform = await _foodTruckContext.SocialMediaPlatforms
+                .FirstOrDefaultAsync(p => p.PlatformId == platformId);
+
             return platform;
         }
 
-        public List<SocialMediaPlatform> GetSocialMediaPlatforms()
+        public async Task<IEnumerable<SocialMediaPlatform>> GetSocialMediaPlatformsAsync()
         {
-            var platforms = _foodTruckContext.SocialMediaPlatforms
+            var platforms = await _foodTruckContext.SocialMediaPlatforms
                 .AsNoTracking()
-                .ToList();
+                .ToListAsync();
 
             return platforms;
         }

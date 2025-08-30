@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xunit;
+using System.Threading.Tasks;
 
 namespace FoodTruckNationApi.Test.FoodTrucks
 {
@@ -26,52 +27,52 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             SocialMediaPlatform twitter = new SocialMediaPlatform(2, "Twitter", "http://twitter.com/{0}", null);
             SocialMediaPlatform instagram = new SocialMediaPlatform(3, "Instagram", "http://instagram.com/{0}", null);
 
-            foodTruckOne = new FoodTruck(1, "Food Truck One", "Food Truck One Description", @"http://www.foodtruckone.com");
-            foodTruckOne.AddTag(tagOne);
-            foodTruckOne.AddTag(tagTwo);
-            foodTruckOne.AddSocialMediaAccount(new SocialMediaAccount(facebook, foodTruckOne, "foodTruckOne"));
-            foodTruckOne.AddSocialMediaAccount(new SocialMediaAccount(twitter, foodTruckOne, "foodTruckOne"));
+            _foodTruckOne = new FoodTruck(1, "Food Truck One", "Food Truck One Description", @"http://www.foodtruckone.com");
+            _foodTruckOne.AddTag(tagOne);
+            _foodTruckOne.AddTag(tagTwo);
+            _foodTruckOne.AddSocialMediaAccount(new SocialMediaAccount(facebook, _foodTruckOne, "foodTruckOne"));
+            _foodTruckOne.AddSocialMediaAccount(new SocialMediaAccount(twitter, _foodTruckOne, "foodTruckOne"));
 
-            foodTruckTwo = new FoodTruck(2, "Food Truck Two", "Food Truck Two Description", @"http://www.foodtrucktwo.com");
-            foodTruckTwo.AddTag(tagThree);
-            foodTruckOne.AddSocialMediaAccount(new SocialMediaAccount(facebook, foodTruckTwo, "foodTruckTwo"));
+            _foodTruckTwo = new FoodTruck(2, "Food Truck Two", "Food Truck Two Description", @"http://www.foodtrucktwo.com");
+            _foodTruckTwo.AddTag(tagThree);
+            _foodTruckOne.AddSocialMediaAccount(new SocialMediaAccount(facebook, _foodTruckTwo, "foodTruckTwo"));
 
-            foodTruckThree = new FoodTruck(3, "Food Truck Two", "Food Truck Three Description", @"http://www.foodtruckthree.com");
-            foodTruckThree.AddTag(tagOne);
-            foodTruckThree.AddTag(tagFour);
-            foodTruckThree.AddSocialMediaAccount(new SocialMediaAccount(facebook, foodTruckThree, "foodTruckThree"));
-            foodTruckThree.AddSocialMediaAccount(new SocialMediaAccount(twitter, foodTruckThree, "foodTruckThree"));
-            foodTruckThree.AddSocialMediaAccount(new SocialMediaAccount(instagram, foodTruckThree, "foodTruckThree"));
+            _foodTruckThree = new FoodTruck(3, "Food Truck Two", "Food Truck Three Description", @"http://www.foodtruckthree.com");
+            _foodTruckThree.AddTag(tagOne);
+            _foodTruckThree.AddTag(tagFour);
+            _foodTruckThree.AddSocialMediaAccount(new SocialMediaAccount(facebook, _foodTruckThree, "foodTruckThree"));
+            _foodTruckThree.AddSocialMediaAccount(new SocialMediaAccount(twitter, _foodTruckThree, "foodTruckThree"));
+            _foodTruckThree.AddSocialMediaAccount(new SocialMediaAccount(instagram, _foodTruckThree, "foodTruckThree"));
 
-            foodTruckList = new List<FoodTruck>()
+            _foodTruckList = new List<FoodTruck>()
             {
-                foodTruckOne, foodTruckTwo, foodTruckThree
+                _foodTruckOne, _foodTruckTwo, _foodTruckThree
             };
 
 
             var config = new MapperConfiguration(cfg => {
                 cfg.AddProfile<FoodTruckModelAutomapperProfile>();
             });
-            mapper = new Mapper(config,
+            _mapper = new Mapper(config,
                 t => FoodTrucksControllerTests.Resolve<Type, object>(t));
 
         }
 
         // Resolver method so AutoMapper will resolve the TestUrlResolver when it goes looking for the UrlResolver
-        private static object Resolve<Type, Object>(Type t)
+        private static object Resolve<TType, TObject>(Type t)
         {
             return new TestUrlResolver();
         }
 
 
 
-        private readonly FoodTruck foodTruckOne;
-        private readonly FoodTruck foodTruckTwo;
-        private readonly FoodTruck foodTruckThree;
+        private readonly FoodTruck _foodTruckOne;
+        private readonly FoodTruck _foodTruckTwo;
+        private readonly FoodTruck _foodTruckThree;
 
-        private readonly List<FoodTruck> foodTruckList;
+        private readonly List<FoodTruck> _foodTruckList;
 
-        private readonly IMapper mapper;
+        private readonly IMapper _mapper;
 
 
         [Fact]
@@ -82,16 +83,16 @@ namespace FoodTruckNationApi.Test.FoodTrucks
 
 
             var mockService = new Mock<IFoodTruckService>();
-            mockService.Setup(r => r.GetAllFoodTrucks())
-                .Returns(Result.Success<List<FoodTruck>>(foodTruckList));
-            FoodTrucksController controller = new FoodTrucksController(mockLogger.Object,  mapper, mockService.Object);
+            mockService.Setup(r => r.GetAllFoodTrucksAsync())
+                .Returns(Task.FromResult(Result.Success<IEnumerable<FoodTruck>>(_foodTruckList)));
+            FoodTrucksController controller = new FoodTrucksController(mockLogger.Object,  _mapper, mockService.Object);
 
             // Act
             var response = controller.Get();
 
             // Assert
-            mockService.Verify(r => r.GetAllFoodTrucks(), Times.Once());
-            mockService.Verify(r => r.GetFoodTrucksByTag(It.IsAny<string>()), Times.Never());
+            mockService.Verify(r => r.GetAllFoodTrucksAsync(), Times.Once());
+            mockService.Verify(r => r.GetFoodTrucksByTagAsync(It.IsAny<string>()), Times.Never());
         }
 
 
@@ -103,16 +104,16 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             var searchTag = "Tacos";
 
             var mockService = new Mock<IFoodTruckService>();
-            mockService.Setup(r => r.GetFoodTrucksByTag(searchTag))
-                .Returns(Result.Success<List<FoodTruck>>(foodTruckList.Where(f => f.Tags.Any(t => t.Tag.Text == searchTag)).ToList()));
-            FoodTrucksController controller = new FoodTrucksController(mockLogger.Object, mapper, mockService.Object);
+            mockService.Setup(r => r.GetFoodTrucksByTagAsync(searchTag))
+                .Returns(Task.FromResult(Result.Success<IEnumerable<FoodTruck>>(_foodTruckList.Where(f => f.Tags.Any(t => t.Tag.Text == searchTag)).ToList())));
+            FoodTrucksController controller = new FoodTrucksController(mockLogger.Object, _mapper, mockService.Object);
 
             // Act
             var response = controller.Get(searchTag);
 
             // Assert
-            mockService.Verify(r => r.GetAllFoodTrucks(), Times.Never());
-            mockService.Verify(r => r.GetFoodTrucksByTag(searchTag), Times.Once());
+            mockService.Verify(r => r.GetAllFoodTrucksAsync(), Times.Never());
+            mockService.Verify(r => r.GetFoodTrucksByTagAsync(searchTag), Times.Once());
         }
 
 

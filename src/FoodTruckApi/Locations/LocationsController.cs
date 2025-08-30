@@ -68,18 +68,18 @@ namespace FoodTruckNationApi.Locations
         [HttpGet(Name = GET_ALL_LOCATIONS)]
         [ProducesResponseType(typeof(List<LocationModel>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public IActionResult Get()
+        public async Task<IActionResult> GetAsync()
         {
-            Result<List<Location>> result = _locationService.GetLocations();
+            Result<IEnumerable<Location>> result = await _locationService.GetLocationsAsync();
 
             if (result.IsSuccess)
             {
-                var model = _mapper.Map<List<Location>, List<LocationModel>>(result.Value);
+                var model = _mapper.Map<IEnumerable<Location>, IEnumerable<LocationModel>>(result.Value);
                 return Ok(model);
             }
             else
             {
-                return MapErrorResult<List<Location>, List<LocationModel>>(result);
+                return MapErrorResult<IEnumerable<Location>, IEnumerable<LocationModel>>(result);
             }
             //return CreateResponse<List<Location>, List<LocationModel>>(result);
         }
@@ -97,9 +97,9 @@ namespace FoodTruckNationApi.Locations
         [ProducesResponseType(typeof(LocationModel), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public ActionResult<LocationModel> Get(int id)
+        public async Task<ActionResult<LocationModel>> GetAsync(int id)
         {
-            Result<Location> result = _locationService.GetLocation(id);
+            Result<Location> result = await _locationService.GetLocationAsync(id);
             if (result.IsSuccess)
             {
                 var model = _mapper.Map<Location, LocationModel>(result.Value);
@@ -131,10 +131,10 @@ namespace FoodTruckNationApi.Locations
         [ProducesResponseType(typeof(LocationModel), 201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(typeof(ApiMessageModel), 409)]
-        public IActionResult Post([FromBody]CreateLocationModel createModel)
+        public async Task<IActionResult> PostAsync([FromBody]CreateLocationModel createModel)
         {
             var createLocationCommand = _mapper.Map<CreateLocationModel, CreateLocationCommand>(createModel);
-            var result = _locationService.CreateLocation(createLocationCommand);
+            var result = await _locationService.CreateLocationAsync(createLocationCommand);
 
             return CreateResponse<Location, LocationModel>(result, (entity) => {
                 var model = _mapper.Map<Location, LocationModel>(entity);
@@ -158,12 +158,12 @@ namespace FoodTruckNationApi.Locations
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 409)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public IActionResult Put(int id, [FromBody]UpdateLocationModel updateModel)
+        public async Task<IActionResult> PutAsync(int id, [FromBody]UpdateLocationModel updateModel)
         {
             var updateCommand = new UpdateLocationCommand() { LocationId = id };
             _mapper.Map<UpdateLocationModel, UpdateLocationCommand>(updateModel, updateCommand);
 
-            var result = _locationService.UpdateLocation(updateCommand);
+            var result = await _locationService.UpdateLocationAsync(updateCommand);
             return CreateResponse<Location, LocationModel>(result);
         }
 
@@ -178,9 +178,9 @@ namespace FoodTruckNationApi.Locations
         [ProducesResponseType(typeof(ApiMessageModel), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            var result = _locationService.DeleteLocation(id);
+            var result = await _locationService.DeleteLocationAsync(id);
 
             return ( result.IsSuccess )
                 ? Ok(new ApiMessageModel() { Message = $"Location {id} has been deleted" })

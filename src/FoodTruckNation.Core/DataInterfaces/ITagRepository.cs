@@ -1,22 +1,23 @@
-﻿using FoodTruckNation.Core.Domain;
+using FoodTruckNation.Core.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FoodTruckNation.Core.DataInterfaces
 {
     public interface ITagRepository
     {
 
-        IList<Tag> GetAllTags();
+        public Task<IEnumerable<Tag>> GetAllTagsAsync();
 
-        IList<Tag> GetAllTagsInUse();
+        public Task<IEnumerable<Tag>> GetAllTagsInUseAsync();
 
-        Tag GetTagById(int id);
+        public Task<Tag> GetTagByIdAsync(int id);
 
-        Tag GetTagByName(String name);
+        public Task<Tag> GetTagByNameAsync(string name);
 
-        void SaveTag(Tag tag);
+        public Task SaveTagAsync(Tag tag);
 
 
 

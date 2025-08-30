@@ -1,7 +1,8 @@
-﻿using FoodTruckNation.Core.Domain;
+using FoodTruckNation.Core.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FoodTruckNation.Core.DataInterfaces
 {
@@ -12,24 +13,24 @@ namespace FoodTruckNation.Core.DataInterfaces
         /// Gets a list of all of the food trucks in the database
         /// </summary>
         /// <returns></returns>
-        IList<FoodTruck> GetAllFoodTrucks();
+        public Task<IEnumerable<FoodTruck>> GetAllFoodTrucksAsync();
 
         /// <summary>
         /// Gets the food truck with the given id
         /// </summary>
         /// <param name="foodTruckId"></param>
         /// <returns></returns>
-        FoodTruck GetFoodTruck(int foodTruckId);
+        public Task<FoodTruck> GetFoodTruckAsync(int foodTruckId);
 
 
 
-        IList<FoodTruck> GetFoodTruckByTag(String tag);
+        public Task<IEnumerable<FoodTruck>> GetFoodTruckByTagAsync(string tag);
 
 
-        void Save(FoodTruck foodTruck);
+        public Task SaveAsync(FoodTruck foodTruck);
 
 
-        void Delete(FoodTruck foodTruck);
+        public Task DeleteAsync(FoodTruck foodTruck);
 
     }
 }

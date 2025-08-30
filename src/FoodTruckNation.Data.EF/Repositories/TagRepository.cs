@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using FoodTruckNation.Core.Domain;
 using DavidBerry.Framework.Data;
+using System.Threading.Tasks;
 
 namespace FoodTruckNation.Data.EF.Repositories
 {
@@ -19,44 +20,46 @@ namespace FoodTruckNation.Data.EF.Repositories
         private readonly FoodTruckContext _dataContext;
 
 
-        public IList<Tag> GetAllTags()
+        public async Task<IEnumerable<Tag>> GetAllTagsAsync()
         {
-           return _dataContext.Tags.AsNoTracking().ToList();
+           return await _dataContext.Tags
+                .AsNoTracking()
+                .ToListAsync();
         }
 
 
-        public IList<Tag> GetAllTagsInUse()
+        public async Task<IEnumerable<Tag>> GetAllTagsInUseAsync()
         {
-            return _dataContext.FoodTrucks
+            return await _dataContext.FoodTrucks
                 .Include(f => f.Tags)
                 .ThenInclude(t => t.Tag)
                 .SelectMany(ft => ft.Tags.Select(ftt => ftt.Tag))
                 .Distinct()
                 .AsNoTracking()
-                .ToList();
+                .ToListAsync();
         }
 
 
-
-        public Tag GetTagById(int id)
+        public async Task<Tag> GetTagByIdAsync(int id)
         {
-            return _dataContext.Tags
+            return await _dataContext.Tags
                 .Where(t => t.TagId == id)
                 .AsNoTracking()
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
 
-        public Tag GetTagByName(string name)
+        public async Task<Tag> GetTagByNameAsync(string name)
         {
-            return _dataContext.Tags
+            return await _dataContext.Tags
                 .Where(t => t.Text == name)
                 .AsNoTracking()
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
 
-        public void SaveTag(Tag tag)
+        public Task SaveTagAsync(Tag tag)
         {
             _dataContext.ChangeTracker.TrackGraph(tag, EfExtensions.ConvertStateOfNode);
+            return Task.CompletedTask;
         }
     }
 }

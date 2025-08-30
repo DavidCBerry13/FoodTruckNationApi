@@ -6,6 +6,7 @@ using FoodTruckNation.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using DavidBerry.Framework.Data;
+using System.Threading.Tasks;
 
 namespace FoodTruckNation.Data.EF.Repositories
 {
@@ -20,9 +21,9 @@ namespace FoodTruckNation.Data.EF.Repositories
         private readonly FoodTruckContext _foodTruckContext;
 
 
-        public IList<FoodTruck> GetAllFoodTrucks()
+        public async Task<IEnumerable<FoodTruck>> GetAllFoodTrucksAsync()
         {
-            var foodTrucks = _foodTruckContext.FoodTrucks
+            var foodTrucks = await _foodTruckContext.FoodTrucks
                 .Include(f => f.Tags)
                 .ThenInclude(t => t.Tag)
                 .Include(f => f.Reviews)
@@ -31,7 +32,7 @@ namespace FoodTruckNation.Data.EF.Repositories
                 .ThenInclude(x => x.Platform)
                 .OrderBy(x => x.FoodTruckId)
                 .AsNoTracking()
-                .ToList();
+                .ToListAsync();
 
             return foodTrucks;
         }
@@ -42,19 +43,18 @@ namespace FoodTruckNation.Data.EF.Repositories
         /// </summary>
         /// <param name="foodTruckId">An int of the unique food truck id</param>
         /// <returns>A FoodTruck object or null if no food truck is found with the given id</returns>
-        public FoodTruck GetFoodTruck(int foodTruckId)
+        public async Task<FoodTruck> GetFoodTruckAsync(int foodTruckId)
         {
-            var foodTruck = _foodTruckContext.FoodTrucks
+            var foodTruck = await _foodTruckContext.FoodTrucks
                 .Include(f => f.SocialMediaAccounts)
                 .ThenInclude(x => x.Platform)
                 .Include(f => f.Tags)
                 .ThenInclude(t => t.Tag)
                 .Include(f => f.Reviews)
                 .Include(f => f.Schedules)
-
                 .Where(ft => ft.FoodTruckId == foodTruckId)
                 .AsNoTracking()
-                .SingleOrDefault();
+                .SingleOrDefaultAsync();
 
             return foodTruck;
         }
@@ -66,9 +66,9 @@ namespace FoodTruckNation.Data.EF.Repositories
         /// <param name="tag">A String of the tag to search for</param>
         /// <returns>A List of FoodTruck objects.  If no Food Trucks are found with
         /// the given tag, an empty list is returned</returns>
-        public IList<FoodTruck> GetFoodTruckByTag(string tag)
+        public async Task<IEnumerable<FoodTruck>> GetFoodTruckByTagAsync(string tag)
         {
-            var foodTruck = _foodTruckContext.FoodTrucks
+            var foodTruck = await _foodTruckContext.FoodTrucks
                 .Include(f => f.Tags)
                 .ThenInclude(t => t.Tag)
                 .Include(f => f.Reviews)
@@ -77,22 +77,24 @@ namespace FoodTruckNation.Data.EF.Repositories
                 .ThenInclude(x => x.Platform)
                 .Where(ft => ft.Tags.Any(ftt => ftt.Tag.Text == tag) )
                 .AsNoTracking()
-                .ToList();
+                .ToListAsync();
 
             return foodTruck;
         }
 
 
-        public void Save(FoodTruck foodTruck)
+        public Task SaveAsync(FoodTruck foodTruck)
         {
             _foodTruckContext.ChangeTracker.TrackGraph(foodTruck, EfExtensions.ConvertStateOfNode);
+            return Task.CompletedTask;
         }
 
 
 
-        public void Delete(FoodTruck foodTruck)
+        public Task DeleteAsync(FoodTruck foodTruck)
         {
             _foodTruckContext.Remove(foodTruck);
+            return Task.CompletedTask;
         }
 
     }

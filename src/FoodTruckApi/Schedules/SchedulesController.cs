@@ -44,13 +44,13 @@ namespace FoodTruckNationApi.Schedules
         /// <param name="parameters">A GetSchedulesParameters object that encapsulates the query string arguments to this method, mainly, the start and end dates if any were included</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult<ScheduleModel> Get([FromQuery]GetSchedulesParameters parameters)
+        public async Task<ActionResult<ScheduleModel>> Get([FromQuery]GetSchedulesParameters parameters)
         {
             var startDate = parameters.StartDate ?? _dateTimeProvider.CurrentDateTime.Date; ;
             var endDate = parameters.EndDate ?? _dateTimeProvider.CurrentDateTime.Date.AddDays(7);
 
-            var result = _scheduleService.GetSchedules(startDate, endDate);
-            return CreateResponse<List<Schedule>, List<ScheduleModel>>(result);
+            var result = await _scheduleService.GetSchedulesAsync(startDate, endDate);
+            return CreateResponse<IEnumerable<Schedule>, IEnumerable<ScheduleModel>>(result);
 
         }
 

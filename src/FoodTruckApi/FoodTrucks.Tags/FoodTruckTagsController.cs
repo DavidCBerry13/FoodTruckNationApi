@@ -47,9 +47,9 @@ namespace FoodTruckNationApi.FoodTrucks.Tags
         /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(typeof(List<string>), 200)]
-        public IActionResult Get(int foodTruckId)
+        public async Task<IActionResult> GetAsync(int foodTruckId)
         {
-            var result = _foodTruckService.GetFoodTruck(foodTruckId);
+            var result = await _foodTruckService.GetFoodTruckAsync(foodTruckId);
 
             if (result.IsSuccess)
             {
@@ -82,9 +82,9 @@ namespace FoodTruckNationApi.FoodTrucks.Tags
         /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(typeof(FoodTruckModel), 200)]
-        public IActionResult Post(int foodTruckId, [FromBody]List<string> tags)
+        public async Task<IActionResult> PostAsync(int foodTruckId, [FromBody]List<string> tags)
         {
-            var result = _foodTruckService.AddFoodTruckTags(foodTruckId, tags);
+            var result = await _foodTruckService.AddFoodTruckTagsAsync(foodTruckId, tags);
             return CreateResponse<FoodTruck, FoodTruckModel>(result);
         }
 
@@ -107,9 +107,9 @@ namespace FoodTruckNationApi.FoodTrucks.Tags
         /// <response code="200">Success.  A FoodTruckModel that represents the current state of the food truck is returned</response>
         [HttpPut()]
         [ProducesResponseType(typeof(FoodTruckModel), 200)]
-        public IActionResult Put(int foodTruckId, [FromBody]List<string> tags)
+        public async Task<IActionResult> PutAsync(int foodTruckId, [FromBody]List<string> tags)
         {
-            var result = _foodTruckService.UpdateFoodTruckTags(foodTruckId, tags);
+            var result = await _foodTruckService.UpdateFoodTruckTagsAsync(foodTruckId, tags);
             return CreateResponse<FoodTruck, FoodTruckModel>(result);
         }
 
@@ -125,9 +125,9 @@ namespace FoodTruckNationApi.FoodTrucks.Tags
         [ProducesResponseType(typeof(ApiMessageModel), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public IActionResult Delete(int foodTruckId, string tag)
+        public async Task <IActionResult> DeleteAsync(int foodTruckId, string tag)
         {
-            var result = _foodTruckService.DeleteFoodTruckTag(foodTruckId, tag);
+            var result = await _foodTruckService.DeleteFoodTruckTagAsync(foodTruckId, tag);
 
             return ( result.IsSuccess )
                 ? Ok(new ApiMessageModel() { Message = $"Tag {tag} has been deleted on food truck {foodTruckId}" })

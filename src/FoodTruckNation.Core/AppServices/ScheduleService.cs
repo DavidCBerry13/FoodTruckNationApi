@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DavidBerry.Framework.Functional;
+using System.Threading.Tasks;
 
 namespace FoodTruckNation.Core.AppServices
 {
@@ -39,63 +40,63 @@ namespace FoodTruckNation.Core.AppServices
         #endregion
 
 
-        public Result<Schedule> GetSchedule(int scheduleId)
+        public async Task<Result<Schedule>> GetScheduleAsync(int scheduleId)
         {
-            var schedule = _scheduleRepository.GetSchedule(scheduleId);
+            var schedule = await _scheduleRepository.GetScheduleAsync(scheduleId);
             return ( schedule != null )
                 ? Result.Success<Schedule>(schedule)
                 : Result.Failure<Schedule>(new ObjectNotFoundError($"No schedule found with id {scheduleId}"));
         }
 
 
-        public Result<Schedule> GetSchedule(int foodTruckId, int scheduleId)
+        public async Task<Result<Schedule>> GetScheduleAsync(int foodTruckId, int scheduleId)
         {
-            var foodTruck = _foodTruckRepository.GetFoodTruck(foodTruckId);
+            var foodTruck =  await _foodTruckRepository.GetFoodTruckAsync(foodTruckId);
             if (foodTruck == null)
                 Result.Failure<Schedule>(new ObjectNotFoundError($"No food truck found with id {foodTruckId}"));
 
-            var schedule = _scheduleRepository.GetSchedule(scheduleId);
+            var schedule = await _scheduleRepository.GetScheduleAsync(scheduleId);
             return ( schedule != null )
                 ? Result.Success<Schedule>(schedule)
                 : Result.Failure<Schedule>(new ObjectNotFoundError($"No schedule found with id {scheduleId}"));
         }
 
-        public Result<List<Schedule>> GetSchedules(DateTime startDate, DateTime endDate)
+        public async Task<Result<IEnumerable<Schedule>>> GetSchedulesAsync(DateTime startDate, DateTime endDate)
         {
-            var schedules = _scheduleRepository.GetSchedules(startDate, endDate);
-            return Result.Success<List<Schedule>>(schedules);
+            var schedules = await _scheduleRepository.GetSchedulesAsync(startDate, endDate);
+            return Result.Success<IEnumerable<Schedule>>(schedules);
         }
 
 
-        public Result<List<Schedule>> GetSchedulesForFoodTruck(int foodTruckId, DateTime startDate, DateTime endDate)
+        public async Task<Result<IEnumerable<Schedule>>> GetSchedulesForFoodTruckAsync(int foodTruckId, DateTime startDate, DateTime endDate)
         {
-            var foodTruck = _foodTruckRepository.GetFoodTruck(foodTruckId);
+            var foodTruck = await _foodTruckRepository.GetFoodTruckAsync(foodTruckId);
             if (foodTruck == null)
                 Result.Failure<Schedule>(new ObjectNotFoundError($"No food truck found with id {foodTruckId}"));
 
-            var schedules = _scheduleRepository.GetSchedulesForFoodTruck(foodTruckId, startDate, endDate);
-            return Result.Success<List<Schedule>>(schedules);
+            var schedules = await _scheduleRepository.GetSchedulesForFoodTruckAsync(foodTruckId, startDate, endDate);
+            return Result.Success<IEnumerable<Schedule>>(schedules);
         }
 
 
-        public Result<List<Schedule>> GetSchedulesForLocation(int locationId, DateTime startDate, DateTime endDate)
+        public async Task<Result<IEnumerable<Schedule>>> GetSchedulesForLocationAsync(int locationId, DateTime startDate, DateTime endDate)
         {
-            var location = _locationRepository.GetLocation(locationId);
+            var location = await _locationRepository.GetLocationAsync(locationId);
             if (location == null)
-                return Result.Failure<List<Schedule>>(new ObjectNotFoundError($"No location with the id {locationId} found"));
+                return Result.Failure<IEnumerable<Schedule>>(new ObjectNotFoundError($"No location with the id {locationId} found"));
 
-            var schedules = _scheduleRepository.GetSchedulesForLocation(locationId, startDate, endDate);
-            return Result.Success<List<Schedule>>(schedules);
+            var schedules = await _scheduleRepository.GetSchedulesForLocationAsync(locationId, startDate, endDate);
+            return Result.Success<IEnumerable<Schedule>>(schedules);
         }
 
 
-        public Result<Schedule> AddFoodTruckSchedule(CreateFoodTruckScheduleCommand command)
+        public async Task<Result<Schedule>> AddFoodTruckScheduleAsync(CreateFoodTruckScheduleCommand command)
         {
-            var foodTruck = _foodTruckRepository.GetFoodTruck(command.FoodTruckId);
+            var foodTruck = await _foodTruckRepository.GetFoodTruckAsync(command.FoodTruckId);
             if (foodTruck == null)
                 return Result.Failure<Schedule>(new ObjectNotFoundError($"No food truck found with id {command.FoodTruckId}"));
 
-            var location = _locationRepository.GetLocation(command.LocationId);
+            var location = await _locationRepository.GetLocationAsync(command.LocationId);
             if (location == null)
                 return Result.Failure<Schedule>(new InvalidDataError($"No location with the id {command.LocationId} found"));
 
@@ -104,21 +105,21 @@ namespace FoodTruckNation.Core.AppServices
             foodTruck.AddSchedule(schedule);
 
             // Persist to the database
-            _foodTruckRepository.Save(foodTruck);
-            UnitOfWork.SaveChanges();
+            await _foodTruckRepository.SaveAsync(foodTruck);
+            await UnitOfWork.SaveChangesAsync();
 
             return Result.Success<Schedule>(schedule);
         }
 
 
 
-        public Result<Schedule> UpdateFoodTruckSchedule(UpdateFoodTruckScheduleCommand command)
+        public async Task<Result<Schedule>> UpdateFoodTruckScheduleAsync(UpdateFoodTruckScheduleCommand command)
         {
-            var foodTruck = _foodTruckRepository.GetFoodTruck(command.FoodTruckId);
+            var foodTruck = await _foodTruckRepository.GetFoodTruckAsync(command.FoodTruckId);
             if (foodTruck == null)
                 return Result.Failure<Schedule>(new ObjectNotFoundError($"No food truck found with id {command.FoodTruckId}"));
 
-            var location = _locationRepository.GetLocation(command.LocationId);
+            var location = await _locationRepository.GetLocationAsync(command.LocationId);
             if (location == null)
                 return Result.Failure<Schedule>(new InvalidDataError($"No location with the id {command.LocationId} found"));
 
@@ -131,16 +132,16 @@ namespace FoodTruckNation.Core.AppServices
             schedule.ScheduledEnd = command.EndTime;
 
             // Persist to the database
-            _foodTruckRepository.Save(foodTruck);
-            UnitOfWork.SaveChanges();
+            await _foodTruckRepository.SaveAsync(foodTruck);
+            await UnitOfWork.SaveChangesAsync();
 
             return Result.Success<Schedule>(schedule);
         }
 
 
-        public Result DeleteFoodTruckSchedule(int foodTruckId, int scheduleId)
+        public async Task<Result> DeleteFoodTruckScheduleAsync(int foodTruckId, int scheduleId)
         {
-            var foodTruck = _foodTruckRepository.GetFoodTruck(foodTruckId);
+            var foodTruck = await _foodTruckRepository.GetFoodTruckAsync(foodTruckId);
             if (foodTruck == null)
                 return Result.Failure(new ObjectNotFoundError($"No food truck with the id {foodTruckId} found so the schedule could not be deleted"));
 
@@ -151,8 +152,8 @@ namespace FoodTruckNation.Core.AppServices
             schedule.CancelScheduledAppointment();
 
             // Persist to the database
-            _foodTruckRepository.Save(foodTruck);
-            UnitOfWork.SaveChanges();
+            await _foodTruckRepository.SaveAsync(foodTruck);
+            await UnitOfWork.SaveChangesAsync();
 
             return Result.Success();
         }

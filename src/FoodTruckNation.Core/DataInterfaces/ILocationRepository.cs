@@ -1,24 +1,33 @@
-﻿using FoodTruckNation.Core.Domain;
+using FoodTruckNation.Core.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FoodTruckNation.Core.DataInterfaces
 {
+
+    /// <summary>
+    /// Defines the interface for querying Location objects from the data store
+    /// </summary>
     public interface ILocationRepository
     {
 
-
-        Location GetLocation(int locationId);
-
-
-        List<Location> GetLocations();
-
-
-        void Save(Location location);
+        /// <summary>
+        /// Gets the Location specified by the given location id.  If no location has the specified id, null is returned
+        /// </summary>
+        /// <param name="locationId">An into of the location id</param>
+        /// <returns>A Location object or null</returns>
+        public Task<Location> GetLocationAsync(int locationId);
 
 
-        void Delete(Location location);
+        public Task<IEnumerable<Location>> GetLocationsAsync();
+
+
+        public Task SaveAsync(Location location);
+
+
+        public Task DeleteAsync(Location location);
 
 
     }

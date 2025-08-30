@@ -51,9 +51,9 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
         [ProducesResponseType(typeof(List<SocialMediaAccount>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public IActionResult Get(int foodTruckId)
+        public async Task<IActionResult> Get(int foodTruckId)
         {
-            var result = _foodTruckService.GetFoodTruck(foodTruckId);
+            var result = await _foodTruckService.GetFoodTruckAsync(foodTruckId);
 
             if ( result.IsSuccess )
             {
@@ -80,9 +80,9 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
         [ProducesResponseType(typeof(SocialMediaAccount), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public IActionResult Get(int foodTruckId, int socialAccountId)
+        public async Task<IActionResult> Get(int foodTruckId, int socialAccountId)
         {
-            var result = _foodTruckService.GetFoodTruck(foodTruckId);
+            var result = await _foodTruckService.GetFoodTruckAsync(foodTruckId);
 
             if (result.IsSuccess)
             {
@@ -112,9 +112,9 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 409)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public IActionResult Post(int foodTruckId, [FromBody]CreateSocialMediaAccountModel socialMediaAccountModel)
+        public async Task<IActionResult> Post(int foodTruckId, [FromBody]CreateSocialMediaAccountModel socialMediaAccountModel)
         {
-            var result = _foodTruckService.AddSocialMediaAccount(foodTruckId,
+            var result = await _foodTruckService.AddSocialMediaAccountAsync(foodTruckId,
                 socialMediaAccountModel.SocialMediaPlatformId,
                 socialMediaAccountModel.AccountName);
 
@@ -128,9 +128,9 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
 
         // PUT: api/FoodTruckSocialMedia/5
         [HttpPut("{socialAccountId}")]
-        public IActionResult Put(int foodTruckId, int socialMediaAccountId, [FromBody]UpdateSocialMediaAccount updateModel)
+        public async Task<IActionResult> Put(int foodTruckId, int socialMediaAccountId, [FromBody]UpdateSocialMediaAccount updateModel)
         {
-            var result = _foodTruckService.UpdateSocialMediaAccount(foodTruckId, socialMediaAccountId, updateModel.AccountName);
+            var result = await _foodTruckService.UpdateSocialMediaAccountAsync(foodTruckId, socialMediaAccountId, updateModel.AccountName);
             return CreateResponse<SocialMediaAccount, SocialMediaAccountModelV11>(result);
         }
 
@@ -148,9 +148,9 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
         [ProducesResponseType(typeof(SocialMediaAccount), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public IActionResult Delete(int foodTruckId, int socialMediaAccountId)
+        public async Task<IActionResult> Delete(int foodTruckId, int socialMediaAccountId)
         {
-            var result = _foodTruckService.DeleteSocialMediaAccount(foodTruckId, socialMediaAccountId);
+            var result = await _foodTruckService.DeleteSocialMediaAccountAsync(foodTruckId, socialMediaAccountId);
 
             return ( result.IsSuccess )
                 ? Ok(new ApiMessageModel() { Message = $"Social Media Account deleted" })

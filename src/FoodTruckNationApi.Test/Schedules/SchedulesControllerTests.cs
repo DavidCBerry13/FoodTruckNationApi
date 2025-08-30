@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
+using System.Threading.Tasks;
 
 namespace FoodTruckNationApi.Test.Schedules
 {
@@ -41,8 +42,8 @@ namespace FoodTruckNationApi.Test.Schedules
             var mockLogger = GetMockLogger<SchedulesController>();
 
             var mockScheduleService = new Mock<IScheduleService>();
-            mockScheduleService.Setup(r => r.GetSchedules(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(Result.Success<List<Schedule>>(new List<Schedule>()));
+            mockScheduleService.Setup(r => r.GetSchedulesAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(Result.Success<IEnumerable<Schedule>>(new List<Schedule>())));
 
             var dateTimeProvider = new UnitTestDateTimeProvider(now);
 
@@ -54,7 +55,7 @@ namespace FoodTruckNationApi.Test.Schedules
             var response = controller.Get(new GetSchedulesParameters());
 
             // Assert
-            mockScheduleService.Verify(r => r.GetSchedules(expectedStartDate, expectedEndDate), Times.Once());
+            mockScheduleService.Verify(r => r.GetSchedulesAsync(expectedStartDate, expectedEndDate), Times.Once());
         }
 
 
@@ -67,8 +68,8 @@ namespace FoodTruckNationApi.Test.Schedules
 
             var mockLogger = GetMockLogger<SchedulesController>();
             var mockScheduleService = new Mock<IScheduleService>();
-            mockScheduleService.Setup(r => r.GetSchedules(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(Result.Success<List<Schedule>>(new List<Schedule>()));
+            mockScheduleService.Setup(r => r.GetSchedulesAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(Result.Success<IEnumerable<Schedule>>(new List<Schedule>())));
             var mockDateTimeProvider = new Mock<IDateTimeProvider>();
 
             SchedulesController controller = new SchedulesController(mockLogger.Object, _mapper,
@@ -78,7 +79,7 @@ namespace FoodTruckNationApi.Test.Schedules
             var response = controller.Get(new GetSchedulesParameters() { StartDate = expectedStartDate, EndDate = expectedEndDate });
 
             // Assert
-            mockScheduleService.Verify(r => r.GetSchedules(expectedStartDate, expectedEndDate), Times.Once());
+            mockScheduleService.Verify(r => r.GetSchedulesAsync(expectedStartDate, expectedEndDate), Times.Once());
             mockDateTimeProvider.Verify(p => p.CurrentDateTime, Times.Never);
             mockDateTimeProvider.Verify(p => p.Today, Times.Never);
 

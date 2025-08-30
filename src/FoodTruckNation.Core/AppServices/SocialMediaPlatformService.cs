@@ -5,6 +5,7 @@ using System.Text;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNation.Core.DataInterfaces;
 using DavidBerry.Framework.Functional;
+using System.Threading.Tasks;
 
 namespace FoodTruckNation.Core.AppServices
 {
@@ -20,15 +21,15 @@ namespace FoodTruckNation.Core.AppServices
         private readonly ISocialMediaPlatformRepository _socialMediaPlatformRepository;
 
 
-        public Result<List<SocialMediaPlatform>> GetAllSocialMediaPlatforms()
+        public async Task<Result<IEnumerable<SocialMediaPlatform>>> GetAllSocialMediaPlatformsAsync()
         {
-            return Result.Success(_socialMediaPlatformRepository.GetSocialMediaPlatforms());
+            return Result.Success(await _socialMediaPlatformRepository.GetSocialMediaPlatformsAsync());
         }
 
 
-        public Result<SocialMediaPlatform> GetSocialMediaPlatform(int platformId)
+        public async Task<Result<SocialMediaPlatform>> GetSocialMediaPlatformAsync(int platformId)
         {
-            var socialMediaPlatform = _socialMediaPlatformRepository.GetSocialMediaPlatform(platformId);
+            var socialMediaPlatform = await _socialMediaPlatformRepository.GetSocialMediaPlatformAsync(platformId);
             return ( socialMediaPlatform != null )
                 ? Result.Success<SocialMediaPlatform>(socialMediaPlatform)
                 : Result.Failure<SocialMediaPlatform>(new ObjectNotFoundError($"No social media platform was found with the id {platformId}"));

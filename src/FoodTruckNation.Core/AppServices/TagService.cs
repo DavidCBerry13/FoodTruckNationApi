@@ -8,6 +8,7 @@ using FoodTruckNation.Core.Commands;
 using FoodTruckNation.Core.DataInterfaces;
 using FoodTruckNation.Core.Domain;
 using DavidBerry.Framework.Functional;
+using System.Threading.Tasks;
 
 namespace FoodTruckNation.Core.AppServices
 {
@@ -24,12 +25,12 @@ namespace FoodTruckNation.Core.AppServices
         private readonly ITagRepository _tagRepository;
 
 
-        public Result<IList<Tag>> GetAllTags()
+        public async Task<Result<IEnumerable<Tag>>> GetAllTagsAsync()
         {
             try
             {
-                var tags = _tagRepository.GetAllTags();
-                return Result.Success<IList<Tag>>(tags);
+                var tags = await _tagRepository.GetAllTagsAsync();
+                return Result.Success<IEnumerable<Tag>>(tags);
             }
             catch (Exception ex)
             {
@@ -39,12 +40,12 @@ namespace FoodTruckNation.Core.AppServices
         }
 
 
-        public Result<IList<Tag>> GetTagsInUse()
+        public async Task<Result<IEnumerable<Tag>>> GetTagsInUseAsync()
         {
             try
             {
-                var tags = _tagRepository.GetAllTagsInUse();
-                return Result.Success<IList<Tag>>(tags);
+                var tags = await _tagRepository.GetAllTagsInUseAsync();
+                return Result.Success<IEnumerable<Tag>>(tags);
             }
             catch (Exception ex)
             {
@@ -54,11 +55,11 @@ namespace FoodTruckNation.Core.AppServices
         }
 
 
-        public Result<Tag> GetTagById(int tagId)
+        public async Task<Result<Tag>> GetTagByIdAsync(int tagId)
         {
             try
             {
-                var tag = _tagRepository.GetTagById(tagId);
+                var tag = await _tagRepository.GetTagByIdAsync(tagId);
                 return (tag != null)
                     ? Result.Success<Tag>(tag)
                     : Result.Failure<Tag>($"No tag found with the tag id of {tagId}");
@@ -72,11 +73,11 @@ namespace FoodTruckNation.Core.AppServices
 
 
 
-        public Result<Tag> GetTagByName(string tagName)
+        public async Task<Result<Tag>> GetTagByNameAsync(string tagName)
         {
             try
             {
-                var tag = _tagRepository.GetTagByName(tagName);
+                var tag = await _tagRepository.GetTagByNameAsync(tagName);
                 return ( tag != null )
                     ? Result.Success<Tag>(tag)
                     : Result.Failure<Tag>($"No tag found with the name of {tagName}");
@@ -90,14 +91,14 @@ namespace FoodTruckNation.Core.AppServices
 
 
 
-        public Result<Tag> CreateNewTag(string tagText)
+        public async Task<Result<Tag>> CreateNewTagAsync(string tagText)
         {
             try
             {
                 Tag tag = new Tag(tagText);
 
-                _tagRepository.SaveTag(tag);
-                UnitOfWork.SaveChanges();
+                await _tagRepository.SaveTagAsync(tag);
+                await UnitOfWork.SaveChangesAsync();
 
                 return Result.Success<Tag>(tag);
             }
@@ -109,19 +110,19 @@ namespace FoodTruckNation.Core.AppServices
         }
 
 
-        public Result<Tag> UpdateTag(UpdateTagCommand updateTagCommand)
+        public async Task<Result<Tag>> UpdateTagAsync(UpdateTagCommand updateTagCommand)
         {
             try
             {
-                Tag tag = _tagRepository.GetTagById(updateTagCommand.TagId);
+                Tag tag = await _tagRepository.GetTagByIdAsync(updateTagCommand.TagId);
 
                 if (tag == null)
                     return Result.Failure<Tag>(new ObjectNotFoundError($"No tag was found with the id of {updateTagCommand.TagId}"));
 
                 tag.Text = updateTagCommand.TagText;
 
-                _tagRepository.SaveTag(tag);
-                UnitOfWork.SaveChanges();
+                await _tagRepository.SaveTagAsync(tag);
+                await UnitOfWork.SaveChangesAsync();
 
                 return Result.Success<Tag>(tag);
             }

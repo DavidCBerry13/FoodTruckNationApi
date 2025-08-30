@@ -8,6 +8,7 @@ using DavidBerry.Framework.Functional;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Asp.Versioning;
+using System.Threading.Tasks;
 
 namespace FoodTruckNationApi.Tags
 {
@@ -44,13 +45,13 @@ namespace FoodTruckNationApi.Tags
         /// <param name="inUseOnly"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult<IList<Tag>> Get([FromQuery]bool inUseOnly = false)
+        public async Task<ActionResult<IEnumerable<Tag>>> Get([FromQuery]bool inUseOnly = false)
         {
-            Result<IList<Tag>> result = inUseOnly
-                ? _tagService.GetTagsInUse()
-                : _tagService.GetAllTags();
+            Result<IEnumerable<Tag>> result = inUseOnly
+                ? await _tagService.GetTagsInUseAsync()
+                : await _tagService.GetAllTagsAsync();
 
-            return CreateResponse<IList<Tag>, List<string>>(result);
+            return CreateResponse<IEnumerable<Tag>, IEnumerable<string>>(result);
         }
 
 
