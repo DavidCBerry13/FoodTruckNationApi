@@ -5,23 +5,24 @@ using DavidBerry.Framework.Functional;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FoodTruckNation.Core.AppInterfaces
 {
     public interface ITagService
     {
 
-        Result<IList<Tag>> GetAllTags();
+        public Task<Result<IEnumerable<Tag>>> GetAllTagsAsync();
 
-        Result<IList<Tag>> GetTagsInUse();
+        public Task<Result<IEnumerable<Tag>>> GetTagsInUseAsync();
 
-        Result<Tag> GetTagById(int tagId);
+        public Task<Result<Tag>> GetTagByIdAsync(int tagId);
 
-        Result<Tag> GetTagByName(string tag);
+        public Task<Result<Tag>> GetTagByNameAsync(string tag);
 
-        Result<Tag> CreateNewTag(string tag);
+        public Task<Result<Tag>> CreateNewTagAsync(string tag);
 
-        Result<Tag> UpdateTag(UpdateTagCommand updateTagCommand);
+        public Task<Result<Tag>> UpdateTagAsync(UpdateTagCommand updateTagCommand);
 
 
     }

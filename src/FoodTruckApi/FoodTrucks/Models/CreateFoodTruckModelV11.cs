@@ -112,7 +112,7 @@ namespace FoodTruckNationApi.FoodTrucks
                 .NotNull().WithMessage("An empty tag is not allowed")
                 .Matches(Tag.TAG_TEXT_REGEX).WithMessage("Tags can only contain characters and spaces");
 
-            var socialMediaPlatformsResult = socialMediaPlatformService.GetAllSocialMediaPlatforms();
+            var socialMediaPlatformsResult = socialMediaPlatformService.GetAllSocialMediaPlatformsAsync().Result;
             var socialMediaPlatforms = (socialMediaPlatformsResult.IsSuccess) ? socialMediaPlatformsResult.Value : new List<SocialMediaPlatform>();
 
             RuleForEach(f => f.SocialMediaAccounts)
@@ -124,7 +124,7 @@ namespace FoodTruckNationApi.FoodTrucks
                 .WithMessage((model, sma) => $"No social media platform with an id of ${sma.SocialMediaPlatformId} could be found");
         }
 
-        internal bool ValidateAccountNamePassesRegex(CreateFoodTruckModelV11.SocialMediaAccountModel sma, List<SocialMediaPlatform> platforms)
+        internal bool ValidateAccountNamePassesRegex(CreateFoodTruckModelV11.SocialMediaAccountModel sma, IEnumerable<SocialMediaPlatform> platforms)
         {
             var platform = platforms.FirstOrDefault(p => p.PlatformId == sma.SocialMediaPlatformId);
             if (platform != null)

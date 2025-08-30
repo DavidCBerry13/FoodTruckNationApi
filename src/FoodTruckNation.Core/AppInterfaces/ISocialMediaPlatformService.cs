@@ -3,15 +3,16 @@ using DavidBerry.Framework.Functional;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FoodTruckNation.Core.AppInterfaces
 {
     public interface ISocialMediaPlatformService
     {
 
-        Result<SocialMediaPlatform> GetSocialMediaPlatform(int platformId);
+        public Task<Result<SocialMediaPlatform>> GetSocialMediaPlatformAsync(int platformId);
 
-        Result<List<SocialMediaPlatform>> GetAllSocialMediaPlatforms();
+        public Task<Result<IEnumerable<SocialMediaPlatform>>> GetAllSocialMediaPlatformsAsync();
 
 
     }

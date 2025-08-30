@@ -11,6 +11,7 @@ using DavidBerry.Framework.ApiUtil.Controllers;
 using DavidBerry.Framework;
 using DavidBerry.Framework.Exceptions;
 using Asp.Versioning;
+using System.Threading.Tasks;
 
 namespace FoodTruckNationApi.FoodTrucks
 {
@@ -90,15 +91,15 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(List<FoodTruckModel>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.0")]
-        public ActionResult<FoodTruckModel> Get([FromQuery]string tag = null)
+        public async Task<ActionResult<IEnumerable<FoodTruckModel>>> Get([FromQuery]string tag = null)
         {
             // Since we have just one filter possibility, we'll leave this as a simple conditional statement
             // If we had more/more complex filter criteria, then splitting the logic into multiple methods would be in order
             var result = (tag == null)
-                ? _foodTruckService.GetAllFoodTrucks()
-                : _foodTruckService.GetFoodTrucksByTag(tag);
+                ? await _foodTruckService.GetAllFoodTrucksAsync()
+                : await _foodTruckService.GetFoodTrucksByTagAsync(tag);
 
-            return CreateResponse<List<FoodTruck>, List<FoodTruckModel>>(result);
+            return CreateResponse<IEnumerable<FoodTruck>, IEnumerable<FoodTruckModel>>(result);
         }
 
 
@@ -113,15 +114,15 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(List<FoodTruckModelV11>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.1")]
-        public ActionResult<List<FoodTruckModelV11>> GetV11([FromQuery] string tag = null)
+        public async Task<ActionResult<IEnumerable<FoodTruckModelV11>>> GetV11([FromQuery] string tag = null)
         {
             // Since we have just one filter possibility, we'll leave this as a simple if statement
             // If we had more/more complex filter criteria, then splitting the logic into multiple methods would be in order
             var result = ( tag == null )
-                ? _foodTruckService.GetAllFoodTrucks()
-                : _foodTruckService.GetFoodTrucksByTag(tag);
+                ? await _foodTruckService.GetAllFoodTrucksAsync()
+                : await _foodTruckService.GetFoodTrucksByTagAsync(tag);
 
-            return CreateResponse<List<FoodTruck>, List<FoodTruckModelV11>>(result);
+            return CreateResponse<IEnumerable<FoodTruck>, IEnumerable<FoodTruckModelV11>>(result);
         }
 
 
@@ -139,9 +140,9 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.0")]
-        public ActionResult<FoodTruckModel> Get(int id)
+        public async Task<ActionResult<FoodTruckModel>> GetAsync(int id)
         {
-            var result = _foodTruckService.GetFoodTruck(id);
+            var result = await _foodTruckService.GetFoodTruckAsync(id);
             return CreateResponse<FoodTruck, FoodTruckModel>(result);
         }
 
@@ -160,9 +161,9 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.1")]
-        public ActionResult<FoodTruckModelV11> GetV11(int id)
+        public async Task<ActionResult<FoodTruckModelV11>> GetV11(int id)
         {
-            var result = _foodTruckService.GetFoodTruck(id);
+            var result = await _foodTruckService.GetFoodTruckAsync(id);
             return CreateResponse<FoodTruck, FoodTruckModelV11>(result);
         }
 
@@ -181,10 +182,10 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(ApiMessageModel), 409)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.0")]
-        public ActionResult<FoodTruckModel> Post([FromBody]CreateFoodTruckModel createModel)
+        public async Task<ActionResult<FoodTruckModel>> Post([FromBody]CreateFoodTruckModel createModel)
         {
             var createCommand = _mapper.Map<CreateFoodTruckModel, CreateFoodTruckCommand>(createModel);
-            var result = _foodTruckService.CreateFoodTruck(createCommand);
+            var result = await _foodTruckService.CreateFoodTruckAsync(createCommand);
 
             if (result.IsSuccess)
             {
@@ -211,10 +212,10 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(ApiMessageModel), 409)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.1")]
-        public ActionResult<FoodTruckModelV11> PostV11([FromBody] CreateFoodTruckModelV11 createModel)
+        public async Task<ActionResult<FoodTruckModelV11>> PostV11([FromBody] CreateFoodTruckModelV11 createModel)
         {
             var createCommand = _mapper.Map<CreateFoodTruckModelV11, CreateFoodTruckCommand>(createModel);
-            var result = _foodTruckService.CreateFoodTruck(createCommand);
+            var result = await _foodTruckService.CreateFoodTruckAsync(createCommand);
 
             if (result.IsSuccess)
             {
@@ -257,12 +258,12 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(ConcurrencyErrorModel<FoodTruckModel>), 409)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.0")]
-        public ActionResult<FoodTruckModel> Put(int id, [FromBody]UpdateFoodTruckModel updateModel)
+        public async Task<ActionResult<FoodTruckModel>> PutAsync(int id, [FromBody]UpdateFoodTruckModel updateModel)
         {
             var updateCommand = new UpdateFoodTruckCommand() { FoodTruckId = id };
             _mapper.Map<UpdateFoodTruckModel, UpdateFoodTruckCommand>(updateModel, updateCommand);
 
-            var result = _foodTruckService.UpdateFoodTruck(updateCommand);
+            var result = await _foodTruckService.UpdateFoodTruckAsync(updateCommand);
             return CreateResponse<FoodTruck, FoodTruckModel>(result);
         }
 
@@ -295,12 +296,12 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(ConcurrencyErrorModel<FoodTruckModelV11>), 409)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.1")]
-        public ActionResult<FoodTruckModelV11> PutV11(int id, [FromBody] UpdateFoodTruckModel updateModel)
+        public async Task<ActionResult<FoodTruckModelV11>> PutV11Async(int id, [FromBody] UpdateFoodTruckModel updateModel)
         {
             var updateCommand = new UpdateFoodTruckCommand() { FoodTruckId = id };
             _mapper.Map<UpdateFoodTruckModel, UpdateFoodTruckCommand>(updateModel, updateCommand);
 
-            var result = _foodTruckService.UpdateFoodTruck(updateCommand);
+            var result = await _foodTruckService.UpdateFoodTruckAsync(updateCommand);
             return CreateResponse<FoodTruck, FoodTruckModelV11>(result);
         }
 
@@ -317,9 +318,9 @@ namespace FoodTruckNationApi.FoodTrucks
         [ProducesResponseType(typeof(ApiMessageModel), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 404)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            var result = _foodTruckService.DeleteFoodTruck(id);
+            var result = await _foodTruckService.DeleteFoodTruckAsync(id);
 
             return ( result.IsSuccess )
                 ? Ok(new ApiMessageModel() { Message = $"Food truck {id} has been deleted" })

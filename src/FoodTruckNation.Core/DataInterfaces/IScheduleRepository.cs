@@ -1,22 +1,23 @@
-﻿using FoodTruckNation.Core.Domain;
+using FoodTruckNation.Core.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FoodTruckNation.Core.DataInterfaces
 {
     public interface IScheduleRepository
     {
 
-        Schedule GetSchedule(int scheduleId);
+        public Task<Schedule> GetScheduleAsync(int scheduleId);
 
-        List<Schedule> GetSchedules(DateTime startDate, DateTime endDate);
+        public Task<IEnumerable<Schedule>> GetSchedulesAsync(DateTime startDate, DateTime endDate);
 
-        List<Schedule> GetSchedulesForLocation(int locationId, DateTime startDate, DateTime endDate);
+        public Task<IEnumerable<Schedule>> GetSchedulesForLocationAsync(int locationId, DateTime startDate, DateTime endDate);
 
-        List<Schedule> GetSchedulesForFoodTruck(int foodTruckId, DateTime startDate, DateTime endDate);
+        public Task<IEnumerable<Schedule>> GetSchedulesForFoodTruckAsync(int foodTruckId, DateTime startDate, DateTime endDate);
 
-        void Save(Schedule schedule);
+        public Task SaveAsync(Schedule schedule);
 
 
     }

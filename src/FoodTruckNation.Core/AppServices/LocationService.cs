@@ -9,6 +9,7 @@ using DavidBerry.Framework.Data;
 using DavidBerry.Framework.Exceptions;
 using FoodTruckNation.Core.AppInterfaces;
 using DavidBerry.Framework.Functional;
+using System.Threading.Tasks;
 
 namespace FoodTruckNation.Core.AppServices
 {
@@ -31,9 +32,9 @@ namespace FoodTruckNation.Core.AppServices
 
 
 
-        public Result<Location> GetLocation(int id)
+        public async Task<Result<Location>> GetLocationAsync(int id)
         {
-            var location = _locationRepository.GetLocation(id);
+            var location = await _locationRepository.GetLocationAsync(id);
             return (location != null)
                 ? Result.Success<Location>(location)
                 : Result.Failure<Location>($"No location found with the id of {id}");
@@ -41,31 +42,31 @@ namespace FoodTruckNation.Core.AppServices
 
 
 
-        public Result<List<Location>> GetLocations()
+        public async Task<Result<IEnumerable<Location>>> GetLocationsAsync()
         {
-            var locations = _locationRepository.GetLocations();
-            return Result.Success<List<Location>>(locations);
+            var locations = await _locationRepository.GetLocationsAsync();
+            return Result.Success<IEnumerable<Location>>(locations);
         }
 
 
 
-        public Result<Location> CreateLocation(CreateLocationCommand createLocationCommand)
+        public async Task<Result<Location>> CreateLocationAsync(CreateLocationCommand createLocationCommand)
         {
             // TODO: Standardize address and check to see if this location already exists
 
             Location location = new Location(createLocationCommand.Name, createLocationCommand.StreetAddress, createLocationCommand.City,
                 createLocationCommand.State, createLocationCommand.ZipCode);
 
-            _locationRepository.Save(location);
-            UnitOfWork.SaveChanges();
+            await _locationRepository.SaveAsync(location);
+            await UnitOfWork.SaveChangesAsync();
 
             return Result.Success<Location>(location);
         }
 
 
-        public Result<Location> UpdateLocation(UpdateLocationCommand updateLocationCommand)
+        public async Task<Result<Location>> UpdateLocationAsync(UpdateLocationCommand updateLocationCommand)
         {
-            Location location = _locationRepository.GetLocation(updateLocationCommand.LocationId);
+            Location location = await _locationRepository.GetLocationAsync(updateLocationCommand.LocationId);
             if (location == null)
                 return Result.Failure<Location>($"No location was found with the id {updateLocationCommand.LocationId}");
 
@@ -78,22 +79,22 @@ namespace FoodTruckNation.Core.AppServices
 
 
 
-            _locationRepository.Save(location);
-            UnitOfWork.SaveChanges();
+            await _locationRepository.SaveAsync(location);
+            await UnitOfWork.SaveChangesAsync();
 
             return Result.Success<Location>(location);
         }
 
 
-        public Result DeleteLocation(int locationId)
+        public async Task<Result> DeleteLocationAsync(int locationId)
         {
-            Location location = _locationRepository.GetLocation(locationId);
+            Location location = await _locationRepository.GetLocationAsync(locationId);
 
             if (location == null)
                 return Result.Failure(new ObjectNotFoundError($"Location id {locationId} not found so it could not be deleted"));
 
-            _locationRepository.Delete(location);
-            UnitOfWork.SaveChanges();
+            await _locationRepository.DeleteAsync(location);
+            await UnitOfWork.SaveChangesAsync();
 
             return Result.Success();
         }

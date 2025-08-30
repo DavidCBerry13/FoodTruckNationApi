@@ -3,25 +3,26 @@ using FoodTruckNation.Core.Domain;
 using DavidBerry.Framework.Functional;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FoodTruckNation.Core.AppInterfaces
 {
     public interface ILocationService
     {
 
-        Result<List<Location>> GetLocations();
+        public Task<Result<IEnumerable<Location>>> GetLocationsAsync();
 
 
-        Result<Location> GetLocation(int id);
+        public Task<Result<Location>> GetLocationAsync(int id);
 
 
-        Result<Location> CreateLocation(CreateLocationCommand locationInfo);
+        public Task<Result<Location>> CreateLocationAsync(CreateLocationCommand locationInfo);
 
 
-        Result<Location> UpdateLocation(UpdateLocationCommand locationInfo);
+        public Task<Result<Location>> UpdateLocationAsync(UpdateLocationCommand locationInfo);
 
 
-        Result DeleteLocation(int locationId);
+        public Task<Result> DeleteLocationAsync(int locationId);
 
 
     }
