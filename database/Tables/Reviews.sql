@@ -11,7 +11,9 @@
 	CONSTRAINT PK_Reviews
 	    PRIMARY KEY (ReviewId),
 	CONSTRAINT FK_Reviews_FoodTruckId
-	    FOREIGN KEY (FoodTruckId) REFERENCES FoodTrucks (FoodTruckId)
+	    FOREIGN KEY (FoodTruckId) REFERENCES FoodTrucks (FoodTruckId),
+	CONSTRAINT CC_Reviews_Rating
+	    CHECK (Rating >= 1 AND Rating <= 5)
 )
 WITH (SYSTEM_VERSIONING = ON
     (HISTORY_TABLE = dbo.ReviewsHistory));

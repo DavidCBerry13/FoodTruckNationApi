@@ -13,7 +13,9 @@
 	CONSTRAINT FK_Schedules_FoodTruckId
 	    FOREIGN KEY (FoodTruckId) REFERENCES FoodTrucks (FoodTruckId),
 	CONSTRAINT FK_Schedules_LocationId
-	    FOREIGN KEY (LocationId) REFERENCES Locations (LocationId)
+	    FOREIGN KEY (LocationId) REFERENCES Locations (LocationId),
+	CONSTRAINT CC_Schedules_EndTime
+	    CHECK (EndTime >= StartTime)
 )
 WITH (SYSTEM_VERSIONING = ON
     (HISTORY_TABLE = dbo.SchedulesHistory));
