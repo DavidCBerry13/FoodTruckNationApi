@@ -16,10 +16,11 @@ namespace FoodTruckNation.Core.AppServices
     public class LocationService : BaseService, ILocationService
     {
 
-        public LocationService(ILoggerFactory loggerFactory, IUnitOfWork uow, ILocationRepository locationRepository)
+        public LocationService(ILoggerFactory loggerFactory, IUnitOfWork uow, ILocationRepository locationRepository, ILocalityRepository localityRepository)
             : base(loggerFactory, uow)
         {
             _locationRepository = locationRepository;
+            _localityRepository = localityRepository;
         }
 
 
@@ -27,6 +28,7 @@ namespace FoodTruckNation.Core.AppServices
 
 
         private readonly ILocationRepository _locationRepository;
+        private readonly ILocalityRepository _localityRepository;
 
         #endregion
 
@@ -37,7 +39,7 @@ namespace FoodTruckNation.Core.AppServices
             var location = await _locationRepository.GetLocationAsync(id);
             return (location != null)
                 ? Result.Success<Location>(location)
-                : Result.Failure<Location>($"No location found with the id of {id}");
+                : Result.Failure<Location>(new ObjectNotFoundError($"No location found with the id of {id}"));
         }
 
 
@@ -49,12 +51,28 @@ namespace FoodTruckNation.Core.AppServices
         }
 
 
+        public async Task<Result<IEnumerable<Location>>> GetLocationsAsync(string localityCode)
+        {
+            var locality = await _localityRepository.GetLocalityAsync(localityCode);
+            if (locality == null)
+                return Result.Failure<IEnumerable<Location>>(new InvalidDataError($"The locality code {localityCode} does not exist"));
+
+            var locations = await _locationRepository.GetLocationsAsync(locality);
+            return Result.Success<IEnumerable<Location>>(locations);
+        }
+
+
 
         public async Task<Result<Location>> CreateLocationAsync(CreateLocationCommand createLocationCommand)
         {
             // TODO: Standardize address and check to see if this location already exists
 
-            Location location = new Location(createLocationCommand.Name, createLocationCommand.StreetAddress, createLocationCommand.City,
+            var locality = await _localityRepository.GetLocalityAsync(createLocationCommand.LocalityCode);
+            if (locality == null)
+                return Result.Failure<Location>(new InvalidDataError($"No locality with the locality code {createLocationCommand.LocalityCode} exists"));
+
+
+            Location location = new Location(createLocationCommand.Name, locality, createLocationCommand.StreetAddress, createLocationCommand.City,
                 createLocationCommand.State, createLocationCommand.ZipCode);
 
             await _locationRepository.SaveAsync(location);

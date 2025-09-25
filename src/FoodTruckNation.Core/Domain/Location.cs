@@ -22,35 +22,44 @@ namespace FoodTruckNation.Core.Domain
         }
 
 
-        internal Location(int id, string name, string streetAddress, string city,
-            string state, string zipCode) : base(ObjectState.UNCHANGED)
+        internal Location(int id, string name, Locality locality, string streetAddress, string city,
+            string state, string zipCode, decimal latitude, decimal longitude) : base(ObjectState.UNCHANGED)
         {
             _locationId = id;
             _locationName = name;
+            _locality = locality;
             _streetAddress = streetAddress;
             _city = city;
             _state = state;
             _zipCode = zipCode;
+            _latitude = latitude;
+            _longitude = longitude;
         }
 
 
-        public Location(string name, string streetAddress, string city,
+        public Location(string name, Locality locality, string streetAddress, string city,
             string state, string zipCode) : base(ObjectState.NEW)
         {
             _locationName = name;
+            _locality = locality;
             _streetAddress = streetAddress;
             _city = city;
             _state = state;
             _zipCode = zipCode;
+            _latitude = 0.0m;
+            _longitude = 0.0m;
         }
 
 
         private int _locationId;
         private string _locationName;
+        private Locality _locality;
         private string _streetAddress;
         private string _city;
         private string _state;
         private string _zipCode;
+        private decimal _latitude;
+        private decimal _longitude;
 
 
 
@@ -84,6 +93,25 @@ namespace FoodTruckNation.Core.Domain
             set
             {
                 _locationName = value;
+                SetObjectModified();
+            }
+        }
+
+        [Required]
+        public string LocalityCode
+        {
+            get;
+            private set;
+        }
+
+
+        [Required]
+        public Locality Locality
+        {
+            get {  return _locality; }
+            set
+            {
+                _locality = value;
                 SetObjectModified();
             }
         }
@@ -135,5 +163,26 @@ namespace FoodTruckNation.Core.Domain
             }
         }
 
+
+        public decimal Latitude
+        {
+            get { return _latitude; }
+            set
+            {
+                _latitude = value;
+                SetObjectModified();
+            }
+        }
+
+
+        public decimal Longitude
+        {
+            get { return _longitude; }
+            set
+            {
+                _longitude = value;
+                SetObjectModified();
+            }
+        }
     }
 }

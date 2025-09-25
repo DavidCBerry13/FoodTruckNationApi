@@ -22,6 +22,11 @@ namespace FoodTruckNationApi.Locations
         public string Name { get; set; }
 
         /// <summary>
+        /// The locality (metro area) code of where this location is
+        /// </summary>
+        public string LocalityCode { get; set; }
+
+        /// <summary>
         /// The street address of this location
         /// </summary>
         public string StreetAddress { get; set; }

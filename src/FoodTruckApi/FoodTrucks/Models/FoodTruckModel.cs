@@ -39,6 +39,16 @@ namespace FoodTruckNationApi.FoodTrucks
         public List<string> Tags { get; set; }
 
         /// <summary>
+        /// The locality (region) code this location is in
+        /// </summary>
+        public string LocalityCode { get; set; }
+
+        /// <summary>
+        /// The locality (region) name this location is in
+        /// </summary>
+        public string LocalityName { get; set; }
+
+        /// <summary>
         /// Gets the number of reviews present for this food truck
         /// </summary>
         public int ReviewCount { get; set; }
@@ -103,7 +113,13 @@ namespace FoodTruckNationApi.FoodTrucks
                 .ForMember(
                     dest => dest.Meta,
                     opt => opt.MapFrom(src => src)
-                );
+                )
+                .ForMember(
+                    dest => dest.LocalityCode,
+                    opt => opt.MapFrom(src => src.Locality.LocalityCode))
+                .ForMember(
+                    dest => dest.LocalityName,
+                    opt => opt.MapFrom(src => src.Locality.Name));
 
             // For the links in the Meta object
             CreateMap<FoodTruck, FoodTruckModel.FoodTruckLinks>()

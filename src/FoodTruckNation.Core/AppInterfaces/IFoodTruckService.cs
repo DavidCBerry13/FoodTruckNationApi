@@ -18,7 +18,7 @@ namespace FoodTruckNation.Core.AppInterfaces
 
         public Task<Result<IEnumerable<FoodTruck>>> GetAllFoodTrucksAsync();
 
-        public Task<Result<IEnumerable<FoodTruck>>> GetFoodTrucksByTagAsync(string tag);
+        public Task<Result<IEnumerable<FoodTruck>>> GetFoodTrucksAsync(string? localityCode, string? tag);
 
         public Task<Result<FoodTruck>> GetFoodTruckAsync(int id);
 

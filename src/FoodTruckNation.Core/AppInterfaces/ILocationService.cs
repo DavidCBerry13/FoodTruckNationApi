@@ -12,6 +12,7 @@ namespace FoodTruckNation.Core.AppInterfaces
 
         public Task<Result<IEnumerable<Location>>> GetLocationsAsync();
 
+        public Task<Result<IEnumerable<Location>>> GetLocationsAsync(string localityCode);
 
         public Task<Result<Location>> GetLocationAsync(int id);
 

@@ -21,13 +21,14 @@ namespace FoodTruckNation.Core.AppServices
 
 
         public FoodTruckService(ILoggerFactory loggerFactory, IUnitOfWork uow, IDateTimeProvider dateTimeProvider,
-            IFoodTruckRepository foodTruckRepository, ITagRepository tagRepository, ISocialMediaPlatformRepository socialMediaPlatformRepository)
+            IFoodTruckRepository foodTruckRepository, ITagRepository tagRepository, ISocialMediaPlatformRepository socialMediaPlatformRepository, ILocalityRepository localityRepository)
             : base(loggerFactory, uow)
         {
             _dateTimeProvider = dateTimeProvider;
             _foodTruckRepository = foodTruckRepository;
             _tagRepository = tagRepository;
             _socialMediaPlatformRepository = socialMediaPlatformRepository;
+            _localityRepository = localityRepository;
         }
 
 
@@ -37,6 +38,7 @@ namespace FoodTruckNation.Core.AppServices
         private readonly IFoodTruckRepository _foodTruckRepository;
         private readonly ITagRepository _tagRepository;
         private readonly ISocialMediaPlatformRepository _socialMediaPlatformRepository;
+        private readonly ILocalityRepository _localityRepository;
 
         #endregion
 
@@ -48,10 +50,43 @@ namespace FoodTruckNation.Core.AppServices
         }
 
 
-        public async Task<Result<IEnumerable<FoodTruck>>> GetFoodTrucksByTagAsync(string tag)
+        public async Task<Result<IEnumerable<FoodTruck>>> GetFoodTrucksAsync(string? localityCode, string? tag)
         {
-            var foodTrucks = await _foodTruckRepository.GetFoodTruckByTagAsync(tag);
-            return Result.Success<IEnumerable<FoodTruck>>(foodTrucks.ToList());
+            // Both locality code and tag are null, so this is basically returning everything
+            if (localityCode == null && tag == null)
+                return await GetAllFoodTrucksAsync();
+
+            if (localityCode != null &&  tag != null)
+            {
+                // We have both locality code and tag, so query food trucks by both
+                var locality = await _localityRepository.GetLocalityAsync(localityCode);
+                if (locality == null)
+                    return Result.Failure<IEnumerable<FoodTruck>>(new InvalidDataError($"The locality code {localityCode} does not exist"));
+
+                var foodTrucks = await _foodTruckRepository.GetFoodTrucksAsync(locality, tag);
+                return Result.Success<IEnumerable<FoodTruck>>(foodTrucks);
+            }
+            else if ( localityCode !=  null && tag == null)
+            {
+                // We have locality code but no tag, so just query by locality
+                var locality = await _localityRepository.GetLocalityAsync(localityCode);
+                if (locality == null)
+                    return Result.Failure<IEnumerable<FoodTruck>>(new InvalidDataError($"The locality code {localityCode} does not exist"));
+
+                var foodTrucks = await _foodTruckRepository.GetFoodTrucksAsync(locality);
+                return Result.Success<IEnumerable<FoodTruck>>(foodTrucks);
+            }
+            else if (localityCode == null && tag != null)
+            {
+                // We have tag but no locality code.  Query by tag
+                var foodTrucks = await _foodTruckRepository.GetFoodTrucksAsync(tag);
+                return Result.Success<IEnumerable<FoodTruck>>(foodTrucks);
+            }
+            else
+            {
+                // Both locality code and tag are null, so this is basically returning everything
+                return await GetAllFoodTrucksAsync();
+            }    
         }
 
 
@@ -79,9 +114,8 @@ namespace FoodTruckNation.Core.AppServices
             // Social Media Accounts
             foreach (var accountInfo in foodTruckInfo.SocialMediaAccounts)
             {
-                var platform = await _socialMediaPlatformRepository.GetSocialMediaPlatformAsync(accountInfo.SocialMediaPlatformId);
-                if (platform == null)
-                    throw new InvalidDataException($"The id {accountInfo.SocialMediaPlatformId} is not a valid social media platform id");
+                var platform =  await _socialMediaPlatformRepository.GetSocialMediaPlatformAsync(accountInfo.SocialMediaPlatformId)
+                    ?? throw new InvalidDataException($"The id {accountInfo.SocialMediaPlatformId} is not a valid social media platform id");
 
                 SocialMediaAccount account = new SocialMediaAccount(platform, foodTruck, accountInfo.AccountName);
                 foodTruck.AddSocialMediaAccount(account);

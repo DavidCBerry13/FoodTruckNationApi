@@ -3,22 +3,28 @@ SET IDENTITY_INSERT Tags ON
 
 MERGE INTO Tags AS Target
 USING (VALUES
-    (1,  'Burgers' ),
-    (2,  'Pizza' ),
-	(3,  'Breakfast' ),
-    (4,  'Japanese Food' ),
-	(5,  'Asian' ),
-    (6,  'Chinese Food' ),
-    (7,  'Sandwiches' ),
-	(8,  'Grilled Cheese' ),
-	(9,  'Paninis' ),
-	(10, 'Thai Food' ),
-	(11, 'Indian Food' ),
-    (12, 'Tacos' ),
-    (13, 'Mexican Food' ),
-    (14, 'Sushi' ),
-    (15, 'Hot Dogs' ),
-	(16, 'Italian Beef')
+    (1,  'American'),
+    (2,  'Asian'),
+	(3,  'BBQ'),
+    (4,  'Breakfast'),
+	(5,  'Burgers'),
+    (6,  'Chicken'),
+    (7,  'Chinese'),
+	(8,  'Cuban'),
+	(9,  'Deserts'),
+	(10, 'Hawaiian'),
+	(11, 'Italian'),
+    (12, 'Japanese'),
+    (13, 'Korean'),
+    (14, 'Mexican'),
+    (15, 'Pizza'),
+	(16, 'Sandwiches'),
+    (17, 'Seafood'),
+    (18, 'Tacos'),
+    (19, 'Thai'),
+    (20, 'French'),
+    (21, 'Crepes'),
+    (22, 'Vegetarian')
 )
 AS Source (TagId, TagName)
 ON Target.TagId = Source.TagId
@@ -41,5 +47,4 @@ SELECT @nextTagId = (
 DBCC CHECKIDENT (Tags, RESEED, @nextTagId)
 
 SET IDENTITY_INSERT Tags OFF
-
 

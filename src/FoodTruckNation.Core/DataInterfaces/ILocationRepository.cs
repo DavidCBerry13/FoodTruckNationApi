@@ -24,6 +24,15 @@ namespace FoodTruckNation.Core.DataInterfaces
         public Task<IEnumerable<Location>> GetLocationsAsync();
 
 
+        /// <summary>
+        /// Get all of the locations in the locality identified by the given locality code
+        /// </summary>
+        /// <param name="locality">The Locality to get the locations for</param>
+        /// <returns>An IEnurable of Locations</returns>
+        public Task<IEnumerable<Location>> GetLocationsAsync(Locality locality);
+
+
+
         public Task SaveAsync(Location location);
 
 

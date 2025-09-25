@@ -16,19 +16,21 @@ namespace FoodTruckNation.Data.EF.Repositories
         public LocationRepository(FoodTruckContext context)
         {
             _foodTruckContext = context;
+            _locations = _foodTruckContext.Locations
+                .AsNoTracking()
+                .Include(x => x.Locality);
         }
 
 
         private readonly FoodTruckContext _foodTruckContext;
-
+        private readonly IQueryable<Location> _locations;
 
 
 
         public async Task<Location> GetLocationAsync(int locationId)
         {
-            var location = await _foodTruckContext.Locations
+            var location = await _locations
                 .Where(l => l.LocationId == locationId)
-                .AsNoTracking()
                 .SingleOrDefaultAsync();
 
             return location;
@@ -36,9 +38,18 @@ namespace FoodTruckNation.Data.EF.Repositories
 
         public async Task<IEnumerable<Location>> GetLocationsAsync()
         {
-            var locations = await _foodTruckContext.Locations
-                .AsNoTracking()
+            var locations = await _locations
                 .ToListAsync();
+
+            return locations;
+        }
+
+
+        public async Task<IEnumerable<Location>> GetLocationsAsync(Locality locality)
+        {
+            var locations = await _locations
+                 .Where(l => l.LocalityCode == locality.LocalityCode)
+                 .ToListAsync();
 
             return locations;
         }
