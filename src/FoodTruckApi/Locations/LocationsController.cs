@@ -1,20 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
+using Asp.Versioning;
+using AutoMapper;
+using Azure;
+using DavidBerry.Framework;
+using DavidBerry.Framework.ApiUtil;
+using DavidBerry.Framework.ApiUtil.Controllers;
+using DavidBerry.Framework.ApiUtil.Models;
+using DavidBerry.Framework.Functional;
+using FoodTruckNation.Core.AppInterfaces;
+using FoodTruckNation.Core.AppServices;
+using FoodTruckNation.Core.Commands;
+using FoodTruckNation.Core.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using FoodTruckNation.Core.Domain;
 using Microsoft.Extensions.Logging;
-using DavidBerry.Framework.ApiUtil;
-using FoodTruckNation.Core.AppInterfaces;
-using FoodTruckNation.Core.Commands;
-using DavidBerry.Framework;
-using AutoMapper;
-using DavidBerry.Framework.ApiUtil.Models;
-using DavidBerry.Framework.ApiUtil.Controllers;
-using DavidBerry.Framework.Functional;
-using Asp.Versioning;
 
 namespace FoodTruckNationApi.Locations
 {
@@ -62,18 +65,24 @@ namespace FoodTruckNationApi.Locations
         /// <summary>
         /// Gets a list of all locations where food trucks can gather at
         /// </summary>
+        /// <param name="locality">
+        /// An optional locality code to only get locations for the given locality
+        /// </param>
         /// <returns></returns>
         /// <response code="200">Success</response>
+        /// <response code="401">Bad Request.  If an unknonw/illegal locality code is passed as a parameter</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet(Name = GET_ALL_LOCATIONS)]
         [ProducesResponseType(typeof(List<LocationModel>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
-        public async Task<IActionResult> GetAsync()
+        public async Task<IActionResult> GetAsync([FromQuery]string locality = null)
         {
-            Result<IEnumerable<Location>> result = await _locationService.GetLocationsAsync();
+            var result = ( locality == null )
+                ? await _locationService.GetLocationsAsync()
+                : await _locationService.GetLocationsAsync(locality);
 
             if (result.IsSuccess)
-            {
+            { 
                 var model = _mapper.Map<IEnumerable<Location>, IEnumerable<LocationModel>>(result.Value);
                 return Ok(model);
             }
@@ -81,7 +90,6 @@ namespace FoodTruckNationApi.Locations
             {
                 return MapErrorResult<IEnumerable<Location>, IEnumerable<LocationModel>>(result);
             }
-            //return CreateResponse<List<Location>, List<LocationModel>>(result);
         }
 
 

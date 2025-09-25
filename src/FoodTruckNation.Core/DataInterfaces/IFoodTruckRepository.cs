@@ -22,9 +22,27 @@ namespace FoodTruckNation.Core.DataInterfaces
         /// <returns></returns>
         public Task<FoodTruck> GetFoodTruckAsync(int foodTruckId);
 
+        /// <summary>
+        /// Gets all the food trucks for the given locality
+        /// </summary>
+        /// <param name="locality">A Locality object of the locality to get food trucks for</param>
+        /// <returns>An IEnumerable of FoodTruck objects that operate in this locality</returns>
+        public Task<IEnumerable<FoodTruck>> GetFoodTrucksAsync(Locality locality);
 
+        /// <summary>
+        /// Gets all the food trucks with the given tag
+        /// </summary>
+        /// <param name="tag">A string of the tag used to filter food trucks with</param>
+        /// <returns>An IEnumerable of FoodTruck objects with the provided tag</returns>
+        public Task<IEnumerable<FoodTruck>> GetFoodTrucksAsync(string tag);
 
-        public Task<IEnumerable<FoodTruck>> GetFoodTruckByTagAsync(string tag);
+        /// <summary>
+        /// Gets all the food trucks for the given locality with the given tag
+        /// </summary>
+        /// <param name="locality">A Locality object of the locality to get food trucks for</param>
+        /// <param name="tag">A string of the tag used to filter food trucks with</param>
+        /// <returns>An IEnumerable of FoodTruck objects in the given locality with the provided tag</returns>
+        public Task<IEnumerable<FoodTruck>> GetFoodTrucksAsync(Locality locality, string tag);
 
 
         public Task SaveAsync(FoodTruck foodTruck);

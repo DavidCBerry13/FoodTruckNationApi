@@ -111,7 +111,7 @@ namespace FoodTruckNation.Data.EF
             modelBuilder.Entity<Locality>().Property(p => p.LocalityCode)
                 .HasField("_localityCode")
                 .HasColumnName("LocalityCode");
-            
+
             modelBuilder.Entity<Locality>().Property(p => p.Name)
                 .HasField("_localityName")
                 .HasColumnName("LocalityName");
@@ -152,6 +152,20 @@ namespace FoodTruckNation.Data.EF
                 .HasField("_zipCode")
                 .HasColumnName("ZipCode");
 
+            modelBuilder.Entity<Location>().Property(p => p.Latitude)
+                .HasField("_latitude")
+                .HasColumnName("Latitude");
+
+            modelBuilder.Entity<Location>().Property(p => p.Longitude)
+                .HasField("_longitude")
+                .HasColumnName("Longitude");
+
+            // https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-many#one-to-many-without-navigation-to-dependents
+            modelBuilder.Entity<Location>()
+                .HasOne(e => e.Locality)
+                .WithMany()
+                .HasForeignKey(e => e.LocalityCode)
+                .IsRequired();
         }
 
 
@@ -187,6 +201,12 @@ namespace FoodTruckNation.Data.EF
                 .IsConcurrencyToken()
                 .ValueGeneratedOnAddOrUpdate();
 
+            // https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-many#one-to-many-without-navigation-to-dependents
+            modelBuilder.Entity<FoodTruck>()
+                .HasOne(e => e.Locality)
+                .WithMany()
+                .HasForeignKey(e => e.LocalityCode)
+                .IsRequired();
 
             // So EF can set the backing field on the navigation property
             // https://blog.oneunicorn.com/2016/10/28/collection-navigation-properties-and-fields-in-ef-core-1-1/

@@ -29,6 +29,16 @@ namespace FoodTruckNationApi.Locations
         public string LocationName { get; set; }
 
         /// <summary>
+        /// The locality (region) code this location is in
+        /// </summary>
+        public string LocalityCode { get; set; }
+
+        /// <summary>
+        /// The locality (region) name this location is in
+        /// </summary>
+        public string LocalityName { get; set; }
+
+        /// <summary>
         /// The street address of this location
         /// </summary>
         public string StreetAddress { get; set; }
@@ -54,6 +64,7 @@ namespace FoodTruckNationApi.Locations
         /// </summary>
         public LocationLinks Meta { get; set; }
 
+        #region Nested Types
 
         /// <summary>
         /// Class to encapsulate the links (urls) for a location
@@ -71,6 +82,7 @@ namespace FoodTruckNationApi.Locations
             public string Schedules { get; set; }
         }
 
+        #endregion
     }
 
 
@@ -88,6 +100,14 @@ namespace FoodTruckNationApi.Locations
                 .ForMember(
                     dest => dest.LocationName,
                     opt => opt.MapFrom(src => src.Name)
+                )
+                .ForMember(
+                    dest => dest.LocalityCode,
+                    opt => opt.MapFrom(src => src.Locality.LocalityCode)
+                )
+                .ForMember(
+                    dest => dest.LocalityName,
+                    opt => opt.MapFrom(src => src.Locality.Name)
                 )
                 .ForMember(
                     dest => dest.Meta,

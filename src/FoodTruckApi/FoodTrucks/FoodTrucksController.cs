@@ -85,19 +85,20 @@ namespace FoodTruckNationApi.FoodTrucks
         /// Gets a list of all food trucks in the system.  Optionally, a tag value can be provided that will return only food trucks tagged with the given tag
         /// </summary>
         /// <param name="tag">An optional tag to filter the food trucks by</param>
+        /// <param name="localityCode">A string of the locality code to get a list of food trucks for</param>        
         /// <returns></returns>
         /// <response code="200">Success.  A list of food trucks will be returned</response>
         [HttpGet(Name = GET_ALL_FOOD_TRUCKS)]
         [ProducesResponseType(typeof(List<FoodTruckModel>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.0")]
-        public async Task<ActionResult<IEnumerable<FoodTruckModel>>> Get([FromQuery]string tag = null)
+        public async Task<ActionResult<IEnumerable<FoodTruckModel>>> Get([FromQuery]string localityCode = null, [FromQuery] string tag = null)
         {
             // Since we have just one filter possibility, we'll leave this as a simple conditional statement
             // If we had more/more complex filter criteria, then splitting the logic into multiple methods would be in order
-            var result = (tag == null)
+            var result = (tag == null && localityCode == null)
                 ? await _foodTruckService.GetAllFoodTrucksAsync()
-                : await _foodTruckService.GetFoodTrucksByTagAsync(tag);
+                : await _foodTruckService.GetFoodTrucksAsync(localityCode, tag);
 
             return CreateResponse<IEnumerable<FoodTruck>, IEnumerable<FoodTruckModel>>(result);
         }
@@ -108,19 +109,20 @@ namespace FoodTruckNationApi.FoodTrucks
         /// Gets a list of all food trucks in the system.  Optionally, a tag value can be provided that will return only food trucks tagged with the given tag
         /// </summary>
         /// <param name="tag">An optional tag to filter the food trucks by</param>
+        /// <param name="localityCode">A string of the locality code to get a list of food trucks for</param>
         /// <returns></returns>
         /// <response code="200">Success.  A list of food trucks will be returned</response>
         [HttpGet(Name = GET_ALL_FOOD_TRUCKS_V11)]
         [ProducesResponseType(typeof(List<FoodTruckModelV11>), 200)]
         [ProducesResponseType(typeof(ApiMessageModel), 500)]
         [MapToApiVersion("1.1")]
-        public async Task<ActionResult<IEnumerable<FoodTruckModelV11>>> GetV11([FromQuery] string tag = null)
+        public async Task<ActionResult<IEnumerable<FoodTruckModelV11>>> GetV11([FromQuery] string tag = null, [FromQuery] string localityCode = null)
         {
             // Since we have just one filter possibility, we'll leave this as a simple if statement
             // If we had more/more complex filter criteria, then splitting the logic into multiple methods would be in order
             var result = ( tag == null )
                 ? await _foodTruckService.GetAllFoodTrucksAsync()
-                : await _foodTruckService.GetFoodTrucksByTagAsync(tag);
+                : await _foodTruckService.GetFoodTrucksAsync(tag, localityCode);
 
             return CreateResponse<IEnumerable<FoodTruck>, IEnumerable<FoodTruckModelV11>>(result);
         }

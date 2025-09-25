@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using DavidBerry.Framework.Domain;
 
@@ -72,6 +73,7 @@ namespace FoodTruckNation.Core.Domain
         private string _name;
         private string _description;
         private string _website;
+        private Locality _locality;
         private DateTime _lastModifiedDate;
         private readonly List<FoodTruckTag> _tags;
         private readonly List<Review> _reviews;
@@ -94,7 +96,7 @@ namespace FoodTruckNation.Core.Domain
         public int FoodTruckId
         {
             get { return _foodTruckId; }
-            private set { _foodTruckId = value; }
+            internal set { _foodTruckId = value; }
         }
 
         public string Name
@@ -127,6 +129,24 @@ namespace FoodTruckNation.Core.Domain
             }
         }
 
+        [Required]
+        public string LocalityCode
+        {
+            get;
+            private set;
+        }
+
+
+        [Required]
+        public Locality Locality
+        {
+            get { return _locality; }
+            set
+            {
+                _locality = value;
+                SetObjectModified();
+            }
+        }
 
         public DateTime LastModifiedDate
         {

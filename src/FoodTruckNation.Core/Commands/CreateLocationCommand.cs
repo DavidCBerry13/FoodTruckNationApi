@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,15 +7,17 @@ namespace FoodTruckNation.Core.Commands
     public class CreateLocationCommand
     {
 
-        public String Name { get; set; }
+        public string Name { get; set; }
 
-        public String StreetAddress { get; set; }
+        public string LocalityCode { get; set; }
 
-        public String City { get; set; }
+        public string StreetAddress { get; set; }
 
-        public String State { get; set; }
+        public string City { get; set; }
 
-        public String ZipCode { get; set; }
+        public string State { get; set; }
+
+        public string ZipCode { get; set; }
 
 
     }

@@ -1,10 +1,10 @@
 ﻿MERGE INTO Localities AS Target
 USING (VALUES
-    ('CHI', 'Chicago'),
+    ('CHI'  , 'Chicago'),
     ('RCKFD', 'Rockford'),
-    ('MKE', 'Milwaukee'),
-    ('MAD', 'Madison'),
-    ('NEWI', 'Northeast Wisconsin')
+    ('MKE'  , 'Milwaukee'),
+    ('MAD'  , 'Madison'),
+    ('NEWI' , 'Northeast Wisconsin')
 )
 AS Source (LocalityCode, LocalityName)
 ON Target.LocalityCode = Source.LocalityCode

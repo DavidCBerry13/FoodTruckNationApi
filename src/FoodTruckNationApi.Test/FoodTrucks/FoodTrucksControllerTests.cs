@@ -92,7 +92,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
 
             // Assert
             mockService.Verify(r => r.GetAllFoodTrucksAsync(), Times.Once());
-            mockService.Verify(r => r.GetFoodTrucksByTagAsync(It.IsAny<string>()), Times.Never());
+            mockService.Verify(r => r.GetFoodTrucksAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Never());
         }
 
 
@@ -104,7 +104,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             var searchTag = "Tacos";
 
             var mockService = new Mock<IFoodTruckService>();
-            mockService.Setup(r => r.GetFoodTrucksByTagAsync(searchTag))
+            mockService.Setup(r => r.GetFoodTrucksAsync(searchTag, null))
                 .Returns(Task.FromResult(Result.Success<IEnumerable<FoodTruck>>(_foodTruckList.Where(f => f.Tags.Any(t => t.Tag.Text == searchTag)).ToList())));
             FoodTrucksController controller = new FoodTrucksController(mockLogger.Object, _mapper, mockService.Object);
 
@@ -113,7 +113,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
 
             // Assert
             mockService.Verify(r => r.GetAllFoodTrucksAsync(), Times.Never());
-            mockService.Verify(r => r.GetFoodTrucksByTagAsync(searchTag), Times.Once());
+            mockService.Verify(r => r.GetFoodTrucksAsync(searchTag, null), Times.Once());
         }
 
 
