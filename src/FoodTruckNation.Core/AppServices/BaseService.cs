@@ -1,4 +1,4 @@
-using DavidBerry.Framework.Data;
+using FoodTruckNation.Core.DataInterfaces;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -13,15 +13,15 @@ namespace FoodTruckNation.Core.AppServices
     public abstract class BaseService
     {
 
-        public BaseService(ILoggerFactory loggerFactory, IUnitOfWork uow)
+        public BaseService(ILoggerFactory loggerFactory, IFoodTruckDatabase foodTruckDatabase)
         {
             Logger = loggerFactory.CreateLogger(GetType());
-            UnitOfWork = uow;
+            FoodTruckDatabase = foodTruckDatabase;
         }
 
 
         protected ILogger Logger { get; private set; }
-        protected IUnitOfWork UnitOfWork { get; private set; }
+        protected IFoodTruckDatabase FoodTruckDatabase { get; init; }
 
 
     }

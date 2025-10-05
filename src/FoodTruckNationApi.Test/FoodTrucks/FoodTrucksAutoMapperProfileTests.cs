@@ -27,9 +27,10 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         public void FoodTruckModelCorrectlyMapsFoodTruckWithTags()
         {
             // Arrange
+            Locality locality = new Locality() {  LocalityCode = "CHI", Name = "Chicago" };
             Tag tagOne = new Tag(1, "Burgers");
             Tag tagTwo = new Tag(2, "Hot Dogs");
-            var foodTruck = new FoodTruck(1, "All American Burger", "Burgers, Brats, Hot Dogs and More", @"http://allamericanburger.foodtruck.com");
+            var foodTruck = new FoodTruck(1, "All American Burger", "Burgers, Brats, Hot Dogs and More", @"http://allamericanburger.foodtruck.com", locality);
             foodTruck.AddTag(tagOne);
             foodTruck.AddTag(tagTwo);
 
@@ -47,7 +48,8 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         public void FoodTruckModelCorrectlyMapsFoodTruckWithoutTags()
         {
             // Arrange
-            var foodTruck = new FoodTruck(1, "All American Burger", "Burgers, Brats, Hot Dogs and More", @"http://allamericanburger.foodtruck.com");
+            Locality locality = new Locality() { LocalityCode = "CHI", Name = "Chicago" };
+            var foodTruck = new FoodTruck(1, "All American Burger", "Burgers, Brats, Hot Dogs and More", @"http://allamericanburger.foodtruck.com", locality);
 
             // Act
             var model = mapper.Map<FoodTruckModel>(foodTruck);

@@ -16,27 +16,17 @@ namespace FoodTruckNation.Core.AppServices
     public class LocationService : BaseService, ILocationService
     {
 
-        public LocationService(ILoggerFactory loggerFactory, IUnitOfWork uow, ILocationRepository locationRepository, ILocalityRepository localityRepository)
-            : base(loggerFactory, uow)
+        public LocationService(ILoggerFactory loggerFactory, IFoodTruckDatabase foodTruckDatabase)
+            : base(loggerFactory, foodTruckDatabase)
         {
-            _locationRepository = locationRepository;
-            _localityRepository = localityRepository;
         }
 
-
-        #region Member Variables
-
-
-        private readonly ILocationRepository _locationRepository;
-        private readonly ILocalityRepository _localityRepository;
-
-        #endregion
 
 
 
         public async Task<Result<Location>> GetLocationAsync(int id)
         {
-            var location = await _locationRepository.GetLocationAsync(id);
+            var location = await FoodTruckDatabase.LocationRepository.GetLocationAsync(id);
             return (location != null)
                 ? Result.Success<Location>(location)
                 : Result.Failure<Location>(new ObjectNotFoundError($"No location found with the id of {id}"));
@@ -46,18 +36,18 @@ namespace FoodTruckNation.Core.AppServices
 
         public async Task<Result<IEnumerable<Location>>> GetLocationsAsync()
         {
-            var locations = await _locationRepository.GetLocationsAsync();
+            var locations = await FoodTruckDatabase.LocationRepository.GetLocationsAsync();
             return Result.Success<IEnumerable<Location>>(locations);
         }
 
 
         public async Task<Result<IEnumerable<Location>>> GetLocationsAsync(string localityCode)
         {
-            var locality = await _localityRepository.GetLocalityAsync(localityCode);
+            var locality = await FoodTruckDatabase.LocalityRepository.GetLocalityAsync(localityCode);
             if (locality == null)
                 return Result.Failure<IEnumerable<Location>>(new InvalidDataError($"The locality code {localityCode} does not exist"));
 
-            var locations = await _locationRepository.GetLocationsAsync(locality);
+            var locations = await FoodTruckDatabase.LocationRepository.GetLocationsAsync(locality);
             return Result.Success<IEnumerable<Location>>(locations);
         }
 
@@ -67,7 +57,7 @@ namespace FoodTruckNation.Core.AppServices
         {
             // TODO: Standardize address and check to see if this location already exists
 
-            var locality = await _localityRepository.GetLocalityAsync(createLocationCommand.LocalityCode);
+            var locality = await FoodTruckDatabase.LocalityRepository.GetLocalityAsync(createLocationCommand.LocalityCode);
             if (locality == null)
                 return Result.Failure<Location>(new InvalidDataError($"No locality with the locality code {createLocationCommand.LocalityCode} exists"));
 
@@ -75,8 +65,8 @@ namespace FoodTruckNation.Core.AppServices
             Location location = new Location(createLocationCommand.Name, locality, createLocationCommand.StreetAddress, createLocationCommand.City,
                 createLocationCommand.State, createLocationCommand.ZipCode);
 
-            await _locationRepository.SaveAsync(location);
-            await UnitOfWork.SaveChangesAsync();
+            await FoodTruckDatabase.LocationRepository.SaveAsync(location);
+            FoodTruckDatabase.CommitChanges();
 
             return Result.Success<Location>(location);
         }
@@ -84,7 +74,7 @@ namespace FoodTruckNation.Core.AppServices
 
         public async Task<Result<Location>> UpdateLocationAsync(UpdateLocationCommand updateLocationCommand)
         {
-            Location location = await _locationRepository.GetLocationAsync(updateLocationCommand.LocationId);
+            Location location = await FoodTruckDatabase.LocationRepository.GetLocationAsync(updateLocationCommand.LocationId);
             if (location == null)
                 return Result.Failure<Location>($"No location was found with the id {updateLocationCommand.LocationId}");
 
@@ -97,8 +87,8 @@ namespace FoodTruckNation.Core.AppServices
 
 
 
-            await _locationRepository.SaveAsync(location);
-            await UnitOfWork.SaveChangesAsync();
+            await FoodTruckDatabase.LocationRepository.SaveAsync(location);
+            FoodTruckDatabase.CommitChanges();
 
             return Result.Success<Location>(location);
         }
@@ -106,13 +96,13 @@ namespace FoodTruckNation.Core.AppServices
 
         public async Task<Result> DeleteLocationAsync(int locationId)
         {
-            Location location = await _locationRepository.GetLocationAsync(locationId);
+            Location location = await FoodTruckDatabase.LocationRepository.GetLocationAsync(locationId);
 
             if (location == null)
                 return Result.Failure(new ObjectNotFoundError($"Location id {locationId} not found so it could not be deleted"));
 
-            await _locationRepository.DeleteAsync(location);
-            await UnitOfWork.SaveChangesAsync();
+            await FoodTruckDatabase.LocationRepository.DeleteAsync(location);
+            FoodTruckDatabase.CommitChanges();
 
             return Result.Success();
         }

@@ -17,7 +17,7 @@ namespace FoodTruckNation.Core.Domain
         /// Private constructor needed by Entity Framework (and maybe Newtonsoft?)
         /// </summary>
         private FoodTruck()
-            : this(string.Empty, string.Empty, string.Empty, ObjectState.UNCHANGED)
+            : this(string.Empty, string.Empty, string.Empty, null, ObjectState.UNCHANGED)
         {
 
         }
@@ -29,8 +29,8 @@ namespace FoodTruckNation.Core.Domain
         /// <param name="name">A String of the name of this food truck</param>
         /// <param name="description">A String of the description of this food truck</param>
         /// <param name="website">A String of the website for this food truck</param>
-        internal FoodTruck(int foodTruckId, string name, string description, string website)
-            : this(name, description, website, ObjectState.UNCHANGED)
+        internal FoodTruck(int foodTruckId, string name, string description, string website, Locality locality)
+            : this(name, description, website, locality, ObjectState.UNCHANGED)
         {
             _foodTruckId = foodTruckId;
         }
@@ -41,8 +41,8 @@ namespace FoodTruckNation.Core.Domain
         /// <param name="name">A String of the name of the new food truck</param>
         /// <param name="description">A String of the description of the food truck</param>
         /// <param name="website">A String of the website for the food truck</param>
-        public FoodTruck(string name, string description, string website)
-            : this(name, description, website, ObjectState.NEW)
+        public FoodTruck(string name, string description, string website, Locality locality)
+            : this(name, description, website, locality, ObjectState.NEW)
         {
 
         }
@@ -55,12 +55,13 @@ namespace FoodTruckNation.Core.Domain
         /// <param name="description">A String of the description of this food truck</param>
         /// <param name="website">A String of the website for this food truck</param>
         /// <param name="objectState">An ObjectState value tracking if this is a new or existing (unchanged) food truck</param>
-        protected FoodTruck(string name, string description, string website, ObjectState objectState)
+        protected FoodTruck(string name, string description, string website, Locality locality, ObjectState objectState)
             : base(objectState)
         {
             _name = name;
             _description = description;
             _website = website;
+            _locality = locality;
             _tags = new List<FoodTruckTag>();
             _reviews = new List<Review>();
             _schedules = new List<Schedule>();

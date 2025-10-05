@@ -20,32 +20,23 @@ namespace FoodTruckNation.Core.AppServices
     {
 
 
-        public FoodTruckService(ILoggerFactory loggerFactory, IUnitOfWork uow, IDateTimeProvider dateTimeProvider,
-            IFoodTruckRepository foodTruckRepository, ITagRepository tagRepository, ISocialMediaPlatformRepository socialMediaPlatformRepository, ILocalityRepository localityRepository)
-            : base(loggerFactory, uow)
+        public FoodTruckService(ILoggerFactory loggerFactory, IFoodTruckDatabase foodTruckDatabase, IDateTimeProvider dateTimeProvider)
+            : base(loggerFactory, foodTruckDatabase)
         {
             _dateTimeProvider = dateTimeProvider;
-            _foodTruckRepository = foodTruckRepository;
-            _tagRepository = tagRepository;
-            _socialMediaPlatformRepository = socialMediaPlatformRepository;
-            _localityRepository = localityRepository;
         }
 
 
         #region Member Variables
 
         private readonly IDateTimeProvider _dateTimeProvider;
-        private readonly IFoodTruckRepository _foodTruckRepository;
-        private readonly ITagRepository _tagRepository;
-        private readonly ISocialMediaPlatformRepository _socialMediaPlatformRepository;
-        private readonly ILocalityRepository _localityRepository;
 
         #endregion
 
 
         public async Task<Result<IEnumerable<FoodTruck>>> GetAllFoodTrucksAsync()
         {
-            var foodTrucks = await _foodTruckRepository.GetAllFoodTrucksAsync();
+            var foodTrucks = await FoodTruckDatabase.FoodTruckRepository.GetAllFoodTrucksAsync();
             return Result.Success<IEnumerable<FoodTruck>>(foodTrucks.ToList());
         }
 
@@ -59,41 +50,41 @@ namespace FoodTruckNation.Core.AppServices
             if (localityCode != null &&  tag != null)
             {
                 // We have both locality code and tag, so query food trucks by both
-                var locality = await _localityRepository.GetLocalityAsync(localityCode);
+                var locality = await FoodTruckDatabase.LocalityRepository.GetLocalityAsync(localityCode);
                 if (locality == null)
                     return Result.Failure<IEnumerable<FoodTruck>>(new InvalidDataError($"The locality code {localityCode} does not exist"));
 
-                var foodTrucks = await _foodTruckRepository.GetFoodTrucksAsync(locality, tag);
+                var foodTrucks = await FoodTruckDatabase.FoodTruckRepository.GetFoodTrucksAsync(locality, tag);
                 return Result.Success<IEnumerable<FoodTruck>>(foodTrucks);
             }
             else if ( localityCode !=  null && tag == null)
             {
                 // We have locality code but no tag, so just query by locality
-                var locality = await _localityRepository.GetLocalityAsync(localityCode);
+                var locality = await FoodTruckDatabase.LocalityRepository.GetLocalityAsync(localityCode);
                 if (locality == null)
                     return Result.Failure<IEnumerable<FoodTruck>>(new InvalidDataError($"The locality code {localityCode} does not exist"));
 
-                var foodTrucks = await _foodTruckRepository.GetFoodTrucksAsync(locality);
+                var foodTrucks = await FoodTruckDatabase.FoodTruckRepository.GetFoodTrucksAsync(locality);
                 return Result.Success<IEnumerable<FoodTruck>>(foodTrucks);
             }
             else if (localityCode == null && tag != null)
             {
                 // We have tag but no locality code.  Query by tag
-                var foodTrucks = await _foodTruckRepository.GetFoodTrucksAsync(tag);
+                var foodTrucks = await FoodTruckDatabase.FoodTruckRepository.GetFoodTrucksAsync(tag);
                 return Result.Success<IEnumerable<FoodTruck>>(foodTrucks);
             }
             else
             {
                 // Both locality code and tag are null, so this is basically returning everything
                 return await GetAllFoodTrucksAsync();
-            }    
+            }
         }
 
 
 
         public async Task<Result<FoodTruck>> GetFoodTruckAsync(int id)
         {
-            var foodTruck = await _foodTruckRepository.GetFoodTruckAsync(id);
+            var foodTruck = await FoodTruckDatabase.FoodTruckRepository.GetFoodTruckAsync(id);
             return (foodTruck != null)
                 ? Result.Success<FoodTruck>(foodTruck)
                 : Result.Failure<FoodTruck>(new ObjectNotFoundError($"No food truck found with the id of ${id}"));
@@ -102,8 +93,13 @@ namespace FoodTruckNation.Core.AppServices
 
         public async Task<Result<FoodTruck>> CreateFoodTruckAsync(CreateFoodTruckCommand foodTruckInfo)
         {
+            // Get the Locality Object for the locality Code
+            var locality = await FoodTruckDatabase.LocalityRepository.GetLocalityAsync(foodTruckInfo.LocalityCode);
+            if (locality == null)
+                return Result.Failure<FoodTruck>(new InvalidDataError($"No locality with the locality code of {foodTruckInfo.LocalityCode} exists"));
+
             // Creates our Food Truck object
-            var foodTruck = new FoodTruck(foodTruckInfo.Name, foodTruckInfo.Description, foodTruckInfo.Website);
+            var foodTruck = new FoodTruck(foodTruckInfo.Name, foodTruckInfo.Description, foodTruckInfo.Website, locality);
 
             // Converts tag strings into tag objects (including creating tags that don't exist)
             var tagObjects = await DecodeTagsAsync(foodTruckInfo.Tags);
@@ -114,7 +110,7 @@ namespace FoodTruckNation.Core.AppServices
             // Social Media Accounts
             foreach (var accountInfo in foodTruckInfo.SocialMediaAccounts)
             {
-                var platform =  await _socialMediaPlatformRepository.GetSocialMediaPlatformAsync(accountInfo.SocialMediaPlatformId)
+                var platform =  await FoodTruckDatabase.SocialMediaPlatformRepository.GetSocialMediaPlatformAsync(accountInfo.SocialMediaPlatformId)
                     ?? throw new InvalidDataException($"The id {accountInfo.SocialMediaPlatformId} is not a valid social media platform id");
 
                 SocialMediaAccount account = new SocialMediaAccount(platform, foodTruck, accountInfo.AccountName);
@@ -122,8 +118,8 @@ namespace FoodTruckNation.Core.AppServices
             }
 
             // Persist to the database
-            await _foodTruckRepository.SaveAsync(foodTruck);
-            await UnitOfWork.SaveChangesAsync();
+            await FoodTruckDatabase.FoodTruckRepository.SaveAsync(foodTruck);
+            FoodTruckDatabase.CommitChanges();
 
             return Result.Success<FoodTruck>(foodTruck);
         }
@@ -133,7 +129,7 @@ namespace FoodTruckNation.Core.AppServices
         {
             List<Tag> tagObjects = new List<Tag>();
 
-            var allTags = await _tagRepository.GetAllTagsAsync();
+            var allTags = await FoodTruckDatabase.TagRepository.GetAllTagsAsync();
             foreach (var tag in inputTags)
             {
                 var tagObject = allTags.SingleOrDefault(t => t.Text == tag);
@@ -160,7 +156,7 @@ namespace FoodTruckNation.Core.AppServices
             try
             {
                 // Creates our Food Truck object
-                var foodTruck = await _foodTruckRepository.GetFoodTruckAsync(foodTruckInfo.FoodTruckId);
+                var foodTruck = await FoodTruckDatabase.FoodTruckRepository.GetFoodTruckAsync(foodTruckInfo.FoodTruckId);
 
                 if (foodTruck == null)
                     return Result.Failure<FoodTruck>(new ObjectNotFoundError($"No food truck found with the id of {foodTruckInfo.FoodTruckId}"));
@@ -172,8 +168,8 @@ namespace FoodTruckNation.Core.AppServices
                 foodTruck.LastModifiedDate = foodTruckInfo.LastModifiedDate;
 
                 // Persist the changes to the database
-                await _foodTruckRepository.SaveAsync(foodTruck);
-                await UnitOfWork.SaveChangesAsync();
+                await FoodTruckDatabase.FoodTruckRepository.SaveAsync(foodTruck);
+                FoodTruckDatabase.CommitChanges();
 
                 return Result.Success<FoodTruck>(foodTruck);
             }
@@ -181,7 +177,7 @@ namespace FoodTruckNation.Core.AppServices
             {
                 // If there is a database conflict, then data access layer (like EF) will throw a DbConcurrencyException, so we catch it and turn
                 // it into an error to be passed up the stack with the existing object
-                var foodTruck = await _foodTruckRepository.GetFoodTruckAsync(foodTruckInfo.FoodTruckId);
+                var foodTruck = await FoodTruckDatabase.FoodTruckRepository.GetFoodTruckAsync(foodTruckInfo.FoodTruckId);
                 return Result.Failure<FoodTruck>(
                     new ConcurrencyError<FoodTruck>($"The food truck could not be updated due to a concurrency exception.  This is most likely because the object has changed since the object was retrieved.  Compare your changes to the current state of the object (included) and resubmit as neccessary",
                     foodTruck));
@@ -199,13 +195,13 @@ namespace FoodTruckNation.Core.AppServices
 
         public async Task<Result> DeleteFoodTruckAsync(int foodTruckId)
         {
-            FoodTruck foodTruck = await _foodTruckRepository.GetFoodTruckAsync(foodTruckId);
+            FoodTruck foodTruck = await FoodTruckDatabase.FoodTruckRepository.GetFoodTruckAsync(foodTruckId);
 
             if (foodTruck == null)
                 return Result.Failure(new ObjectNotFoundError($"Food truck id {foodTruckId} not found so it could not be deleted"));
 
-            await _foodTruckRepository.DeleteAsync(foodTruck);
-            await UnitOfWork.SaveChangesAsync();
+            await FoodTruckDatabase.FoodTruckRepository.DeleteAsync(foodTruck);
+            FoodTruckDatabase.CommitChanges();
 
             return Result.Success();
         }
@@ -216,7 +212,7 @@ namespace FoodTruckNation.Core.AppServices
         public async Task<Result<FoodTruck>> AddFoodTruckTagsAsync(int foodTruckId, List<string> tags)
         {
             // Get the Food Truck object
-            var foodTruck = await _foodTruckRepository.GetFoodTruckAsync(foodTruckId);
+            var foodTruck = await FoodTruckDatabase.FoodTruckRepository.GetFoodTruckAsync(foodTruckId);
             if (foodTruck == null)
                 return Result.Failure<FoodTruck>(new ObjectNotFoundError("No food truck with the id of {foodTruckId} could be found"));
 
@@ -227,8 +223,8 @@ namespace FoodTruckNation.Core.AppServices
             tagObjects.ForEach(obj => foodTruck.AddTag(obj));
 
             // Persist to the database
-            await _foodTruckRepository.SaveAsync(foodTruck);
-            await UnitOfWork.SaveChangesAsync();
+            await FoodTruckDatabase.FoodTruckRepository.SaveAsync(foodTruck);
+            FoodTruckDatabase.CommitChanges();
 
             return Result.Success<FoodTruck>(foodTruck);
         }
@@ -236,7 +232,7 @@ namespace FoodTruckNation.Core.AppServices
         public async Task<Result<FoodTruck>> UpdateFoodTruckTagsAsync(int foodTruckId, List<string> tags)
         {
             // Get the Food Truck object
-            var foodTruck = await _foodTruckRepository.GetFoodTruckAsync(foodTruckId);
+            var foodTruck = await FoodTruckDatabase.FoodTruckRepository.GetFoodTruckAsync(foodTruckId);
             if (foodTruck == null)
                 return Result.Failure<FoodTruck>(new ObjectNotFoundError("No food truck with the id of {foodTruckId} could be found"));
 
@@ -255,8 +251,8 @@ namespace FoodTruckNation.Core.AppServices
 
 
             // Persist to the database
-            await _foodTruckRepository.SaveAsync(foodTruck);
-            await UnitOfWork.SaveChangesAsync();
+            await FoodTruckDatabase.FoodTruckRepository.SaveAsync(foodTruck);
+            FoodTruckDatabase.CommitChanges();
 
             return Result.Success<FoodTruck>(foodTruck);
         }
@@ -264,7 +260,7 @@ namespace FoodTruckNation.Core.AppServices
         public async Task<Result> DeleteFoodTruckTagAsync(int foodTruckId, string tag)
         {
             // Get the Food Truck object
-            var foodTruck = await _foodTruckRepository.GetFoodTruckAsync(foodTruckId);
+            var foodTruck = await FoodTruckDatabase.FoodTruckRepository.GetFoodTruckAsync(foodTruckId);
             if (foodTruck == null)
                 return Result.Failure<FoodTruck>(new ObjectNotFoundError("No food truck with the id of {foodTruckId} could be found"));
 
@@ -275,8 +271,8 @@ namespace FoodTruckNation.Core.AppServices
             foodTruck.RemoveTag(tagToRemove);
 
             // Persist to the database
-            await _foodTruckRepository.SaveAsync(foodTruck);
-            await UnitOfWork.SaveChangesAsync();
+            await FoodTruckDatabase.FoodTruckRepository.SaveAsync(foodTruck);
+            FoodTruckDatabase.CommitChanges();
 
             return Result.Success();
         }
@@ -286,11 +282,11 @@ namespace FoodTruckNation.Core.AppServices
 
         public async Task<Result<SocialMediaAccount>> AddSocialMediaAccountAsync(int foodTruckId, int socialMediaPlatformId, string accountName)
         {
-            var foodTruck = await _foodTruckRepository.GetFoodTruckAsync(foodTruckId);
+            var foodTruck = await FoodTruckDatabase.FoodTruckRepository.GetFoodTruckAsync(foodTruckId);
             if (foodTruck == null)
                 return Result.Failure<SocialMediaAccount>(new ObjectNotFoundError("No food truck with the id of {foodTruckId} could be found"));
 
-            var platform = await _socialMediaPlatformRepository.GetSocialMediaPlatformAsync(socialMediaPlatformId);
+            var platform = await FoodTruckDatabase.SocialMediaPlatformRepository.GetSocialMediaPlatformAsync(socialMediaPlatformId);
             if (platform == null)
                 return Result.Failure<SocialMediaAccount>(new InvalidDataError("No social media platform with the id {socialMediaPlatformId} could be found"));
 
@@ -298,15 +294,15 @@ namespace FoodTruckNation.Core.AppServices
             foodTruck.AddSocialMediaAccount(account);
 
             // Persist to the database
-            await _foodTruckRepository.SaveAsync(foodTruck);
-            await UnitOfWork.SaveChangesAsync();
+            await FoodTruckDatabase.FoodTruckRepository.SaveAsync(foodTruck);
+            FoodTruckDatabase.CommitChanges();
 
             return Result.Success<SocialMediaAccount>(account);
         }
 
         public async Task<Result<SocialMediaAccount>> UpdateSocialMediaAccountAsync(int foodTruckId, int socialMediaAccountId, string accountName)
         {
-            var foodTruck = await _foodTruckRepository.GetFoodTruckAsync(foodTruckId);
+            var foodTruck = await FoodTruckDatabase.FoodTruckRepository.GetFoodTruckAsync(foodTruckId);
             if (foodTruck == null)
                 return Result.Failure<SocialMediaAccount>(new ObjectNotFoundError("No food truck with the id of {foodTruckId} could be found"));
 
@@ -317,19 +313,19 @@ namespace FoodTruckNation.Core.AppServices
             account.AccountName = accountName;
 
             // Persist to the database
-            await _foodTruckRepository.SaveAsync(foodTruck);
-            await UnitOfWork.SaveChangesAsync();
+            await FoodTruckDatabase.FoodTruckRepository.SaveAsync(foodTruck);
+            FoodTruckDatabase.CommitChanges();
 
             return Result.Success<SocialMediaAccount>(account);
         }
 
         public async Task<Result> DeleteSocialMediaAccountAsync(int foodTruckId, int socialMediaPlatformId)
         {
-            var foodTruck = await _foodTruckRepository.GetFoodTruckAsync(foodTruckId);
+            var foodTruck = await FoodTruckDatabase.FoodTruckRepository.GetFoodTruckAsync(foodTruckId);
             if (foodTruck == null)
                 return Result.Failure(new ObjectNotFoundError("No food truck with the id of {foodTruckId} could be found"));
 
-            var platform = await _socialMediaPlatformRepository.GetSocialMediaPlatformAsync(socialMediaPlatformId);
+            var platform = await FoodTruckDatabase.SocialMediaPlatformRepository.GetSocialMediaPlatformAsync(socialMediaPlatformId);
             if (platform == null)
                 return Result.Failure(new ObjectNotFoundError($"No social media platform with the id {socialMediaPlatformId} could be found"));
 
@@ -340,8 +336,8 @@ namespace FoodTruckNation.Core.AppServices
             foodTruck.RemoveSocialMediaAccount(account);
 
             // Persist to the database
-            await _foodTruckRepository.SaveAsync(foodTruck);
-            await UnitOfWork.SaveChangesAsync();
+            await FoodTruckDatabase.FoodTruckRepository.SaveAsync(foodTruck);
+            FoodTruckDatabase.CommitChanges();
 
             return Result.Success();
         }
@@ -351,7 +347,7 @@ namespace FoodTruckNation.Core.AppServices
 
         public async Task<Result<IEnumerable<Review>>> GetFoodTruckReviewsAsync(int foodTruckId)
         {
-            FoodTruck foodTruck = await _foodTruckRepository.GetFoodTruckAsync(foodTruckId);
+            FoodTruck foodTruck = await FoodTruckDatabase.FoodTruckRepository.GetFoodTruckAsync(foodTruckId);
 
             if (foodTruck == null)
                 return Result.Failure<IEnumerable<Review>>(new ObjectNotFoundError("No food truck with the id of {foodTruckId} could be found"));
@@ -361,7 +357,7 @@ namespace FoodTruckNation.Core.AppServices
 
         public async Task<Result<Review>> GetFoodTruckReviewAsync(int foodTruckId, int reviewId)
         {
-            FoodTruck foodTruck = await _foodTruckRepository.GetFoodTruckAsync(foodTruckId);
+            FoodTruck foodTruck = await FoodTruckDatabase.FoodTruckRepository.GetFoodTruckAsync(foodTruckId);
 
             if (foodTruck == null)
                 return Result.Failure<Review>(new ObjectNotFoundError("No food truck with the id of {foodTruckId} could be found"));
@@ -373,7 +369,7 @@ namespace FoodTruckNation.Core.AppServices
 
         public async Task<Result<Review>> CreateFoodTruckReviewAsync(CreateReviewCommand command)
         {
-            FoodTruck foodTruck = await _foodTruckRepository.GetFoodTruckAsync(command.FoodTruckId);
+            FoodTruck foodTruck = await FoodTruckDatabase.FoodTruckRepository.GetFoodTruckAsync(command.FoodTruckId);
 
             if (foodTruck == null)
                 return Result.Failure<Review>(new ObjectNotFoundError("No food truck with the id of {foodTruckId} could be found"));
@@ -382,8 +378,8 @@ namespace FoodTruckNation.Core.AppServices
             foodTruck.AddReview(review);
 
             // Persist the changes to the database
-            await _foodTruckRepository.SaveAsync(foodTruck);
-            await UnitOfWork.SaveChangesAsync();
+            await FoodTruckDatabase.FoodTruckRepository.SaveAsync(foodTruck);
+            FoodTruckDatabase.CommitChanges();
 
             return Result.Success<Review>(review);
         }
