@@ -18,6 +18,8 @@ namespace FoodTruckNationApi.Test.FoodTrucks
     {
         public FoodTrucksControllerTests()
         {
+            Locality locality = new Locality() { LocalityCode = "CHI", Name = "Chicago" };
+
             Tag tagOne = new Tag(1, "Tag One");
             Tag tagTwo = new Tag(2, "Tag Two");
             Tag tagThree = new Tag(3, "Tag Three");
@@ -27,17 +29,17 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             SocialMediaPlatform twitter = new SocialMediaPlatform(2, "Twitter", "http://twitter.com/{0}", null);
             SocialMediaPlatform instagram = new SocialMediaPlatform(3, "Instagram", "http://instagram.com/{0}", null);
 
-            _foodTruckOne = new FoodTruck(1, "Food Truck One", "Food Truck One Description", @"http://www.foodtruckone.com");
+            _foodTruckOne = new FoodTruck(1, "Food Truck One", "Food Truck One Description", @"http://www.foodtruckone.com", locality);
             _foodTruckOne.AddTag(tagOne);
             _foodTruckOne.AddTag(tagTwo);
             _foodTruckOne.AddSocialMediaAccount(new SocialMediaAccount(facebook, _foodTruckOne, "foodTruckOne"));
             _foodTruckOne.AddSocialMediaAccount(new SocialMediaAccount(twitter, _foodTruckOne, "foodTruckOne"));
 
-            _foodTruckTwo = new FoodTruck(2, "Food Truck Two", "Food Truck Two Description", @"http://www.foodtrucktwo.com");
+            _foodTruckTwo = new FoodTruck(2, "Food Truck Two", "Food Truck Two Description", @"http://www.foodtrucktwo.com", locality);
             _foodTruckTwo.AddTag(tagThree);
             _foodTruckOne.AddSocialMediaAccount(new SocialMediaAccount(facebook, _foodTruckTwo, "foodTruckTwo"));
 
-            _foodTruckThree = new FoodTruck(3, "Food Truck Two", "Food Truck Three Description", @"http://www.foodtruckthree.com");
+            _foodTruckThree = new FoodTruck(3, "Food Truck Two", "Food Truck Three Description", @"http://www.foodtruckthree.com", locality);
             _foodTruckThree.AddTag(tagOne);
             _foodTruckThree.AddTag(tagFour);
             _foodTruckThree.AddSocialMediaAccount(new SocialMediaAccount(facebook, _foodTruckThree, "foodTruckThree"));

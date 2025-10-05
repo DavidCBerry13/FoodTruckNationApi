@@ -20,6 +20,8 @@ namespace FoodTruckNation.Core.Commands
 
         public string Website { get; set; }
 
+        public string LocalityCode { get; set; }
+
         public List<string> Tags { get; set; }
 
         public List<FoodTruckSocialMediaAccountData> SocialMediaAccounts { get; set; }

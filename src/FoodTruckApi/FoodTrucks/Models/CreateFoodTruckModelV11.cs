@@ -39,6 +39,11 @@ namespace FoodTruckNationApi.FoodTrucks
         public string Website { get; set; }
 
         /// <summary>
+        /// Get the locality code of the locality this food truck is in
+        /// </summary>
+        public string LocalityCode { get; set; }
+
+        /// <summary>
         /// Gets a list of tags to be attached to the new food truck.
         /// </summary>
         /// <remarks>

@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using FoodTruckNationApi.FoodTrucks;
 using System;
 using System.Collections.Generic;
@@ -22,6 +22,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Name = name,
                 Description = "Some very interesting description",
                 Website = @"http://www.foodtruck.com",
+                LocalityCode = "CHI",
                 Tags = new List<string>() { "Burgers", "Sandwiches" }
             };
 
@@ -157,6 +158,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Name = "Food Truck Name",
                 Description = "Some very interesting description",
                 Website = website,
+                LocalityCode = "CHI",
                 Tags = new List<string>() { "Burgers", "Sandwiches" }
             };
 
@@ -208,6 +210,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Name = "Food Truck Name",
                 Description = "Some very interesting description",
                 Website = @"http://www.foodtruck.com",
+                LocalityCode = "CHI",
                 Tags = new List<string>()
             };
 
@@ -228,6 +231,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
                 Name = "Food Truck Name",
                 Description = "Some very interesting description",
                 Website = @"http://www.foodtruck.com",
+                LocalityCode = "CHI",
                 Tags = null
             };
 

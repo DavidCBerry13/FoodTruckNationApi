@@ -22,7 +22,7 @@ namespace FoodTruckNation.Data.EF
                 .UseSqlServer(connectionString)
             );
 
-            ConfigureRepositories(services);
+            services.AddScoped<IFoodTruckDatabase, FoodTruckDatabase>();
         }
 
 
@@ -46,23 +46,23 @@ namespace FoodTruckNation.Data.EF
                 context.Database.EnsureCreated();
             }
 
-            ConfigureRepositories(services);
+            services.AddScoped<IFoodTruckDatabase, FoodTruckDatabase>();
         }
 
 
 
 
-        private static void ConfigureRepositories(IServiceCollection services)
-        {
-            services.AddScoped<IUnitOfWork, EfUnitOfWork<FoodTruckContext>>();
+        //private static void ConfigureRepositories(IServiceCollection services)
+        //{
+        //    services.AddScoped<IUnitOfWork, BaseEfDatabase<FoodTruckContext>>();
 
-            services.AddScoped<IFoodTruckRepository, FoodTruckRepository>();
-            services.AddScoped<ITagRepository, TagRepository>();
-            services.AddScoped<ILocalityRepository, LocalityRepository>();
-            services.AddScoped<ILocationRepository, LocationRepository>();
-            services.AddScoped<IScheduleRepository, ScheduleRepository>();
-            services.AddScoped<ISocialMediaPlatformRepository, SocialMediaPlatformRepository>();
-        }
+        //    services.AddScoped<IFoodTruckRepository, FoodTruckRepository>();
+        //    services.AddScoped<ITagRepository, TagRepository>();
+        //    services.AddScoped<ILocalityRepository, LocalityRepository>();
+        //    services.AddScoped<ILocationRepository, LocationRepository>();
+        //    services.AddScoped<IScheduleRepository, ScheduleRepository>();
+        //    services.AddScoped<ISocialMediaPlatformRepository, SocialMediaPlatformRepository>();
+        //}
 
 
     }

@@ -15,21 +15,18 @@ namespace FoodTruckNation.Core.AppServices
     public class TagService : BaseService, ITagService
     {
 
-        public TagService(ILoggerFactory loggerFactory, IUnitOfWork uow, ITagRepository tagRepository)
-            : base(loggerFactory, uow)
+        public TagService(ILoggerFactory loggerFactory, IFoodTruckDatabase foodTruckDatabase)
+            : base(loggerFactory, foodTruckDatabase)
         {
-            _tagRepository = tagRepository;
         }
 
-
-        private readonly ITagRepository _tagRepository;
 
 
         public async Task<Result<IEnumerable<Tag>>> GetAllTagsAsync()
         {
             try
             {
-                var tags = await _tagRepository.GetAllTagsAsync();
+                var tags = await FoodTruckDatabase.TagRepository.GetAllTagsAsync();
                 return Result.Success<IEnumerable<Tag>>(tags);
             }
             catch (Exception ex)
@@ -44,7 +41,7 @@ namespace FoodTruckNation.Core.AppServices
         {
             try
             {
-                var tags = await _tagRepository.GetAllTagsInUseAsync();
+                var tags = await FoodTruckDatabase.TagRepository.GetAllTagsInUseAsync();
                 return Result.Success<IEnumerable<Tag>>(tags);
             }
             catch (Exception ex)
@@ -59,7 +56,7 @@ namespace FoodTruckNation.Core.AppServices
         {
             try
             {
-                var tag = await _tagRepository.GetTagByIdAsync(tagId);
+                var tag = await FoodTruckDatabase.TagRepository.GetTagByIdAsync(tagId);
                 return (tag != null)
                     ? Result.Success<Tag>(tag)
                     : Result.Failure<Tag>($"No tag found with the tag id of {tagId}");
@@ -77,7 +74,7 @@ namespace FoodTruckNation.Core.AppServices
         {
             try
             {
-                var tag = await _tagRepository.GetTagByNameAsync(tagName);
+                var tag = await FoodTruckDatabase.TagRepository.GetTagByNameAsync(tagName);
                 return ( tag != null )
                     ? Result.Success<Tag>(tag)
                     : Result.Failure<Tag>($"No tag found with the name of {tagName}");
@@ -97,14 +94,15 @@ namespace FoodTruckNation.Core.AppServices
             {
                 Tag tag = new Tag(tagText);
 
-                await _tagRepository.SaveTagAsync(tag);
-                await UnitOfWork.SaveChangesAsync();
+                await FoodTruckDatabase.TagRepository.SaveTagAsync(tag);
+                FoodTruckDatabase.CommitChanges();
 
                 return Result.Success<Tag>(tag);
             }
             catch (Exception ex)
             {
                 Logger.LogError(new EventId(101), ex, "Error thrown while calling TagService.CreateNewTag()");
+                FoodTruckDatabase.RollbackChanges();
                 throw;
             }
         }
@@ -114,21 +112,22 @@ namespace FoodTruckNation.Core.AppServices
         {
             try
             {
-                Tag tag = await _tagRepository.GetTagByIdAsync(updateTagCommand.TagId);
+                Tag tag = await FoodTruckDatabase.TagRepository.GetTagByIdAsync(updateTagCommand.TagId);
 
                 if (tag == null)
                     return Result.Failure<Tag>(new ObjectNotFoundError($"No tag was found with the id of {updateTagCommand.TagId}"));
 
                 tag.Text = updateTagCommand.TagText;
 
-                await _tagRepository.SaveTagAsync(tag);
-                await UnitOfWork.SaveChangesAsync();
+                await FoodTruckDatabase.TagRepository.SaveTagAsync(tag);
+                FoodTruckDatabase.CommitChanges();
 
                 return Result.Success<Tag>(tag);
             }
             catch (Exception ex)
             {
                 Logger.LogError(new EventId(101), ex, "Error thrown while calling TagService.UpdateTag()");
+                FoodTruckDatabase.RollbackChanges();
                 throw;
             }
         }

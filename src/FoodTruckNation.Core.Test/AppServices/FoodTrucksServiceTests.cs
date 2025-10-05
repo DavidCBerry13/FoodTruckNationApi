@@ -28,25 +28,25 @@ namespace FoodTruckNation.Core.Test.AppServices
             Locality locality = new Locality() { LocalityCode = localityCode, Name = "Chicago" };
             IEnumerable<FoodTruck> foodTrucks = new List<FoodTruck>()
             {
-                new FoodTruck(1, "Food Truck One", "", "") { Locality = locality },
-                new FoodTruck(2, "Food Truck Two", "", "") { Locality = locality },
-                new FoodTruck(3, "Food Truck Three", "", "") { Locality = locality },
+                new FoodTruck(1, "Food Truck One", "", "", locality),
+                new FoodTruck(2, "Food Truck Two", "", "", locality),
+                new FoodTruck(3, "Food Truck Three", "", "", locality),
             };
 
             // Arrange
             var loggerFactoryMock = new Mock<ILoggerFactory>();
-            var unitOfWorkMock = new Mock<IUnitOfWork>();
+
             var foodTruckRepositoryMock = new Mock<IFoodTruckRepository>();
             foodTruckRepositoryMock.Setup(x => x.GetFoodTrucksAsync(locality)).ReturnsAsync(foodTrucks);
+
             var localityRepositoryMock = new Mock<ILocalityRepository>();
             localityRepositoryMock.Setup(x => x.GetLocalityAsync(localityCode)).ReturnsAsync(locality);
-            var tagRepositoryMock = new Mock<ITagRepository>();
-            var socialMediaPlatformRepositoryMock = new Mock<ISocialMediaPlatformRepository>();
 
+            var databaseMock = new Mock<IFoodTruckDatabase>();
+            databaseMock.Setup(x => x.FoodTruckRepository).Returns(foodTruckRepositoryMock.Object);
+            databaseMock.Setup(x => x.LocalityRepository).Returns(localityRepositoryMock.Object);
 
-
-            var foodTruckService = new FoodTruckService(loggerFactoryMock.Object, unitOfWorkMock.Object, new StandardDateTimeProvider(),
-                foodTruckRepositoryMock.Object, tagRepositoryMock.Object, socialMediaPlatformRepositoryMock.Object, localityRepositoryMock.Object);
+            var foodTruckService = new FoodTruckService(loggerFactoryMock.Object, databaseMock.Object, new StandardDateTimeProvider());
 
             // Act
             var result = await foodTruckService.GetFoodTrucksAsync(localityCode, null);
@@ -66,16 +66,15 @@ namespace FoodTruckNation.Core.Test.AppServices
 
             // Arrange
             var loggerFactoryMock = new Mock<ILoggerFactory>();
-            var unitOfWorkMock = new Mock<IUnitOfWork>();
             var foodTruckRepositoryMock = new Mock<IFoodTruckRepository>();
             var localityRepositoryMock = new Mock<ILocalityRepository>();
             localityRepositoryMock.Setup(x => x.GetLocalityAsync(localityCode)).ReturnsAsync(null as Locality);
-            var tagRepositoryMock = new Mock<ITagRepository>();
-            var socialMediaPlatformRepositoryMock = new Mock<ISocialMediaPlatformRepository>();
 
-            var foodTruckService = new FoodTruckService(loggerFactoryMock.Object, unitOfWorkMock.Object, new StandardDateTimeProvider(),
-                foodTruckRepositoryMock.Object, tagRepositoryMock.Object, socialMediaPlatformRepositoryMock.Object, localityRepositoryMock.Object);
+            var databaseMock = new Mock<IFoodTruckDatabase>();
+            databaseMock.Setup(x => x.FoodTruckRepository).Returns(foodTruckRepositoryMock.Object);
+            databaseMock.Setup(x => x.LocalityRepository).Returns(localityRepositoryMock.Object);
 
+            var foodTruckService = new FoodTruckService(loggerFactoryMock.Object, databaseMock.Object, new StandardDateTimeProvider());
 
             // Act
             var result = await foodTruckService.GetFoodTrucksAsync(localityCode, null);
@@ -96,25 +95,28 @@ namespace FoodTruckNation.Core.Test.AppServices
             Locality locality = new Locality() { LocalityCode = localityCode, Name = "Chicago" };
             IEnumerable<FoodTruck> foodTrucks = new List<FoodTruck>()
             {
-                new FoodTruck(1, "Thai Food Truck One", "", "") { Locality = locality },
-                new FoodTruck(2, "Thai Food Truck Two", "", "") { Locality = locality },
-                new FoodTruck(3, "Thai Food Truck Three", "", "") { Locality = locality },
+                new FoodTruck(1, "Thai Food Truck One", "", "", locality),
+                new FoodTruck(2, "Thai Food Truck Two", "", "", locality),
+                new FoodTruck(3, "Thai Food Truck Three", "", "", locality),
             };
 
             // Arrange
             var loggerFactoryMock = new Mock<ILoggerFactory>();
-            var unitOfWorkMock = new Mock<IUnitOfWork>();
+
             var foodTruckRepositoryMock = new Mock<IFoodTruckRepository>();
             foodTruckRepositoryMock.Setup(x => x.GetFoodTrucksAsync(locality, tag)).ReturnsAsync(foodTrucks);
+
             var localityRepositoryMock = new Mock<ILocalityRepository>();
             localityRepositoryMock.Setup(x => x.GetLocalityAsync(localityCode)).ReturnsAsync(locality);
+
+            var databaseMock = new Mock<IFoodTruckDatabase>();
+            databaseMock.Setup(x => x.FoodTruckRepository).Returns(foodTruckRepositoryMock.Object);
+            databaseMock.Setup(x => x.LocalityRepository).Returns(localityRepositoryMock.Object);
+
             var tagRepositoryMock = new Mock<ITagRepository>();
             var socialMediaPlatformRepositoryMock = new Mock<ISocialMediaPlatformRepository>();
 
-
-
-            var foodTruckService = new FoodTruckService(loggerFactoryMock.Object, unitOfWorkMock.Object, new StandardDateTimeProvider(),
-                foodTruckRepositoryMock.Object, tagRepositoryMock.Object, socialMediaPlatformRepositoryMock.Object, localityRepositoryMock.Object);
+            var foodTruckService = new FoodTruckService(loggerFactoryMock.Object, databaseMock.Object, new StandardDateTimeProvider());
 
             // Act
             var result = await foodTruckService.GetFoodTrucksAsync(localityCode, tag);

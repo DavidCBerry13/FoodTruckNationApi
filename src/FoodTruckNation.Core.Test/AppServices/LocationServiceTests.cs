@@ -32,13 +32,18 @@ public class LocationServiceTests
 
         // Arrange
         var loggerFactoryMock = new Mock<ILoggerFactory>();
-        var unitOfWorkMock = new Mock<IUnitOfWork>();
+
         var locationRepositoryMock = new Mock<ILocationRepository>();
         locationRepositoryMock.Setup(x => x.GetLocationsAsync(locality)).ReturnsAsync(locations);
+
         var localityRepositoryMock = new Mock<ILocalityRepository>();
         localityRepositoryMock.Setup(x => x.GetLocalityAsync(localityCode)).ReturnsAsync(locality);
 
-        var locationService = new LocationService(loggerFactoryMock.Object, unitOfWorkMock.Object, locationRepositoryMock.Object, localityRepositoryMock.Object);
+        var databaseMock = new Mock<IFoodTruckDatabase>();
+        databaseMock.Setup(x => x.LocalityRepository).Returns(localityRepositoryMock.Object);
+        databaseMock.Setup(x => x.LocationRepository).Returns(locationRepositoryMock.Object);
+
+        var locationService = new LocationService(loggerFactoryMock.Object, databaseMock.Object);
 
         // Act
         var result = await locationService.GetLocationsAsync(localityCode);
@@ -57,12 +62,16 @@ public class LocationServiceTests
 
         // Arrange
         var loggerFactoryMock = new Mock<ILoggerFactory>();
-        var unitOfWorkMock = new Mock<IUnitOfWork>();
+
         var locationRepositoryMock = new Mock<ILocationRepository>();
         var localityRepositoryMock = new Mock<ILocalityRepository>();
         localityRepositoryMock.Setup(x => x.GetLocalityAsync(localityCode)).Returns(Task.FromResult((Locality)null));
 
-        var locationService = new LocationService(loggerFactoryMock.Object, unitOfWorkMock.Object, locationRepositoryMock.Object, localityRepositoryMock.Object);
+        var databaseMock = new Mock<IFoodTruckDatabase>();
+        databaseMock.Setup(x => x.LocalityRepository).Returns(localityRepositoryMock.Object);
+        databaseMock.Setup(x => x.LocationRepository).Returns(locationRepositoryMock.Object);
+
+        var locationService = new LocationService(loggerFactoryMock.Object, databaseMock.Object);
 
         // Act
         var result = await locationService.GetLocationsAsync(localityCode);

@@ -37,6 +37,12 @@ namespace FoodTruckNationApi.FoodTrucks
         public string Website { get; set; }
 
         /// <summary>
+        /// Get the locality code of the locality this food truck is in
+        /// </summary>
+        public string LocalityCode { get; set; }
+
+
+        /// <summary>
         /// Gets a list of tags to be attached to the new food truck.
         /// </summary>
         /// <remarks>
@@ -66,6 +72,9 @@ namespace FoodTruckNationApi.FoodTrucks
                 .NotEmpty().WithMessage("The food truck must have a website")
                 .Matches(FoodTruck.WEBSITE_VALIDATION).WithMessage("You must input a valid website url");
 
+            RuleFor(f => f.LocalityCode)
+                .NotEmpty().WithMessage("The food truck must have a locality code")
+                .Matches(Locality.CODE_VALIDATION).WithMessage("You must input a valid locality code");
 
             RuleForEach(f => f.Tags)
                 .NotNull().WithMessage("Tags cannot be empty")
