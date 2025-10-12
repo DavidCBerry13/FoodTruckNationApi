@@ -22,7 +22,12 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
     [ApiVersion("1.1")]
     public class FoodTruckSocialMediaController : ApiControllerBase
     {
-
+        /// <summary>
+        /// Creates a new instance of the FoodTruckSocialMediaController class
+        /// </summary>
+        /// <param name="logger">A Logger for the controller to use</param>
+        /// <param name="mapper">A mapper used by the controller to map between entity and model objects</param>
+        /// <param name="foodTruckService">A FoodTruckService object used for getting social media account info about the food truck</param>
         public FoodTruckSocialMediaController(ILogger<FoodTruckSocialMediaController> logger, IMapper mapper, IFoodTruckService foodTruckService)
             : base(logger, mapper)
         {
@@ -126,7 +131,17 @@ namespace FoodTruckNationApi.Api.FoodTrucks.SocialMedia
             });
         }
 
-        // PUT: api/FoodTruckSocialMedia/5
+        /// <summary>
+        /// Updates the social media account associated with the specified food truck.
+        /// </summary>
+        /// <remarks>The <paramref name="updateModel"/> parameter must include a valid account name.  If
+        /// the specified food truck or social media account does not exist, an appropriate error response will be
+        /// returned.</remarks>
+        /// <param name="foodTruckId">The unique identifier of the food truck whose social media account is being updated.</param>
+        /// <param name="socialMediaAccountId">The unique identifier of the social media account to update.</param>
+        /// <param name="updateModel">An object containing the updated details for the social media account.</param>
+        /// <returns>An <see cref="IActionResult"/> representing the result of the operation.  This may include a success
+        /// response with the updated social media account details or an error response if the update fails.</returns>
         [HttpPut("{socialAccountId}")]
         public async Task<IActionResult> Put(int foodTruckId, int socialMediaAccountId, [FromBody]UpdateSocialMediaAccount updateModel)
         {

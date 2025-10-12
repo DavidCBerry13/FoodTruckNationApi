@@ -16,13 +16,23 @@ using Asp.Versioning;
 
 namespace FoodTruckNationApi.FoodTrucks.Schedules
 {
+
+    /// <summary>
+    /// Controller containing actions related to the schedules (appointments) for a food truck
+    /// </summary>
     [Produces("application/json")]
     [Route("api/FoodTrucks/{foodTruckId}/Schedules")]
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
     public class FoodTruckSchedulesController : ApiControllerBase
     {
-
+        /// <summary>
+        /// Constructs a FoodTruckSchedulesController object
+        /// </summary>
+        /// <param name="logger">An ILogger to use by the controller</param>
+        /// <param name="mapper">An IMapper used by this controller to map between model and entity objects</param>
+        /// <param name="scheduleService">An iScheduleService object used to read/create/update food truck schedules</param>
+        /// <param name="dateTimeProvider">An iDateTimeProver for handling date/time functions</param>
         public FoodTruckSchedulesController(ILogger<FoodTruckSchedulesController> logger, IMapper mapper,
             IScheduleService scheduleService, IDateTimeProvider dateTimeProvider)
             : base(logger, mapper)
@@ -120,6 +130,17 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
                 });
         }
 
+        /// <summary>
+        /// Updates the schedule of a specific food truck with the provided details.
+        /// </summary>
+        /// <remarks>This method maps the provided <paramref name="updateModel"/> to a command object and
+        /// invokes the schedule service to perform the update. If the update is successful, the method returns a
+        /// response with the updated schedule and a location header pointing to the resource.</remarks>
+        /// <param name="foodTruckId">The unique identifier of the food truck whose schedule is being updated.</param>
+        /// <param name="scheduleId">The unique identifier of the schedule to update.</param>
+        /// <param name="updateModel">The model containing the updated schedule details.</param>
+        /// <returns>An <see cref="ActionResult{T}"/> containing the updated <see cref="Schedule"/> object if the update is
+        /// successful.</returns>
         [HttpPut("{scheduleId}")]
         public async Task<ActionResult<Schedule>> Put(int foodTruckId, int scheduleId, [FromBody]UpdateFoodTruckScheduleModel updateModel)
         {

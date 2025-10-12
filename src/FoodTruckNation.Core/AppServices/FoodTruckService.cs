@@ -41,7 +41,7 @@ namespace FoodTruckNation.Core.AppServices
         }
 
 
-        public async Task<Result<IEnumerable<FoodTruck>>> GetFoodTrucksAsync(string? localityCode, string? tag)
+        public async Task<Result<IEnumerable<FoodTruck>>> GetFoodTrucksAsync(string localityCode, string tag)
         {
             // Both locality code and tag are null, so this is basically returning everything
             if (localityCode == null && tag == null)
@@ -237,11 +237,11 @@ namespace FoodTruckNation.Core.AppServices
                 return Result.Failure<FoodTruck>(new ObjectNotFoundError("No food truck with the id of {foodTruckId} could be found"));
 
             // Handle Tags on Object but not in Input list (i.e. tags to be removed)
-            var removedTags = foodTruck.Tags.WhereNotExists(tags, (foodTruckTag, inputTag) => ( foodTruckTag.Tag.Text == inputTag ));
+            var removedTags = foodTruck.Tags.WhereNotExists(tags, (foodTruckTag, inputTag) => foodTruckTag.Tag.Text == inputTag );
             removedTags.ToList().ForEach(removedTag => foodTruck.RemoveTag(removedTag));
 
             // Now deal with the tags that are on the object
-            var newTags = tags.WhereNotExists(foodTruck.Tags, (inputTag, foodTruckTag) => ( inputTag == foodTruckTag.Tag.Text ));
+            var newTags = tags.WhereNotExists(foodTruck.Tags, (inputTag, foodTruckTag) => inputTag == foodTruckTag.Tag.Text);
 
             // Converts tag strings into tag objects (including creating tags that don't exist)
             var tagObjects = await DecodeTagsAsync(newTags);

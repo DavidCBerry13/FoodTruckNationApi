@@ -25,7 +25,12 @@ namespace FoodTruckNationApi.SocialMediaPlatforms
     public class SocialMediaPlatformsController : ApiControllerBase
     {
 
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SocialMediaPlatformsController"/> class.
+        /// </summary>
+        /// <param name="logger">The logger instance used to log messages for this controller.</param>
+        /// <param name="mapper">The mapper instance used for object-to-object mapping.</param>
+        /// <param name="socialMediaPlatformService">The service instance used to manage social media platform operations.</param>
         public SocialMediaPlatformsController(ILogger<SocialMediaPlatformsController> logger, IMapper mapper,
             ISocialMediaPlatformService socialMediaPlatformService)
             : base(logger, mapper)

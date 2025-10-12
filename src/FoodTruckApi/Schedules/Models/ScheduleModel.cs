@@ -45,6 +45,9 @@ namespace FoodTruckNationApi.Schedules
 
         #region Nested Types - Location
 
+        /// <summary>
+        /// Represents the location where a food truck is scheduled to appear
+        /// </summary>
         public class LocationModel
         {
             /// <summary>

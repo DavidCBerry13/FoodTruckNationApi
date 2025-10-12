@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FoodTruckNationApi.Api.FoodTrucks.Tags
 {
-    public class FoodTruckTagsAutomapperProfile : Profile
+    internal class FoodTruckTagsAutomapperProfile : Profile
     {
 
 
@@ -20,7 +20,7 @@ namespace FoodTruckNationApi.Api.FoodTrucks.Tags
 
         internal void AddFoodTruckToFoodTruckModelMap()
         {
-            CreateMap<FoodTruckTag, String>()
+            CreateMap<FoodTruckTag, string>()
                 .ConvertUsing(x => x.Tag.Text);
         }
 
