@@ -28,9 +28,11 @@ namespace FoodTruckNationApi.Test.Schedules
         public void WhenStartAndEndDateProvidedInCorrectOrder_Passes()
         {
             // Arrange
-            var model = new GetSchedulesParameters();
-            model.StartDate = DateTime.Today;
-            model.EndDate = DateTime.Today.AddDays(10);
+            var model = new GetSchedulesParameters
+            {
+                StartDate = DateTime.Today,
+                EndDate = DateTime.Today.AddDays(10)
+            };
 
             // Act
             var validator = new GetSchedulesParametersValidator();
@@ -44,8 +46,10 @@ namespace FoodTruckNationApi.Test.Schedules
         public void WhenOnlyStartDateProvided_Fails()
         {
             // Arrange
-            var model = new GetSchedulesParameters();
-            model.StartDate = DateTime.Today;
+            var model = new GetSchedulesParameters
+            {
+                StartDate = DateTime.Today
+            };
 
             // Act
             var validator = new GetSchedulesParametersValidator();
@@ -59,8 +63,10 @@ namespace FoodTruckNationApi.Test.Schedules
         public void WhenOnlyEndDateProvided_Fails()
         {
             // Arrange
-            var model = new GetSchedulesParameters();
-            model.EndDate = DateTime.Today.AddDays(10);
+            var model = new GetSchedulesParameters
+            {
+                EndDate = DateTime.Today.AddDays(10)
+            };
 
             // Act
             var validator = new GetSchedulesParametersValidator();
@@ -90,9 +96,11 @@ namespace FoodTruckNationApi.Test.Schedules
         public void WhenEndDate60DaysAfterStartDate_Passes()
         {
             // Arrange
-            var model = new GetSchedulesParameters();
-            model.StartDate = DateTime.Today;
-            model.EndDate = DateTime.Today.AddDays(60);
+            var model = new GetSchedulesParameters
+            {
+                StartDate = DateTime.Today,
+                EndDate = DateTime.Today.AddDays(60)
+            };
 
             // Act
             var validator = new GetSchedulesParametersValidator();
@@ -106,9 +114,11 @@ namespace FoodTruckNationApi.Test.Schedules
         public void WhenEndDate61DaysAfterStartDate_Passes()
         {
             // Arrange
-            var model = new GetSchedulesParameters();
-            model.StartDate = DateTime.Today.AddDays(10);
-            model.EndDate = DateTime.Today;
+            var model = new GetSchedulesParameters
+            {
+                StartDate = DateTime.Today.AddDays(10),
+                EndDate = DateTime.Today
+            };
 
             // Act
             var validator = new GetSchedulesParametersValidator();

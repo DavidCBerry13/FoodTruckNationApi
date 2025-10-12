@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace FoodTruckNationApi.FoodTrucks.Schedules
 {
+    /// <summary>
+    /// Modul used to update an existing schedule (appointment) for a food truck, including its location and operating times.
+    /// </summary>
     public class UpdateFoodTruckScheduleModel
     {
 

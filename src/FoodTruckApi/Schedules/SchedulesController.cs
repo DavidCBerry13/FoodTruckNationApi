@@ -24,7 +24,13 @@ namespace FoodTruckNationApi.Schedules
     [ApiVersion("1.1")]
     public class SchedulesController : ApiControllerBase
     {
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SchedulesController"/> class.
+        /// </summary>
+        /// <param name="logger">The logger instance used to log messages for the controller.</param>
+        /// <param name="mapper">The mapper instance used for object-to-object mapping.</param>
+        /// <param name="scheduleService">The service used to manage and retrieve schedule-related data.</param>
+        /// <param name="dateTimeProvider">The provider used to retrieve the current date and time.</param>
         public SchedulesController(ILogger<SchedulesController> logger, IMapper mapper,
             IScheduleService scheduleService, IDateTimeProvider dateTimeProvider) : base(logger, mapper)
         {

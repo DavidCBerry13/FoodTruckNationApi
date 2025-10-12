@@ -14,7 +14,11 @@ namespace FoodTruckNationApi.FoodTrucks
     /// </summary>
     public class CreateFoodTruckModel
     {
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateFoodTruckModel"/> class.
+        /// </summary>
+        /// <remarks>This constructor initializes the <see cref="Tags"/> property to an empty list of
+        /// strings.</remarks>
         public CreateFoodTruckModel()
         {
             Tags = new List<string>();

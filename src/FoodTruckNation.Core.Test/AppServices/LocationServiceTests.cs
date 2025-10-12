@@ -65,7 +65,7 @@ public class LocationServiceTests
 
         var locationRepositoryMock = new Mock<ILocationRepository>();
         var localityRepositoryMock = new Mock<ILocalityRepository>();
-        localityRepositoryMock.Setup(x => x.GetLocalityAsync(localityCode)).Returns(Task.FromResult((Locality)null));
+        localityRepositoryMock.Setup(x => x.GetLocalityAsync(localityCode)).Returns(Task.FromResult((Locality?)null));
 
         var databaseMock = new Mock<IFoodTruckDatabase>();
         databaseMock.Setup(x => x.LocalityRepository).Returns(localityRepositoryMock.Object);

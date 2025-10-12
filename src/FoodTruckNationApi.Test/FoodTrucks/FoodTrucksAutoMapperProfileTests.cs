@@ -17,11 +17,11 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             var config = new MapperConfiguration(cfg => {
                 cfg.AddProfile<FoodTruckModelAutomapperProfile>();
             });
-            mapper = new Mapper(config,
+            _mapper = new Mapper(config,
                 t => FoodTrucksAutoMapperProfileTests.Resolve<Type, object>(t));
         }
 
-        private readonly IMapper mapper;
+        private readonly IMapper _mapper;
 
         [Fact]
         public void FoodTruckModelCorrectlyMapsFoodTruckWithTags()
@@ -35,7 +35,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             foodTruck.AddTag(tagTwo);
 
             // Act
-            var model = mapper.Map<FoodTruckModel>(foodTruck);
+            var model = _mapper.Map<FoodTruckModel>(foodTruck);
 
             // Assert
             model.Tags.Count.ShouldBe(2);
@@ -52,7 +52,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             var foodTruck = new FoodTruck(1, "All American Burger", "Burgers, Brats, Hot Dogs and More", @"http://allamericanburger.foodtruck.com", locality);
 
             // Act
-            var model = mapper.Map<FoodTruckModel>(foodTruck);
+            var model = _mapper.Map<FoodTruckModel>(foodTruck);
 
             // Assert
             model.Tags.ShouldBeEmpty();
@@ -60,7 +60,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
 
 
         // Resolver method so AutoMapper will resolve the TestUrlResolver when it goes looking for the UrlResolver
-        private static object Resolve<Type, Object>(Type t)
+        private static TestUrlResolver Resolve<TType, TObject>(TType t)
         {
             return new TestUrlResolver();
         }

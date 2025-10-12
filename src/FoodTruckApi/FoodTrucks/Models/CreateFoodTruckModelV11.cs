@@ -10,6 +10,9 @@ using FoodTruckNation.Core.Domain;
 
 namespace FoodTruckNationApi.FoodTrucks
 {
+    /// <summary>
+    /// Version 1.1. of the model used when creating a new food truck
+    /// </summary>
     public class CreateFoodTruckModelV11
     {
 
