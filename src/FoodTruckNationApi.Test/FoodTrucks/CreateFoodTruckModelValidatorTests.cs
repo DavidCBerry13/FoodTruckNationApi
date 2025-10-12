@@ -1,4 +1,4 @@
-using FluentAssertions;
+using Shouldly;
 using FoodTruckNationApi.FoodTrucks;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         [InlineData("Little Havana")]
         [InlineData("Burger-o-rama")]
         [InlineData("Hoppin' Jalepeno")]
-        public void ValidFoodTruckNamesPass(String name)
+        public void ValidFoodTruckNamesPass(string name)
         {
             // Arrange
             CreateFoodTruckModel model = new CreateFoodTruckModel()
@@ -31,7 +31,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeTrue();
+            result.IsValid.ShouldBeTrue();
         }
 
 
@@ -39,7 +39,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
         [InlineData("Name With %")]
         [InlineData("Name with ^")]
         [InlineData("Name with &")]
-        public void InvalidFoodTruckNamesFail(String name)
+        public void InvalidFoodTruckNamesFail(string name)
         {
             // Arrange
             CreateFoodTruckModel model = new CreateFoodTruckModel()
@@ -55,7 +55,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
 
@@ -76,7 +76,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
         [Fact]
@@ -96,7 +96,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
 
@@ -117,7 +117,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
 
@@ -138,7 +138,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
         [Theory]
@@ -167,7 +167,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeTrue();
+            result.IsValid.ShouldBeTrue();
         }
 
 
@@ -196,7 +196,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
 
@@ -219,7 +219,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeTrue();
+            result.IsValid.ShouldBeTrue();
         }
 
         [Fact]
@@ -240,7 +240,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeTrue();
+            result.IsValid.ShouldBeTrue();
         }
 
 
@@ -261,7 +261,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
 
@@ -282,7 +282,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
 

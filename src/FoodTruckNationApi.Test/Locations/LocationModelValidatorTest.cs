@@ -1,4 +1,4 @@
-using FluentAssertions;
+using Shouldly;
 using FoodTruckNationApi.Locations;
 using System;
 using System.Collections.Generic;
@@ -32,7 +32,7 @@ namespace FoodTruckNationApi.Test.Locations
         [InlineData("U.S. Bank Center", "777 E. Wisconsin Ave", "Milwaukee", "WI", "53202")]
         [InlineData("L'Enfant Plaza", "429 L'Enfant Plaza SW", "Washington", "DC", "20024")]
         [InlineData("Willis Tower-Wacker Drive", "200 S Wacker Dr", "Chicago", "IL", "60606")]
-    public void ValidLocationObjectsShouldPass(string name, string address, string city, 
+    public void ValidLocationObjectsShouldPass(string name, string address, string city,
             string state, string zipCode)
         {
             // Arrange
@@ -50,7 +50,7 @@ namespace FoodTruckNationApi.Test.Locations
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeTrue();
+            result.IsValid.ShouldBeTrue();
         }
 
 
@@ -69,7 +69,7 @@ namespace FoodTruckNationApi.Test.Locations
             var result = validator.Validate(_locationOne);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
 
@@ -87,7 +87,7 @@ namespace FoodTruckNationApi.Test.Locations
             var result = validator.Validate(_locationOne);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
         [Theory]
@@ -104,7 +104,7 @@ namespace FoodTruckNationApi.Test.Locations
             var result = validator.Validate(_locationOne);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
 
@@ -125,7 +125,7 @@ namespace FoodTruckNationApi.Test.Locations
             var result = validator.Validate(_locationOne);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
         [Theory]
@@ -149,7 +149,7 @@ namespace FoodTruckNationApi.Test.Locations
             var result = validator.Validate(_locationOne);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
     }

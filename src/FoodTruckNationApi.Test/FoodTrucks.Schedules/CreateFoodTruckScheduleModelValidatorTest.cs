@@ -1,10 +1,10 @@
-using FluentAssertions;
 using FoodTruckNationApi.FoodTrucks.Schedules;
 using DavidBerry.Framework.TimeAndDate;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
+using Shouldly;
 
 namespace FoodTruckNationApi.Test.FoodTrucks.Schedules
 {
@@ -32,7 +32,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks.Schedules
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeTrue();
+            result.IsValid.ShouldBeTrue();
         }
 
 
@@ -55,7 +55,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks.Schedules
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
 
@@ -78,7 +78,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks.Schedules
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
 
@@ -101,7 +101,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks.Schedules
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
 
@@ -125,7 +125,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks.Schedules
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
 
@@ -148,7 +148,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks.Schedules
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeTrue();
+            result.IsValid.ShouldBeTrue();
         }
 
 

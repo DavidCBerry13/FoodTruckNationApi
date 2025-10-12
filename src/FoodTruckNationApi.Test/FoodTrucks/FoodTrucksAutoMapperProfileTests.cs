@@ -1,5 +1,5 @@
 using AutoMapper;
-using FluentAssertions;
+using Shouldly;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNationApi.FoodTrucks;
 using System;
@@ -38,9 +38,9 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             var model = mapper.Map<FoodTruckModel>(foodTruck);
 
             // Assert
-            model.Tags.Should().HaveCount(2);
-            model.Tags.Should().Contain("Burgers");
-            model.Tags.Should().Contain("Hot Dogs");
+            model.Tags.Count.ShouldBe(2);
+            model.Tags.ShouldContain("Burgers");
+            model.Tags.ShouldContain("Hot Dogs");
         }
 
 
@@ -55,7 +55,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             var model = mapper.Map<FoodTruckModel>(foodTruck);
 
             // Assert
-            model.Tags.Should().BeEmpty();
+            model.Tags.ShouldBeEmpty();
         }
 
 
