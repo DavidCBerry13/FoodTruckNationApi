@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FluentAssertions;
+using Shouldly;
 using FluentValidation;
 using FoodTruckApi.Localities.Models;
 using FoodTruckNationApi.Locations;
@@ -33,7 +33,7 @@ namespace FoodTruckNationApi.Test.Localities
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeTrue();
+            result.IsValid.ShouldBeTrue();
         }
 
 
@@ -50,13 +50,13 @@ namespace FoodTruckNationApi.Test.Localities
                 Code = code,
                 Name = name
             };
-            
+
             // Act
             CreateLocalityModelValidator validator = new CreateLocalityModelValidator();
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
         [Theory]
@@ -77,7 +77,7 @@ namespace FoodTruckNationApi.Test.Localities
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
         [Theory]
@@ -98,7 +98,7 @@ namespace FoodTruckNationApi.Test.Localities
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
 
@@ -119,7 +119,7 @@ namespace FoodTruckNationApi.Test.Localities
             var result = validator.Validate(model);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
     }

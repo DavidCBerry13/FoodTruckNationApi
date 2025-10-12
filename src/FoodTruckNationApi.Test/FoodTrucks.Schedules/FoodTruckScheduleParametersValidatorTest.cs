@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using Shouldly;
 using FoodTruckNationApi.FoodTrucks.Schedules;
 using System;
 using System.Collections.Generic;
@@ -25,7 +25,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks.Schedules
             var validator = new FoodTruckScheduleParametersValidator();
             var result = validator.Validate(parms);
 
-            result.IsValid.Should().BeTrue();
+            result.IsValid.ShouldBeTrue();
         }
 
 
@@ -41,7 +41,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks.Schedules
             var validator = new FoodTruckScheduleParametersValidator();
             var result = validator.Validate(parms);
 
-            result.IsValid.Should().BeTrue();
+            result.IsValid.ShouldBeTrue();
         }
 
         [Fact]
@@ -56,7 +56,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks.Schedules
             var validator = new FoodTruckScheduleParametersValidator();
             var result = validator.Validate(parms);
 
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
 
@@ -72,7 +72,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks.Schedules
             var validator = new FoodTruckScheduleParametersValidator();
             var result = validator.Validate(parms);
 
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
 
@@ -88,7 +88,7 @@ namespace FoodTruckNationApi.Test.FoodTrucks.Schedules
             var validator = new FoodTruckScheduleParametersValidator();
             var result = validator.Validate(parms);
 
-            result.IsValid.Should().BeFalse();
+            result.IsValid.ShouldBeFalse();
         }
 
 
