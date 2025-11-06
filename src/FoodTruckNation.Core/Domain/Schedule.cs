@@ -1,4 +1,5 @@
 using DavidBerry.Framework.Domain;
+using DavidBerry.Framework.Util;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,7 @@ namespace FoodTruckNation.Core.Domain
     /// <summary>
     /// Represents a schedule for a food truck to be at a certain location on a certain day for a certain period of time
     /// </summary>
-    public class Schedule : BaseEntity
+    public class Schedule : BaseEntity, ITimePeriod
     {
 
 
@@ -34,8 +35,8 @@ namespace FoodTruckNation.Core.Domain
             _foodTruck = foodTruck;
             _locationId = location.LocationId;
             _location = location;
-            ScheduledStart = startTime;
-            ScheduledEnd = endTime;
+            StartTime = startTime;
+            EndTime = endTime;
         }
 
 
@@ -47,8 +48,8 @@ namespace FoodTruckNation.Core.Domain
             _foodTruck = foodTruck;
             _locationId = location.LocationId;
             _location = location;
-            ScheduledStart = startTime;
-            ScheduledEnd = endTime;
+            StartTime = startTime;
+            EndTime = endTime;
         }
 
 
@@ -96,7 +97,7 @@ namespace FoodTruckNation.Core.Domain
         }
 
 
-        public DateTime ScheduledStart
+        public DateTime StartTime
         {
             get { return _scheduleStart; }
             set
@@ -107,7 +108,7 @@ namespace FoodTruckNation.Core.Domain
         }
 
 
-        public DateTime ScheduledEnd
+        public DateTime EndTime
         {
             get { return _scheduleEnd; }
             set
@@ -125,6 +126,7 @@ namespace FoodTruckNation.Core.Domain
         {
             SetObjectDeleted();
         }
+
 
     }
 }

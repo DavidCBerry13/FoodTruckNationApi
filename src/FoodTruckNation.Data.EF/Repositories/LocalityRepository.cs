@@ -32,7 +32,6 @@ namespace FoodTruckNation.Data.EF.Repositories
         public async Task<IEnumerable<Locality>> GetLocalitiesAsync()
         {
             var localities = await _foodTruckContext.Localities
-                .AsNoTracking()
                 .ToListAsync();
 
             return localities;
@@ -42,7 +41,6 @@ namespace FoodTruckNation.Data.EF.Repositories
         {
             var locality = await _foodTruckContext.Localities
                 .Where(l => l.LocalityCode == localityCode)
-                .AsNoTracking()
                 .SingleOrDefaultAsync();
 
             return locality;

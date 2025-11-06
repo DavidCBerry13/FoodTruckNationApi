@@ -12,6 +12,8 @@ using System.Linq;
 using System.Text;
 using DavidBerry.Framework.Functional;
 using System.Threading.Tasks;
+using FoodTruckNation.Core.Util;
+using DavidBerry.Framework.Util;
 
 namespace FoodTruckNation.Core.AppServices
 {
@@ -24,7 +26,7 @@ namespace FoodTruckNation.Core.AppServices
             _dateTimeProvider = dateTimeProvider;
         }
 
-        private IDateTimeProvider _dateTimeProvider;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
 
         public async Task<Result<Schedule>> GetScheduleAsync(int scheduleId)
@@ -87,6 +89,12 @@ namespace FoodTruckNation.Core.AppServices
             if (location == null)
                 return Result.Failure<Schedule>(new InvalidDataError($"No location with the id {command.LocationId} found"));
 
+            // Check to make sure this schedule does not overlap with any existing schedules for this food truck
+            var overlappingSchedules = foodTruck.Schedules.Where(s => s.Overlaps(command.StartTime, command.EndTime));
+            if ( overlappingSchedules.Any() )
+                return Result.Failure<Schedule>(new SchedulingConflictError(
+                    $"The scheduled time ({command.StartTime:M/dd/yyyy h:mm:ss tt}-{command.EndTime:M/dd/yyyy h:mm:ss tt}) conflicts with an existing scheduled time for this food truck", overlappingSchedules));
+
             // Create the new schedule object and add it to the food truck
             Schedule schedule = new Schedule(foodTruck, location, command.StartTime, command.EndTime);
             foodTruck.AddSchedule(schedule);
@@ -102,21 +110,26 @@ namespace FoodTruckNation.Core.AppServices
 
         public async Task<Result<Schedule>> UpdateFoodTruckScheduleAsync(UpdateFoodTruckScheduleCommand command)
         {
+            // First, get the food truck with the schedule that needs updating
             var foodTruck = await FoodTruckDatabase.FoodTruckRepository.GetFoodTruckAsync(command.FoodTruckId);
             if (foodTruck == null)
                 return Result.Failure<Schedule>(new ObjectNotFoundError($"No food truck found with id {command.FoodTruckId}"));
 
-            var location = await FoodTruckDatabase.LocationRepository.GetLocationAsync(command.LocationId);
-            if (location == null)
-                return Result.Failure<Schedule>(new InvalidDataError($"No location with the id {command.LocationId} found"));
-
+            // Now make sure the scheule specified exists in the food truck (that is, someone did not give us the scheule id of a schedule that belongs to another food truck)
             Schedule schedule = foodTruck.Schedules.FirstOrDefault(s => s.ScheduleId == command.ScheduleId);
             if (schedule == null)
-                return Result.Failure<Schedule>(new ObjectNotFoundError($"No schedule found with id {command.ScheduleId}"));
+                return Result.Failure<Schedule>(new ObjectNotFoundError($"No schedule found with id {command.ScheduleId} in Food Truck {command.FoodTruckId}"));
 
-            schedule.Location = location;
-            schedule.ScheduledStart = command.StartTime;
-            schedule.ScheduledEnd = command.EndTime;
+            // Validate the new times do not overlap with any other scheduled times for this food truck
+            var overlappingSchedules = foodTruck.Schedules
+                .Where(s => s.ScheduleId != command.ScheduleId)
+                .Where(s => s.Overlaps(command.StartTime, command.EndTime));
+            if (overlappingSchedules.Any())
+                return Result.Failure<Schedule>(new SchedulingConflictError(
+                    $"The scheduled time ({command.StartTime:M/dd/yyyy h:mm:ss tt}-{command.EndTime:M/dd/yyyy h:mm:ss tt}) conflicts with an existing scheduled time for this food truck", overlappingSchedules));
+
+            schedule.StartTime = command.StartTime;
+            schedule.EndTime = command.EndTime;
 
             // Persist to the database
             await FoodTruckDatabase.FoodTruckRepository.SaveAsync(foodTruck);

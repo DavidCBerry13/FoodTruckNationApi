@@ -166,6 +166,7 @@ namespace FoodTruckNation.Data.EF
                 .WithMany()
                 .HasForeignKey(e => e.LocalityCode)
                 .IsRequired();
+
         }
 
 
@@ -290,15 +291,13 @@ namespace FoodTruckNation.Data.EF
                 .HasField("_locationId")
                 .HasColumnName("LocationId");
 
-            modelBuilder.Entity<Schedule>().Property(x => x.ScheduledStart)
+            modelBuilder.Entity<Schedule>().Property(x => x.StartTime)
                 .HasField("_scheduleStart")
                 .HasColumnName("StartTime");
 
-            modelBuilder.Entity<Schedule>().Property(x => x.ScheduledEnd)
+            modelBuilder.Entity<Schedule>().Property(x => x.EndTime)
                 .HasField("_scheduleEnd")
                 .HasColumnName("EndTime");
-
-
 
             modelBuilder.Entity<Schedule>()
                 .HasOne<FoodTruck>(x => x.FoodTruck)
