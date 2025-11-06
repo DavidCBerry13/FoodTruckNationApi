@@ -93,7 +93,7 @@ namespace FoodTruckNation.Core.AppServices
             var overlappingSchedules = foodTruck.Schedules.Where(s => s.Overlaps(command.StartTime, command.EndTime));
             if ( overlappingSchedules.Any() )
                 return Result.Failure<Schedule>(new SchedulingConflictError(
-                    $"The scheduled time ({command.StartTime}-{command.EndTime}) conflicts with an existing scheduled time for this food truck", overlappingSchedules));
+                    $"The scheduled time ({command.StartTime:M/dd/yyyy h:mm:ss tt}-{command.EndTime:M/dd/yyyy h:mm:ss tt}) conflicts with an existing scheduled time for this food truck", overlappingSchedules));
 
             // Create the new schedule object and add it to the food truck
             Schedule schedule = new Schedule(foodTruck, location, command.StartTime, command.EndTime);
@@ -126,7 +126,7 @@ namespace FoodTruckNation.Core.AppServices
                 .Where(s => s.Overlaps(command.StartTime, command.EndTime));
             if (overlappingSchedules.Any())
                 return Result.Failure<Schedule>(new SchedulingConflictError(
-                    $"The scheduled time ({command.StartTime}-{command.EndTime}) conflicts with an existing scheduled time for this food truck", overlappingSchedules));
+                    $"The scheduled time ({command.StartTime:M/dd/yyyy h:mm:ss tt}-{command.EndTime:M/dd/yyyy h:mm:ss tt}) conflicts with an existing scheduled time for this food truck", overlappingSchedules));
 
             schedule.StartTime = command.StartTime;
             schedule.EndTime = command.EndTime;
