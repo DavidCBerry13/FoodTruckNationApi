@@ -67,6 +67,22 @@ namespace FoodTruckNation.Core.Domain
         }
 
 
+        public override bool Equals(object obj)
+        {
+            if (obj is Locality otherLocality)
+            {
+                return LocalityCode == otherLocality.LocalityCode;
+            }
+            return false;
+        }
+
+
+        override public int GetHashCode()
+        {
+            return LocalityCode.GetHashCode();
+        }
+
+
         #region Static Creator Methods
 
         /// <summary>

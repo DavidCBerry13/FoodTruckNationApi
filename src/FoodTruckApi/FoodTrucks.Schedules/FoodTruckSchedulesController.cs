@@ -2,17 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Asp.Versioning;
+using AutoMapper;
+using DavidBerry.Framework.ApiUtil.Controllers;
+using DavidBerry.Framework.ApiUtil.Models;
+using DavidBerry.Framework.Functional;
+using DavidBerry.Framework.TimeAndDate;
+using FoodTruckApi.FoodTrucks.Schedules.Models;
+using FoodTruckNation.Core.AppInterfaces;
+using FoodTruckNation.Core.Commands;
+using FoodTruckNation.Core.Domain;
+using FoodTruckNation.Core.Util;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using DavidBerry.Framework.ApiUtil.Controllers;
 using Microsoft.Extensions.Logging;
-using AutoMapper;
-using FoodTruckNation.Core.AppInterfaces;
-using DavidBerry.Framework.TimeAndDate;
-using FoodTruckNation.Core.Domain;
-using FoodTruckNation.Core.Commands;
-using DavidBerry.Framework.ApiUtil.Models;
-using Asp.Versioning;
 
 namespace FoodTruckNationApi.FoodTrucks.Schedules
 {
@@ -131,12 +134,12 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
         }
 
         /// <summary>
-        /// Updates the schedule of a specific food truck with the provided details.
+        /// Updates the schedule of a specific schedule with the provided details.
         /// </summary>
         /// <remarks>This method maps the provided <paramref name="updateModel"/> to a command object and
         /// invokes the schedule service to perform the update. If the update is successful, the method returns a
         /// response with the updated schedule and a location header pointing to the resource.</remarks>
-        /// <param name="foodTruckId">The unique identifier of the food truck whose schedule is being updated.</param>
+        /// <param name="foodTruckId">The unique identifier of the food truck containing the schedule to be updated.</param>
         /// <param name="scheduleId">The unique identifier of the schedule to update.</param>
         /// <param name="updateModel">The model containing the updated schedule details.</param>
         /// <returns>An <see cref="ActionResult{T}"/> containing the updated <see cref="Schedule"/> object if the update is
@@ -144,7 +147,16 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
         [HttpPut("{scheduleId}")]
         public async Task<ActionResult<Schedule>> Put(int foodTruckId, int scheduleId, [FromBody]UpdateFoodTruckScheduleModel updateModel)
         {
-            var updateCommand = _mapper.Map<UpdateFoodTruckScheduleModel, UpdateFoodTruckScheduleCommand>(updateModel);
+            // Populate the command object from the incoming urls parametrs and model
+            var updateCommand = new UpdateFoodTruckScheduleCommand()
+            {
+                FoodTruckId = foodTruckId,
+                ScheduleId = scheduleId,
+                StartTime = updateModel.StartTime,
+                EndTime = updateModel.EndTime
+            };
+
+            // Call the service to update the schedule
             var result = await _scheduleService.UpdateFoodTruckScheduleAsync(updateCommand);
             return CreateResponse<Schedule, FoodTruckScheduleModel>(result,
                 (schedule) =>
@@ -176,5 +188,29 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
                 ? Ok(new ApiMessageModel() { Message = $"Schedule {scheduleId} has been deleted for food truck {foodTruckId}" })
                 : MapErrorResult(result);
         }
+
+        /// <summary>
+        /// Overrides the MapErrorResult method to handle SchedulingConflictError errors specifically
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <typeparam name="TModel"></typeparam>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        [NonAction]
+        protected override ActionResult MapErrorResult<TEntity, TModel>(Result result)
+        {
+            switch (result.Error)
+            {
+                case SchedulingConflictError error:
+                    return UnprocessableEntity(new ScheduleConflictMessageModel() {
+                        Message = error.Message,
+                        ConflictingSchedules = _mapper.Map<List<Schedule>, List<FoodTruckScheduleModel>>(error.ConflictingSchedules)
+                    });
+                default:
+                    return base.MapErrorResult<TEntity, TModel>(result);
+            }
+        }
+
     }
+
 }

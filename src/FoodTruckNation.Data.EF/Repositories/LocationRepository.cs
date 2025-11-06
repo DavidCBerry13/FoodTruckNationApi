@@ -17,7 +17,6 @@ namespace FoodTruckNation.Data.EF.Repositories
         {
             _foodTruckContext = context;
             _locations = _foodTruckContext.Locations
-                .AsNoTracking()
                 .Include(x => x.Locality);
         }
 

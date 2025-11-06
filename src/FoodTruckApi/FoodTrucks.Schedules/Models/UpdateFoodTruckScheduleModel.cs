@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 namespace FoodTruckNationApi.FoodTrucks.Schedules
 {
     /// <summary>
-    /// Modul used to update an existing schedule (appointment) for a food truck, including its location and operating times.
+    /// Modul used to update an existing schedule (appointment) for a food truck..
     /// </summary>
+    /// <remarks>
+    /// Updating a schedule is changing the start and/or end time of the schedule.  If a user wants to change the location
+    /// or the food truck for a schedule, they should delete the existing schedule and create a new one.
+    /// </remarks>
     public class UpdateFoodTruckScheduleModel
     {
-
-        /// <summary>
-        /// The id of the location where the food truck will be at this time
-        /// </summary>
-        public int LocationId { get; set; }
 
         /// <summary>
         /// The date/time the food truck will arrive

@@ -142,11 +142,11 @@ namespace FoodTruckNationApi.FoodTrucks.Schedules
             CreateMap<Schedule, FoodTruckScheduleModel>()
                 .ForMember(
                     dest => dest.StartTime,
-                    opt => opt.MapFrom(src => src.ScheduledStart)
+                    opt => opt.MapFrom(src => src.StartTime)
                 )
                 .ForMember(
                     dest => dest.EndTime,
-                    opt => opt.MapFrom(src => src.ScheduledEnd)
+                    opt => opt.MapFrom(src => src.EndTime)
                 )
                 .ForMember(
                     dest => dest.Location,

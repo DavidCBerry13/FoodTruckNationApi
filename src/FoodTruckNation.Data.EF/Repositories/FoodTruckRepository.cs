@@ -22,9 +22,11 @@ namespace FoodTruckNation.Data.EF.Repositories
                 .ThenInclude(t => t.Tag)
                 .Include(f => f.Reviews)
                 .Include(f => f.Schedules)
+                .ThenInclude(s => s.Location)
+                .ThenInclude(l => l.Locality)
                 .Include(f => f.SocialMediaAccounts)
                 .ThenInclude(x => x.Platform)
-                .AsNoTracking();
+                ;
         }
 
 

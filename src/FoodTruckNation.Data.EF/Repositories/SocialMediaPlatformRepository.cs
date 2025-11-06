@@ -32,7 +32,6 @@ namespace FoodTruckNation.Data.EF.Repositories
         public async Task<IEnumerable<SocialMediaPlatform>> GetSocialMediaPlatformsAsync()
         {
             var platforms = await _foodTruckContext.SocialMediaPlatforms
-                .AsNoTracking()
                 .ToListAsync();
 
             return platforms;

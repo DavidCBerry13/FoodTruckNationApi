@@ -31,7 +31,6 @@ namespace FoodTruckNation.Data.EF.Repositories
         {
             var schedule = await _baseQuery
                 .Where(s => s.ScheduleId >= scheduleId)
-                .AsNoTracking()
                 .FirstOrDefaultAsync();
 
             return schedule;
@@ -42,9 +41,8 @@ namespace FoodTruckNation.Data.EF.Repositories
             var foodTruckSchedules = await _foodTruckContext.Schedules
                 .Include(s => s.Location)
                 .Include(s => s.FoodTruck)
-                .Where(s => s.ScheduledStart >= startDate)
-                .Where(s => s.ScheduledEnd <= endDate)
-                .AsNoTracking()
+                .Where(s => s.StartTime >= startDate)
+                .Where(s => s.EndTime <= endDate)
                 .ToListAsync();
 
             return foodTruckSchedules;
@@ -56,9 +54,8 @@ namespace FoodTruckNation.Data.EF.Repositories
                 .Include(s => s.Location)
                 .Include(s => s.FoodTruck)
                 .Where(s => s.FoodTruckId == foodTruckId)
-                .Where(s => s.ScheduledStart >= startDate)
-                .Where(s => s.ScheduledEnd <= endDate)
-                .AsNoTracking()
+                .Where(s => s.StartTime >= startDate)
+                .Where(s => s.EndTime <= endDate)
                 .ToListAsync();
 
             return foodTruckSchedules;
@@ -70,9 +67,8 @@ namespace FoodTruckNation.Data.EF.Repositories
                 .Include(s => s.Location)
                 .Include(s => s.FoodTruck)
                 .Where(s => s.LocationId == locationId)
-                .Where(s => s.ScheduledStart >= startDate)
-                .Where(s => s.ScheduledEnd <= endDate)
-                .AsNoTracking()
+                .Where(s => s.StartTime >= startDate)
+                .Where(s => s.EndTime <= endDate)
                 .ToListAsync();
 
             return foodTruckSchedules;

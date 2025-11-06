@@ -23,7 +23,6 @@ namespace FoodTruckNation.Data.EF.Repositories
         public async Task<IEnumerable<Tag>> GetAllTagsAsync()
         {
            return await _dataContext.Tags
-                .AsNoTracking()
                 .ToListAsync();
         }
 
@@ -35,7 +34,6 @@ namespace FoodTruckNation.Data.EF.Repositories
                 .ThenInclude(t => t.Tag)
                 .SelectMany(ft => ft.Tags.Select(ftt => ftt.Tag))
                 .Distinct()
-                .AsNoTracking()
                 .ToListAsync();
         }
 
@@ -44,7 +42,6 @@ namespace FoodTruckNation.Data.EF.Repositories
         {
             return await _dataContext.Tags
                 .Where(t => t.TagId == id)
-                .AsNoTracking()
                 .FirstOrDefaultAsync();
         }
 
@@ -52,7 +49,6 @@ namespace FoodTruckNation.Data.EF.Repositories
         {
             return await _dataContext.Tags
                 .Where(t => t.Text == name)
-                .AsNoTracking()
                 .FirstOrDefaultAsync();
         }
 
