@@ -2,6 +2,7 @@ using AutoMapper;
 using Shouldly;
 using FoodTruckNation.Core.Domain;
 using FoodTruckNationApi.FoodTrucks;
+using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,9 +15,9 @@ namespace FoodTruckNationApi.Test.FoodTrucks
 
         public FoodTrucksAutoMapperProfileTests()
         {
-            var config = new MapperConfiguration(cfg => {
-                cfg.AddProfile<FoodTruckModelAutomapperProfile>();
-            });
+            var configurationExpression = new MapperConfigurationExpression();
+            configurationExpression.AddProfile<FoodTruckModelAutomapperProfile>();
+            var config = new MapperConfiguration(configurationExpression, NullLoggerFactory.Instance);
             _mapper = new Mapper(config,
                 t => FoodTrucksAutoMapperProfileTests.Resolve<Type, object>(t));
         }
