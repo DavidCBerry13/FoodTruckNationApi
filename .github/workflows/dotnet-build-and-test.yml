@@ -25,37 +25,38 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: '10.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore src/FoodTruckApi.sln
+      run: dotnet restore FoodTruckApi.sln
+      working-directory: src
 
     - name: Build solution
-      run: dotnet build src/FoodTruckApi.sln --configuration Release --no-restore
+      run: dotnet build FoodTruckApi.sln --configuration Release --no-restore
+      working-directory: src
 
-      # Framework Tests
+    # Application tests
     - name: Run tests
-      run: >
-        dotnet test src/FoodTruckApi.sln \
+      run: |
+        dotnet test --solution FoodTruckApi.sln \
           --configuration Release \
           --no-build \
-          --logger "trx;LogFilePrefix=TestResults" \
           --results-directory TestResults/ \
-          --collect:"XPlat Code Coverage" \
-          /p:CollectCoverage=true \
-          /p:CoverletOutput=TestResults/ \
-          /p:CoverletOutputFormat=cobertura
+          --report-trx \
+          --coverage \
+          --coverage-output-format cobertura
+      working-directory: src
 
     - name: Upload test results artifact
       uses: actions/upload-artifact@v4
       with:
         name: test-results
-        path: TestResults/**.trx
+        path: src/TestResults/**/*.trx
 
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action@v2
       with:
-        files: TestResults/**.trx
+        files: src/TestResults/**/*.trx
         check_name: "Test Results"
         comment_title: "Test Results"
 
@@ -63,7 +64,7 @@ jobs:
     - name: Combine Coverage Reports # This is because one report is produced per project, and we want one result for all of them.
       uses: danielpalme/ReportGenerator-GitHub-Action@5.4.17
       with:
-        reports: "TestResults/**/*.cobertura.xml" # REQUIRED # The coverage reports that should be parsed (separated by semicolon). Globbing is supported.
+        reports: "src/TestResults/**/*.cobertura.xml" # REQUIRED # The coverage reports that should be parsed (separated by semicolon). Globbing is supported.
         targetdir: "${{ github.workspace }}" # REQUIRED # The directory where the generated report should be saved.
         reporttypes: "Cobertura" # The output formats and scope (separated by semicolon) Values: Badges, Clover, Cobertura, CsvSummary, Html, Html_Dark, Html_Light, Html_BlueRed, HtmlChart, HtmlInline, HtmlInline_AzurePipelines, HtmlInline_AzurePipelines_Dark, HtmlInline_AzurePipelines_Light, HtmlSummary, JsonSummary, Latex, LatexSummary, lcov, MarkdownSummary, MarkdownSummaryGithub, MarkdownDeltaSummary, MHtml, PngChart, SonarQube, TeamCitySummary, TextSummary, TextDeltaSummary, Xml, XmlSummary
         verbosity: "Info" # The verbosity level of the log messages. Values: Verbose, Info, Warning, Error, Off
