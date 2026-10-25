@@ -16,3 +16,49 @@
 WITH (SYSTEM_VERSIONING = ON
     (HISTORY_TABLE = dbo.FoodTrucksHistory));
 
+
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'Auto-generated, unique id number assigned to the food truck',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'FoodTrucks',
+    @level2type = N'COLUMN',
+    @level2name = N'FoodTruckId'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'The name of the food truck',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'FoodTrucks',
+    @level2type = N'COLUMN',
+    @level2name = N'TruckName'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'The locality (region) this food truck operates in',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'FoodTrucks',
+    @level2type = N'COLUMN',
+    @level2name = N'LocalityCode'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'A description of the type of cuisine this food truck serves',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'FoodTrucks',
+    @level2type = N'COLUMN',
+    @level2name = N'Description'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'The website of this food truck',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'FoodTrucks',
+    @level2type = N'COLUMN',
+    @level2name = N'Website'

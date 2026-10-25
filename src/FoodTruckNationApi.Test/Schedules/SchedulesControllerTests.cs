@@ -6,6 +6,7 @@ using DavidBerry.Framework;
 using DavidBerry.Framework.Functional;
 using DavidBerry.Framework.TimeAndDate;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -20,9 +21,9 @@ namespace FoodTruckNationApi.Test.Schedules
 
         public SchedulesControllerTests()
         {
-            var config = new MapperConfiguration(cfg => {
-                cfg.AddProfile<ScheduleModelAutomapperProfile>();
-            });
+            var configurationExpression = new MapperConfigurationExpression();
+            configurationExpression.AddProfile<ScheduleModelAutomapperProfile>();
+            var config = new MapperConfiguration(configurationExpression, NullLoggerFactory.Instance);
             _mapper = new Mapper(config,
                 t => SchedulesControllerTests.Resolve<Type, object>(t));
         }

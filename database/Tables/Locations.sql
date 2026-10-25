@@ -19,3 +19,4 @@
 )
 WITH (SYSTEM_VERSIONING = ON
     (HISTORY_TABLE = dbo.LocationsHistory));
+GO

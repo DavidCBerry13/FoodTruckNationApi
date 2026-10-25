@@ -68,9 +68,9 @@
     <Build Include="Tables\Tags.sql" />
     <Build Include="Tables\FoodTruckTags.sql" />
     <Build Include="Tables\Reviews.sql" />
-    <PostDeploy Include="InitialData.sql">
+    <None Include="InitialData.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </PostDeploy>
+    </None>
     <Build Include="Tables\SocialMediaPlatforms.sql" />
     <Build Include="Tables\SocialMediaAccounts.sql" />
     <None Include="Data\SocialMediaPlatformsData.sql" />
@@ -86,5 +86,8 @@
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="FoodTruckDatabase.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Tables\Table-Metadata.sql" />
   </ItemGroup>
 </Project>

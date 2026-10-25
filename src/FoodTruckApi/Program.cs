@@ -79,7 +79,7 @@ namespace FoodTruckApi
                 // Add services to the container.
 
                 builder.Services.AddValidatorsFromAssemblyContaining<CreateFoodTruckModelValidator>();  // Fluent Validation
-                builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(UrlResolver)));  // AutoMapper
+                builder.Services.AddAutoMapper(_ => { }, Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(UrlResolver)));  // AutoMapper
                 builder.Services.AddCors();  // For CORS
 
                 var connectionString = builder.Configuration.GetConnectionString("FoodTruckConnectionString");

@@ -4,6 +4,7 @@ using FoodTruckNation.Core.Domain;
 using FoodTruckNationApi.FoodTrucks;
 using DavidBerry.Framework.Functional;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -52,9 +53,9 @@ namespace FoodTruckNationApi.Test.FoodTrucks
             };
 
 
-            var config = new MapperConfiguration(cfg => {
-                cfg.AddProfile<FoodTruckModelAutomapperProfile>();
-            });
+            var configurationExpression = new MapperConfigurationExpression();
+            configurationExpression.AddProfile<FoodTruckModelAutomapperProfile>();
+            var config = new MapperConfiguration(configurationExpression, NullLoggerFactory.Instance);
             _mapper = new Mapper(config,
                 t => FoodTrucksControllerTests.Resolve<Type, object>(t));
 
